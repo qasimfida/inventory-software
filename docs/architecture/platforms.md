@@ -2,12 +2,15 @@
 
 The mandatory scope rule is canonical in [AGENTS.md](../../AGENTS.md): an unspecified platform means all applicable supported platforms; an explicit platform limits UI/integrations, while required shared-layer changes still apply. Inspect actual support first, disclose missing foundations, and implement them only within task scope. Never equate a planned platform with a completed one.
 
-| Platform | Current status                      | Target UI / persistence                     | Required qualification                                                                           |
-| -------- | ----------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| Web      | Not scaffolded                      | React DOM / IndexedDB                       | Browser matrix, offline app startup, quota/eviction, multi-tab writers                           |
-| Windows  | Not scaffolded                      | Shared React DOM in proposed Tauri / SQLite | Windows build, WebView2, installer/signing, printers, update/recovery                            |
-| macOS    | Not scaffolded                      | Shared React DOM in proposed Tauri / SQLite | macOS build, WKWebView, permissions, notarization/signing, printers                              |
-| Mobile   | Not scaffolded; OS matrix undecided | Proposed React Native / native SQLite       | iOS/Android targets to confirm; lifecycle/background suspension, camera, secure storage, devices |
+| Platform | Scaffold and verification                                            | Remaining qualification                                                                         |
+| -------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Web      | React/Vite shell; TypeScript and production build verified           | Browser interaction/accessibility tests; IndexedDB and offline startup absent                   |
+| Windows  | Tauri host consuming web frontend; Rust source/config present        | Native build requires Windows OS/MSVC/WebView2; installer, storage and hardware unverified      |
+| macOS    | Tauri native debug build and launch verified; no native APIs enabled | Release/signing/notarization and hardware tests pending                                         |
+| Android  | Expo React Native shell; Metro/Hermes export and typecheck verified  | Android adb and Java runtime absent; native build/device tests blocked; storage adapters absent |
+| iOS      | Expo React Native shell; Metro/Hermes export and typecheck verified  | Full Xcode and CocoaPods absent; native build/device tests blocked; storage adapters absent     |
+
+See the [startup repair report](../development/startup-repair.md) for current verification and [platform setup and feasibility](../platforms/setup.md) for prerequisites, capability choices and commands. Scaffolded clients are applicable to future features by default, but native verification limitations must be reported separately. No platform is a production-qualified POS release.
 
 ## Sharing boundary
 

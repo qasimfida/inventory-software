@@ -1,0 +1,656 @@
+# POS & INVENTORY MANAGEMENT PLATFORM
+## Complete Implementation Playbook — Commands 2–35
+
+# GLOBAL INSTRUCTIONS FOR EVERY COMMAND
+
+Apply these rules to every command below.
+
+### A. Inspect before implementing
+
+Before changing code:
+
+1. Read `AGENTS.md` and the relevant specialized documentation.
+2. Inspect the actual repository, existing implementations, API contracts, database schema, tests, and platform adapters.
+3. Identify what is already implemented, partially implemented, missing, duplicated, or broken.
+4. Trace affected consumers, dependencies, events, caches, persistence, and supported platforms.
+5. Write a concise implementation plan before editing.
+6. Reuse working code and preserve backward compatibility unless a justified change is required.
+
+Never assume that a feature is missing just because its implementation is not in the expected file or folder.
+
+### B. Platform coverage
+
+Unless a task explicitly specifies a platform, implement the feature across all applicable supported platforms: web, mobile, Windows, and macOS.
+
+Share domain rules and API contracts wherever possible. Use platform-specific adapters for local databases, hardware, secure storage, and native capabilities.
+
+If a platform cannot support the requested behavior, document the limitation and provide a suitable alternative. Do not silently omit a supported platform.
+
+### C. Code quality
+
+- Prefer focused files around 100–150 lines; treat 200 lines as a review threshold rather than an absolute limit.
+- Follow the existing architecture and component boundaries.
+- Use strict TypeScript wherever TypeScript is used.
+- Keep UI, domain logic, persistence, API controllers, and platform integrations separate.
+- Use shadcn/ui for suitable low-level web UI primitives, `src/components/common/` for reusable application components, and feature-specific folders for feature-owned components.
+- Avoid duplicate logic, unnecessary dependencies, giant components, hardcoded configuration, dead code, and excessive comments.
+- Never disable tests, weaken type safety, or suppress errors merely to achieve a passing build.
+
+### D. Data integrity and security
+
+- Enforce tenant isolation and permissions on the backend.
+- Use database transactions for operations that must succeed or fail together.
+- Make retryable write operations idempotent.
+- Preserve auditability for sensitive business operations.
+- Do not use blind last-write-wins for inventory, sales, payments, or financial records.
+- Never expose secrets or sensitive business data in logs.
+- Do not trust client-side calculations or permissions as the authoritative source.
+
+### E. Completion requirements
+
+For each command:
+
+1. Implement only the assigned scope.
+2. Add or update tests.
+3. Run relevant formatting, lint, type-check, tests, migrations checks, and builds.
+4. Inspect the diff for regressions and unnecessary changes.
+5. Update documentation when necessary.
+6. Report files changed, actual validation results, limitations, and remaining work.
+7. Stop and wait for approval before starting the next command.
+
+Do not claim a test passed unless it was actually executed successfully.
+
+---
+
+# STAGE 0 — FOUNDATION VALIDATION
+
+## COMMAND 2 — Audit and Correct the Initial Foundation
+
+Inspect the output of Command 1 and verify that the repository foundation is coherent and functional.
+
+Review:
+
+- `AGENTS.md`, `README.md`, and architecture documentation.
+- Workspace configuration and package-manager consistency.
+- Approved web, backend, mobile, and desktop applications.
+- Shared packages and dependency boundaries.
+- Environment configuration and example files.
+- TypeScript, linting, formatting, testing, and build scripts.
+- Git ignore rules, generated files, and secrets handling.
+- Actual support for platform-specific dependencies.
+
+Correct incomplete, contradictory, duplicated, or broken configuration. Remove unnecessary scaffolding and unused dependencies.
+
+Verify that every scaffolded application builds independently where practical and that shared packages resolve correctly.
+
+Do not implement authentication, products, inventory, sales, or other business functionality.
+
+Deliver an audit report with verified platform status, issues fixed, outstanding blockers, and exact validation results. Stop.
+
+## COMMAND 3 — Establish the Workspace and Application Boundaries
+
+Audit the existing monorepo and establish the approved application and package boundaries.
+
+Implement or correct:
+
+- Workspace scripts and package-manager configuration.
+- Independent development, testing, type-checking, and build commands.
+- Shared TypeScript and lint configuration.
+- Package aliases and reliable imports.
+- Environment separation for local development, testing, and production.
+- A consistent configuration strategy.
+- Clear rules preventing UI or native dependencies from leaking into shared domain packages.
+- Appropriate development instructions for each approved platform.
+
+Keep the backend independently deployable. Keep desktop and mobile native integrations isolated from browser-only code.
+
+Add minimal smoke tests to verify that the application entry points and shared packages load correctly.
+
+Do not build business screens or create future business tables without a current architectural need. Stop after validation.
+
+## COMMAND 4 — Build the Shared Design System
+
+Inspect existing UI components before introducing new ones.
+
+Establish a consistent UI foundation for the web application using the existing stack and shadcn/ui where appropriate.
+
+Implement or improve:
+
+- Design tokens for colors, typography, spacing, radii, borders, and focus states.
+- Responsive layout primitives.
+- Accessible buttons, inputs, selects, dialogs, tables, menus, and form controls as needed.
+- Reusable application-level loading, error, empty, retry, and confirmation states.
+- Consistent form validation presentation.
+- Keyboard navigation and accessible labels.
+- Clear separation between UI primitives, reusable application components, and feature components.
+
+If mobile or desktop uses a different UI framework, document its equivalent design conventions instead of forcing incompatible web components into it.
+
+Create only a small foundation/demo screen if needed to validate the design system. Do not build POS or inventory screens.
+
+Add tests or checks for representative components and accessibility-sensitive behavior. Stop.
+
+---
+
+# STAGE 1 — BACKEND, DATABASE, AND SECURITY
+
+## COMMAND 5 — Establish the Backend and Database Foundation
+
+Inspect the existing backend, database configuration, migrations, and test setup.
+
+Establish a modular-monolith backend using the approved architecture, preferably NestJS, Node.js, TypeScript, and PostgreSQL where consistent with the repository.
+
+Implement or correct:
+
+- Validated environment configuration.
+- PostgreSQL connection management.
+- Database migration tooling and conventions.
+- Request validation and consistent error handling.
+- Structured logging with sensitive-data redaction.
+- API versioning.
+- Health and readiness checks.
+- Graceful startup and shutdown.
+- Unit and integration test infrastructure.
+- Safe development configuration.
+- Database transaction conventions.
+
+Organize modules so controllers, application services, domain rules, persistence, and external integrations have clear responsibilities.
+
+Do not create all future business tables preemptively. Do not build fake production endpoints. Verify database connectivity and migration execution using the available environment. Stop.
+
+## COMMAND 6 — Implement Authentication and Session Management
+
+Inspect existing authentication, session handling, token storage, and platform-specific security capabilities.
+
+Implement a secure authentication foundation for every applicable approved platform.
+
+Include:
+
+- Registration or invitation-based onboarding as appropriate for the product.
+- Login and logout.
+- Session expiration and renewal.
+- Password hashing using a suitable established algorithm if password authentication is used.
+- Secure credential and token storage appropriate to each platform.
+- Protected API routes and consistent authentication errors.
+- Account status handling.
+- Session revocation and logout from active sessions.
+- Rate limiting and abuse protection for sensitive endpoints.
+- Tests for invalid credentials, expired sessions, revoked sessions, and unauthorized access.
+
+Avoid inventing a custom cryptographic protocol. Never store plaintext passwords or long-lived sensitive tokens in insecure browser storage.
+
+For offline operation, define an explicit policy for previously authenticated devices, session expiration, and locally cached sensitive data. Offline access must never bypass permissions indefinitely.
+
+Document any email, SMS, or identity-provider setup that requires credentials. Do not fake successful verification. Stop.
+
+## COMMAND 7 — Implement Business, Store, Warehouse, and Terminal Management
+
+Implement the foundational organizational model.
+
+Support:
+
+- Businesses or organizations.
+- Business membership.
+- Stores and branches.
+- Warehouses.
+- POS terminals or registered devices.
+- Relationships between businesses, stores, warehouses, and terminals.
+- Active, suspended, and archived states where appropriate.
+- Membership invitations or assignment flows where required.
+- Authorized listing, creation, editing, and deactivation operations.
+
+Define which entities belong to a business and which can be shared. Prevent accidental cross-business access.
+
+Ensure that every query and mutation is scoped using authenticated backend context rather than a client-supplied business ID alone.
+
+Add database constraints, indexes, API validation, audit events for important changes, and cross-tenant isolation tests.
+
+Provide minimal functional management screens on all applicable platforms. Do not build unrelated product or inventory workflows. Stop.
+
+## COMMAND 8 — Implement Roles, Permissions, and Audit Logging
+
+Inspect the authorization requirements and implement a consistent role-and-permission system.
+
+Support the required initial roles:
+
+- Super administrator.
+- Business owner.
+- Manager with assigned scope.
+- Cashier.
+- Custom roles or permissions where justified.
+
+Define granular permissions for viewing and changing products, stock, sales, purchases, customers, payments, reports, users, and business settings.
+
+Support business-, store-, and warehouse-scoped access where appropriate.
+
+Requirements:
+
+- Enforce authorization in backend services and endpoints.
+- Use frontend permission checks only for presentation and usability.
+- Deny access by default.
+- Prevent privilege escalation through modified request payloads.
+- Record actor, action, target, timestamp, relevant scope, and safe change metadata for sensitive operations.
+- Prevent ordinary users from modifying or deleting protected audit history.
+- Redact secrets and sensitive personal information.
+- Test role escalation, unauthorized access, and cross-tenant isolation.
+
+Build the required role-assignment and audit-history screens without exposing records beyond the user's scope. Stop.
+
+## COMMAND 9 — Standardize Database and API Conventions
+
+Audit the existing schema and API contracts. Define consistent conventions before the domain grows.
+
+Standardize:
+
+- Identifier formats.
+- UTC timestamps and business-local display rules.
+- Currency representation and precision.
+- Quantity precision and unit-of-measure handling.
+- Pagination, sorting, and filtering.
+- Validation errors and error codes.
+- API versioning and compatibility.
+- Database migrations and rollback expectations.
+- Transaction boundaries.
+- Idempotency-key conventions for retryable writes.
+- Optimistic concurrency or record-version handling where appropriate.
+- Indexing and query performance expectations.
+
+Use exact decimal or integer-minor-unit representations for money rather than floating-point arithmetic. Define explicit rules for currencies with different minor-unit precision.
+
+Document how breaking API changes are handled across independently updated clients.
+
+Update existing code only where necessary to establish these conventions. Add representative tests and migration checks. Stop.
+
+---
+
+# STAGE 2 — PRODUCT AND INVENTORY
+
+## COMMAND 10 — Implement Product Catalog and SKU Management
+
+Inspect existing product models and catalog screens. Implement or complete:
+
+- Product creation, editing, archiving, and search.
+- SKU and unique identifier handling.
+- Categories and subcategories.
+- Product descriptions and images.
+- Barcodes and alternative product codes.
+- Active/inactive status.
+- Product type and track-inventory settings.
+- Business-scoped catalog access.
+- Pagination, filters, and duplicate validation.
+- Import/export groundwork if already supported by the architecture.
+
+Keep product identity and descriptive attributes separate from stock balances. **Do not allow users to directly edit on-hand quantity from the product form.** Stock changes must eventually go through inventory movement operations.
+
+Build usable catalog interfaces across applicable platforms, with barcode scanning where supported.
+
+Add API, database, validation, and UI tests. Stop.
+
+## COMMAND 11 — Implement Variants, Units of Measure, and Pricing
+
+Implement product variations and pricing rules.
+
+Support, where relevant:
+
+- Variants such as size, color, model, and other attributes.
+- Variant-specific SKUs and barcodes.
+- Units of measure and explicit conversions.
+- Purchase, sale, and stock-count units.
+- Base selling prices and cost information.
+- Business- or store-specific price lists.
+- Effective dates and applicable customer pricing.
+- Promotions and discount rules with clear precedence.
+- Tax-inclusive and tax-exclusive pricing conventions where required.
+
+Prevent invalid or ambiguous unit conversions. Preserve precision through calculations and round only at explicitly defined boundaries.
+
+Create one authoritative pricing service for the backend. Clients may calculate previews, but the backend must validate final prices and discount permissions.
+
+Record price versions or effective periods where needed for historical transaction accuracy. Add tests for rounding, conversions, discounts, and price precedence. Stop.
+
+## COMMAND 12 — Implement the Inventory Ledger and Stock Balances
+
+This is a critical domain foundation. Inspect the existing schema and inventory logic before implementing it.
+
+Build an auditable inventory movement system with:
+
+- An immutable or correction-by-reversal movement ledger.
+- Per-product, per-warehouse, and per-location stock balances.
+- Movement types for opening stock, receiving, sale, return, transfer, adjustment, and other approved operations.
+- Transactional updates to movement records and balance projections.
+- Stable movement identifiers and idempotency keys.
+- Concurrency-safe stock updates.
+- Optional negative-stock policy configurable by business.
+- Reservations and available-to-sell calculations where required.
+- Traceability from each movement to its originating business operation.
+- Reconciliation between ledger totals and materialized balances.
+
+Do not implement stock changes by directly overwriting quantities. Correct mistakes through explicit reversals or adjustment movements.
+
+Define the difference between on-hand, reserved, available, damaged, and in-transit stock if those states are supported.
+
+Test duplicate requests, simultaneous sales, rollback after partial failure, negative-stock restrictions, and balance consistency.
+
+Document the accounting of stock movements and migration strategy. Stop.
+
+## COMMAND 13 — Implement Suppliers and Purchasing
+
+Implement supplier management and the purchasing workflow.
+
+Support:
+
+- Supplier profiles and business-scoped access.
+- Purchase orders.
+- Purchase-order line items and unit costs.
+- Draft, approved, ordered, partially received, completed, and cancelled states where appropriate.
+- Receiving against purchase orders.
+- Partial deliveries and backorders.
+- Supplier returns.
+- Supplier invoices and outstanding payable references.
+- Links between purchasing documents and inventory movements.
+- Supplier purchase history.
+
+Receiving stock must create inventory movements through the approved ledger service. Repeated receiving requests must not duplicate quantities.
+
+Handle changes to purchase orders after partial receipt carefully. Preserve historical quantities and costs.
+
+Add screens for supplier management, purchase orders, receiving, and supplier history across applicable platforms.
+
+Test partial receipt, duplicate receipt prevention, cancellation, and ledger consistency. Stop.
+
+## COMMAND 14 — Implement Warehouse and Storage Locations
+
+Implement a hierarchical storage-location model.
+
+Support configurable structures such as:
+
+- Warehouse.
+- Zone.
+- Aisle.
+- Rack.
+- Shelf.
+- Bin.
+
+Allow simpler businesses to use only the levels they need.
+
+Implement:
+
+- Unique location codes within the correct scope.
+- Location types and active/inactive status.
+- Optional capacity metadata.
+- Product quantities by location.
+- Location-specific stock movement.
+- Barcode or QR labels for locations.
+- Optional notes and photos.
+- Search and filtering by warehouse and location.
+- Validation against invalid parent-child relationships.
+
+Ensure location-level stock reconciles with warehouse-level stock. Moving stock between bins must create the appropriate movement records rather than merely changing a displayed number.
+
+Add tests for hierarchy integrity, duplicate codes, location deactivation, and quantity reconciliation. Stop.
+
+## COMMAND 15 — Implement Internal Stock Transfers
+
+Implement the full transfer lifecycle between approved source and destination locations.
+
+Support:
+
+- Transfer creation and line items.
+- Draft and approval states where configured.
+- Source stock validation and reservation.
+- Dispatch.
+- In-transit quantities.
+- Partial receipt.
+- Destination confirmation.
+- Shortages, damage, and discrepancies.
+- Cancellation rules based on transfer state.
+- Audit history and responsible users.
+
+Transfers between warehouses must not create stock. They relocate ownership of the quantity within the defined inventory scope.
+
+For inter-business transfers, use an explicit commercial workflow rather than assuming both businesses share a ledger.
+
+Make every transition transactional and idempotent. Prevent dispatching more than the approved quantity or receiving more than the dispatched quantity without an explicit discrepancy process.
+
+Add tests for partial transfers, retries, concurrent stock consumption, cancellation, and reconciliation. Stop.
+
+---
+
+# STAGE 3 — POS AND CUSTOMER OPERATIONS
+
+## COMMAND 16 — Implement Customer Management and Credit
+
+Implement customer records and the foundation for credit sales.
+
+Support:
+
+- Customer profiles and contact information.
+- Search and duplicate detection.
+- Customer-specific price lists where permitted.
+- Credit eligibility and limits.
+- Outstanding balances and payment history.
+- Customer statements.
+- Partial payments.
+- Due dates and payment terms.
+- Credit holds and authorized overrides.
+
+Create traceable receivable records for credit transactions. Do not use a manually editable customer balance as the source of truth.
+
+Protect personal data through scoped access, appropriate logging, and configurable retention.
+
+Keep the customer subledger consistent with sales and payments. Test partial payment allocation, overpayment policy, credit limits, concurrent purchases, and unauthorized credit overrides.
+
+Build the necessary customer-management interfaces. Stop.
+
+## COMMAND 17 — Implement POS Checkout
+
+Implement a usable point-of-sale workflow using the existing product, pricing, inventory, customer, and authorization services.
+
+Include:
+
+- Fast product search.
+- Barcode-based product lookup.
+- Cart management.
+- Quantity changes.
+- Unit-of-measure selection where supported.
+- Price and discount calculations.
+- Tax calculation.
+- Customer selection.
+- Cash and approved payment-method selection.
+- Stock availability checks.
+- Checkout validation.
+- Durable sale records.
+- Receipt data generation.
+- Clear success and failure states.
+
+The backend must validate product prices, discounts, taxes, permissions, and inventory rules. Client-side totals are previews, not authoritative financial values.
+
+A completed sale must create consistent transaction, payment or receivable, and inventory records within the correct transactional boundaries.
+
+Do not claim support for offline checkout until the offline workflow is implemented and tested.
+
+Design for fast keyboard-driven desktop checkout and suitable touch interaction on mobile. Keep analytics and nonessential network requests out of the critical checkout path.
+
+Test totals, rounding, discounts, tax, stock concurrency, duplicate submissions, and failed transactions. Stop.
+
+## COMMAND 18 — Implement Payments, Cash Shifts, and Receipts
+
+Implement payment recording and cash management.
+
+Support, as applicable:
+
+- Cash payments.
+- Approved external payment providers.
+- Split tender.
+- Partial payment.
+- Payment references and provider transaction IDs.
+- Payment status and reconciliation.
+- Cashier shifts.
+- Opening float.
+- Cash-in and cash-out with authorization.
+- Expected versus counted cash.
+- Shift closing and discrepancy reporting.
+- Receipt generation and reprinting.
+- Printer adapters for supported platforms.
+
+Separate payment intent, provider confirmation, and recorded payment state. Never assume a payment succeeded merely because a client received a timeout or closed the screen.
+
+Use idempotency for payment initiation and webhook processing. Protect against duplicate charges and duplicate payment records.
+
+Keep payment-provider credentials on the server. Document any provider-specific limitations and sandbox setup.
+
+Test payment retries, failed payments, duplicate callbacks, split payments, shift discrepancies, and receipt generation. Stop.
+
+## COMMAND 19 — Implement Returns, Refunds, Exchanges, and Voids
+
+Implement traceable correction workflows for completed sales.
+
+Support:
+
+- Full and partial returns.
+- Return quantities by sale line.
+- Return reason codes.
+- Refund eligibility.
+- Exchange workflows.
+- Authorized sale voiding.
+- Restock, damaged, and non-restockable dispositions.
+- Refunds to the original payment method where supported.
+- Cash refunds where authorized.
+- Links to original sales, payments, and stock movements.
+
+Never delete completed financial transactions to make a balance look correct. Use explicit reversal and adjustment records.
+
+Prevent returning more than the eligible quantity. Prevent repeated refund requests from generating duplicate refunds. Keep provider refund state and local refund state reconciled.
+
+Test partial returns, exchanges, non-restockable goods, duplicate requests, authorization failures, and refund-provider errors. Stop.
+
+## COMMAND 20 — Integrate and Verify the Complete POS Workflow
+
+Audit the end-to-end flow implemented in Commands 10–19.
+
+Trace the lifecycle from product selection through pricing, checkout, payment, stock movement, receipt, return, and refund.
+
+Resolve inconsistencies in:
+
+- Currency and quantity precision.
+- Tax and discount calculation.
+- Stock deductions.
+- Customer receivables.
+- Payment records.
+- Sale status transitions.
+- Audit history.
+- Permissions.
+- Duplicate submissions.
+- UI state after failures.
+
+Add integration and end-to-end tests for successful checkout, failed payment, partial payment, credit sale, return, refund, and stock reconciliation.
+
+Verify behavior on every applicable supported platform. Avoid copying the same financial logic into each UI.
+
+Do not begin the offline synchronization implementation in this command. Produce an end-to-end verification report and stop.
+
+---
+
+# STAGE 4 — OFFLINE-FIRST OPERATION
+
+## COMMAND 21 — Implement the Local Persistence and Synchronization Engine
+
+Inspect the existing offline interfaces and platform storage implementations before writing synchronization logic.
+
+Implement the actual offline foundation for approved platforms.
+
+Requirements:
+
+- Durable local storage.
+- Local schema versioning and migrations.
+- A persistent outbox for supported operations.
+- Stable operation identifiers.
+- Idempotent server-side processing.
+- Batched uploads.
+- Incremental downloads using server-defined cursors or versions.
+- Retry with bounded backoff.
+- Durable checkpoints.
+- Network interruption recovery.
+- Synchronization status and error reporting.
+- Conflict detection and resolution workflows.
+- Protection against duplicate application of changes.
+- Recovery after application crashes or device restarts.
+
+Use IndexedDB or a suitable browser persistence layer for web, and an appropriate SQLite-based solution for desktop and mobile when supported.
+
+Separate synchronization transport from domain rules. Do not use sockets as the durability mechanism.
+
+Define conflict policies by operation type. Inventory and financial operations require domain-aware reconciliation, not blind last-write-wins.
+
+If a device-local operation cannot be safely replayed, surface it as unresolved rather than silently discarding it.
+
+Add failure-injection tests for interrupted requests, repeated requests, application restarts, stale cursors, and corrupted or incompatible local schema versions.
+
+Do not claim complete offline support until the supported operations have been integrated and tested. Stop.
+
+## COMMAND 22 — Integrate Offline POS Checkout
+
+Integrate the synchronization engine with the POS flow.
+
+Support:
+
+- Local product and price snapshots with version information.
+- Durable offline carts and sales.
+- Locally generated stable transaction identifiers.
+- Configurable offline payment policy.
+- Explicit pending, synced, rejected, and conflict states.
+- Safe reconnection and upload retries.
+- Reconciliation of server-assigned data with local records.
+- Prevention of duplicate sales after retries.
+- Visibility into unresolved operations.
+
+Define a business-configurable policy for offline discounts, credit sales, stock limits, and payment methods. Do not silently promise online-only payment methods will work offline.
+
+If multiple terminals can sell the same product while disconnected, define the stock-risk policy explicitly. Local stock is not proof of globally available stock.
+
+Keep checkout responsive while background synchronization runs. Show clear status without blocking unrelated local operations.
+
+Test airplane mode, lost responses after server commit, app restart, reconnect, duplicate upload, and conflicting stock changes.
+
+Verify all applicable platforms. Stop.
+
+## COMMAND 23 — Implement Real-Time Updates and Reconnect Recovery
+
+Implement real-time notifications for relevant changes, including approved price updates, product changes, inventory changes, and operational status changes.
+
+Use the established backend event mechanism, such as Socket.IO, where suitable.
+
+Rules:
+
+- The database remains authoritative.
+- Events notify clients that data may have changed.
+- Clients recover missed changes through the synchronization or delta API.
+- Events must be scoped to authorized businesses, stores, and subscriptions.
+- Reconnection must not depend on receiving every previous socket message.
+- Use event identifiers, versions, or cursors where needed.
+- Prevent duplicate event handling from duplicating business operations.
+- Avoid broadcasting sensitive data to unauthorized clients.
+
+Ensure price updates reach the relevant POS screens and cached price snapshots. Define behavior when a terminal is offline or a price version is stale.
+
+Add reconnect, missed-event, duplicate-event, authorization, and stale-cache tests. Do not add unnecessary real-time dependencies to unrelated screens. Stop.
+
+## COMMAND 24 — Implement Barcode-Based Stock Counting and Reconciliation
+
+Implement stock counting as a controlled inventory operation.
+
+Support:
+
+- Count sessions scoped to a business, warehouse, and optional location.
+- Product identification through barcode scanners.
+- Mobile camera scanning where supported.
+- Manual lookup and quantity entry.
+- Blind counting where the expected quantity is hidden.
+- Unit-of-measure and carton conversion.
+- Partial counts and resumed sessions.
+- Recounts and discrepancy review.
+- Approval rules.
+- Traceable stock adjustments.
+- Audit history and count exports.
+
+Support USB and Bluetooth scanners that act as keyboard input

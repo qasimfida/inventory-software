@@ -12,3 +12,9 @@ Authentication establishes identity; authorization decides allowed actions on sp
 - Secrets stay outside source control; document variable names with fake examples only when introduced. Logs and errors must not reveal other tenants' existence or sensitive records. Payment data should remain with the provider wherever possible.
 
 Security acceptance includes cross-tenant IDs, mismatched nested resources, insufficient warehouse scopes, revoked users, feed/socket access, background jobs, cache switching and RLS role behavior. Use [testing](../development/testing.md) and update this policy with each new authorization surface.
+
+## Current foundation enforcement
+
+The only public endpoints are live/ready health checks. The API binds loopback by default, validates environment variables, uses verified PostgreSQL TLS in production, allowlisted CORS, Helmet, request-size defaults, generated request IDs and safe JSON errors/logs. Exact packaged Tauri origins are documented exceptions to browser HTTPS origins. CORS is not authorization. There is no authentication or tenant data yet; add real backend authorization before any business endpoint.
+
+Native plugins/capabilities and secure credential stores are not enabled. Client environment variables are public. Production deployment still needs rate limits, HTTPS ingress, signing, secret provisioning and the relevant authentication/CSRF policy. [Validation status](../development/validation-status.md) records unresolved transitive mobile-tooling advisories; do not claim dependency security clearance or deploy unsigned/unqualified shells.

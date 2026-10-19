@@ -1,0 +1,29 @@
+{
+  "name": "@inventory/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build && node scripts/dev.mjs",
+    "build": "tsc -p tsconfig.json",
+    "start": "node --env-file-if-exists=.env dist/main.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "db:migrate": "node --env-file-if-exists=.env --import tsx scripts/migrate.ts",
+    "db:create": "node-pg-migrate create --migrations-dir migrations --migration-file-language sql",
+    "prebuild": "npm run build:shared --prefix ../.."
+  },
+  "dependencies": {
+    "@inventory/contracts": "0.0.0",
+    "@nestjs/common": "12.2.0",
+    "@nestjs/core": "12.2.0",
+    "@nestjs/platform-express": "12.2.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "class-validator": "^0.14.2",
+    "class-transformer": "^0.5.1",
+    "zod": "4.6.7",
+    "pg": "8.23.1",
+    "helmet": "^8.1.0",
+    "node-pg-migrate": "9.0.0"
+  }
+}

@@ -6,7 +6,8 @@
 4. **Plan.** List files, reusable logic, platform adapters/UI, migrations/API compatibility, offline effects, checks and acceptance criteria. A small change needs only a brief plan.
 5. **Implement.** Extend existing patterns; explain new libraries/abstractions. Keep scope to requested behavior and dependencies. Update contracts, migrations, tests and documents as needed.
 6. **Validate.** Run available relevant formatting, lint, type, unit/integration/E2E, build and platform checks. Exercise failure paths for persistence, inventory, finance and sync. Never claim an unavailable or unrun check passed.
-7. **Report.** State changes/files, affected consumers, implemented and verified platforms separately, exact checks/results, limitations and follow-up blockers.
+7. **Review.** Inspect the diff for regressions, duplicated logic, security issues, unrelated changes and unnecessary complexity; update affected documentation.
+8. **Report.** State changes/files, affected consumers, implemented and verified platforms separately, exact checks/results, limitations and follow-up blockers.
 
 ## Impact map template
 

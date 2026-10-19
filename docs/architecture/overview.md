@@ -1,6 +1,6 @@
 # Target architecture
 
-Status: accepted architectural direction; all application behavior below is unimplemented. [Decisions](decisions.md) distinguishes commitments from proposals. [Module map](../ai/architecture-map.md) owns directory and dependency details.
+Status: web/API/mobile/desktop shells and shared health/error transport are scaffolded. The business and offline behavior described below remains a target, not implemented functionality. [Decisions](decisions.md) distinguishes commitments from proposals. [Module map](../ai/architecture-map.md) owns directory and dependency details.
 
 ## Responsibilities and data flow
 
@@ -27,7 +27,7 @@ Lazy-load reporting, analytics, administration, and warehouse visualization. Est
 
 ## Persistence and evolution
 
-Backend migrations live in `apps/api/migrations`; select the SQL/ORM tool with the first schema task. Commit ordered migrations, review locking/data impact, test clean installation and upgrades, and use expand/migrate/contract for compatible rollout. Never use automatic schema synchronization in production. Local database migrations are versioned separately per adapter and must preserve unsent operations.
+Backend migrations live in `apps/api/migrations`; use `node-pg-migrate` for reviewed SQL and `pg` for connections; see [migration workflow](../development/migrations.md). Commit ordered migrations, review locking/data impact, test clean installation and upgrades, and use expand/migrate/contract for compatible rollout. Never use automatic schema synchronization in production. Local database migrations are versioned separately per adapter and must preserve unsent operations.
 
 Prices are owned by catalog; sales snapshots the agreed values, currency, tax and price version. Checkout validates authoritative prices and policy; offline deviations require explicit reconciliation. Inventory owns quantities and reservations; other modules never update balances directly. [Domain rules](../domain/inventory-and-finance.md) define the invariants.
 

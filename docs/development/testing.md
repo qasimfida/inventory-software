@@ -2,21 +2,13 @@
 
 ## Available today
 
-| Command                    | Meaning                                                                         |
-| -------------------------- | ------------------------------------------------------------------------------- |
-| `npm ci`                   | Install locked documentation tooling                                            |
-| `npm run format`           | Apply Prettier                                                                  |
-| `npm run format:check`     | Check deterministic formatting                                                  |
-| `npm run check:foundation` | Required docs, local Markdown file links, source line limits/exception register |
-| `npm run validate`         | Run both foundation checks                                                      |
+[README commands](../../README.md) are the canonical command reference. `validate` runs formatting, documentation/source review thresholds, ESLint/import boundaries, strict type checks including test/tooling code, tooling regression tests, Vitest, and shared/API/web builds. Set a valid `VITE_API_BASE_URL` or copy the example environment before validation. `build:mobile` separately exports Android/iOS JS bundles. `build:desktop` requires native toolchains. Do not interpret JS export as a native release build.
 
-The checker validates file targets, not heading anchors or external websites. It is not an application test, Markdown semantic parser, security scanner, or import-cycle checker.
+`npm test` first runs Node tooling regression tests (forbidden import probes and JavaScript lint enforcement), then Vitest. Vitest includes `.test.ts` and `.test.tsx`, resolves the web `@/` alias, and covers server-rendered UI state semantics, environment rejection/redaction, typed transport responses, versioned HTTP health, CORS, headers, error envelopes and request validation. Nest test compilation uses TypeScript's legacy decorators/metadata through a small pre-transform; it does not weaken application types. `test:integration` requires `TEST_DATABASE_URL` and fails explicitly without it; it queries real PostgreSQL and closes the pool. No UI E2E runner is installed because this shell has no business flow; add one with the first user workflow.
 
-## Required when executable code is introduced
+The foundation checker validates local Markdown file targets, required documents and source-size review warnings. It does not validate heading anchors or external links. Generated native/build directories are excluded. Dependency-cruiser enforces cycles, resolution and app/shared/runtime boundaries; strict shared-package configs omit DOM/Node globals. Review runtime behavior in addition to these structural checks.
 
-Add real `lint`, `typecheck`, `test`, `test:integration`, `test:e2e` and `build` scripts as their runners exist; document applicability and platform-specific commands. No no-op/success-only replacements. `validate` must include all mandatory non-device checks appropriate to the scaffold. Add CI using the lockfile and the same commands; native jobs require their OS/toolchain.
-
-Choose test runners with the relevant framework, not in advance. Tests should assert externally meaningful behavior, not mirror implementation. Co-locate unit tests; place cross-module integration and full workflow tests in clearly named app test directories.
+Keep tests adjacent to implementations (`.test.ts`/`.test.tsx`); PostgreSQL tests use `.integration.test.ts`. Native tests need the corresponding OS/device. A future CI service should run the same commands but is not introduced under this task's scope. Record current check evidence in the [foundation audit](foundation-audit.md); the [Command 1 record](validation-status.md) is historical. never use success-only stubs for unavailable runners.
 
 | Change             | Minimum evidence                                                                                                                                                                |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

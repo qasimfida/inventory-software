@@ -1,0 +1,67 @@
+module.exports = {
+  forbidden: [
+    {
+      name: 'portable-code-no-node-builtins',
+      severity: 'error',
+      from: {
+        path: '^(packages/[^/]+/src/|apps/(web|mobile)/src/)',
+        pathNot: '\\.test\\.[cm]?[jt]sx?$',
+      },
+      to: { dependencyTypes: ['core'] },
+    },
+    {
+      name: 'web-no-native-server-imports',
+      severity: 'error',
+      from: { path: '^apps/web/src/' },
+      to: {
+        path: '(node:|node_modules/(react-native|@react-native|expo[^/]*|@expo|@tauri-apps|@nestjs|pg)(/|$))',
+      },
+    },
+    {
+      name: 'mobile-no-dom-server-imports',
+      severity: 'error',
+      from: { path: '^apps/mobile/src/' },
+      to: { path: '(node:|node_modules/(react-dom|@tauri-apps|@nestjs|pg)(/|$))' },
+    },
+    { name: 'no-circular', severity: 'error', from: {}, to: { circular: true } },
+    { name: 'no-unresolved', severity: 'error', from: {}, to: { couldNotResolve: true } },
+    {
+      name: 'packages-cannot-import-apps',
+      severity: 'error',
+      from: { path: '^packages/' },
+      to: { path: '^apps/' },
+    },
+    {
+      name: 'contracts-are-independent',
+      severity: 'error',
+      from: { path: '^packages/contracts/' },
+      to: { path: '^packages/(?!contracts/)' },
+    },
+    {
+      name: 'shared-no-platform-runtime',
+      severity: 'error',
+      from: { path: '^packages/' },
+      to: {
+        path: '(node:|node_modules/(react(?:-dom|-native)?|@react-native|expo[^/]*|@expo|@nestjs|@tauri-apps|pg)(/|$))',
+      },
+    },
+    ...['web', 'api', 'mobile'].map((app) => ({
+      name: `${app}-no-cross-app-import`,
+      severity: 'error',
+      from: { path: `^apps/${app}/` },
+      to: { path: `^apps/(?!${app}/)` },
+    })),
+  ],
+  options: {
+    doNotFollow: { path: 'node_modules' },
+    exclude: {
+      path: '^(apps|packages)/[^/]+/(dist|target|android|ios|\\.expo)/|/src-tauri/(target|gen)/',
+    },
+    tsConfig: { fileName: 'tsconfig.boundaries.json' },
+    tsPreCompilationDeps: true,
+    enhancedResolveOptions: {
+      exportsFields: ['exports'],
+      conditionNames: ['types', 'import', 'default'],
+    },
+  },
+};

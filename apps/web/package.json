@@ -1,0 +1,30 @@
+{
+  "name": "@inventory/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "npm run build:shared --prefix ../..",
+    "predev": "npm run build:shared --prefix ../.."
+  },
+  "dependencies": {
+    "@inventory/api-client": "0.0.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-router-dom": "7.18.4",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.0.0",
+    "class-variance-authority": "^0.7.1",
+    "@radix-ui/react-slot": "^1.2.0"
+  },
+  "devDependencies": {
+    "vite": "8.3.4",
+    "@vitejs/plugin-react": "6.1.2",
+    "tailwindcss": "4.3.3",
+    "@tailwindcss/vite": "4.3.3"
+  }
+}

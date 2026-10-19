@@ -3,3 +3,12 @@ dist/
 build/
 coverage/
 package-lock.json
+
+target/
+.expo/
+apps/mobile/ios/
+apps/mobile/android/
+apps/desktop/src-tauri/gen/
+
+# Repository-local PostgreSQL development data
+.local/

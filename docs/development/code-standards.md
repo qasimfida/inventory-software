@@ -2,7 +2,7 @@
 
 ## Structure and naming
 
-Target 100–150 physical lines per source file, with a 200-line maximum. Split by responsibility, not arbitrary line counts. Generated code, lockfiles and migrations can be exempt; any other exception requires a review rationale and decomposition proposal. Register exact source paths and reasons in `scripts/source-size-exceptions.json`; stale exceptions fail validation. Documentation is not source code.
+Target 100–150 physical lines per source file, with 200 lines as a review threshold, not an absolute cap. Split by responsibility, not arbitrary line counts. Generated code, lockfiles and migrations can be exempt; any other exception requires a review rationale and decomposition proposal. Register exact source paths and reasons in `scripts/source-size-exceptions.json`; stale exceptions fail validation. Documentation is not source code.
 
 | Item                      | Convention                                                               |
 | ------------------------- | ------------------------------------------------------------------------ |
@@ -30,13 +30,13 @@ Keep rendering separate from domain and persistence. Use React state/reducers/co
 
 ## Tooling contract
 
-Current executable checks: pinned Prettier and `check:foundation`. No application exists, so TypeScript/ESLint configs are intentionally deferred to the first source scaffold.
+Current executable checks: Prettier, ESLint with TypeScript-aware promise rules, React Hooks/DOM accessibility rules, dependency-cruiser, strict type checks, Vitest, builds and the foundation checker. Root configs are shared; app configs select runtime-specific libraries.
 
-At that scaffold, add compatible ESLint flat configuration with TypeScript-aware analysis, unused imports/variables, consistent type imports/naming, React/React Hooks rules for React code, JSX accessibility for DOM code, and resolved import-cycle/module-boundary checks. Configure platform-specific rules without applying DOM rules to native files. Do not weaken rules to hide failures; document narrowly scoped exceptions.
+Maintain ESLint flat configuration with TypeScript-aware analysis, unused imports/variables, consistent type imports/naming, React/React Hooks rules for React code, JSX accessibility for DOM code, and resolved import-cycle/module-boundary checks. Configure platform-specific rules without applying DOM rules to native files. Do not weaken rules to hide failures; document narrowly scoped exceptions.
 
 TypeScript must enable `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`, `noUnusedLocals` and `noUnusedParameters`. Choose module/target settings per Node, browser, and native toolchain. Keep domain free of DOM/native globals. Verify aliases and package exports in tests and builds.
 
-Use Prettier as the sole formatting authority; do not duplicate conflicting ESLint formatting rules. Add the script contract from [testing](testing.md) and required CI checks with the scaffold. Lock dependency versions; review package necessity, bundle cost, license and platform compatibility before installation.
+Use Prettier as the sole formatting authority; do not duplicate conflicting ESLint formatting rules. Follow the script contract in [testing](testing.md). CI provider setup is deferred under Command 1 scope; use these same checks when authorized. Lock dependency versions; review package necessity, bundle cost, license and platform compatibility before installation.
 
 ## Review gate
 

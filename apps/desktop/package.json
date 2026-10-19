@@ -1,0 +1,16 @@
+{
+  "name": "@inventory/desktop",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "check": "cargo check --manifest-path src-tauri/Cargo.toml",
+    "prebuild": "npm run build:shared --prefix ../..",
+    "predev": "npm run build:shared --prefix ../.."
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.12.3"
+  }
+}

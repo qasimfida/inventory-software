@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+
+:root {
+  --background: oklch(0.985 0 0);
+  --foreground: oklch(0.205 0 0);
+  --card: oklch(1 0 0);
+  --primary: oklch(0.35 0.09 180);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.94 0.01 180);
+  --secondary-foreground: oklch(0.25 0.04 180);
+  --accent: oklch(0.94 0.01 180);
+  --accent-foreground: oklch(0.25 0.04 180);
+  --muted-foreground: oklch(0.45 0 0);
+  --destructive: oklch(0.5 0.18 25);
+  --border: oklch(0.86 0 0);
+  --input: oklch(0.86 0 0);
+  --ring: oklch(0.45 0.1 180);
+  --radius: 0.5rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-md: var(--radius);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply m-0 bg-background font-sans text-foreground antialiased;
+  }
+  button {
+    @apply cursor-pointer;
+  }
+  button:disabled {
+    @apply cursor-not-allowed;
+  }
+}

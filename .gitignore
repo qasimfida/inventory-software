@@ -7,3 +7,20 @@ coverage/
 .env.*
 !.env.example
 *.tsbuildinfo
+
+target/
+.expo/
+apps/mobile/ios/
+apps/mobile/android/
+apps/desktop/src-tauri/gen/
+
+# Local signing material and tool logs; never commit credentials.
+*.p12
+*.p8
+*.jks
+*.keystore
+*.mobileprovision
+*.log
+
+# Repository-local PostgreSQL development data
+.local/

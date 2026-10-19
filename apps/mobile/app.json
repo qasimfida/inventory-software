@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "Inventory Foundation",
+    "slug": "inventory-foundation",
+    "version": "0.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.inventoryfoundation.app"
+    },
+    "android": {
+      "package": "com.inventoryfoundation.app"
+    }
+  }
+}
