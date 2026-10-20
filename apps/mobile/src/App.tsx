@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import { createApiClient } from '@inventory/api-client';
+import { AuthPanel } from './auth/AuthPanel';
 import { theme } from './theme';
 
 export function App() {
@@ -27,7 +28,8 @@ export function App() {
         Inventory platform
       </Text>
       <Text style={styles.description}>
-        Development foundation. Business workflows and offline storage are not implemented.
+        Manage your business, customers, stock and cash sales. Checkout requires an online
+        connection.
       </Text>
       <Text style={styles.description}>Connection checks API liveness only.</Text>
       {status === 'loading' && (
@@ -56,6 +58,7 @@ export function App() {
           {status === 'error' ? 'Try again' : 'Check connection'}
         </Text>
       </Pressable>
+      <AuthPanel />
     </ScrollView>
   );
 }

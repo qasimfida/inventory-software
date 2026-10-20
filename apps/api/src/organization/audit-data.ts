@@ -1,0 +1,75 @@
+// Allowlist persisted change metadata; contact details, credentials and arbitrary payloads are omitted.
+const safeKeys = new Set([
+  'id',
+  'customerId',
+  'saleId',
+  'paymentId',
+  'shiftId',
+  'creditEnabled',
+  'creditHold',
+  'termsDays',
+  'days',
+  'allowNegative',
+  'quantityDelta',
+  'reservedDelta',
+  'damagedDelta',
+  'transitDelta',
+  'sourceKind',
+  'accountId',
+  'ownerId',
+  'name',
+  'code',
+  'sku',
+  'categoryId',
+  'parentId',
+  'trackInventory',
+  'kind',
+  'type',
+  'role',
+  'state',
+  'version',
+  'scope',
+  'storeId',
+  'warehouseId',
+  'permissions',
+  'status',
+  'productId',
+  'variantId',
+  'quantity',
+  'unitId',
+  'currency',
+  'amount',
+  'price',
+  'unitPrice',
+  'discountBasisPoints',
+  'taxBasisPoints',
+  'taxInclusive',
+  'startsAt',
+  'endsAt',
+  'minimumQuantity',
+  'priority',
+  'priceVersion',
+  'sourceId',
+  'movementId',
+  'reasonCode',
+  'locationId',
+  'supplierId',
+  'purchaseId',
+  'transferId',
+  'reversalId',
+  'effectiveFrom',
+  'effectiveTo',
+  'timeZone',
+]);
+export function safeAuditData(value: unknown, depth = 0): unknown {
+  if (depth > 6) return null;
+  if (Array.isArray(value))
+    return value.slice(0, 100).map((item) => safeAuditData(item, depth + 1));
+  if (value && typeof value === 'object')
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([key]) => safeKeys.has(key))
+        .map(([key, item]) => [key, safeAuditData(item, depth + 1)]),
+    );
+  return typeof value === 'string' ? value.slice(0, 500) : (value ?? null);
+}

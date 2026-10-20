@@ -24,3 +24,16 @@ apps/desktop/src-tauri/gen/
 
 # Repository-local PostgreSQL development data
 .local/
+
+artifacts/
+!.env.*.example
+
+test-results/
+playwright-report/
+
+# Device-local business vaults and SQLite sidecars
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.db-wal
+*.db-shm

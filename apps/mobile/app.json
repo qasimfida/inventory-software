@@ -11,6 +11,16 @@
     },
     "android": {
       "package": "com.inventoryfoundation.app"
-    }
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow barcode scanning for product and location lookup.",
+          "recordAudioAndroid": false
+        }
+      ]
+    ]
   }
 }

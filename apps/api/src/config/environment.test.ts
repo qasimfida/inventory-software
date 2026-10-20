@@ -28,6 +28,12 @@ describe('environment validation', () => {
     for (const overrides of [
       { CORS_ORIGINS: '*' },
       { PORT: '0' },
+      { DATABASE_POOL_MAX: '0' },
+      { DATABASE_STATEMENT_TIMEOUT_MS: '-1' },
+      { SHUTDOWN_TIMEOUT_MS: 'NaN' },
+      { REQUEST_BODY_LIMIT_BYTES: '0' },
+      { DATABASE_URL: 'postgresql://localhost/' },
+      { DATABASE_URL: `${development.DATABASE_URL}#fragment` },
       { DATABASE_URL: `${development.DATABASE_URL}?sslmode=no-verify` },
     ]) {
       expect(() => parseEnvironment({ ...development, ...overrides })).toThrow();

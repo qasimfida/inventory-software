@@ -1,0 +1,25 @@
+{
+  "name": "@inventory/domain",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "test": "node ../../scripts/test-workspace.mjs",
+    "dev": "tsc -p tsconfig.json --watch"
+  },
+  "dependencies": {
+    "@inventory/contracts": "0.0.0"
+  }
+}

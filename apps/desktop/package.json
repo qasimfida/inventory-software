@@ -8,7 +8,10 @@
     "build": "tauri build",
     "check": "cargo check --manifest-path src-tauri/Cargo.toml",
     "prebuild": "npm run build:shared --prefix ../..",
-    "predev": "npm run build:shared --prefix ../.."
+    "predev": "npm run build:shared --prefix ../..",
+    "test": "npm test -w @inventory/web && cargo test --locked --manifest-path src-tauri/Cargo.toml",
+    "typecheck": "npm run typecheck -w @inventory/web && npm run check",
+    "lint": "npm run lint -w @inventory/web && cargo fmt --manifest-path src-tauri/Cargo.toml -- --check"
   },
   "devDependencies": {
     "@tauri-apps/cli": "2.12.3"

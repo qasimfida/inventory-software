@@ -1,21 +1,27 @@
 @import 'tailwindcss';
 
 :root {
-  --background: oklch(0.985 0 0);
-  --foreground: oklch(0.205 0 0);
-  --card: oklch(1 0 0);
-  --primary: oklch(0.35 0.09 180);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.94 0.01 180);
-  --secondary-foreground: oklch(0.25 0.04 180);
-  --accent: oklch(0.94 0.01 180);
-  --accent-foreground: oklch(0.25 0.04 180);
-  --muted-foreground: oklch(0.45 0 0);
-  --destructive: oklch(0.5 0.18 25);
-  --border: oklch(0.86 0 0);
-  --input: oklch(0.86 0 0);
-  --ring: oklch(0.45 0.1 180);
+  color-scheme: light;
+  --background: #f8faf9;
+  --foreground: #172b26;
+  --card: #ffffff;
+  --primary: #16594d;
+  --primary-foreground: #ffffff;
+  --secondary: #e7f0ec;
+  --secondary-foreground: #24473d;
+  --accent: #e7f0ec;
+  --accent-foreground: #24473d;
+  --muted: #f1f5f3;
+  --muted-foreground: #52645d;
+  --destructive: #a62424;
+  --success: #166534;
+  --warning: #854d0e;
+  --border: #ccd8d2;
+  --input: #718078;
+  --ring: #16594d;
   --radius: 0.5rem;
+  --focus-width: 3px;
+  --focus-offset: 3px;
 }
 
 @theme inline {
@@ -28,25 +34,70 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  --spacing: 0.25rem;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-  body {
-    @apply m-0 bg-background font-sans text-foreground antialiased;
+  html {
+    @apply font-sans;
   }
-  button {
+  body {
+    @apply m-0 bg-background text-base leading-relaxed text-foreground antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply leading-tight font-semibold tracking-tight;
+  }
+  h1 {
+    @apply text-3xl sm:text-4xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  h3 {
+    @apply text-base;
+  }
+  button,
+  select {
     @apply cursor-pointer;
   }
-  button:disabled {
+  :disabled {
     @apply cursor-not-allowed;
+  }
+  :focus-visible {
+    outline: var(--focus-width) solid var(--ring);
+    outline-offset: var(--focus-offset);
+  }
+  ::selection {
+    background: var(--secondary);
+    color: var(--foreground);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

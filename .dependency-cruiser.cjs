@@ -1,10 +1,34 @@
 module.exports = {
   forbidden: [
     {
+      name: 'api-runtime-no-development-fixtures',
+      severity: 'error',
+      from: { path: '^apps/api/src/', pathNot: '(^apps/api/src/development/|\\.test\\.ts$)' },
+      to: { path: '^apps/api/src/development/' },
+    },
+    {
+      name: 'api-no-ui-native-imports',
+      severity: 'error',
+      from: { path: '^apps/api/src/' },
+      to: {
+        path: 'node_modules/(react|react-dom|react-native|react-native-web|@react-native|expo[^/]*|@expo|@tauri-apps)(/|$)',
+      },
+    },
+    {
+      name: 'shared-only-approved-dependencies',
+      severity: 'error',
+      from: { path: '^packages/', pathNot: '\\.test\\.[cm]?[jt]sx?$' },
+      to: {
+        path: 'node_modules/',
+        pathNot:
+          'node_modules/(zod|@noble/(ciphers|hashes)|@inventory/(contracts|api-client|domain))(/|$)',
+      },
+    },
+    {
       name: 'portable-code-no-node-builtins',
       severity: 'error',
       from: {
-        path: '^(packages/[^/]+/src/|apps/(web|mobile)/src/)',
+        path: '^(packages/[^/]+/src/|apps/(web|mobile)/(src/|index\\.ts$))',
         pathNot: '\\.test\\.[cm]?[jt]sx?$',
       },
       to: { dependencyTypes: ['core'] },
@@ -12,7 +36,7 @@ module.exports = {
     {
       name: 'web-no-native-server-imports',
       severity: 'error',
-      from: { path: '^apps/web/src/' },
+      from: { path: '^apps/web/src/', pathNot: '^apps/web/src/platform/desktop-storage\\.ts$' },
       to: {
         path: '(node:|node_modules/(react-native|@react-native|expo[^/]*|@expo|@tauri-apps|@nestjs|pg)(/|$))',
       },
@@ -20,8 +44,8 @@ module.exports = {
     {
       name: 'mobile-no-dom-server-imports',
       severity: 'error',
-      from: { path: '^apps/mobile/src/' },
-      to: { path: '(node:|node_modules/(react-dom|@tauri-apps|@nestjs|pg)(/|$))' },
+      from: { path: '^apps/mobile/(src/|index\\.ts$)', pathNot: '\\.test\\.[cm]?[jt]sx?$' },
+      to: { path: '(node:|node_modules/(react-dom|react-native-web|@tauri-apps|@nestjs|pg)(/|$))' },
     },
     { name: 'no-circular', severity: 'error', from: {}, to: { circular: true } },
     { name: 'no-unresolved', severity: 'error', from: {}, to: { couldNotResolve: true } },
@@ -42,10 +66,10 @@ module.exports = {
       severity: 'error',
       from: { path: '^packages/' },
       to: {
-        path: '(node:|node_modules/(react(?:-dom|-native)?|@react-native|expo[^/]*|@expo|@nestjs|@tauri-apps|pg)(/|$))',
+        path: '(node:|node_modules/(react|react-dom|react-native|react-native-web|@react-native|expo[^/]*|@expo|@nestjs|@tauri-apps|pg)(/|$))',
       },
     },
-    ...['web', 'api', 'mobile'].map((app) => ({
+    ...['web', 'api', 'mobile', 'desktop'].map((app) => ({
       name: `${app}-no-cross-app-import`,
       severity: 'error',
       from: { path: `^apps/${app}/` },

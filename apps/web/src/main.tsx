@@ -11,3 +11,9 @@ createRoot(root).render(
     <RouterProvider router={router} />
   </StrictMode>,
 );
+
+if (import.meta.env.PROD && 'serviceWorker' in navigator && !('__TAURI_INTERNALS__' in window)) {
+  void navigator.serviceWorker.register('./sw.js').catch(() => {
+    /* Offline preparation reports persistence independently. */
+  });
+}

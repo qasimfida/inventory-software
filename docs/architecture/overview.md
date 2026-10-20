@@ -1,17 +1,17 @@
 # Target architecture
 
-Status: web/API/mobile/desktop shells and shared health/error transport are scaffolded. The business and offline behavior described below remains a target, not implemented functionality. [Decisions](decisions.md) distinguishes commitments from proposals. [Module map](../ai/architecture-map.md) owns directory and dependency details.
+Status: web/API/mobile/desktop foundations include invitation onboarding, online session management and shared validated transport. Online [organization management](../development/organization-management.md) is implemented. Online catalog/pricing, stock ledger, purchasing, storage and transfers are also implemented; see [domain rollout](../development/domain-rollout.md). Online POS, customer receivables, cash collection/shifts and corrections are implemented; see [commerce rollout](../development/commerce-rollout.md). Bounded offline cash, durable sync, live invalidations, stock counts and scanning are implemented; see [offline rollout](../development/offline-rollout.md). External payments, supplier settlement and general-ledger accounting remain targets. [Decisions](decisions.md) distinguishes commitments from proposals. [Module map](../ai/architecture-map.md) owns directory and dependency details.
 
 ## Responsibilities and data flow
 
-| Layer                | Responsibility                                                                                                    |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| React web client     | Browser UI, local operation capture, IndexedDB adapter; installable app shell when offline startup is implemented |
-| Desktop shell        | Reuse React UI; native SQLite, printing, filesystem and secure-storage adapters                                   |
-| Native mobile client | Platform UI/navigation, scanning and native storage; reuse domain and contracts                                   |
-| Shared packages      | Pure domain calculations/invariants, transport schemas, client application use cases and adapter ports            |
-| NestJS API           | Authoritative validation, tenant authorization, business transactions, durable sync endpoints                     |
-| PostgreSQL           | Confirmed business records, ledgers/projections, idempotency receipts, durable change feed                        |
+| Layer                | Responsibility                                                                                                   |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| React web client     | Browser UI, local operation capture, IndexedDB adapter; versioned production app-shell cache for offline startup |
+| Desktop shell        | Reuse React UI; native SQLite, printing, filesystem and secure-storage adapters                                  |
+| Native mobile client | Platform UI/navigation, scanning and native storage; reuse domain and contracts                                  |
+| Shared packages      | Pure domain calculations/invariants, transport schemas, client application use cases and adapter ports           |
+| NestJS API           | Authoritative validation, tenant authorization, business transactions, durable sync endpoints                    |
+| PostgreSQL           | Confirmed business records, ledgers/projections, idempotency receipts, durable change feed                       |
 
 Client UI → application use case → local transaction (data + pending operation) → REST synchronization → authorized server transaction → durable acknowledgement/change feed → local projection → subscribed consumers. An online-only command uses the same server validation boundary. The UI must disclose operation status.
 

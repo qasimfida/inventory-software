@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ApiClientError, createApiClient, parseApiOrigin } from './index.js';
+import { ApiClientError, createApiClient, parseApiOrigin } from '@inventory/api-client';
 
 describe('API transport boundary', () => {
   it('rejects invalid ports and origin credentials before sending a request', () => {

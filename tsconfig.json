@@ -9,6 +9,13 @@
     "types": ["node"],
     "allowImportingTsExtensions": true
   },
-  "include": ["vitest*.ts", "apps/api/**/*.ts", "packages/**/*.test.ts", "scripts/**/*.ts"],
+  "include": [
+    "vitest*.ts",
+    "apps/api/**/*.ts",
+    "packages/**/*.test.ts",
+    "scripts/**/*.ts",
+    "playwright.config.ts",
+    "tests/browser/**/*.ts"
+  ],
   "exclude": ["**/node_modules/**", "**/dist/**"]
 }

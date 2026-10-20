@@ -1,1 +1,8 @@
-{}
+{
+  "apps/api/src/catalog/pricing.integration.test.ts": "A 203-line integration matrix shares one priced product across conversion, precedence, authorization and withdrawal checks. Keep its temporal fixture cohesive; extract a pricing test fixture and split policy/lifecycle suites if more cases are added.",
+  "apps/api/src/purchasing/purchasing.integration.test.ts": "Purchase lifecycle matrix covers partial receipts, retries, returns, cancellation and immutable costs with shared fixtures. Split additional supplier cases into a separate suite.",
+  "apps/api/src/purchasing/purchasing.service.ts": "Purchase draft and transition commands share the same authorization and aggregate. Extract supplier management when supplier operations expand.",
+  "apps/web/src/features/purchasing/PurchasingPanel.tsx": "One accessible purchasing workspace composes shared forms; split the detail presentation if additional history is added.",
+  "apps/web/src/features/warehouse/WarehousePanel.tsx": "Scanning orchestration keeps the selected product/unit/source/destination and validated confirmation context together. Count state and presentation are already separate; extract the purchase/transfer confirmation subview if this 200-line shell grows.",
+  "apps/mobile/src/warehouse/WarehousePanel.tsx": "Scanning orchestration keeps the selected product/unit/source/destination and validated confirmation context together. Count state and presentation are already separate; extract the purchase/transfer confirmation subview if this 200-line shell grows."
+}

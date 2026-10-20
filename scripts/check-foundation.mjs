@@ -6,6 +6,9 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const ignoredDirectories = new Set([
   '.git',
   '.local',
+  'artifacts',
+  'test-results',
+  'playwright-report',
   'node_modules',
   'dist',
   'build',

@@ -14,6 +14,13 @@ const environmentSchema = z.object({
   PORT: z.coerce.number().int().min(1).max(65535).default(3100),
   DATABASE_URL: z.url().refine((value) => /^postgres(?:ql)?:\/\//.test(value)),
   DATABASE_SSL: z.enum(['disable', 'verify-full']).default('disable'),
+  DATABASE_POOL_MAX: z.coerce.number().int().min(1).max(50).default(10),
+  DATABASE_CONNECT_TIMEOUT_MS: z.coerce.number().int().min(100).max(30000).default(3000),
+  DATABASE_STATEMENT_TIMEOUT_MS: z.coerce.number().int().min(100).max(60000).default(5000),
+  DATABASE_IDLE_TRANSACTION_TIMEOUT_MS: z.coerce.number().int().min(100).max(60000).default(10000),
+  REQUEST_BODY_LIMIT_BYTES: z.coerce.number().int().min(1024).max(1048576).default(102400),
+  HTTP_REQUEST_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120000).default(30000),
+  SHUTDOWN_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120000).default(15000),
   CORS_ORIGINS: z.string().default('http://localhost:5173,http://127.0.0.1:5173'),
 });
 
@@ -32,8 +39,10 @@ export function parseEnvironment(input: Record<string, unknown>) {
     throw new Error('CORS_ORIGINS must contain explicit HTTP(S) or packaged desktop origins.');
   const corsOrigins = parsedOrigins.data;
   // Do not allow URL query options to override certificate verification.
-  if (new URL(env.DATABASE_URL).search)
-    throw new Error('DATABASE_URL query options are not supported.');
+  const databaseUrl = new URL(env.DATABASE_URL);
+  if (!databaseUrl.hostname || databaseUrl.pathname.length < 2 || databaseUrl.hash)
+    throw new Error('DATABASE_URL requires a host and database name, without a fragment.');
+  if (databaseUrl.search) throw new Error('DATABASE_URL query options are not supported.');
   if (env.NODE_ENV === 'production') {
     if (env.DATABASE_SSL !== 'verify-full')
       throw new Error('Production requires verified database TLS.');

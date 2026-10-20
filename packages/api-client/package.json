@@ -15,9 +15,18 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "prebuild": "npm run build -w @inventory/contracts"
+    "prebuild": "npm run build -w @inventory/contracts && npm run build -w @inventory/domain",
+    "lint": "eslint .",
+    "test": "node ../../scripts/test-workspace.mjs",
+    "pretest": "npm run build",
+    "pretypecheck": "npm run build -w @inventory/contracts && npm run build -w @inventory/domain",
+    "dev": "tsc -p tsconfig.json --watch",
+    "predev": "npm run build -w @inventory/contracts"
   },
   "dependencies": {
-    "@inventory/contracts": "0.0.0"
+    "@inventory/contracts": "0.0.0",
+    "@inventory/domain": "0.0.0",
+    "@noble/ciphers": "2.4.0",
+    "@noble/hashes": "2.4.0"
   }
 }

@@ -8,6 +8,9 @@ export default tseslint.config(
   {
     ignores: [
       '.local/**',
+      'artifacts/**',
+      'test-results/**',
+      'playwright-report/**',
       '**/node_modules/**',
       '**/dist/**',
       '**/target/**',
@@ -31,6 +34,7 @@ export default tseslint.config(
           'tsconfig.json',
           'apps/web/tsconfig.json',
           'apps/mobile/tsconfig.json',
+          'apps/mobile/tsconfig.test.json',
           'packages/*/tsconfig.json',
         ],
         tsconfigRootDir: import.meta.dirname,

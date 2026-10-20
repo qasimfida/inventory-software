@@ -12,3 +12,8 @@ apps/desktop/src-tauri/gen/
 
 # Repository-local PostgreSQL development data
 .local/
+
+artifacts/
+
+test-results/
+playwright-report/

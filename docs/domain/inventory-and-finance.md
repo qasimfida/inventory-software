@@ -1,6 +1,6 @@
 # Inventory and financial invariants
 
-These are design requirements, not existing tables or code. Server application services own validation and explicit PostgreSQL transactions. Client rules improve feedback but never replace authoritative checks.
+Inventory ledger, reservations, purchasing references, storage and transfers implement the relevant invariants below; see [domain rollout](../development/domain-rollout.md). Customer receivables, cash allocations, POS and corrections are implemented; see [commerce rollout](../development/commerce-rollout.md). General-ledger accounting and synchronization remain future work. Server application services own validation and explicit PostgreSQL transactions. Client rules improve feedback but never replace authoritative checks.
 
 ## Inventory
 
@@ -22,3 +22,7 @@ These are design requirements, not existing tables or code. Server application s
 - External payment calls cannot share a PostgreSQL transaction. Persist an intent and stable provider idempotency key, reconcile unknown outcomes and authenticate/deduplicate webhooks. Never retry an ambiguous charge with a new identity. Offline card acceptance depends on provider support and explicit policy.
 
 For each mutation, commit business records, projections, audit, idempotency result and durable change records together where locally transactional. If the operation fails, roll back all participating database writes. Test competing updates, retries after lost responses, compensation and unauthorized resource IDs.
+
+Commerce decisions: quantities use exact six-place decimals and money uses integer currency minor units. Completed prices/taxes/discounts are immutable snapshots. Returns apportion original net and tax cumulatively, assigning rounding residuals so a full return exactly reverses the original totals. Unit conversions for returns derive from original sold/base quantities; unrepresentable fractions are rejected. Unpaid credit is reduced before refunding collected cash, and cash refunds are linked to original payments including later collections. Damaged returns increase damaged stock without increasing available stock; non-restockable returns create no stock increase. A full-sale void requires no previous returns and appends corrections; it never deletes a sale.
+
+An exchange is two durable, explicit steps: refund/credit the original exchange return, then independently charge a replacement sale linked uniquely to that return. Same warehouse/customer/currency is required; there is no implicit net payment or cross-business exchange. A failed replacement leaves the original return valid and refundable money already recorded. Closed cash shifts cannot be edited; expected cash derives from opening float plus immutable receipts/refunds/authorized movements. Cash refunds and cash-out cannot make a shift negative.

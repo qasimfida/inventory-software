@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
-import { writeFile, unlink, readFile } from 'node:fs/promises';
-import { randomUUID } from 'node:crypto';
+import { writeFile, readFile, mkdtemp, mkdir, cp, symlink, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
@@ -13,6 +14,18 @@ const cli = fileURLToPath(
 
 const probes = [
   [
+    'API importing UI',
+    "export { createElement } from 'react';",
+    'api-no-ui-native-imports',
+    'apps/api/src/audit.ts',
+  ],
+  [
+    'mobile importing browser implementation',
+    "export { View } from 'react-native-web';",
+    'mobile-no-dom-server-imports',
+    'apps/mobile/src/audit.ts',
+  ],
+  [
     'Node prefixed import',
     "export { readFile } from 'node:fs/promises';",
     'portable-code-no-node-builtins',
@@ -20,26 +33,47 @@ const probes = [
   ['Node bare import', "export { readFile } from 'fs/promises';", 'portable-code-no-node-builtins'],
   ['UI runtime import', "export { createElement } from 'react';", 'shared-no-platform-runtime'],
   [
+    'browser-native bridge import',
+    "export { View } from 'react-native-web';",
+    'shared-no-platform-runtime',
+  ],
+  [
+    'unapproved shared dependency',
+    "export { clsx } from 'clsx';",
+    'shared-only-approved-dependencies',
+  ],
+  [
     'cross-package source import',
     "export { createApiClient } from '@inventory/api-client';",
     'contracts-are-independent',
   ],
 ];
 
-for (const [name, source, rule] of probes) {
+for (const [name, source, rule, location = 'packages/contracts/src/audit.ts'] of probes) {
   test(`dependency boundary rejects ${name}`, async () => {
-    const file = new URL(`../packages/contracts/src/audit-${randomUUID()}.ts`, import.meta.url);
-    await writeFile(file, source, { flag: 'wx' });
+    const fixture = await mkdtemp(join(tmpdir(), 'inventory-boundary-'));
+    for (const name of ['contracts', 'api-client']) {
+      await mkdir(join(fixture, 'packages', name), { recursive: true });
+      await cp(join(root, 'packages', name, 'src'), join(fixture, 'packages', name, 'src'), {
+        recursive: true,
+      });
+    }
+    for (const config of ['.dependency-cruiser.cjs', 'tsconfig.boundaries.json'])
+      await cp(join(root, config), join(fixture, config));
+    await symlink(join(root, 'node_modules'), join(fixture, 'node_modules'), 'junction');
+    await mkdir(join(fixture, 'apps/api/src'), { recursive: true });
+    await mkdir(join(fixture, 'apps/mobile/src'), { recursive: true });
+    await writeFile(join(fixture, location), source, { flag: 'wx' });
     try {
       const result = spawnSync(
         process.execPath,
         [cli, 'apps', 'packages', '--config', '.dependency-cruiser.cjs'],
-        { cwd: root, encoding: 'utf8' },
+        { cwd: fixture, encoding: 'utf8' },
       );
-      assert.equal(result.status, 1, result.stdout + result.stderr);
+      assert.ok(result.status !== null && result.status > 0, result.stdout + result.stderr);
       assert.ok((result.stdout + result.stderr).includes(rule), result.stdout + result.stderr);
     } finally {
-      await unlink(file);
+      await rm(fixture, { recursive: true, force: true });
     }
   });
 }
