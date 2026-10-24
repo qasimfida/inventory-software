@@ -1,0 +1,12 @@
+{
+  "productId": "5651fb22-591d-4135-9eee-c0af5eab8756",
+  "variantId": "5651fb22-591d-4135-9eee-c0af5eab8756",
+  "sku": "AUDIT-NOTEBOOK",
+  "warehouseId": "de000000-0000-4000-8000-000000000300",
+  "price": "USD 12.50",
+  "taxBasisPoints": 1000,
+  "openingQuantity": "20",
+  "idempotencyKey": "9bd97427-ad3b-4ace-a899-27e65f77f5f4",
+  "api": "127.0.0.1:3191",
+  "retained": true
+}

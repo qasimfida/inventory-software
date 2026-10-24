@@ -1,0 +1,5 @@
+{
+  "platform": "web Chrome",
+  "role": "owner",
+  "result": "Adding HP-002 twice produces one cart line, quantity 2, quoted line total $60.00. No checkout submitted."
+}

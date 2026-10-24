@@ -1,3 +1,4 @@
+import { WarehouseSelect } from '@/components/common/WarehouseSelect';
 import { LiveNotice } from './LiveNotice';
 import { CountWorkflow } from './CountWorkflow';
 import { useMemo, useState } from 'react';
@@ -106,20 +107,26 @@ export function WarehousePanel({
           </Txt>
           <LiveNotice businessId={business.id} warehouseId={warehouseId} />
           <Txt>{error}</Txt>
-          <Pick
+          <WarehouseSelect
             label="Scanning warehouse"
             value={warehouseId}
-            options={locations
-              .filter((l) => l.kind === 'warehouses')
-              .map((l) => ({ value: l.id, label: l.name }))}
-            onChange={(v) => {
+            onChange={(e) => {
+              const v = e.target.value;
               setWarehouse(v);
               setProduct(null);
               setForms([]);
               setSource('');
               setDestination('');
             }}
-          />
+          >
+            {locations
+              .filter((l) => l.kind === 'warehouses')
+              .map((l) => (
+                <option key={l.id} value={l.id}>
+                  {l.name}
+                </option>
+              ))}
+          </WarehouseSelect>
           <Pick
             label="Workflow"
             value={mode}

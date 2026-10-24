@@ -1,6 +1,12 @@
 import { expect } from '@playwright/test';
 export async function exerciseCounts(page, productId) {
-  await page.getByRole('button', { name: 'Offline test · active · owner', exact: true }).click();
+  await page
+    .getByLabel('Business', { exact: true })
+    .selectOption({ label: 'Offline test · active · owner' });
+  await page
+    .getByRole('navigation', { name: 'Workspace sections' })
+    .getByRole('button', { name: 'Warehouse operations', exact: true })
+    .click();
   await page
     .getByRole('button', { name: 'Stock counts / warehouse scanning', exact: true })
     .click();

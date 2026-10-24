@@ -1,0 +1,8 @@
+{
+  "checks": [
+    "Owner: legacy link redirects to staff; title hover underlines; record opens in drawer; editing is prefilled; account access editor opens without submitting changes",
+    "Staff and account access are absent from settings tabs",
+    "Staff page has no document overflow at 390, 768, 1440px"
+  ],
+  "errors": []
+}

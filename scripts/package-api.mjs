@@ -49,7 +49,13 @@ cpSync(resolve(root, 'apps/api/migrations'), resolve(destination, 'apps/api/migr
 const lock = JSON.parse(readFileSync(resolve(root, 'package-lock.json'), 'utf8'));
 lock.name = manifest.name;
 lock.packages[''] = { ...manifest };
-for (const workspace of ['apps/web', 'apps/mobile', 'apps/desktop', 'packages/api-client'])
+for (const workspace of [
+  'apps/web',
+  'apps/mobile',
+  'apps/desktop',
+  'packages/api-client',
+  'packages/design-tokens',
+])
   delete lock.packages[workspace];
 for (const [key, entry] of Object.entries(lock.packages)) {
   if (entry.link && !lock.packages[entry.resolved]) delete lock.packages[key];

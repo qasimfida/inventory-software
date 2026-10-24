@@ -1,3 +1,6 @@
+import { z } from 'zod';
+import { SchemaPipe } from '../http/schema.pipe.js';
+import { loginContext } from '../security/device-login.js';
 import {
   Body,
   Controller,
@@ -7,6 +10,7 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  Query,
   Req,
   Res,
 } from '@nestjs/common';
@@ -15,7 +19,7 @@ import { ENVIRONMENT } from '../config/environment.js';
 import type { Environment } from '../config/environment.js';
 import { AuthService } from './auth.service.js';
 import { SessionRepository } from './session.repository.js';
-import { AcceptInvitationDto, LoginDto } from './auth.dto.js';
+import { AcceptInvitationDto, LoginDto, ResetPasswordDto, RecoveryStatusDto } from './auth.dto.js';
 import { PublicRoute, clearSessionCookie, sessionResponse, transportFor } from './auth.http.js';
 import type { AuthRequest } from './auth.http.js';
 
@@ -27,6 +31,18 @@ export class AuthController {
     @Inject(ENVIRONMENT) private readonly environment: Environment,
   ) {}
   @PublicRoute()
+  @Post('password/status')
+  recoveryStatus(@Body() input: RecoveryStatusDto) {
+    return this.auth.recoveryStatus(input);
+  }
+  @PublicRoute()
+  @Post('password/reset')
+  async reset(@Body() input: ResetPasswordDto, @Res({ passthrough: true }) response: Response) {
+    await this.auth.reset(input, String(response.getHeader('x-request-id')));
+    clearSessionCookie(response, this.environment);
+    return { ok: true };
+  }
+  @PublicRoute()
   @Post('login')
   async login(
     @Body() input: LoginDto,
@@ -36,7 +52,11 @@ export class AuthController {
     return sessionResponse(
       response,
       this.environment,
-      await this.auth.login(input, transportFor(request)),
+      await this.auth.login(
+        input,
+        transportFor(request),
+        loginContext(request, response, this.environment),
+      ),
     );
   }
   @PublicRoute()
@@ -49,7 +69,11 @@ export class AuthController {
     return sessionResponse(
       response,
       this.environment,
-      await this.auth.accept(input, transportFor(request)),
+      await this.auth.accept(
+        input,
+        transportFor(request),
+        loginContext(request, response, this.environment),
+      ),
     );
   }
   @Get('session')
@@ -67,35 +91,56 @@ export class AuthController {
     return sessionResponse(
       response,
       this.environment,
-      await this.sessions.renew(request.identity, request.sessionToken),
+      await this.sessions.renew(
+        request.identity,
+        request.sessionToken,
+        String(response.getHeader('x-request-id')),
+      ),
     );
   }
   @Post('logout')
   async logout(@Req() request: AuthRequest, @Res({ passthrough: true }) response: Response) {
-    await this.sessions.revoke(request.identity.account_id, request.identity.id);
+    await this.sessions.revoke(
+      request.identity.account_id,
+      request.identity.id,
+      String(response.getHeader('x-request-id')),
+    );
     clearSessionCookie(response, this.environment);
     return { ok: true };
   }
   @Get('sessions')
-  async list(@Req() request: AuthRequest) {
+  async list(
+    @Req() request: AuthRequest,
+    @Query('includeDevice', new SchemaPipe(z.enum(['true', 'false']).optional()))
+    includeDevice?: string,
+  ) {
     return {
       sessions: (await this.sessions.list(request.identity.account_id)).map((session) => ({
         id: session.id,
         createdAt: session.created_at.toISOString(),
         expiresAt: session.expires_at.toISOString(),
         transport: session.transport,
+        ...(includeDevice === 'true' ? { deviceId: session.device_id } : {}),
       })),
     };
   }
   @Delete('sessions')
   async revokeAll(@Req() request: AuthRequest, @Res({ passthrough: true }) response: Response) {
-    await this.sessions.revoke(request.identity.account_id);
+    await this.sessions.revoke(
+      request.identity.account_id,
+      undefined,
+      String(response.getHeader('x-request-id')),
+    );
     clearSessionCookie(response, this.environment);
     return { ok: true };
   }
   @Delete('sessions/:id')
   async revoke(@Param('id', new ParseUUIDPipe()) id: string, @Req() request: AuthRequest) {
-    await this.sessions.revoke(request.identity.account_id, id);
+    await this.sessions.revoke(
+      request.identity.account_id,
+      id,
+      String(request.res?.getHeader('x-request-id')),
+    );
     return { ok: true };
   }
 }

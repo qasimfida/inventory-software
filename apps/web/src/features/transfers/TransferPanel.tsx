@@ -1,17 +1,26 @@
+import { RecordCollection } from '@/components/common/RecordCollection';
+import { FormSheet } from '@/components/common/FormSheet';
+import { WarehouseSelect } from '@/components/common/WarehouseSelect';
+import { usePageCollection } from '@/components/common/usePageCollection';
+import { Pagination } from '@/components/common/Pagination';
+import { SearchControl } from '@/components/common/SearchControl';
+import { RefreshCw } from 'lucide-react';
+import { TransferDetails } from './TransferDetails';
+import { Grid } from '@/components/common/Layout';
+import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import {
   createTransferClient,
   createInventoryClient,
-  ResourceModel,
+  cancellableResource,
   transferCreateForm,
   transferDetailForms,
   transferAddLineForm,
 } from '@inventory/api-client';
-import { hasPermission, businessTime } from '@inventory/contracts';
+import { hasPermission } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
 import { CommandForm } from '@/components/common/CommandForm';
 import { Button } from '@/components/ui/Button';
-import { Input, Select } from '@/components/ui/FormControls';
 import { authClient } from '@/platform/auth-client';
 const operationKey = () => crypto.randomUUID();
 export function TransferPanel({
@@ -34,20 +43,38 @@ export function TransferPanel({
       () => createInventoryClient(authClient.organizationRequest, operationKey, business.id),
       [business.id],
     );
-  const model = useMemo(
+  const request = useMemo(
     () =>
-      new ResourceModel(async () => ({
-        workspace: await client.load({ warehouseId, search, offset }),
-        stock: await stock.load({ warehouseId, search, offset }),
-        detail: transferId ? await client.detail(transferId) : null,
-      })),
+      cancellableResource(
+        async (signal) => ({
+          workspace: await client.load({ warehouseId, search, offset }, signal),
+          stock: await stock.load({ warehouseId, search, offset }, signal),
+          detail: transferId ? await client.detail(transferId) : null,
+        }),
+        () => new AbortController(),
+      ),
     [client, stock, warehouseId, search, offset, transferId],
   );
-  const state = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
+  const { model } = request;
+  const rawPageState = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
+  const state = usePageCollection(
+    rawPageState,
+    [business, warehouseId, search],
+    offset,
+    ['workspace.transfers'],
+    () => {
+      setOffset(0);
+    },
+  );
   useEffect(() => {
-    if (warehouseId) void model.run();
-    return model.reset;
-  }, [model, warehouseId]);
+    const timer = setTimeout(() => {
+      if (warehouseId) void model.run();
+    }, 250);
+    return () => {
+      clearTimeout(timer);
+      request.cancel();
+    };
+  }, [model, request, warehouseId]);
   const forms =
     state.data && hasPermission(business, 'stock.write')
       ? [
@@ -58,91 +85,120 @@ export function TransferPanel({
           ...(state.data.detail ? transferDetailForms(client, state.data.detail) : []),
         ]
       : [];
-  return (
-    <section aria-label="Stock transfers" className="space-y-3 border-t pt-4">
-      <h2>Stock transfers</h2>
-      <p>
-        Approval reserves stock. Dispatch moves it into transit. Receipt records good, damaged and
-        explicitly confirmed lost quantities. Access to both warehouses is required; inter-business
-        transfers are blocked.
-      </p>
-      <label htmlFor="transfer-warehouse">Transfer warehouse</label>
-      <Select
-        id="transfer-warehouse"
-        value={warehouseId}
-        onChange={(e) => {
-          setWarehouseId(e.target.value);
-          setTransferId('');
-          setOffset(0);
-        }}
+  const toolbar = (
+    <>
+      <div className="collection-search">
+        <SearchControl
+          label="Search transfer reference / item"
+          suggestions={
+            state.data?.workspace.transfers.map((item) => ({
+              value: item.reference,
+              label: item.reference,
+            })) ?? []
+          }
+          busy={state.busy || (!state.data && !state.error)}
+          emptyMessage="No matching records. Try another name or code."
+          value={search}
+          onChange={(value) => {
+            setSearch(value);
+            setOffset(0);
+          }}
+        />
+      </div>
+      <Button
+        onClick={() => void model.run()}
+        disabled={state.busy || !warehouseId}
+        variant="ghost"
+        size="icon"
+        aria-label="Refresh transfers"
+        title="Refresh"
       >
-        {warehouses.map((w) => (
-          <option key={w.id} value={w.id}>
-            {w.name}
-          </option>
-        ))}
-      </Select>
-      <label htmlFor="transfer-search">Search transfer reference / item</label>
-      <Input
-        id="transfer-search"
-        value={search}
-        onChange={(e) => {
-          setSearch(e.target.value);
-          setOffset(0);
-        }}
-      />
-      {state.error && <p role="alert">{state.error}</p>}
-      <Button onClick={() => void model.run()} disabled={state.busy || !warehouseId}>
-        Refresh transfers
+        <RefreshCw aria-hidden="true" />
       </Button>
-      {state.data && (
-        <>
-          <label htmlFor="transfer-document">Transfer document</label>
-          <Select
-            id="transfer-document"
-            value={transferId}
-            onChange={(e) => setTransferId(e.target.value)}
+    </>
+  );
+  return (
+    <section aria-label="Stock transfers" className="screen-section">
+      <ScreenHeader
+        title="Stock transfers"
+        description={
+          <>
+            Approval reserves stock. Dispatch moves it into transit. Receipt records good, damaged
+            and explicitly confirmed lost quantities. Access to both warehouses is required;
+            inter-business transfers are blocked.
+          </>
+        }
+      />
+      <Grid className="screen-filters">
+        <div>
+          <WarehouseSelect
+            label="Transfer warehouse"
+            id="transfer-warehouse"
+            value={warehouseId}
+            onChange={(e) => {
+              setWarehouseId(e.target.value);
+              setTransferId('');
+              setOffset(0);
+            }}
           >
-            <option value="">Select transfer</option>
-            {state.data.workspace.transfers.map((t) => (
-              <option key={t.id} value={t.id}>
-                {t.reference} · {t.state}
+            {warehouses.map((w) => (
+              <option key={w.id} value={w.id}>
+                {w.name}
               </option>
             ))}
-          </Select>
-          <Button disabled={!offset} onClick={() => setOffset(Math.max(0, offset - 25))}>
-            Previous transfers page
-          </Button>
-          <Button disabled={!state.data.workspace.hasMore} onClick={() => setOffset(offset + 25)}>
-            Next transfers page
-          </Button>
-          {state.data.detail && (
-            <>
-              <p>
-                {state.data.detail.transfer.reference} · {state.data.detail.transfer.state}
-              </p>
-              {state.data.detail.lines.map((l) => (
-                <p key={l.id}>
-                  {l.variantId} · approved base units {l.baseQuantity} · settled {l.settled}
-                </p>
-              ))}
-              {state.data.detail.receipts.map((r) => (
-                <p key={r.id}>
-                  Receipt {r.id} · good {r.received} · damaged {r.damaged} · shortage {r.shortage} ·{' '}
-                  {r.reason}
-                </p>
-              ))}
-              {state.data.detail.events.map((e) => (
-                <p key={e.id}>
-                  {businessTime(e.createdAt, business.timeZone)} · {e.action} · actor {e.actorId} ·{' '}
-                  {e.reason}
-                </p>
-              ))}
-            </>
-          )}
-          {forms.map((f) => (
+          </WarehouseSelect>
+        </div>
+      </Grid>
+      {state.error && <p role="alert">{state.error}</p>}
+
+      {!state.data && <div className="collection-toolbar">{toolbar}</div>}
+      {state.data && (
+        <>
+          <RecordCollection
+            toolbar={toolbar}
+            label="transfers"
+            onOpen={setTransferId}
+            items={state.data.workspace.transfers.map((t) => ({
+              id: t.id,
+              title: t.reference,
+              subtitle: `${locations.find((l) => l.id === t.sourceWarehouseId)?.name ?? 'Source warehouse'} → ${locations.find((l) => l.id === t.destinationWarehouseId)?.name ?? 'Destination warehouse'}`,
+              detail: new Date(t.createdAt).toLocaleDateString(),
+              status: t.state.replaceAll('_', ' '),
+              tone:
+                t.state === 'completed'
+                  ? 'success'
+                  : t.state === 'cancelled'
+                    ? 'neutral'
+                    : 'warning',
+            }))}
+            columns={['Transfer', 'Route', 'Created']}
+          />
+          <Pagination
+            label="transfers"
+            offset={offset}
+            pageSize={25}
+            hasMore={state.data?.workspace.hasMore ?? false}
+            busy={state.busy || (!state.data && !state.error)}
+            onChange={setOffset}
+          />
+          {forms.slice(0, 1).map((f) => (
             <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
           ))}
+          <FormSheet
+            title="Transfer details"
+            open={!!transferId}
+            onOpenChange={(open) => {
+              if (!open) setTransferId('');
+            }}
+          >
+            {state.error && <p role="alert">{state.error}</p>}
+            {state.data.detail && (
+              <TransferDetails detail={state.data.detail} timeZone={business.timeZone} />
+            )}
+            {forms.slice(1).map((f) => (
+              <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
+            ))}
+          </FormSheet>
         </>
       )}
     </section>

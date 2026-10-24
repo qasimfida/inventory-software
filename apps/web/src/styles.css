@@ -1,30 +1,40 @@
+@import './theme/navigation-refinement.css';
 @import 'tailwindcss';
 
-:root {
-  color-scheme: light;
-  --background: #f8faf9;
-  --foreground: #172b26;
-  --card: #ffffff;
-  --primary: #16594d;
-  --primary-foreground: #ffffff;
-  --secondary: #e7f0ec;
-  --secondary-foreground: #24473d;
-  --accent: #e7f0ec;
-  --accent-foreground: #24473d;
-  --muted: #f1f5f3;
-  --muted-foreground: #52645d;
-  --destructive: #a62424;
-  --success: #166534;
-  --warning: #854d0e;
-  --border: #ccd8d2;
-  --input: #718078;
-  --ring: #16594d;
-  --radius: 0.5rem;
-  --focus-width: 3px;
-  --focus-offset: 3px;
-}
+@import '@inventory/design-tokens/tokens.css';
+@import './theme/preferences.css';
+@import './theme/data-presentation.css';
+@import './theme/workspace.css';
+@import './theme/screens.css';
+@import './theme/shell.css';
+@import './theme/inventory-refinement.css';
+@import './theme/overview.css';
+@import './theme/interaction-refinement.css';
+@import './theme/sidebar-refinement.css';
+@import './theme/shell-controls.css';
+@import './theme/operational-ui.css';
+@import './theme/catalog-cart.css';
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme inline {
+  --color-navigation-hover: var(--navigation-hover);
+  --color-navigation-selected: var(--navigation-selected);
+  --color-navigation-selected-foreground: var(--navigation-selected-foreground);
+  --color-table-header: var(--table-header);
+  --color-table-row: var(--table-row);
+  --color-table-hover: var(--table-hover);
+  --color-table-selected: var(--table-selected);
+  --color-table-selected-foreground: var(--table-selected-foreground);
+  --color-overlay: var(--overlay);
+  --color-disabled-foreground: var(--disabled-foreground);
+  --color-disabled: var(--disabled);
+  --color-selected-foreground: var(--selected-foreground);
+  --color-selected: var(--selected);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-info: var(--info);
+  --color-elevated: var(--elevated);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -46,9 +56,20 @@
   --radius-md: var(--radius);
   --radius-lg: calc(var(--radius) + 4px);
   --radius-xl: calc(var(--radius) + 8px);
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, monospace;
-  --spacing: 0.25rem;
+  --font-sans: var(--font-family-sans);
+  --font-mono: var(--font-family-mono);
+  --text-xs: calc(var(--font-small) * var(--text-scale));
+  --text-sm: calc(var(--font-label) * var(--text-scale));
+  --text-base: calc(var(--font-body) * var(--text-scale));
+  --text-lg: calc(var(--font-card) * var(--text-scale));
+  --text-xl: calc(var(--font-heading) * var(--text-scale));
+  --text-2xl: calc(var(--font-title) * var(--text-scale));
+  --text-control: calc(var(--font-control) * var(--text-scale));
+  --spacing: var(--space-unit);
+  --shadow-xs: var(--elevation-low);
+  --shadow-lg: var(--elevation-high);
+  --shadow-sm: var(--elevation-low);
+  --shadow-xl: var(--elevation-high);
 }
 
 @layer base {
@@ -59,7 +80,9 @@
     @apply font-sans;
   }
   body {
-    @apply m-0 bg-background text-base leading-relaxed text-foreground antialiased;
+    @apply m-0 bg-background text-base text-foreground antialiased;
+    font-size: calc(var(--font-body) * var(--text-scale));
+    line-height: var(--line-body);
   }
   h1,
   h2,
@@ -67,13 +90,17 @@
     @apply leading-tight font-semibold tracking-tight;
   }
   h1 {
-    @apply text-3xl sm:text-4xl;
+    font-size: calc(var(--font-title) * var(--text-scale));
   }
   h2 {
-    @apply text-xl;
+    font-size: calc(var(--font-heading) * var(--text-scale));
   }
   h3 {
-    @apply text-base;
+    @apply text-lg;
+  }
+  label {
+    font-size: calc(var(--font-label) * var(--text-scale));
+    font-weight: var(--weight-medium);
   }
   button,
   select {
@@ -87,17 +114,40 @@
     outline-offset: var(--focus-offset);
   }
   ::selection {
-    background: var(--secondary);
-    color: var(--foreground);
+    background: var(--selected);
+    color: var(--selected-foreground);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+@layer base {
+  [data-theme='light'] {
+    color-scheme: light;
+  }
+  [data-theme='dark'] {
+    color-scheme: dark;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    /* Apply palette changes atomically; interpolated text/surface colors can lose contrast. */
+    transition-property: box-shadow;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+  }
+  input:disabled,
+  select:disabled,
+  textarea:disabled,
+  button:disabled {
+    opacity: 1;
+    background: var(--disabled);
+    color: var(--disabled-foreground);
+  }
+  [role='alert'] {
+    color: var(--destructive);
+  }
+  h4 {
+    font-size: calc(var(--font-body) * var(--text-scale));
+    font-weight: var(--weight-strong);
   }
 }

@@ -1,4 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { stockOverview } from './stock-overview.js';
+import type { StockOverviewQuery } from '@inventory/contracts';
 import type { StockQuery } from '@inventory/contracts';
 import { OrganizationScope } from '../organization/organization.scope.js';
 import type { Actor } from '../organization/organization.scope.js';
@@ -9,6 +11,13 @@ export class InventoryQueries {
     @Inject(OrganizationScope) private readonly scope: OrganizationScope,
     @Inject(LedgerCore) private readonly ledger: LedgerCore,
   ) {}
+  overview(actor: Actor, b: string, q: StockOverviewQuery) {
+    return this.scope.run(actor, b, 'stock.read', async (ctx) => {
+      await this.ledger.warehouse(ctx, q.warehouseId);
+      for (const id of q.warehouseIds ?? []) await this.ledger.warehouse(ctx, id);
+      return stockOverview(ctx, q);
+    });
+  }
   workspace(actor: Actor, b: string, q: StockQuery) {
     return this.scope.run(actor, b, 'stock.read', async (ctx) => {
       await this.ledger.warehouse(ctx, q.warehouseId);

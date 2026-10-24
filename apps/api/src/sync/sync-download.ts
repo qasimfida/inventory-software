@@ -15,8 +15,8 @@ export class SyncDownload {
       const old = q.cursor
         ? (
             await ctx.tx.query<{ revision: string; access_hash: string; temporal: boolean }>(
-              `SELECT revision::text,access_hash,(date_trunc('minute',created_at)<date_trunc('minute',now())) AS temporal FROM sync_cursors WHERE id=$1 AND business_id=$2 AND actor_id=$3 AND warehouse_id=$4 AND expires_at>now()`,
-              [q.cursor, b, actor.accountId, q.warehouseId],
+              `SELECT revision::text,access_hash,(date_trunc('minute',created_at)<date_trunc('minute',now())) AS temporal FROM sync_cursors WHERE id=$1 AND business_id=$2 AND actor_id=$3 AND warehouse_id=$4 AND currency=$5 AND expires_at>now()`,
+              [q.cursor, b, actor.accountId, q.warehouseId, q.currency],
             )
           ).rows[0]
         : null;

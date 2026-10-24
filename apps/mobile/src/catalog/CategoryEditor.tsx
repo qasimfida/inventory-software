@@ -1,5 +1,6 @@
+import { Text } from '../ui/Themed';
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { categoryInputSchema, categoryEditSchema } from '@inventory/contracts';
 import type { Category } from '@inventory/contracts';
 import type { createCatalogClient } from '@inventory/api-client';

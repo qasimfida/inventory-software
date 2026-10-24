@@ -1,6 +1,10 @@
 // Allowlist persisted change metadata; contact details, credentials and arbitrary payloads are omitted.
 const safeKeys = new Set([
   'id',
+  'values',
+  'industry',
+  'schemaVersion',
+  'lowStockThreshold',
   'customerId',
   'saleId',
   'paymentId',
@@ -52,6 +56,7 @@ const safeKeys = new Set([
   'sourceId',
   'movementId',
   'reasonCode',
+  'approvalReason',
   'locationId',
   'supplierId',
   'purchaseId',

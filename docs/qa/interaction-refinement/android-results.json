@@ -1,0 +1,18 @@
+{
+  "platform": "Android 16 ARM64, Expo Go 58",
+  "mode": "development fixtures",
+  "checks": [
+    "login",
+    "unified SKU/price suggestions",
+    "persistent cart action",
+    "scrollable cart",
+    "automatic quote after quantity step",
+    "workspace switching locked for active cart",
+    "profile menu",
+    "dark theme",
+    "violet palette",
+    "bundled Karla font selection",
+    "notification preview and navigation"
+  ],
+  "saleSubmitted": false
+}

@@ -1,16 +1,15 @@
-import { createAuthClient } from '@inventory/api-client';
+import { deviceMarker } from './device-marker';
+import { createAuthClient, memoryCredentialStore } from '@inventory/api-client';
 import { createCredentialStore } from './credential-store';
-const baseUrl = process.env.EXPO_PUBLIC_API_BASE_URL ?? '';
+import { authTransport } from './transport';
+import { apiOrigin } from './api-origin';
+const mocks = __DEV__ && process.env.EXPO_PUBLIC_USE_MOCKS === 'true';
+const transport: typeof authTransport = mocks
+  ? async (url, options) => (await import('@inventory/api-client/mock')).demoTransport(url, options)
+  : authTransport;
 export const authClient = createAuthClient(
-  baseUrl,
-  async (url, options) => {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 10000);
-    try {
-      return await fetch(url, { ...options, signal: controller.signal });
-    } finally {
-      clearTimeout(timer);
-    }
-  },
-  createCredentialStore(baseUrl),
+  apiOrigin,
+  transport,
+  mocks ? memoryCredentialStore() : createCredentialStore(apiOrigin),
+  mocks ? undefined : deviceMarker,
 );

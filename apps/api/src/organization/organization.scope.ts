@@ -1,3 +1,4 @@
+import { routeBusinessEvent } from '../notifications/route-event.js';
 import { safeAuditData } from './audit-data.js';
 import {
   ConflictException,
@@ -80,9 +81,9 @@ export async function audit(
   before: unknown,
   after: unknown,
 ) {
-  await context.tx.query(
+  const saved = await context.tx.query<{ id: string }>(
     `INSERT INTO organization_audit(business_id,actor_id,resource_id,action,request_id,before_data,after_data,store_id,warehouse_id)
-    VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+    VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id::text`,
     [
       context.business.id,
       context.actor.accountId,
@@ -94,6 +95,15 @@ export async function audit(
       auditScope(after, 'storeId', resourceId),
       auditScope(after, 'warehouseId', resourceId),
     ],
+  );
+  await routeBusinessEvent(
+    context.tx,
+    context.business.id,
+    saved.rows[0]!.id,
+    action,
+    auditScope(after, 'warehouseId', resourceId) as string | null,
+    auditScope(after, 'storeId', resourceId) as string | null,
+    after,
   );
 }
 

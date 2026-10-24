@@ -7,7 +7,7 @@ import {
   audit,
   checkVersionAndState,
 } from '../organization/organization.scope.js';
-import type { Actor } from '../organization/organization.scope.js';
+import type { Actor, OrganizationContext } from '../organization/organization.scope.js';
 import {
   getProduct,
   productPage,
@@ -25,32 +25,37 @@ export class ProductService {
     return this.scope.run(actor, businessId, 'products.read', (ctx) => getProduct(ctx, id));
   }
   create(actor: Actor, businessId: string, input: ProductInput) {
-    return this.scope.run(actor, businessId, 'products.write', async (ctx) => {
-      requireBusinessScope(ctx);
-      await validateCategory(ctx, input.categoryId);
-      const id = randomUUID();
-      await ctx.tx.query(
-        `INSERT INTO catalog_products(id,business_id,name,sku,description,images,category_id,state,type,track_inventory) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
-        [
-          id,
-          businessId,
-          input.name,
-          input.sku,
-          input.description,
-          JSON.stringify(input.images),
-          input.categoryId,
-          input.state,
-          input.type,
-          input.trackInventory,
-        ],
-      );
-      await writeIdentifiers(ctx, id, input);
-      await ensureDefaultVariant(ctx, id);
-      const result = await getProduct(ctx, id);
-      await audit(ctx, id, 'product.created', null, result);
-      return result;
-    });
+    return this.scope.run(actor, businessId, 'products.write', (ctx) =>
+      this.createInTransaction(ctx, input),
+    );
   }
+  async createInTransaction(ctx: OrganizationContext, input: ProductInput) {
+    const businessId = ctx.business.id;
+    requireBusinessScope(ctx);
+    await validateCategory(ctx, input.categoryId);
+    const id = randomUUID();
+    await ctx.tx.query(
+      `INSERT INTO catalog_products(id,business_id,name,sku,description,images,category_id,state,type,track_inventory) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
+      [
+        id,
+        businessId,
+        input.name,
+        input.sku,
+        input.description,
+        JSON.stringify(input.images),
+        input.categoryId,
+        input.state,
+        input.type,
+        input.trackInventory,
+      ],
+    );
+    await writeIdentifiers(ctx, id, input);
+    await ensureDefaultVariant(ctx, id);
+    const result = await getProduct(ctx, id);
+    await audit(ctx, id, 'product.created', null, result);
+    return result;
+  }
+
   edit(actor: Actor, businessId: string, id: string, input: ProductEdit) {
     return this.scope.run(actor, businessId, 'products.write', async (ctx) => {
       requireBusinessScope(ctx);

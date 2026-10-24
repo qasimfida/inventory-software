@@ -1,6 +1,6 @@
 # Module and directory map
 
-The paths in this table exist. Organization management, catalog/pricing, inventory, purchasing, storage and transfers are implemented. Customers, sales and cash payment modules are also implemented. Offline cash/sync, stock counts and scanning are implemented. General-ledger accounting and external payment providers remain proposals.
+The paths in this table exist. Organization management, catalog/pricing, inventory, purchasing, storage and transfers are implemented. Customers, sales and cash payment modules are also implemented. Offline cash/sync, stock counts and scanning are implemented. A limited double-entry/source-posting foundation is implemented in Stage 6; external payment providers remain unconfigured.
 
 | Actual path                          | Responsibility / consumers                                                                                              |
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
@@ -73,6 +73,8 @@ Module calls use public application interfaces: OrganizationScope/LocationAccess
 
 Commerce ownership: `apps/api/src/customers` owns scoped profiles, credit policy, immutable receivables/allocations/credits and retention. `CustomerAccess` and `ReceivableCore` are its public transaction interfaces. `apps/api/src/payments` owns cash payments, original-payment refund allocation, shifts and immutable cash entries (`CashCore`, `CashRefunds`, `ShiftCore`). `apps/api/src/sales` orchestrates authoritative pricing, ledger posting, credit/payment participants, returns and exchange links within one authorized transaction. Read projections join financial facts for receipts/reconciliation; only owning modules write their tables. Shared contracts/client models contain no platform APIs. Web/Tauri and mobile own separate POS controls and printer adapters.
 
+Supplier payables belong to `apps/api/src/purchasing`: `PayableService` owns immutable supplier credits/settlements and derives invoice balances. It uses the public `ShiftCore` transaction interface for cash effects rather than editing drawer balances. `payable.controller.ts` validates scoped API requests; portable payable contracts/clients/forms feed web/Tauri and native `PayablePanel` controls. `PurchaseReturns` owns condition-specific stock returns through `LedgerCore`. See [Stage 3](../development/stage-3-workflows.md).
+
 | `apps/api/src/sync` | Offline policy/leases, snapshots, durable delta cursors, scoped revision hints, idempotent sales and owner reconciliation |
 | `apps/api/src/counts` | Blind count capture, cutoff/recount policy, owner approval and exact scan lookup |
 | `packages/api-client/src/offline-*`, `sync-*`, `invalidations.ts` | Encrypted document/schema, atomic store port, durable outbox, transport and view model |
@@ -81,3 +83,29 @@ Commerce ownership: `apps/api/src/customers` owns scoped profiles, credit policy
 | `apps/web/src/platform/*vault*`, `desktop-storage.ts` | IndexedDB and lazy narrow Tauri IPC adapter |
 | `apps/mobile/src/platform/vault-*` | SQLite/native random source; IndexedDB for Expo web |
 | `apps/desktop/src-tauri/src/offline.rs` | SQLite migration and conditional envelope writes |
+
+## Stage 3.5 presentation and AI foundation
+
+`packages/design-tokens/tokens.css` owns portable semantic colors and design metrics; generated native exports and web CSS share that source. UI adapters remain in web/mobile, outside domain/contracts/api-client and the independently deployable API. See [design-system guidance](../development/design-system.md) and [common component APIs](../development/common-components.md).
+
+`apps/api/src/ai` owns a disabled, provider-independent internal navigation-help extension, strict schemas, permission-filtered static context, bounded provider execution and redacted metrics. Stage 6 exposes it through the guarded integrations controller; it has no action tools or installed provider. See [AI boundaries](provider-foundation.md). Provider-backed inference remains unconfigured; Command 25A settings/security ownership is recorded below. Stage 4 separately extends identity recovery, transport reliability and sync boundaries as described below.
+
+## Stage 4 security and reliability
+
+`auth/password-recovery.ts` owns operator issuance and atomic password/session recovery. It calls the sync-owned `revokeOfflineAccess(tx, accountId)` boundary; pending operations remain retained for review. The existing global guard rate-limits recovery completion. Web/Tauri and native `auth/PasswordRecovery` controls use the shared auth client without token persistence or automatic login.
+
+`packages/api-client/src/read-retry.ts` supplies bounded safe-read retries; web/native transport adapters own fetch, timers and body deadlines. Client error metadata preserves the server-generated correlation ID. `outbox-claim.ts` owns atomic local batch eligibility and persistent attempts/backoff; SyncEngine preserves confirmed results under concurrent/late responses. Server cursors also bind currency. See [Stage 4 impact and evidence](../development/stage-4.md).
+
+## Command 25A settings and security
+
+`packages/contracts/src/settings.ts` owns pure settings validation, defaults and precedence; `packages/api-client/src/settings` owns transport/state models. `apps/api/src/settings` owns versioned account preferences and platform/business policies, reusing OrganizationScope. `apps/api/src/security` owns append-only security events, account-specific installation recognition, tenant-routed durable in-app delivery and access-controlled reads. Auth calls its transaction functions; existing role/inventory/financial audits remain in their owning modules. `logging/diagnostic.ts` and the global error filter own allowlisted diagnostics, with 30-day cleanup by the existing security worker. No provider SDK, font, visualization library, gateway or future business tables are introduced. Web/Tauri and native settings controls compose the shared models; native SecureStore/browser-cookie/desktop marker adapters stay platform-owned. See [settings/security architecture](../development/command-25a.md).
+
+## Stage 5 reports and operational delivery
+
+`apps/api/src/reports` owns read-only, permission-specific transaction/ledger aggregates; it joins owning-module facts without writing them. `notifications/route-event.ts` is the public transactional enqueue boundary called by organization audit; `notifications/deliver.ts` is the shared durable delivery routine called by the existing security worker. `notifications/approval-queue.ts` reads pending domain documents; approval mutations remain in purchasing/transfers/counts. `inventory/low-stock.ts` observes committed-in-transaction availability crossings and emits an audit event; it never edits balances. `visualization` reads scoped storage hierarchy and per-location stock. Optional industry configuration remains in the settings policy with schema/CAS versioning. Shared report/inbox/review/hierarchy clients contain no platform APIs. Web workflow registration uses lazy imports; Expo owns native controls. See [Stage 5 impact map and limits](../development/stage-5.md).
+
+Stage 6: `apps/api/src/trading` owns bilateral relationships, explicit shared order snapshots and events; it has no catalog or cross-tenant financial repository access. `accounting` owns periods and append-only double-entry journals, reads immutable sources through its posting adapter, and never updates source stock/cash records. `integrations` exposes safe provider status and the navigation-only AI boundary; it reuses the existing AI provider port and durable rate limiter. Contracts live in `packages/contracts/src/{trading,accounting,integrations}.ts`; clients and platform-independent forms live in `packages/api-client/src/{stage6,trading-forms,accounting-forms}.ts`. Web feature panels are lazy; mobile has native equivalents; Tauri consumes the web UI. No new packages or third-party dependencies. See [Stage 6](../development/stage-6.md).
+
+The overview read model lives in `reports/dashboard.service.ts` and `dashboard-queries.ts`, with portable contracts/client and feature-local web/native panels. The account currency preference uses the existing settings store. See [overview and currency semantics](../development/overview-currency.md).
+
+Live catalog updates are owned by `apps/api/src/live` (ticket authentication, PostgreSQL LISTEN and WebSocket hints), with portable lifecycle code in `packages/api-client/src/catalog-live.ts` and web/native adapters in `platform/useCatalogLive.ts`. Read projections remain in catalog/inventory; authoritative pricing and checkout remain with their existing owners. See [live UI impact map](../development/live-ui-refinement.md).

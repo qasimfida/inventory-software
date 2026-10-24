@@ -1,0 +1,78 @@
+[
+  {
+    "check": "typecheck",
+    "command": "npm run typecheck",
+    "exitCode": 0,
+    "seconds": 37.8
+  },
+  {
+    "check": "test",
+    "command": "npm test",
+    "exitCode": 0,
+    "note": "Full rerun passed after correcting native JSX whitespace; 14 tooling + 199 Vitest tests."
+  },
+  {
+    "check": "build",
+    "command": "npm run build",
+    "exitCode": 0,
+    "seconds": 16.8
+  },
+  {
+    "check": "mobile-export",
+    "command": "npm run build:mobile",
+    "exitCode": 0,
+    "seconds": 31.4
+  },
+  {
+    "check": "desktop-app",
+    "command": "npm run build -w @inventory/desktop -- --bundles app",
+    "exitCode": 0,
+    "seconds": 70.2
+  },
+  {
+    "check": "desktop-rust-tests",
+    "command": "cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml",
+    "exitCode": 0,
+    "seconds": 19.4
+  },
+  {
+    "check": "postgresql-integration",
+    "exitCode": 0,
+    "tests": 4
+  },
+  {
+    "check": "chrome-suite",
+    "exitCode": 0,
+    "tests": 24
+  },
+  {
+    "check": "chrome-integrated-journeys",
+    "exitCode": 0,
+    "journeys": 6
+  },
+  {
+    "check": "android-emulator-walkthrough",
+    "exitCode": 0
+  },
+  {
+    "check": "lint",
+    "exitCode": 0,
+    "warnings": 19
+  },
+  {
+    "check": "foundation",
+    "exitCode": 0
+  },
+  {
+    "check": "format",
+    "exitCode": 1,
+    "remaining": "Pre-existing user-edited AGENTS.md only"
+  },
+  {
+    "check": "dependency-audit",
+    "exitCode": 1,
+    "moderate": 7,
+    "high": 15,
+    "critical": 0
+  }
+]

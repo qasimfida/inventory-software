@@ -20,8 +20,15 @@
       }
     ],
     "security": {
-      "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost http://localhost:3100 http://127.0.0.1:3100; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
-      "devCsp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost ws://127.0.0.1:5174 http://127.0.0.1:3100 http://localhost:3100; object-src 'none'; base-uri 'self'"
+      "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost http://localhost:3100 http://127.0.0.1:3100 ws://localhost:3100 ws://127.0.0.1:3100; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
+      "devCsp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost ws://127.0.0.1:5174 http://127.0.0.1:3100 http://localhost:3100 ws://127.0.0.1:3100 ws://localhost:3100; object-src 'none'; base-uri 'self'",
+      "capabilities": [
+        {
+          "identifier": "main-links",
+          "windows": ["main"],
+          "permissions": ["core:default", "deep-link:allow-get-current"]
+        }
+      ]
     }
   },
   "bundle": {
@@ -34,5 +41,12 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
+  },
+  "plugins": {
+    "deep-link": {
+      "desktop": {
+        "schemes": ["inventory"]
+      }
+    }
   }
 }

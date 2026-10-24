@@ -1,8 +1,15 @@
+import { WarehouseSelect } from '@/components/common/WarehouseSelect';
+import { usePageCollection } from '@/components/common/usePageCollection';
+import { Pagination } from '@/components/common/Pagination';
+import { SearchControl } from '@/components/common/SearchControl';
+import { RefreshCw } from 'lucide-react';
+import { Grid } from '@/components/common/Layout';
+import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import {
   createStorageClient,
   createInventoryClient,
-  ResourceModel,
+  cancellableResource,
   storageForms,
   storageMoveForm,
 } from '@inventory/api-client';
@@ -11,7 +18,6 @@ import type { Business, Location } from '@inventory/contracts';
 import { LocationLabel } from './LocationLabel';
 import { CommandForm } from '@/components/common/CommandForm';
 import { Button } from '@/components/ui/Button';
-import { Input, Select } from '@/components/ui/FormControls';
 import { authClient } from '@/platform/auth-client';
 const operationKey = () => crypto.randomUUID();
 export function StoragePanel({
@@ -33,19 +39,37 @@ export function StoragePanel({
       () => createInventoryClient(authClient.organizationRequest, operationKey, business.id),
       [business.id],
     );
-  const model = useMemo(
+  const request = useMemo(
     () =>
-      new ResourceModel(async () => ({
-        storage: await client.load({ warehouseId, search, offset }),
-        stock: await stock.load({ warehouseId, search, offset }),
-      })),
+      cancellableResource(
+        async (signal) => ({
+          storage: await client.load({ warehouseId, search, offset }, signal),
+          stock: await stock.load({ warehouseId, search, offset }, signal),
+        }),
+        () => new AbortController(),
+      ),
     [client, stock, warehouseId, search, offset],
   );
-  const state = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
+  const { model } = request;
+  const rawPageState = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
+  const state = usePageCollection(
+    rawPageState,
+    [business, warehouseId, search],
+    offset,
+    ['storage.locations', 'storage.totals'],
+    () => {
+      setOffset(0);
+    },
+  );
   useEffect(() => {
-    if (warehouseId) void model.run();
-    return model.reset;
-  }, [model, warehouseId]);
+    const timer = setTimeout(() => {
+      if (warehouseId) void model.run();
+    }, 250);
+    return () => {
+      clearTimeout(timer);
+      request.cancel();
+    };
+  }, [model, request, warehouseId]);
   const forms = state.data
     ? [
         ...(hasPermission(business, 'locations.write')
@@ -57,48 +81,74 @@ export function StoragePanel({
       ]
     : [];
   return (
-    <section aria-label="Storage locations" className="space-y-3 border-t pt-4">
-      <h2>Storage locations</h2>
-      <p>
-        Capacity is descriptive metadata. Moves relocate available undamaged stock. Barcode labels
-        encode the location UUID; scan quality requires device validation.
-      </p>
-      <label htmlFor="storage-warehouse">Storage warehouse</label>
-      <Select
-        id="storage-warehouse"
-        value={warehouseId}
-        onChange={(e) => {
-          setWarehouseId(e.target.value);
-          setOffset(0);
-        }}
-      >
-        {warehouses.map((w) => (
-          <option key={w.id} value={w.id}>
-            {w.name}
-          </option>
-        ))}
-      </Select>
-      <label htmlFor="storage-search">Search storage code / name</label>
-      <Input
-        id="storage-search"
-        value={search}
-        onChange={(e) => {
-          setSearch(e.target.value);
-          setOffset(0);
-        }}
+    <section aria-label="Storage locations" className="screen-section">
+      <ScreenHeader
+        title="Storage locations"
+        description={
+          <>
+            Capacity is descriptive metadata. Moves relocate available undamaged stock. Barcode
+            labels encode the location UUID; scan quality requires device validation.
+          </>
+        }
       />
+      <Grid className="screen-filters">
+        <div>
+          <WarehouseSelect
+            label="Storage warehouse"
+            id="storage-warehouse"
+            value={warehouseId}
+            onChange={(e) => {
+              setWarehouseId(e.target.value);
+              setOffset(0);
+            }}
+          >
+            {warehouses.map((w) => (
+              <option key={w.id} value={w.id}>
+                {w.name}
+              </option>
+            ))}
+          </WarehouseSelect>
+        </div>
+        <div>
+          <SearchControl
+            label="Search storage code / name"
+            suggestions={
+              state.data?.storage.locations.map((item) => ({
+                value: item.code,
+                label: `${item.code} · ${item.name}`,
+              })) ?? []
+            }
+            busy={state.busy || (!state.data && !state.error)}
+            emptyMessage="No matching records. Try another name or code."
+            value={search}
+            onChange={(value) => {
+              setSearch(value);
+              setOffset(0);
+            }}
+          />
+        </div>
+        <Button
+          onClick={() => void model.run()}
+          disabled={state.busy || !warehouseId}
+          variant="ghost"
+          size="icon"
+          aria-label="Refresh storage"
+          title="Refresh"
+        >
+          <RefreshCw aria-hidden="true" />
+        </Button>
+      </Grid>
       {state.error && <p role="alert">{state.error}</p>}
-      <Button onClick={() => void model.run()} disabled={state.busy || !warehouseId}>
-        Refresh storage
-      </Button>
       {state.data && (
         <>
-          <Button disabled={!offset} onClick={() => setOffset(Math.max(0, offset - 50))}>
-            Previous storage page
-          </Button>
-          <Button disabled={!state.data.storage.hasMore} onClick={() => setOffset(offset + 50)}>
-            Next storage page
-          </Button>
+          <Pagination
+            label="locations"
+            offset={offset}
+            pageSize={50}
+            hasMore={state.data?.storage.hasMore ?? false}
+            busy={state.busy || (!state.data && !state.error)}
+            onChange={setOffset}
+          />
           {state.data.storage.locations.map((l) => (
             <div key={l.id}>
               <p>

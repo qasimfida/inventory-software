@@ -1,3 +1,5 @@
+import type { StockEntry } from './stock-entry.js';
+import { lowStock } from './low-stock.js';
 import {
   BadRequestException,
   ConflictException,
@@ -11,21 +13,6 @@ import type { OrganizationContext } from '../organization/organization.scope.js'
 import { audit } from '../organization/organization.scope.js';
 import { LocationAccess } from '../organization/location-access.js';
 import { CatalogAccess } from '../catalog/catalog-access.js';
-export interface StockEntry {
-  variantId: string;
-  warehouseId: string;
-  locationId: string | null;
-  quantityDelta: string;
-  reservedDelta?: string;
-  damagedDelta?: string;
-  transitDelta?: string;
-  type: string;
-  sourceKind: string;
-  sourceId: string;
-  commandId: string;
-  reason: string;
-  reversalOf?: string;
-}
 @Injectable()
 export class LedgerCore {
   constructor(
@@ -143,6 +130,7 @@ export class LedgerCore {
       storeId: target.warehouse.storeId,
       locationId: target.id,
     });
+    await lowStock(ctx, input);
     return this.movement(ctx, id);
   }
   async movement(ctx: OrganizationContext, id: string) {

@@ -1,0 +1,25 @@
+{
+  "name": "@inventory/design-tokens",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./tokens.css": "./tokens.css",
+    "./fonts/*": "./fonts/*"
+  },
+  "files": [
+    "dist",
+    "tokens.css",
+    "fonts"
+  ],
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "node build.mjs",
+    "lint": "eslint .",
+    "test": "node ../../scripts/test-workspace.mjs"
+  }
+}

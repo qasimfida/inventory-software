@@ -1,8 +1,17 @@
+import { View } from 'react-native';
+import { WarehouseSelect } from '../ui/WarehouseSelect';
+import { usePageCollection } from '../ui/usePageCollection';
+import { Pagination } from '../ui/Pagination';
+import { SearchControl } from '../ui/SearchControl';
+import { IconAction } from '../ui/IconAction';
+import { PurchaseDetails } from './PurchaseDetails';
+import { ScreenBody, ScreenHeader } from '../ui/ScreenHeader';
+import { Text } from '../ui/Themed';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import {
   createPurchasingClient,
   createInventoryClient,
-  ResourceModel,
+  cancellableResource,
   supplierForms,
   purchaseCreateForm,
   purchaseDetailForms,
@@ -10,8 +19,7 @@ import {
 } from '@inventory/api-client';
 import { hasPermission } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
-import { Text, View } from 'react-native';
-import { Action, Choice, Field, styles } from '../organization/Controls';
+import { Choice } from '../organization/Controls';
 import { CommandForm } from '../components/CommandForm';
 import { authClient } from '../auth/client';
 import { operationKey } from '../platform/operation-key';
@@ -36,27 +44,48 @@ export function PurchasingPanel({
     () => createInventoryClient(authClient.organizationRequest, operationKey, business.id),
     [business.id],
   );
-  const model = useMemo(
+  const request = useMemo(
     () =>
-      new ResourceModel(async () => ({
-        workspace: await client.load({
-          warehouseId,
-          search,
-          offset,
-          ...(supplierId ? { supplierId } : {}),
+      cancellableResource(
+        async (signal) => ({
+          workspace: await client.load(
+            {
+              warehouseId,
+              search,
+              offset,
+              ...(supplierId ? { supplierId } : {}),
+            },
+            signal,
+          ),
+          stock: hasPermission(business, 'stock.read')
+            ? await stock.load({ warehouseId, search, offset }, signal)
+            : null,
+          detail: orderId ? await client.detail(orderId) : null,
         }),
-        stock: hasPermission(business, 'stock.read')
-          ? await stock.load({ warehouseId, search, offset })
-          : null,
-        detail: orderId ? await client.detail(orderId) : null,
-      })),
+        () => new AbortController(),
+      ),
     [client, stock, business, warehouseId, search, offset, supplierId, orderId],
   );
-  const state = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
+  const { model } = request;
+  const rawPageState = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
+  const state = usePageCollection(
+    rawPageState,
+    [business, warehouseId, search, supplierId],
+    offset,
+    ['workspace.suppliers', 'workspace.orders'],
+    () => {
+      setOffset(0);
+    },
+  );
   useEffect(() => {
-    if (warehouseId) void model.run();
-    return model.reset;
-  }, [model, warehouseId]);
+    const timer = setTimeout(() => {
+      if (warehouseId) void model.run();
+    }, 250);
+    return () => {
+      clearTimeout(timer);
+      request.cancel();
+    };
+  }, [model, request, warehouseId]);
   const forms =
     state.data && hasPermission(business, 'purchases.write')
       ? [
@@ -78,14 +107,18 @@ export function PurchasingPanel({
         ]
       : [];
   return (
-    <View style={styles.group}>
-      <Text accessibilityRole="header">Purchasing</Text>
-      <Text>
-        Receipts and returns post stock movements. Invoice references are unallocated obligations;
-        payment settlement and accounting are not implemented. After an uncertain request and
-        reload, check history before submitting again.
-      </Text>
-      <Choice
+    <ScreenBody>
+      <ScreenHeader
+        title="Purchasing"
+        description={
+          <>
+            Receipts and returns post stock movements. Use Supplier balances to record invoice
+            credits and cash settlements. After an uncertain request and reload, check history
+            before submitting again.
+          </>
+        }
+      />
+      <WarehouseSelect
         label="Purchasing warehouse"
         value={warehouseId}
         options={warehouses.map((w) => ({ value: w.id, label: w.name }))}
@@ -95,20 +128,32 @@ export function PurchasingPanel({
           setOffset(0);
         }}
       />
-      <Field
-        label="Search suppliers / purchase reference / item"
-        value={search}
-        onChange={(value) => {
-          setSearch(value);
-          setOffset(0);
-        }}
-      />
-      {state.error && <Text accessibilityRole="alert">{state.error}</Text>}
-      <Action
-        label="Refresh purchasing"
-        onPress={() => void model.run()}
-        disabled={state.busy || !warehouseId}
-      />
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+        <View style={{ flex: 1, minWidth: 0 }}>
+          <SearchControl
+            suggestions={
+              state.data?.workspace.suppliers.map((item) => ({
+                value: item.name,
+                label: item.name,
+              })) ?? []
+            }
+            busy={state.busy || (!state.data && !state.error)}
+            label="Search suppliers / purchase reference / item"
+            value={search}
+            onChange={(value) => {
+              setSearch(value);
+              setOffset(0);
+            }}
+          />
+        </View>
+        <IconAction
+          label="Refresh purchasing"
+          onPress={() => void model.run()}
+          disabled={state.busy || !warehouseId}
+          icon="↻"
+        />
+      </View>
+      {Boolean(state.error) && <Text accessibilityRole="alert">{state.error}</Text>}
       {state.data && (
         <>
           <Choice
@@ -136,45 +181,20 @@ export function PurchasingPanel({
             ]}
             onChange={setOrderId}
           />
-          <Action
-            label="Previous purchasing page"
-            onPress={() => setOffset(Math.max(0, offset - 25))}
-            disabled={!offset}
+          <Pagination
+            label="purchasing"
+            offset={offset}
+            pageSize={25}
+            hasMore={state.data?.workspace.hasMore ?? false}
+            busy={state.busy || (!state.data && !state.error)}
+            onChange={setOffset}
           />
-          <Action
-            label="Next purchasing page"
-            onPress={() => setOffset(offset + 25)}
-            disabled={!state.data.workspace.hasMore}
-          />
-          {state.data.detail && (
-            <>
-              <Text>
-                {state.data.detail.order.reference} · {state.data.detail.order.state} ·{' '}
-                {state.data.detail.order.currency}
-              </Text>
-              {state.data.detail.lines.map((l) => (
-                <Text key={l.id}>
-                  {l.variantId} · ordered {l.quantity} · received {l.received} · cost {l.unitCost}
-                </Text>
-              ))}
-              {state.data.detail.invoices.map((i) => (
-                <Text key={i.id}>
-                  Invoice {i.reference} · unallocated {i.amountMinor} minor units · due {i.dueDate}
-                </Text>
-              ))}
-              {state.data.detail.returns.map((r) => (
-                <Text key={r.id}>
-                  Return {r.quantity} · credit reference {r.creditReference} · movement{' '}
-                  {r.movementId}
-                </Text>
-              ))}
-            </>
-          )}
+          {state.data.detail && <PurchaseDetails detail={state.data.detail} />}
           {forms.map((form) => (
             <CommandForm key={form.title} definition={form} run={(work) => void model.run(work)} />
           ))}
         </>
       )}
-    </View>
+    </ScreenBody>
   );
 }

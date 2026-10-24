@@ -1,11 +1,16 @@
+import { throwIfCancelled } from './cancellation.js';
+import type { CancellationSignal } from './cancellation.js';
 import {
   API_PREFIX,
   apiOriginSchema,
   authResponseSchema,
   sessionSchema,
   sessionsSchema,
+  apiErrorSchema,
+  authMutationSchema,
+  recoveryStatusSchema,
 } from '@inventory/contracts';
-import type { Session } from '@inventory/contracts';
+import type { Session, ApiErrorResponse } from '@inventory/contracts';
 
 export interface CredentialStore {
   get(): Promise<string | null>;
@@ -17,6 +22,7 @@ export interface AuthRequestOptions {
   headers: Record<string, string>;
   credentials: 'include' | 'omit';
   body?: string;
+  signal?: CancellationSignal;
 }
 export type AuthTransport = (
   url: string,
@@ -27,23 +33,41 @@ export type AuthTransport = (
   json(): Promise<unknown>;
 }>;
 export class AuthenticationError extends Error {
-  constructor(public readonly status: number) {
+  constructor(
+    public readonly status: number,
+    public readonly details?: ApiErrorResponse,
+  ) {
     super(
-      status === 401
-        ? 'Sign in again. Credentials may be invalid or the session has ended.'
-        : status === 403
-          ? 'You do not have access to this operation.'
-          : status === 404
-            ? 'The record is unavailable or access has changed.'
-            : status === 409
-              ? 'Conflict: refresh first; check duplicate codes, active children, archive state or the last owner.'
-              : status === 400
-                ? 'Check the required fields and formats.'
-                : status === 429
-                  ? 'Too many attempts. Try again in 15 minutes.'
-                  : 'Unable to complete authentication. Check your connection and try again.',
+      details &&
+        ['PRICE_UNAVAILABLE', 'CART_CURRENCY_MISMATCH', 'CHECKOUT_STORE_REQUIRED'].includes(
+          details.code,
+        )
+        ? details.message
+        : status === 401
+          ? 'Sign in again. Credentials may be invalid or the session has ended.'
+          : status === 403
+            ? 'You do not have access to this operation.'
+            : status === 404
+              ? 'The record is unavailable or access has changed.'
+              : status === 409
+                ? 'This change could not be saved. The record may have changed or a code is already in use. Reload the record and review your changes.'
+                : status === 400
+                  ? 'Check the required fields and formats.'
+                  : status === 429
+                    ? 'Too many attempts. Try again in 15 minutes.'
+                    : 'Unable to complete the request. Check your connection and review transaction status before retrying.',
     );
+    // Correlation IDs remain available in details for support, not routine user messages.
   }
+}
+/** Background read failures may retain already verified UI until its original session expires. */
+export function isTransientReadFailure(error: unknown): boolean {
+  return (
+    error instanceof Error &&
+    (error instanceof TypeError ||
+      ['AbortError', 'TimeoutError'].includes(error.name) ||
+      ('status' in error && Number(error.status) >= 500))
+  );
 }
 export function memoryCredentialStore(): CredentialStore {
   let token: string | null = null;
@@ -61,6 +85,7 @@ export function createAuthClient(
   baseUrl: string,
   transport: AuthTransport,
   store: CredentialStore | null,
+  deviceMarker?: () => Promise<string | null>,
 ) {
   const origin = apiOriginSchema.parse(baseUrl);
   let pending: Promise<unknown> = Promise.resolve();
@@ -75,24 +100,40 @@ export function createAuthClient(
     body?: unknown,
     overrideToken?: string,
     organization = false,
+    signal?: CancellationSignal,
   ) {
+    throwIfCancelled(signal);
+    const marker =
+      deviceMarker && ['login', 'invitations/accept'].includes(path)
+        ? await deviceMarker().catch(() => null)
+        : null;
     const token = overrideToken ?? (await store?.get());
     const response = await transport(
       `${origin}${API_PREFIX}${organization ? '/businesses' : '/auth/'}${path}`,
       {
         method,
+        ...(signal ? { signal } : {}),
         credentials: store ? 'omit' : 'include',
         headers: {
           'content-type': 'application/json',
+          ...(marker ? { 'x-inventory-device': marker } : {}),
           'x-inventory-client': store ? 'native' : 'web',
           ...(token ? { authorization: `Bearer ${token}` } : {}),
         },
         ...(body === undefined ? {} : { body: JSON.stringify(body) }),
       },
     );
+    throwIfCancelled(signal);
     if (!response.ok) {
       if (response.status === 401) await store?.clear();
-      throw new AuthenticationError(response.status);
+      const detail = apiErrorSchema.safeParse(await response.json().catch(() => undefined));
+      const error = new AuthenticationError(
+        response.status,
+        detail.success ? detail.data : undefined,
+      );
+      if (path === 'login' && response.status === 401)
+        error.message = 'Email or password is incorrect. Check your details and try again.';
+      throw error;
     }
     return response.json();
   }
@@ -119,22 +160,41 @@ export function createAuthClient(
     });
   }
   return {
-    organizationRequest: (path: string, method = 'GET', body?: unknown) =>
-      serial(() => send(path, method, body, undefined, true)),
+    catalogSocketUrl: `${origin.replace(/^http/, 'ws')}${API_PREFIX}/catalog-live`,
+    accountRequest: (path: string, method = 'GET', body?: unknown, signal?: CancellationSignal) =>
+      serial(() => send(path, method, body, undefined, false, signal)),
+    organizationRequest: (
+      path: string,
+      method = 'GET',
+      body?: unknown,
+      signal?: CancellationSignal,
+    ) => serial(() => send(path, method, body, undefined, true, signal)),
     login: (email: string, password: string) =>
       serial(() => establish('login', { email, password })),
     accept: (email: string, password: string, invitationToken: string) =>
       serial(() => establish('invitations/accept', { email, password, invitationToken })),
+    recoveryStatus: (email: string, resetToken: string) =>
+      serial(async () =>
+        recoveryStatusSchema.parse(await send('password/status', 'POST', { email, resetToken })),
+      ),
+    resetPassword: (email: string, password: string, resetToken: string) =>
+      serial(async () => {
+        authMutationSchema.parse(
+          await send('password/reset', 'POST', { email, password, resetToken }),
+        );
+        await store?.clear();
+      }),
     current: () => serial(async () => sessionSchema.parse(await send('session'))),
     renew: () => serial(() => establish('renew')),
-    list: () => serial(async () => sessionsSchema.parse(await send('sessions')).sessions),
+    list: () =>
+      serial(async () => sessionsSchema.parse(await send('sessions?includeDevice=true')).sessions),
     revoke: (id: string) =>
       serial(async () => {
-        await send(`sessions/${encodeURIComponent(id)}`, 'DELETE');
+        authMutationSchema.parse(await send(`sessions/${encodeURIComponent(id)}`, 'DELETE'));
       }),
     logout: (all = false) =>
       serial(async () => {
-        await send(all ? 'sessions' : 'logout', all ? 'DELETE' : 'POST');
+        authMutationSchema.parse(await send(all ? 'sessions' : 'logout', all ? 'DELETE' : 'POST'));
         await store?.clear();
       }),
   };

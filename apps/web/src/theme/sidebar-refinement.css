@@ -1,0 +1,316 @@
+/* Resolved accent aliases also cover portals, navigation and selected rows. */
+html[data-accent] {
+  --navigation-hover: color-mix(in srgb, var(--primary) 8%, var(--card));
+  --navigation-selected: color-mix(in srgb, var(--primary) 15%, var(--card));
+  --navigation-selected-foreground: color-mix(in srgb, var(--primary) 80%, var(--foreground));
+  --selected: var(--navigation-selected);
+  --selected-foreground: var(--navigation-selected-foreground);
+  --secondary: var(--navigation-hover);
+  --secondary-foreground: var(--primary);
+  --chart-1: var(--primary);
+  --accent: var(--navigation-hover);
+  --accent-foreground: var(--foreground);
+  --table-hover: var(--navigation-hover);
+  --table-selected: var(--navigation-selected);
+  --table-selected-foreground: var(--foreground);
+  --sidebar: color-mix(in srgb, var(--primary) 3%, var(--card));
+}
+.app-sidebar,
+.sidebar-profile {
+  background: var(--sidebar);
+}
+.shell-content {
+  max-width: none;
+  width: 100%;
+}
+.sidebar-brand {
+  padding: var(--space-medium) var(--space-small);
+  flex-direction: column;
+  align-items: stretch;
+}
+.sidebar-toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+.app-sidebar[data-collapsed='true'] .sidebar-toolbar {
+  justify-content: center;
+}
+.sidebar-navigation {
+  padding: var(--space-medium) var(--space-small);
+}
+.sidebar-group + .sidebar-group {
+  margin-top: var(--space-medium);
+}
+.sidebar-group .accordion-trigger {
+  font-weight: var(--weight-strong);
+  padding-block: var(--space-small);
+}
+.sidebar-group .accordion-content[data-state='open'] {
+  padding-block: var(--space-small);
+  display: grid;
+  gap: var(--space-unit);
+}
+.shell-nav-link {
+  padding-block: var(--space-small);
+  min-height: var(--control-height);
+}
+.shell-nav-link span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.workspace-trigger {
+  width: 100%;
+  min-width: 0;
+}
+.workspace-trigger > span,
+.workspace-option > span {
+  width: 100%;
+  justify-content: flex-start;
+}
+.workspace-copy {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+.workspace-copy > span,
+.workspace-copy small,
+.workspace-option small {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.workspace-trigger:disabled {
+  opacity: 1;
+  background: transparent;
+  color: var(--foreground);
+}
+.workspace-trigger svg,
+.profile-chevron {
+  flex-shrink: 0;
+}
+.desktop-sidebar-toggle svg,
+.header-actions .connection-indicator svg,
+.header-theme svg,
+.notification-button svg {
+  width: 22px;
+  height: 22px;
+}
+.notification-heading {
+  font-size: var(--font-body);
+  font-weight: var(--weight-strong);
+  padding: var(--space-small) var(--space-medium);
+}
+.notification-menu .notification-view-all-icon {
+  width: 16px;
+  height: 16px;
+}
+.sidebar-resize-handle {
+  position: absolute;
+  inset: 0 -4px 0 auto;
+  width: 8px;
+  cursor: col-resize;
+  touch-action: none;
+}
+.sidebar-resize-handle:hover,
+.sidebar-resize-handle:focus-visible {
+  background: var(--navigation-selected);
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+.settings-layout,
+.settings-content {
+  min-width: 0;
+  max-width: 100%;
+}
+.settings-navigation.settings-tabs {
+  min-width: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+.compact-palette {
+  padding: var(--space-unit);
+  gap: var(--space-small);
+}
+.palette-options {
+  padding: var(--space-unit);
+  margin-top: var(--space-small);
+}
+.palette-option {
+  padding: var(--space-unit);
+  gap: var(--space-unit);
+}
+.data-table tbody tr:nth-child(odd) {
+  background: var(--muted);
+}
+.data-table tbody tr:nth-child(even) {
+  background: var(--card);
+}
+.data-table tbody tr:hover {
+  background: var(--table-hover);
+}
+.data-table tbody tr[data-selected='true'] {
+  background: var(--table-selected);
+}
+.data-table thead th {
+  border-top: var(--border-width) solid var(--border);
+  border-bottom: var(--border-width) solid var(--border);
+}
+.data-table [data-actions],
+.data-table td:has([data-row-actions]) {
+  text-align: right;
+}
+.ui-checkbox {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  width: var(--selection-size);
+  height: var(--selection-size);
+  flex-shrink: 0;
+  border: var(--border-width) solid var(--input);
+  border-radius: var(--radius-small, 4px);
+  background: var(--card);
+  cursor: pointer;
+}
+.ui-checkbox[data-state='checked'],
+.ui-checkbox[data-state='indeterminate'] {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+.ui-checkbox svg {
+  width: 14px;
+  height: 14px;
+}
+.ui-checkbox:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.ui-checkbox[aria-invalid='true'] {
+  border-color: var(--destructive);
+}
+.selection-toolbar label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+.view-tabs {
+  display: inline-flex;
+  background: var(--muted);
+  padding: var(--space-unit);
+  border-radius: var(--control-radius);
+  gap: var(--space-unit);
+}
+.view-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-small);
+  min-height: var(--control-small);
+  padding: var(--space-unit) var(--space-small);
+  border-radius: var(--control-radius);
+  font-size: var(--font-control);
+  color: var(--muted-foreground);
+}
+.view-tabs button[data-state='active'] {
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: var(--elevation-low);
+}
+.view-tabs svg {
+  width: 20px;
+  height: 20px;
+}
+@media (pointer: coarse) {
+  .view-tabs button {
+    min-height: var(--target-size);
+  }
+  .shell-nav-link {
+    min-height: var(--target-size);
+  }
+}
+@media (max-width: 767px) {
+  .sidebar-resize-handle {
+    display: none;
+  }
+}
+
+.shell-content :is(button, input, select, [tabindex]) {
+  scroll-margin-block-start: calc(var(--shell-header-height) * 3);
+}
+
+.header-theme {
+  display: block;
+}
+.header-actions .connection-dot {
+  display: block;
+}
+
+/* Same semantic tab treatment as collection view controls; retain horizontal scrolling. */
+.settings-navigation.view-tabs {
+  justify-content: flex-start;
+  border-bottom: 0;
+  width: 100%;
+}
+.settings-navigation.view-tabs button {
+  font-size: var(--font-small);
+  gap: var(--space-unit);
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.workspace-trigger svg.size-5,
+.profile-trigger svg.profile-chevron {
+  width: var(--menu-chevron-size);
+  height: var(--menu-chevron-size);
+}
+.selectable-card {
+  position: relative;
+  padding-top: calc(var(--control-height) + var(--space-small));
+}
+.selectable-card[data-selected='true'] {
+  background: var(--selected);
+  box-shadow: inset 0 0 0 2px var(--primary);
+}
+.card-selection {
+  position: absolute;
+  top: var(--space-small);
+  left: var(--space-small);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--target-size);
+  min-height: var(--target-size);
+}
+.card-selection .ui-checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--card);
+  border-color: var(--muted-foreground);
+}
+.card-selection .ui-checkbox[data-state='checked'] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+}
+@media (hover: hover) and (pointer: fine) {
+  .selectable-card:not([data-selected='true']) .card-selection {
+    opacity: 0;
+  }
+  .selectable-card:hover .card-selection,
+  .selectable-card:focus-within .card-selection {
+    opacity: 1;
+  }
+}
+
+/* Record titles are links in tables; action icons and static cells stay unchanged. */
+.data-table a:hover,
+.data-table .product-card-title:not(:disabled):hover,
+.data-table th[scope='row'] button:not(:disabled):hover,
+.data-table th[scope='row'] button:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}

@@ -1,0 +1,13 @@
+{
+  "api": "isolated retained development database on port 3191",
+  "name": "UI drawer review 1792675795106",
+  "id": "f18d4c06-3a98-48bd-b5e9-30bcb60ec107",
+  "status": 201,
+  "checks": [
+    "create through drawer",
+    "refresh/filter created business",
+    "empty location state",
+    "logout"
+  ],
+  "retained": true
+}

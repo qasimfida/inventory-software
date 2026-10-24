@@ -20,7 +20,9 @@
           "cameraPermission": "Allow barcode scanning for product and location lookup.",
           "recordAudioAndroid": false
         }
-      ]
-    ]
+      ],
+      "expo-sharing"
+    ],
+    "scheme": "inventory"
   }
 }

@@ -1,0 +1,36 @@
+.business-location-groups {
+  display: grid;
+  gap: var(--space-large);
+}
+.business-location-groups h4 {
+  margin-bottom: var(--space-small);
+}
+.business-location-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--sidebar-width)), 1fr));
+  gap: var(--space-small);
+  padding: 0;
+  list-style: none;
+}
+.business-location-cards li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-small);
+  min-width: 0;
+  padding: var(--space-medium);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--surface-radius);
+  background: var(--secondary);
+}
+.business-location-cards button {
+  max-width: 100%;
+  justify-content: flex-start;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.business-location-cards p {
+  font-size: var(--font-small);
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}

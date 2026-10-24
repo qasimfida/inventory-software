@@ -3,12 +3,15 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './app/router';
 import './styles.css';
+import { AppearanceProvider } from './theme/Appearance';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Missing application root.');
 createRoot(root).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AppearanceProvider>
+      <RouterProvider router={router} />
+    </AppearanceProvider>
   </StrictMode>,
 );
 

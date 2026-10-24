@@ -57,7 +57,7 @@ export class CountApproval {
         await audit(ctx, id, 'count.approved', null, {
           warehouseId: c.warehouseId,
           locationId: c.locationId,
-          reason: input.reason,
+          approvalReason: input.reason,
         });
         return countDetail(ctx, id);
       });

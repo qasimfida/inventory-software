@@ -1,0 +1,180 @@
+/* Three icon sizes, selected by the existing account preference. Charts are not icons. */
+:root {
+  --icon-current: var(--icon-medium);
+}
+:root[data-icon-size='small'] {
+  --icon-current: var(--icon-small);
+}
+:root[data-icon-size='large'] {
+  --icon-current: var(--icon-large);
+}
+.lucide.lucide {
+  width: var(--icon-current);
+  height: var(--icon-current);
+  flex-shrink: 0;
+}
+.lucide[data-icon-size='small'] {
+  width: var(--icon-small);
+  height: var(--icon-small);
+}
+.lucide[data-icon-size='large'] {
+  width: var(--icon-large);
+  height: var(--icon-large);
+}
+.header-separator {
+  height: var(--space-medium);
+}
+.header-page-title {
+  font-size: calc(var(--font-heading) * var(--text-scale));
+  margin: 0;
+}
+.sidebar-brand,
+.sidebar-profile {
+  min-height: var(--shell-header-height);
+  padding-block: var(--space-small);
+  display: flex;
+  align-items: center;
+}
+.sidebar-profile > * {
+  width: 100%;
+}
+.settings-layout > .overflow-tabs {
+  position: sticky;
+  top: var(--header-occupied-height, var(--shell-header-height));
+  z-index: 20;
+  box-shadow: var(--elevation-low);
+}
+.view-tabs {
+  background: var(--secondary);
+  border: var(--border-width) solid var(--border);
+}
+.command-search {
+  position: relative;
+  padding: var(--space-small);
+}
+.command-search > svg {
+  position: absolute;
+  left: var(--space-medium);
+  pointer-events: none;
+}
+.command-search input {
+  min-height: var(--control-small);
+  height: auto;
+  border: var(--border-width) solid var(--input);
+  border-radius: var(--control-radius);
+  padding-left: calc(var(--space-medium) + var(--icon-current) + var(--space-small));
+  background: var(--background);
+}
+.popover-panel .search-control input,
+.command-select-panel input {
+  font-size: calc(var(--font-small) * var(--text-scale));
+}
+.product-card,
+.inventory-product-card {
+  min-width: 0;
+  height: 100%;
+}
+.product-card > div,
+.inventory-product-card > div {
+  min-width: 0;
+}
+.product-card h3,
+.inventory-product-card h3 {
+  overflow-wrap: anywhere;
+  line-height: var(--line-body);
+}
+.product-card img,
+.inventory-product-card img {
+  max-width: 100%;
+  object-fit: contain;
+}
+.product-art {
+  aspect-ratio: 4 / 3;
+  min-height: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.business-card-art {
+  aspect-ratio: 3 / 1;
+  display: grid;
+  place-items: center;
+  background: var(--secondary);
+  color: var(--primary);
+  border-radius: var(--radius);
+}
+.business-card-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-medium);
+  color: var(--muted-foreground);
+  font-size: var(--font-small);
+}
+.business-card-counts span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+.business-card-counts svg {
+  color: var(--primary);
+}
+.pos-policy {
+  font-size: var(--font-small);
+  color: var(--muted-foreground);
+}
+.pos-toolbar {
+  justify-content: flex-end;
+  gap: var(--space-small);
+}
+.pos-toolbar > div {
+  flex: initial;
+  min-width: 0;
+}
+.pos-cart-scroll {
+  flex: 1;
+}
+.pos-workspace {
+  gap: var(--space-medium);
+}
+.pos-cart {
+  position: sticky;
+  top: calc(var(--header-occupied-height, var(--shell-header-height)) + var(--space-medium));
+}
+@media (pointer: fine) {
+  .popover-panel input,
+  .popover-panel [role='combobox'] {
+    min-height: var(--control-icon);
+    font-size: calc(var(--font-control) * var(--text-scale));
+  }
+}
+.overview-metric-orders .metric-card {
+  background: color-mix(in srgb, var(--success) 8%, var(--card));
+}
+.overview-metric-basket .metric-card {
+  background: color-mix(in srgb, var(--warning) 8%, var(--card));
+}
+.overview-metric-stock .metric-card {
+  background: color-mix(in srgb, var(--destructive) 6%, var(--card));
+}
+@media (min-width: 1000px) {
+  .pos-cart {
+    height: calc(100dvh - var(--pos-cart-top, var(--shell-header-height)) - var(--space-medium));
+    max-height: calc(
+      100dvh - var(--pos-cart-top, var(--shell-header-height)) - var(--space-medium)
+    );
+  }
+}
+/* Standalone refresh actions align consistently to the end of their content toolbar. */
+.screen-section > button:has(.lucide-refresh-cw),
+.screen-section > div > button:has(.lucide-refresh-cw) {
+  display: flex;
+  margin-inline-start: auto;
+}
+main button[aria-label^='Refresh'] {
+  display: flex;
+  margin-inline-start: auto;
+  border-radius: var(--control-radius);
+  background: var(--secondary);
+}
+main button[aria-label^='Refresh']:hover:not(:disabled) {
+  background: var(--navigation-hover);
+}

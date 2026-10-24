@@ -17,7 +17,10 @@ export function Page({ className, children, ...props }: ComponentProps<'main'>) 
       <main
         id="main"
         tabIndex={-1}
-        className={cn('mx-auto w-full max-w-6xl space-y-8 px-4 py-8 sm:px-6 sm:py-12', className)}
+        className={cn(
+          'mx-auto w-full max-w-[var(--content-width)] space-y-6 px-4 py-6 sm:px-6 sm:py-8',
+          className,
+        )}
         {...props}
       >
         {children}
@@ -43,7 +46,10 @@ export function Grid({ className, ...props }: ComponentProps<'div'>) {
 export function Panel({ className, ...props }: ComponentProps<'section'>) {
   return (
     <section
-      className={cn('min-w-0 space-y-5 rounded-xl border bg-card p-5 sm:p-6', className)}
+      className={cn(
+        'min-w-0 space-y-4 rounded-(--surface-radius) border bg-card p-(--panel-padding)',
+        className,
+      )}
       {...props}
     />
   );

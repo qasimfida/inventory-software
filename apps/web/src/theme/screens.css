@@ -1,0 +1,163 @@
+/* Screen composition shared by every workspace module. No visibility or data-state rules. */
+@layer components {
+  .screen-section {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--space-unit) * 4);
+    overflow-wrap: anywhere;
+  }
+  .screen-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: calc(var(--space-unit) * 4);
+    padding-bottom: calc(var(--space-unit) * 5);
+    border-bottom: 1px solid var(--border);
+  }
+  .screen-heading {
+    flex: 1 1 260px;
+    min-width: 0;
+  }
+  .screen-header h2 {
+    font-size: calc(var(--font-title) * var(--text-scale));
+  }
+  .screen-description {
+    margin-top: calc(var(--space-unit) * 2);
+    max-width: 85ch;
+    color: var(--muted-foreground);
+  }
+  .screen-actions,
+  .screen-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: calc(var(--space-unit) * 2);
+  }
+  .screen-filters {
+    display: grid;
+    align-items: end;
+    gap: calc(var(--space-unit) * 4);
+    padding: var(--panel-padding);
+    background: var(--muted);
+    border-radius: var(--radius-lg);
+  }
+  .screen-filters > div {
+    min-width: 0;
+    display: grid;
+    gap: calc(var(--space-unit) * 2);
+  }
+  .screen-section label {
+    display: block;
+  }
+  .screen-section label > :is(input:not([type='checkbox']), select, textarea) {
+    margin-top: calc(var(--space-unit) * 2);
+  }
+  .screen-section :is(input, select, textarea) {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .screen-section > :is(button, a) {
+    align-self: flex-start;
+  }
+  .screen-section :is(p, li, dd, pre) {
+    overflow-wrap: anywhere;
+  }
+  .screen-section > h3 {
+    padding-top: calc(var(--space-unit) * 3);
+  }
+  .screen-section [role='alert'] {
+    padding: calc(var(--space-unit) * 3);
+    border: 1px solid var(--destructive);
+    border-radius: var(--radius);
+    background: var(--card);
+  }
+  .screen-section pre {
+    max-width: 100%;
+    white-space: pre-wrap;
+  }
+  .record-details {
+    display: grid;
+    gap: calc(var(--space-unit) * 4);
+    padding-block: calc(var(--space-unit) * 4);
+    border-bottom: 1px solid var(--border);
+  }
+  .record-details > div {
+    min-width: 0;
+  }
+  .record-details dt {
+    color: var(--muted-foreground);
+    font-size: calc(var(--font-small) * var(--text-scale));
+    margin-bottom: calc(var(--space-unit));
+  }
+  .record-details dd {
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  .record-list {
+    display: grid;
+    gap: calc(var(--space-unit) * 3);
+  }
+  .record-list > li {
+    border-bottom: 1px solid var(--border);
+    padding-block: calc(var(--space-unit) * 3);
+    overflow-wrap: anywhere;
+  }
+  .screen-form {
+    display: grid;
+    gap: calc(var(--space-unit) * 3);
+    min-width: 0;
+  }
+  .screen-form > label {
+    margin-bottom: calc(var(--space-unit) * -2);
+  }
+  .screen-form > button {
+    justify-self: start;
+  }
+  .screen-form legend {
+    font-weight: 600;
+    padding-bottom: calc(var(--space-unit) * 4);
+  }
+  .command-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: calc(var(--space-unit) * 4);
+    padding: var(--panel-padding);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--card);
+  }
+  .command-form > h3,
+  .command-form > button,
+  .command-form > div:has(textarea) {
+    grid-column: 1/-1;
+  }
+  .command-form > button {
+    justify-self: start;
+  }
+  .command-form > div {
+    min-width: 0;
+  }
+  .pos-cart .command-form {
+    background: var(--muted);
+  }
+  .pos-cart .command-form > button {
+    width: 100%;
+    min-height: 44px;
+  }
+  @media (min-width: 768px) {
+    .screen-filters {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .record-details {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .screen-section > .command-form,
+    .screen-section > fieldset > .command-form {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}

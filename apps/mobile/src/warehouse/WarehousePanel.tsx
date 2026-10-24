@@ -1,7 +1,9 @@
+import { WarehouseSelect } from '../ui/WarehouseSelect';
+import { Text as Txt } from '../ui/Themed';
 import { LiveNotice } from './LiveNotice';
 import { CountWorkflow } from './CountWorkflow';
 import { useMemo, useState } from 'react';
-import { View as Box, Text as Txt } from 'react-native';
+import { ScreenBody as Box } from '../ui/ScreenHeader';
 import { Action as Act, Field as F, Choice as Pick } from '../organization/Controls';
 import { CommandForm } from '../components/CommandForm';
 import { authClient } from '../auth/client';
@@ -14,11 +16,13 @@ import type { Business, Location } from '@inventory/contracts';
 export function WarehousePanel({
   business,
   locations,
+  page = false,
 }: {
   business: Business;
   locations: Location[];
+  page?: boolean;
 }) {
-  const [open, setOpen] = useState(false),
+  const [open, setOpen] = useState(page),
     [warehouseId, setWarehouse] = useState(
       locations.find((l) => l.kind === 'warehouses')?.id ?? '',
     ),
@@ -102,7 +106,7 @@ export function WarehousePanel({
           </Txt>
           <LiveNotice businessId={business.id} warehouseId={warehouseId} />
           <Txt>{error}</Txt>
-          <Pick
+          <WarehouseSelect
             label="Scanning warehouse"
             value={warehouseId}
             options={locations

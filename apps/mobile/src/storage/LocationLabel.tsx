@@ -1,4 +1,5 @@
-import { ScrollView, View, Text } from 'react-native';
+import { Text } from '../ui/Themed';
+import { ScrollView, View } from 'react-native';
 import { locationLabel } from '@inventory/domain';
 export function LocationLabel({ id, code }: { id: string; code: string }) {
   const label = locationLabel(id);

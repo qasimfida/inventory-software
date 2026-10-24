@@ -66,6 +66,7 @@ export const purchaseReturnSchema = z
   .object({
     receiptId: z.uuid(),
     quantity: positiveQuantitySchema,
+    damaged: decimalSchema.default('0'),
     reason: z.string().trim().min(3).max(240),
     creditReference: z.string().trim().min(1).max(80),
     idempotencyKey: operationKeySchema,
@@ -120,6 +121,7 @@ export const purchaseDetailSchema = z.object({
       movementId: z.uuid(),
       creditReference: z.string(),
       reason: z.string(),
+      damaged: z.string(),
     }),
   ),
   invoices: z.array(

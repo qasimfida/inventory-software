@@ -34,7 +34,7 @@ it('calculates discounts and tax exactly without intermediate floating-point rou
   ).toEqual({ netMinor: '17280', taxMinor: '1728', totalMinor: '19008' });
   expect(baseQuantity('2', '12', '1')).toBe('24');
   expect(() => baseQuantity('1', '1', '3')).toThrow();
-  expect(formatMinorUnits('19008', 'USD')).toBe('USD 190.08');
+  expect(formatMinorUnits('19008', 'USD')).toBe('$190.08');
   expect(percentageBasisPoints('12.25')).toBe(1225);
   expect(() => percentageBasisPoints('12.255')).toThrow();
 });

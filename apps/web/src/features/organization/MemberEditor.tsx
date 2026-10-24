@@ -1,3 +1,4 @@
+import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { hasPermission } from '@inventory/contracts';
 import { AccessFields } from './AccessFields';
 import { useState } from 'react';
@@ -23,13 +24,18 @@ export function MemberEditor({
   }
   const writable = hasPermission(workspace.business, 'users.write');
   return (
-    <section aria-label="Business membership" className="space-y-3">
-      <h3>Membership</h3>
-      <p>
-        Assign an existing invited account. Owners control memberships; managers control locations;
-        viewers can read locations.
-      </p>
-      <ul>
+    <section aria-label="Business membership" className="screen-section">
+      <ScreenHeader
+        title="Membership"
+        level={3}
+        description={
+          <>
+            Assign an existing invited account. Owners control memberships; managers control
+            locations; viewers can read locations.
+          </>
+        }
+      />
+      <ul className="record-list">
         {workspace.members.map((member) => (
           <li key={member.accountId}>
             {member.email} · {member.role} · {member.state}{' '}
@@ -44,7 +50,7 @@ export function MemberEditor({
       {writable && (
         <form
           key={editing?.accountId ?? 'new'}
-          className="space-y-2"
+          className="screen-form"
           onSubmit={(event) => {
             event.preventDefault();
             const form = event.currentTarget;
@@ -82,7 +88,7 @@ export function MemberEditor({
             });
           }}
         >
-          <fieldset disabled={busy} className="space-y-2">
+          <fieldset disabled={busy} className="screen-form">
             <legend>{editing ? `Edit ${editing.email}` : 'Assign account'}</legend>
             {!editing && (
               <>

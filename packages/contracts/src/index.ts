@@ -25,6 +25,9 @@ export const apiErrorSchema = z
       'FORBIDDEN',
       'RATE_LIMITED',
       'CONFLICT',
+      'PRICE_UNAVAILABLE',
+      'CART_CURRENCY_MISMATCH',
+      'CHECKOUT_STORE_REQUIRED',
     ]),
     message: z.string(),
     requestId: z.string().uuid(),
@@ -34,7 +37,13 @@ export const apiErrorSchema = z
   .strict();
 export type ApiErrorResponse = z.infer<typeof apiErrorSchema>;
 
-export { sessionSchema, authResponseSchema, sessionsSchema } from './auth.js';
+export {
+  sessionSchema,
+  authResponseSchema,
+  sessionsSchema,
+  authMutationSchema,
+  recoveryStatusSchema,
+} from './auth.js';
 export type { Session, ActiveSession } from './auth.js';
 export * from './organization.js';
 
@@ -54,3 +63,22 @@ export * from './returns.js';
 export * from './offline.js';
 
 export * from './counts.js';
+export * from './payables.js';
+export * from './settings.js';
+export * from './security.js';
+export * from './reports.js';
+export * from './industry.js';
+export * from './business-notifications.js';
+export * from './warehouse-view.js';
+export * from './trading.js';
+export * from './accounting.js';
+export * from './integrations.js';
+export * from './stock-overview.js';
+export * from './dashboard.js';
+export * from './platform-overview.js';
+
+export * from './company-profile.js';
+
+export * from './platform-businesses.js';
+export * from './operations.js';
+export * from './bulk-import.js';

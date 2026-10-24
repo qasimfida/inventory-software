@@ -79,6 +79,7 @@ export async function transferEvent(
       warehouseId,
       storeId: wh.store_id,
       state: transfer.state,
+      ...(action === 'approve' ? { approvalReason: reason } : {}),
     });
   }
 }

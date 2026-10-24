@@ -45,13 +45,28 @@ export function convertQuantity(quantity: string, numerator: string, denominator
   if ((q * n) % d !== 0n) throw new Error('Conversion exceeds six-decimal quantity precision');
   return decimalString((q * n) / d);
 }
+/** Format a decimal price without rounding fractions of a currency minor unit. */
+export function formatDecimalPrice(amount: string, currency: string): string {
+  decimal(amount);
+  const trimmed = amount.includes('.') ? amount.replace(/0+$/, '').replace(/\.$/, '') : amount;
+  const [whole, fraction = ''] = trimmed.split('.');
+  const digits = fraction.padEnd(currencyExponent(currency), '0');
+  return `${currencySymbol(currency)}${whole}${digits ? '.' + digits : ''}`;
+}
+export function currencySymbol(currency: string): string {
+  return (
+    ({ USD: '$', EUR: '€', GBP: '£', JPY: '¥' } as Record<string, string>)[currency] ??
+    `${currency} `
+  );
+}
 export function formatMinorUnits(amount: string, currency: string): string {
   if (!/^-?(0|[1-9][0-9]*)$/.test(amount)) throw new Error('Invalid minor amount');
   const exponent = currencyExponent(currency),
     value = BigInt(amount),
     abs = value < 0n ? -value : value,
     divisor = 10n ** BigInt(exponent);
-  return `${currency} ${value < 0n ? '-' : ''}${abs / divisor}${exponent ? '.' + (abs % divisor).toString().padStart(exponent, '0') : ''}`;
+  const prefix = currencySymbol(currency);
+  return `${prefix}${value < 0n ? '-' : ''}${abs / divisor}${exponent ? '.' + (abs % divisor).toString().padStart(exponent, '0') : ''}`;
 }
 export function percentageBasisPoints(value: string): number {
   const scaled = decimal(value);

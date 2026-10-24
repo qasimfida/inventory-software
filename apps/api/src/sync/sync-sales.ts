@@ -29,6 +29,7 @@ export class SyncSales {
         snapshot: unknown;
         created_at: Date;
         expires_at: Date;
+        revoked_at: Date | null;
       }>('SELECT * FROM offline_leases WHERE business_id=$1 AND id=$2', [
         ctx.business.id,
         input.leaseId,
@@ -59,7 +60,8 @@ export class SyncSales {
     if (
       !current.enabled ||
       (!reconcile &&
-        (row.access_hash !== accessHash(ctx) ||
+        (row.revoked_at !== null ||
+          row.access_hash !== accessHash(ctx) ||
           current.version !== lease.policy.version ||
           Date.now() > row.expires_at.getTime() + 86400000))
     )

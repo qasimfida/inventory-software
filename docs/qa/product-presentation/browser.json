@@ -1,0 +1,34 @@
+{
+  "layouts": [
+    {
+      "width": 1440,
+      "columns": "366px 366px",
+      "available": 748,
+      "card": 366,
+      "overflow": false
+    },
+    {
+      "width": 1000,
+      "columns": "312px 312px 312px",
+      "available": 968,
+      "card": 312,
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "columns": "360px 360px",
+      "available": 736,
+      "card": 360,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "columns": "358px",
+      "available": 358,
+      "card": 358,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

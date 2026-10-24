@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { setTimeout as delay } from 'node:timers/promises';
 import { Pool } from 'pg';
 import request from 'supertest';
 import { afterAll, beforeAll, expect, vi } from 'vitest';
@@ -38,6 +39,19 @@ export function authFixture(prefix: 'auth_test_' | 'inventory_dev_' = 'auth_test
     await app.init();
   }, 20000);
   afterAll(async () => {
+    // Optional diagnostic mode: retain only this uniquely named test database.
+    // Tests and up migrations still run; rollback/drop validation is explicitly skipped.
+    if (process.env.TEST_RETAIN_DATABASES === 'true') {
+      try {
+        await app?.close();
+      } finally {
+        await database?.end();
+        await admin?.end();
+        vi.unstubAllEnvs();
+        console.info(`Retained isolated test database: ${name}`);
+      }
+      return;
+    }
     try {
       await app?.close();
       if (database) {
@@ -50,8 +64,28 @@ export function authFixture(prefix: 'auth_test_' | 'inventory_dev_' = 'auth_test
     } finally {
       await database?.end();
       if (admin) {
-        await admin.query(`DROP DATABASE IF EXISTS "${name}" WITH (FORCE)`);
-        await admin.end();
+        // node-pg-migrate closes its client without awaiting the socket's final disconnect.
+        // Let those completed migration connections drain before dropping the test database.
+        try {
+          const deadline = Date.now() + 5000;
+          let connections: number;
+          do {
+            connections = Number(
+              (
+                await admin.query(
+                  'SELECT count(*) AS connections FROM pg_stat_activity WHERE datname=$1',
+                  [name],
+                )
+              ).rows[0].connections,
+            );
+            if (connections === 0) break;
+            await delay(20);
+          } while (Date.now() < deadline);
+          expect(connections, 'Test database connections must drain before drop').toBe(0);
+          await admin.query(`DROP DATABASE IF EXISTS "${name}"`);
+        } finally {
+          await admin.end();
+        }
       }
       vi.unstubAllEnvs();
     }

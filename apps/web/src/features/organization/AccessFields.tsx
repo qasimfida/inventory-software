@@ -1,7 +1,14 @@
 import { useState } from 'react';
-import { permissionSchema } from '@inventory/contracts';
+import {
+  permissionGroups,
+  permissionLabel,
+  roleGuidance,
+  roleCapabilities,
+} from '@inventory/api-client';
+import { assignableRoleSchema } from '@inventory/contracts';
+import { AccordionSection } from '@/components/ui/Accordion';
 import type { Membership, Workspace } from '@inventory/contracts';
-import { Select } from '@/components/ui/FormControls';
+import { Checkbox, Select } from '@/components/ui/FormControls';
 export function AccessFields({
   role,
   member,
@@ -11,9 +18,21 @@ export function AccessFields({
   member: Membership | null;
   workspace: Workspace;
 }) {
+  const [selected, setSelected] = useState(member?.permissions ?? []);
+  const parsedRole = assignableRoleSchema.safeParse(role);
   const [storeId, setStoreId] = useState(member?.scope?.storeId ?? '');
   return (
     <>
+      <p className="text-sm text-muted-foreground">{roleGuidance[role]}</p>
+      {parsedRole.success && role !== 'custom' && (
+        <AccordionSection title="View included permissions">
+          <ul>
+            {roleCapabilities(parsedRole.data).map((label) => (
+              <li key={label}>{label}</li>
+            ))}
+          </ul>
+        </AccordionSection>
+      )}
       {role !== 'owner' && (
         <>
           <label htmlFor="access-store">Access scope: store</label>
@@ -59,22 +78,30 @@ export function AccessFields({
       {role === 'custom' && (
         <fieldset>
           <legend>Custom permissions</legend>
-          {permissionSchema.options
-            .filter(
-              (p) =>
-                p !== 'users.write' && (!storeId || !['users.read', 'business.write'].includes(p)),
-            )
-            .map((p) => (
-              <label key={p} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="permission"
-                  value={p}
-                  defaultChecked={member?.permissions?.includes(p)}
-                />
-                {p}
-              </label>
-            ))}
+          {permissionGroups(!!storeId).map((group) => (
+            <AccordionSection
+              key={group.key}
+              title={`${group.label} · ${group.permissions.filter((p) => selected.includes(p)).length} selected`}
+            >
+              {group.permissions.map((permission) => (
+                <label key={permission} className="flex min-h-(--target-size) items-center gap-2">
+                  <Checkbox
+                    name="permission"
+                    value={permission}
+                    checked={selected.includes(permission)}
+                    onCheckedChange={(checked) =>
+                      setSelected((old) =>
+                        checked === true
+                          ? [...old, permission]
+                          : old.filter((p) => p !== permission),
+                      )
+                    }
+                  />
+                  {permissionLabel(permission)}
+                </label>
+              ))}
+            </AccordionSection>
+          ))}
         </fieldset>
       )}
       <p className="text-sm">

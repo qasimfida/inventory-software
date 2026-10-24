@@ -1,0 +1,14 @@
+{
+  "checks": [
+    "Enhanced empty search: icon/title/description; no create action",
+    "Applied filter count and tooltip",
+    "Notifications: shared toolbar, card surface, contextual empty state",
+    "Audit actor email and change-detail drawer",
+    "Failed catalog request has retry; retry recovers",
+    "Network loss keeps bounded session and automatically opens prepared-register fallback; restoration detected",
+    "Notifications viewport 390: no page overflow",
+    "Notifications viewport 768: no page overflow",
+    "Notifications viewport 1440: no page overflow"
+  ],
+  "errors": []
+}

@@ -1,14 +1,19 @@
+import { SidePanel } from '../ui/SidePanel';
+import { Text } from '../ui/Themed';
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Surface } from '../ui/Surface';
 import type { CommandForm as Definition, FormValues } from '@inventory/api-client';
-import { Action, Choice, Field, styles } from '../organization/Controls';
+import { Action, Choice, Field } from '../organization/Controls';
 export function CommandForm({
   definition,
   run,
+  inline = false,
 }: {
   definition: Definition;
+  inline?: boolean;
   run: (work: () => Promise<unknown>) => void;
 }) {
+  const [open, setOpen] = useState(false);
   const [values, setValues] = useState<FormValues>(() =>
     Object.fromEntries(
       definition.fields.map((f) => [
@@ -20,8 +25,8 @@ export function CommandForm({
   );
   const change = (key: string, value: string | number | boolean) =>
     setValues((current) => ({ ...current, [key]: value }));
-  return (
-    <View style={styles.group}>
+  const form = (
+    <Surface>
       <Text accessibilityRole="header">{definition.title}</Text>
       {definition.fields.map((field) =>
         field.kind === 'select' || field.kind === 'boolean' ? (
@@ -64,6 +69,16 @@ export function CommandForm({
           run(() => definition.submit(input));
         }}
       />
-    </View>
+    </Surface>
+  );
+  return inline ? (
+    form
+  ) : (
+    <>
+      <Action label={definition.title} onPress={() => setOpen(true)} />
+      <SidePanel title={definition.title} open={open} onClose={() => setOpen(false)}>
+        {form}
+      </SidePanel>
+    </>
   );
 }

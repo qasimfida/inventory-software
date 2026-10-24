@@ -1,0 +1,11 @@
+{
+  "platform": "Android 16 ARM64 / Expo Go",
+  "source": "development mock transport",
+  "checks": [
+    "native product accordion fields",
+    "category/tracking fields",
+    "location create drawer",
+    "role capability disclosure"
+  ],
+  "businessMutations": false
+}

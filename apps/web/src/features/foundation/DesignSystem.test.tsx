@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { selectOption } from '@/../test/select-option';
 import { afterEach, expect, it } from 'vitest';
 import { cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -23,7 +24,7 @@ it('associates labels, hints and validation errors and focuses the error summary
   await user.click(screen.getByRole('button', { name: 'Enter a preview label.' }));
   expect(document.activeElement).toBe(input);
   await user.type(input, 'Example');
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Spacing preference' }), 'Compact');
+  await selectOption(screen.getByRole('combobox', { name: 'Spacing preference' }), 'Compact');
   await user.click(screen.getByRole('button', { name: 'Update preview' }));
   expect(screen.queryByRole('alert')).toBeNull();
   expect(screen.getByRole('status').textContent).toContain('Example, compact');
@@ -74,13 +75,13 @@ it('supports keyboard menu navigation and skips disabled items', async () => {
 it('retries the example error through a keyboard-operable action', async () => {
   const user = userEvent.setup();
   render(<StateDemo />);
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Example state' }), 'error');
+  await selectOption(screen.getByRole('combobox', { name: 'Example state' }), 'error');
   expect(screen.getByRole('alert').textContent).toContain('could not be loaded');
   const retry = screen.getByRole('button', { name: 'Try again' });
   retry.focus();
   await user.keyboard('{Enter}');
   expect(screen.queryByRole('alert')).toBeNull();
-  expect(screen.getByText('There is nothing to display in this example yet.')).toBeTruthy();
+  expect(screen.getByText('No example records yet')).toBeTruthy();
 });
 
 it('defaults ordinary buttons to non-submit and preserves explicit submit buttons', () => {

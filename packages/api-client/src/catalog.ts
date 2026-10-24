@@ -1,3 +1,4 @@
+import type { CancellationSignal } from './cancellation.js';
 import {
   productPageSchema,
   productSchema,
@@ -21,8 +22,12 @@ export function queryString(query: object) {
 export function createCatalogClient(request: OrganizationTransport, businessId: string) {
   const path = `/${encodeURIComponent(businessId)}`;
   return {
-    list: async (query: CatalogQuery) =>
-      productPageSchema.parse(await request(`${path}/products?${queryString(query)}`)),
+    list: async (query: CatalogQuery, signal?: CancellationSignal) =>
+      productPageSchema.parse(
+        await request(`${path}/products?${queryString(query)}`, 'GET', undefined, signal),
+      ),
+    get: async (id: string) =>
+      productSchema.parse(await request(`${path}/products/${encodeURIComponent(id)}`)),
     categories: async () => categoriesSchema.parse(await request(`${path}/categories`)).items,
     create: async (input: ProductInput) =>
       productSchema.parse(await request(`${path}/products`, 'POST', input)),

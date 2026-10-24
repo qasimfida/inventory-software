@@ -70,7 +70,7 @@ export class SyncCatalog {
       currency: currencySchema.parse(currency),
       revision: rev,
       items,
-      cursor: await cursor(ctx, warehouseId, rev),
+      cursor: await cursor(ctx, warehouseId, rev, currency),
     };
   }
 }

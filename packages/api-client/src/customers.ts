@@ -1,3 +1,4 @@
+import type { CancellationSignal } from './cancellation.js';
 import { z } from 'zod';
 import {
   customerPageSchema,
@@ -27,9 +28,14 @@ export function createCustomerClient(
       z
         .object({ prices: z.array(priceSchema) })
         .parse(await request(`${path}/${encodeURIComponent(id)}/prices`)),
-    load: async (q: Partial<CustomerQuery>) =>
+    load: async (q: Partial<CustomerQuery>, signal?: CancellationSignal) =>
       customerPageSchema.parse(
-        await request(`${path}?${queryString(customerQuerySchema.parse(q))}`),
+        await request(
+          `${path}?${queryString(customerQuerySchema.parse(q))}`,
+          'GET',
+          undefined,
+          signal,
+        ),
       ),
     save: (input: CustomerInput, id?: string, version?: number) =>
       request(`${path}${id ? '/' + encodeURIComponent(id) : ''}`, id ? 'PATCH' : 'POST', {

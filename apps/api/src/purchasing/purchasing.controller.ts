@@ -37,12 +37,14 @@ import { SchemaPipe } from '../http/schema.pipe.js';
 import { PurchasingService } from './purchasing.service.js';
 import { PurchaseReceiving } from './purchase-receiving.js';
 import { PurchaseQueries } from './purchase-queries.js';
+import { PurchaseReturns } from './purchase-returns.js';
 @Controller('businesses/:businessId')
 export class PurchasingController {
   constructor(
     @Inject(PurchasingService) private readonly service: PurchasingService,
     @Inject(PurchaseReceiving) private readonly receiving: PurchaseReceiving,
     @Inject(PurchaseQueries) private readonly queries: PurchaseQueries,
+    @Inject(PurchaseReturns) private readonly returns: PurchaseReturns,
   ) {}
   @Post('purchases/:id/lines') addLine(
     @Req() r: AuthRequest,
@@ -110,7 +112,7 @@ export class PurchasingController {
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body(new SchemaPipe(purchaseReturnSchema)) input: PurchaseReturn,
   ) {
-    return this.receiving.returnGoods(requestActor(r), b, id, input);
+    return this.returns.returnGoods(requestActor(r), b, id, input);
   }
   @Post('purchases/:id/invoices') route8(
     @Req() r: AuthRequest,

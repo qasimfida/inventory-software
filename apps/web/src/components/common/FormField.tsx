@@ -22,7 +22,9 @@ export function FormField({ id, label, description, error, required, children }:
     <div className="space-y-2">
       <label htmlFor={fieldId} className="block text-sm font-medium">
         {label}
-        {required && <span className="text-muted-foreground"> (required)</span>}
+        {required && (
+          <span aria-hidden="true" className="ml-1 text-muted-foreground after:content-['*']" />
+        )}
       </label>
       {description && (
         <p id={`${fieldId}-hint`} className="text-sm text-muted-foreground">

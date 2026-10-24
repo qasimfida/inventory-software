@@ -10,11 +10,14 @@ it('redacts nested credentials, URLs, errors and circular objects in valid JSON'
     nested: { authorization: 'Bearer private' },
     detail: 'postgresql://user:private@localhost/db',
     error: new Error('private'),
+    privateKey: 'key-material',
+    diagnostic: '-----BEGIN PRIVATE KEY-----\nkey-material\n-----END PRIVATE KEY-----',
   };
   value.self = value;
   logger.log(value);
   logger.error('private driver failure', 'private stack');
-  expect(lines.join('')).not.toMatch(/private|secret-value/);
+  expect(lines.join('')).not.toMatch(/"private"|secret-value|private driver|private stack/);
+  expect(lines.join('')).not.toContain('key-material');
   expect(JSON.parse(lines[0]!).message.event).toBe('test');
   expect(JSON.parse(lines[0]!).message.self).toBe('[CIRCULAR]');
   expect(JSON.parse(lines[1]!).level).toBe('error');

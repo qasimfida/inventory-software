@@ -73,3 +73,5 @@ The browser test mounts the actual main module, resolves the lazy route and rend
 Boundary regression tests run forbidden imports in temporary copies instead of writing into live source, so they cannot interrupt concurrent app builds. See the [Command 3 validation report](workspace-validation.md) for exact results and remaining blockers.
 
 Mobile adapter tests that execute SQLite through Node live in `apps/mobile/test` and use `tsconfig.test.json`. The mobile typecheck command validates that test environment separately, keeping Node globals out of the native application program.
+
+The portable API-client import adapter uses `fflate` for bounded ZIP/UTF-8 decoding and `fast-xml-parser` for values-only XLSX worksheets. Neither imports DOM/native/server APIs. The dependency rule permits these only in `import-file.ts` and `import-xlsx.ts`; domain/contracts remain free of spreadsheet dependencies. XLSX parsing is dynamically imported. Native document selection and sharing stay in the mobile platform adapter (`expo-document-picker`, `expo-file-system`, `expo-sharing`); browser/Tauri file dialogs stay in the web adapter.

@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+vi.mock('react-native-safe-area-context', () => import('../ui/safe-area-test-adapter'));
 import { afterEach, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -91,7 +92,8 @@ it('uses native labelled controls for search, cart, authoritative quote and conf
   const user = userEvent.setup();
   render(<PosCheckout business={business} warehouse={warehouse} onLockChange={() => {}} />);
   await user.click(await screen.findByRole('button', { name: 'Add NATIVE · Native item' }));
-  await user.click(screen.getByRole('button', { name: 'Calculate checkout total' }));
+  await screen.findAllByText('$1.00', {}, { timeout: 3000 });
+  await user.click(screen.getByRole('button', { name: 'Checkout' }));
   await user.click(await screen.findByRole('button', { name: 'Complete cash / credit sale' }));
   await screen.findByText(/Sale completed:/);
   expect(request).toHaveBeenCalledWith(

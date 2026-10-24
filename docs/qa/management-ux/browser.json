@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "Product sections preserve drafts; cancelled form sends no mutation",
+    "Searchable scoped locations, list/grid and editing drawer",
+    "Grouped custom grants retain checked state, no assignment submitted",
+    "Five affected routes at 1440/768/390 px without page overflow",
+    "Real business registration → authorized setup → real store creation"
+  ],
+  "errors": [],
+  "createdBusiness": "UI Setup 1792691870097"
+}

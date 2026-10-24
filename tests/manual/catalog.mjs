@@ -1,5 +1,10 @@
 import { expect } from '@playwright/test';
 export async function exerciseCatalog(page) {
+  await page
+    .getByRole('navigation', { name: 'Workspace sections' })
+    .getByRole('button', { name: 'Catalog & pricing', exact: true })
+    .click();
+  await page.getByText('Manage categories', { exact: true }).click();
   await page.getByLabel('Category name', { exact: true }).fill('Browser category');
   await page.getByRole('button', { name: 'Save category', exact: true }).click();
   await expect(
@@ -22,6 +27,13 @@ export async function exerciseCatalog(page) {
   await page.getByRole('button', { name: 'Edit product Browser product', exact: true }).click();
   await page.getByLabel('Product status', { exact: true }).selectOption('inactive');
   await page.getByRole('button', { name: 'Save product', exact: true }).click();
-  await expect(page.getByText('BROWSER-SKU · inactive · physical', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'View details for Browser product', exact: true }).click();
+  await expect(page.getByRole('complementary', { name: 'Product detail' })).toContainText(
+    'BROWSER-SKU · inactive',
+  );
+  await expect(page.getByRole('complementary', { name: 'Product detail' })).toContainText(
+    'physical',
+  );
+  await page.getByRole('button', { name: 'Close product detail' }).click();
   console.log('PASS real browser category/product creation, barcode lookup and status editing');
 }

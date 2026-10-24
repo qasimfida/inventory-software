@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Panel, Cluster } from '@/components/common/Layout';
 import { Button } from '@/components/ui/Button';
-import { Menu, MenuTrigger, MenuContent, MenuItem } from '@/components/ui/Menu';
+import { Menu, MenuTrigger, MenuContent, MenuItem, MenuSeparator } from '@/components/ui/Menu';
 import { Table } from '@/components/ui/Table';
 
 export function ReferencePanel() {
   const [message, setMessage] = useState('');
   return (
-    <Panel aria-labelledby="reference-heading">
+    <Panel id="showcase-menus" tabIndex={-1} aria-labelledby="reference-heading">
       <h2 id="reference-heading">Semantic styles</h2>
       <Table>
         <caption>Color communicates meaning alongside text.</caption>
@@ -18,6 +18,10 @@ export function ReferencePanel() {
           </tr>
         </thead>
         <tbody>
+          <tr data-selected="true">
+            <th scope="row">Selected row</th>
+            <td>Selection remains readable in either theme</td>
+          </tr>
           <tr>
             <th scope="row">Primary</th>
             <td className="text-primary">Continue an action</td>
@@ -47,6 +51,7 @@ export function ReferencePanel() {
               Show feedback
             </MenuItem>
             <MenuItem disabled>Unavailable action</MenuItem>
+            <MenuSeparator />
             <MenuItem onSelect={() => setMessage('')}>Clear feedback</MenuItem>
           </MenuContent>
         </Menu>

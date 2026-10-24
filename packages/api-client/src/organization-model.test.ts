@@ -18,7 +18,7 @@ function deferred<T>() {
   });
   return { promise, resolve };
 }
-it('clears the previous business synchronously and ignores responses after switching or logout', async () => {
+it('automatically opens a business, clears the previous business synchronously and ignores responses after switching or logout', async () => {
   const pending = deferred<Workspace>();
   const request = vi
     .fn()
@@ -28,7 +28,6 @@ it('clears the previous business synchronously and ignores responses after switc
     .mockResolvedValueOnce(workspace(a));
   const model = new OrganizationModel(createOrganizationClient(request));
   await model.refresh();
-  await model.select(a.id);
   expect(model.snapshot().workspace?.business.id).toBe(a.id);
   const selecting = model.select(b.id);
   expect(model.snapshot().workspace).toBeNull();
@@ -51,7 +50,6 @@ it('drops membership data after a denied refresh or failed mutation', async () =
     .mockResolvedValueOnce(workspace(a));
   const model = new OrganizationModel(createOrganizationClient(request));
   await model.refresh();
-  await model.select(a.id);
   await model.refresh(async () => {
     throw Object.assign(new Error('Access denied'), { status: 403 });
   });
@@ -65,7 +63,6 @@ it('never opens child data for a suspended business', async () => {
   const request = vi.fn().mockResolvedValue({ businesses: [{ ...a, state: 'suspended' }] });
   const model = new OrganizationModel(createOrganizationClient(request));
   await model.refresh();
-  await model.select(a.id);
   expect(request).toHaveBeenCalledTimes(1);
   expect(model.snapshot().workspace).toBeNull();
 });
@@ -80,11 +77,45 @@ it('keeps unchanged workspace references during revalidation and clears revoked 
     .mockResolvedValueOnce({ businesses: [] });
   const model = new OrganizationModel(createOrganizationClient(request));
   await model.refresh();
-  await model.select(a.id);
   const original = model.snapshot();
   await model.revalidate();
   expect(model.snapshot()).toBe(original);
   await model.revalidate();
   expect(model.snapshot().workspace).toBeNull();
   expect(model.snapshot().selectedId).toBeNull();
+});
+
+it('prefers active access, preserves an explicit selection, and handles no memberships', async () => {
+  const suspended = { ...a, state: 'suspended' as const };
+  const request = vi
+    .fn()
+    .mockImplementation(async (path: string) =>
+      path ? workspace(b) : { businesses: [suspended, b] },
+    );
+  const model = new OrganizationModel(createOrganizationClient(request));
+  await model.refresh();
+  expect(model.snapshot().selectedId).toBe(b.id);
+  await model.select(a.id);
+  await model.refresh();
+  expect(model.snapshot().selectedId).toBe(a.id);
+  expect(model.snapshot().workspace).toBeNull();
+  request.mockResolvedValue({ businesses: [] });
+  await model.refresh();
+  expect(model.snapshot()).toMatchObject({ selectedId: null, workspace: null, error: '' });
+});
+
+it('retains the active workspace during transient background failures but clears denied access', async () => {
+  const request = vi
+    .fn()
+    .mockResolvedValueOnce({ businesses: [a] })
+    .mockResolvedValueOnce(workspace(a));
+  const model = new OrganizationModel(createOrganizationClient(request));
+  await model.refresh();
+  const verified = model.snapshot();
+  request.mockRejectedValueOnce(new TypeError('Network request failed'));
+  await model.revalidate();
+  expect(model.snapshot()).toBe(verified);
+  request.mockRejectedValueOnce(Object.assign(new Error('Access revoked'), { status: 403 }));
+  await model.revalidate();
+  expect(model.snapshot().workspace).toBeNull();
 });

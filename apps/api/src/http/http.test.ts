@@ -26,7 +26,12 @@ class ValidationProbeController {
 
 @Module({
   controllers: [HealthController, ValidationProbeController],
-  providers: [{ provide: DatabaseService, useValue: { isReady: async () => false } }],
+  providers: [
+    {
+      provide: DatabaseService,
+      useValue: { isReady: async () => false, query: async () => ({ rows: [] }) },
+    },
+  ],
 })
 class HttpTestModule {}
 
@@ -47,6 +52,7 @@ describe('HTTP foundation', () => {
     expect(response.headers['x-content-type-options']).toBe('nosniff');
     expect(response.headers['x-request-id']).toMatch(/^[\da-f-]{36}$/);
     expect(response.headers['cache-control']).toBe('no-store');
+    expect(response.headers['access-control-expose-headers']).toContain('x-request-id');
   });
   it('fails readiness without database connectivity using a safe error envelope', async () => {
     const response = await request(app.getHttpServer()).get('/api/v1/health/ready').expect(503);

@@ -2,13 +2,25 @@ import type { ComponentProps } from 'react';
 import { cn } from '@/lib/utils';
 
 export function Table({ className, ...props }: ComponentProps<'table'>) {
+  return <table className={cn('data-table', className)} {...props} />;
+}
+
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex -- Named table region must support keyboard scrolling. */
+/** Keep overflowing exact values readable and keyboard-scrollable without fetching more data. */
+export function TableScroll({
+  label,
+  className,
+  ...props
+}: ComponentProps<'div'> & { label: string }) {
   return (
-    <table
-      className={cn(
-        'w-full border-collapse text-left text-sm [&_caption]:pb-4 [&_caption]:text-left [&_caption]:text-muted-foreground [&_th]:font-semibold [&_th]:text-foreground [&_th]:align-top [&_td]:align-top [&_th]:p-3 [&_td]:p-3 [&_tr]:border-b [&_thead]:bg-muted [&_tbody_tr:hover]:bg-muted/60',
-        className,
-      )}
+    <div
+      role="region"
+      aria-label={label}
+      tabIndex={0}
+      className={cn('min-w-0 max-w-full overflow-auto', className)}
       {...props}
     />
   );
 }
+
+/* eslint-enable jsx-a11y/no-noninteractive-tabindex */

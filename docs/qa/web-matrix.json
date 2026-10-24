@@ -1,0 +1,6485 @@
+{
+  "results": [
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/admin",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/admin/businesses",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/admin",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/admin/businesses",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/admin",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/admin/businesses",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/admin",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/admin/businesses",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/admin",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "superadmin",
+      "path": "/admin/businesses",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "inventory",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "accountant",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "role": "viewer",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/admin",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "superadmin",
+      "path": "/admin/businesses",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/accounting",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/trading",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/company",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/business",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/staff",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/team",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/payables",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/reports",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/locations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/pos",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/device",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/catalog",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/inventory",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/warehouse",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/transfers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/storage",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/warehouse-view",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/purchasing",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "inventory",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/sales",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/cash",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/customers",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/logs",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "accountant",
+      "path": "/settings/audit",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/dashboard",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/notifications",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/integrations",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/profile",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/preferences",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/security",
+      "overflow": false,
+      "alerts": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "role": "viewer",
+      "path": "/settings/notifications",
+      "overflow": false,
+      "alerts": []
+    }
+  ],
+  "issues": []
+}

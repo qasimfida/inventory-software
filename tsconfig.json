@@ -15,7 +15,11 @@
     "packages/**/*.test.ts",
     "scripts/**/*.ts",
     "playwright.config.ts",
-    "tests/browser/**/*.ts"
+    "tests/browser/**/*.ts",
+    "tests/dom-setup.ts",
+    "playwright.shell.config.ts",
+    "tests/shell/**/*.ts",
+    "apps/mobile/app.config.ts"
   ],
   "exclude": ["**/node_modules/**", "**/dist/**"]
 }

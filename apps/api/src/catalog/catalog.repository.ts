@@ -1,3 +1,4 @@
+import { displayPrices } from './display-prices.js';
 import { ForbiddenException, NotFoundException, ConflictException } from '@nestjs/common';
 import type { CatalogQuery, Product, ProductInput } from '@inventory/contracts';
 import type { OrganizationContext } from '../organization/organization.scope.js';
@@ -18,7 +19,8 @@ export async function getProduct(ctx: OrganizationContext, id: string) {
     )
   ).rows[0];
   if (!row) throw new NotFoundException();
-  return wire(row);
+  const prices = await displayPrices(ctx, [id]);
+  return { ...wire(row), price: prices.get(id) ?? null };
 }
 export async function productPage(ctx: OrganizationContext, q: CatalogQuery) {
   const args: unknown[] = [
@@ -43,8 +45,13 @@ export async function productPage(ctx: OrganizationContext, q: CatalogQuery) {
       [...args, q.limit, q.offset],
     )
   ).rows.map(wire);
+  const prices = await displayPrices(
+    ctx,
+    rows.map((p) => p.id),
+    q.storeId,
+  );
   return {
-    items: rows,
+    items: rows.map((p) => ({ ...p, price: prices.get(p.id) ?? null })),
     total,
     limit: q.limit,
     offset: q.offset,

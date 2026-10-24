@@ -1,3 +1,6 @@
+import { SyncStatus } from './SyncStatus';
+import { useReachability } from '@/platform/useReachability';
+import { VaultRecovery } from './VaultRecovery';
 import { OfflineCart } from './OfflineCart';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { OfflineWorkspace } from '@inventory/api-client';
@@ -7,11 +10,25 @@ import { onOfflineLock } from './offline-lock';
 import { OfflinePolicy as Policy } from './OfflinePolicy';
 const uuid = () => crypto.randomUUID();
 import { Box, Txt, Act, F, Secret } from '@/components/common/WorkspaceControls';
-export function OfflinePanel() {
+export function OfflinePanel({
+  allowSetup = true,
+  embedded = false,
+  setup,
+  onLockChange,
+}: {
+  allowSetup?: boolean;
+  embedded?: boolean;
+  setup?: { businessId: string; warehouseId: string; currency: string };
+  onLockChange?: (locked: boolean) => void;
+}) {
+  const online = useReachability();
   const model = useMemo(
     () =>
       new OfflineWorkspace(
-        async () => createVaultStore(),
+        async () =>
+          import.meta.env.DEV && import.meta.env.VITE_USE_MOCKS === 'true'
+            ? (await import('@inventory/api-client/mock')).demoVaultStore
+            : createVaultStore(),
         vaultRandom,
         authClient.organizationRequest,
         uuid,
@@ -19,12 +36,12 @@ export function OfflinePanel() {
     [],
   );
   const state = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
-  const [open, setOpen] = useState(false),
+  const [open, setOpen] = useState(embedded),
     [name, setName] = useState('register'),
     [password, setPassword] = useState(''),
-    [businessId, setBusiness] = useState(''),
-    [warehouseId, setWarehouse] = useState(''),
-    [currency, setCurrency] = useState('USD'),
+    [businessId, setBusiness] = useState(setup?.businessId ?? ''),
+    [warehouseId, setWarehouse] = useState(setup?.warehouseId ?? ''),
+    [currency, setCurrency] = useState(setup?.currency ?? 'USD'),
     [note, setNote] = useState('');
   useEffect(() => {
     const timer = setInterval(() => void model.sync(), 15000);
@@ -41,23 +58,33 @@ export function OfflinePanel() {
     };
   }, [model]);
   const data = state.data;
+  const unlocked = Boolean(data);
+  useEffect(() => {
+    if (online && unlocked) void model.sync();
+  }, [online, unlocked, model]);
+  useEffect(() => {
+    onLockChange?.(state.busy || !!data?.cart.length);
+    return () => onLockChange?.(false);
+  }, [onLockChange, state.busy, data?.cart.length]);
   return (
     <Box>
-      <Act
-        label={open ? 'Close offline register' : 'Offline cash register'}
-        onPress={() => {
-          setOpen(!open);
-          if (open) model.lock();
-        }}
-      />
+      {!embedded && (
+        <Act
+          label={open ? 'Close cached checkout' : 'Use cached products'}
+          onPress={() => {
+            setOpen(!open);
+            if (open) model.lock();
+          }}
+        />
+      )}
       {open && (
         <>
           <Txt>
-            Separate encrypted offline register. Cash only, root warehouse stock, no customer
-            credit. Prepare online with an open shift. Keep the shift open until every offline sale
-            is confirmed.
+            Encrypted cached checkout. Cash only, root warehouse stock, no customer credit. Prepare
+            online with an open shift. Keep the shift open until every offline sale is confirmed.
           </Txt>
           {state.error && <Txt>{state.error}</Txt>}
+          <VaultRecovery model={model} name={name} password={password} unlocked={!!data} />
           {!data ? (
             <>
               <F label="Vault name" value={name} onChange={setName} />
@@ -70,18 +97,30 @@ export function OfflinePanel() {
                   setPassword('');
                 }}
               />
-              <F label="Business ID for preparation" value={businessId} onChange={setBusiness} />
-              <F label="Warehouse ID for preparation" value={warehouseId} onChange={setWarehouse} />
-              <F label="Currency" value={currency} onChange={setCurrency} />
-              <Act
-                label="Prepare new offline register online"
-                disabled={state.busy}
-                onPress={() => {
-                  void model.open(name, password, { businessId, warehouseId, currency });
-                  setPassword('');
-                }}
-              />
-              <Policy businessId={businessId} />
+              {allowSetup && (
+                <>
+                  <F
+                    label="Business ID for preparation"
+                    value={businessId}
+                    onChange={setBusiness}
+                  />
+                  <F
+                    label="Warehouse ID for preparation"
+                    value={warehouseId}
+                    onChange={setWarehouse}
+                  />
+                  <F label="Currency" value={currency} onChange={setCurrency} />
+                  <Act
+                    label="Prepare new offline register online"
+                    disabled={state.busy}
+                    onPress={() => {
+                      void model.open(name, password, { businessId, warehouseId, currency });
+                      setPassword('');
+                    }}
+                  />
+                  <Policy businessId={businessId} />
+                </>
+              )}
             </>
           ) : (
             <>
@@ -93,6 +132,7 @@ export function OfflinePanel() {
                 after expiration. Global stock is checked on upload; another terminal can consume it
                 first.
               </Txt>
+              <SyncStatus state={state} />
               <OfflineCart model={model} data={data} />
               <Txt>
                 {data.error} Last sync:{' '}

@@ -1,0 +1,183 @@
+/* The settings adapter owns attributes; CSS only presents the resolved preference. */
+:root {
+  --text-scale: 1;
+}
+html[data-text-size='small'] {
+  font-size: 14px;
+  --text-scale: 0.9;
+}
+html[data-text-size='large'] {
+  font-size: 19px;
+  --text-scale: 1.2;
+}
+html[data-density='compact'] {
+  --space-unit: 3px;
+  --control-height: 36px;
+  --table-row-height: 34px;
+  --table-header-height: 36px;
+  --table-cell-padding: 10px;
+  --panel-padding: 16px;
+}
+html[data-accent='teal'] {
+  --primary: var(--primary-teal);
+  --ring: var(--primary-teal);
+}
+html[data-effects='false'] {
+  --elevation-low: none;
+  --elevation-high: none;
+}
+
+/* Prevent iOS input zoom without enlarging desktop data-entry forms. */
+@media (pointer: coarse) {
+  [data-slot='button'],
+  [role='menuitem'],
+  input:not([type='checkbox']):not([type='radio']),
+  select {
+    min-height: var(--target-size);
+  }
+  [data-slot='button'][data-size^='icon'] {
+    min-width: var(--target-size);
+  }
+  input:not([type='checkbox']):not([type='radio']),
+  select,
+  textarea {
+    font-size: max(16px, calc(var(--font-control) * var(--text-scale)));
+  }
+}
+
+/* Unlayered !important rules beat component utilities, including infinite loops. */
+html[data-motion='disabled'],
+html[data-motion='disabled']::before,
+html[data-motion='disabled']::after,
+html[data-motion='disabled'] *,
+html[data-motion='disabled'] *::before,
+html[data-motion='disabled'] *::after,
+html[data-motion='reduced'],
+html[data-motion='reduced']::before,
+html[data-motion='reduced']::after,
+html[data-motion='reduced'] *,
+html[data-motion='reduced'] *::before,
+html[data-motion='reduced'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:root {
+  --control-radius: var(--radius);
+  --surface-radius: var(--radius);
+}
+html[data-radius='circle'] {
+  --control-radius: var(--radius-circle);
+  --surface-radius: calc(var(--radius) * 2);
+}
+[data-slot='button'],
+input:not([type='checkbox']):not([type='radio']),
+select,
+[role='combobox'],
+.search-field,
+.profile-avatar,
+.segmented-control {
+  border-radius: var(--control-radius);
+}
+/* Multiline fields stay usable rather than clipping text into an ellipse. */
+textarea {
+  border-radius: var(--radius);
+}
+
+@font-face {
+  font-family: 'Karla';
+  src: url('@inventory/design-tokens/fonts/Karla.ttf') format('truetype');
+  font-weight: 200 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lora';
+  src: url('@inventory/design-tokens/fonts/Lora.ttf') format('truetype');
+  font-weight: 400 700;
+  font-display: swap;
+}
+html[data-accent='violet'] {
+  --primary: var(--primary-violet);
+  --ring: var(--primary-violet);
+}
+html[data-accent='rose'] {
+  --primary: var(--primary-rose);
+  --ring: var(--primary-rose);
+}
+html[data-accent='amber'] {
+  --primary: var(--primary-amber);
+  --ring: var(--primary-amber);
+}
+.preference-group {
+  padding-block: var(--space-medium);
+  border-top: var(--border-width) solid var(--border);
+}
+.palette-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-small);
+}
+.palette-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-small);
+  padding: var(--space-small);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+}
+.palette-option[data-selected='true'],
+.palette-option:focus-within {
+  outline: var(--focus-width) solid var(--ring);
+  outline-offset: var(--space-unit);
+}
+.palette-swatch {
+  width: var(--control-height);
+  height: var(--control-height);
+  border-radius: var(--control-radius);
+  background: var(--primary);
+}
+.palette-swatch[data-color='default'] {
+  background: var(--info);
+}
+.palette-swatch[data-color='teal'] {
+  background: var(--primary-teal);
+}
+.palette-swatch[data-color='violet'] {
+  background: var(--primary-violet);
+}
+.palette-swatch[data-color='rose'] {
+  background: var(--primary-rose);
+}
+.palette-swatch[data-color='amber'] {
+  background: var(--primary-amber);
+}
+
+.palette-option {
+  position: relative;
+  cursor: pointer;
+}
+.palette-radio {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+.palette-option:has(:disabled) {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

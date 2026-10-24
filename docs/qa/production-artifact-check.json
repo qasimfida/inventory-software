@@ -1,0 +1,22 @@
+[
+  {
+    "directory": "apps/web/dist/assets",
+    "bundles": 28,
+    "fixtureMarkerMatches": []
+  },
+  {
+    "directory": "apps/mobile/dist/_expo/static/js/web",
+    "bundles": 1,
+    "fixtureMarkerMatches": []
+  },
+  {
+    "directory": "apps/mobile/dist/_expo/static/js/android",
+    "bundles": 1,
+    "fixtureMarkerMatches": []
+  },
+  {
+    "directory": "apps/mobile/dist/_expo/static/js/ios",
+    "bundles": 1,
+    "fixtureMarkerMatches": []
+  }
+]

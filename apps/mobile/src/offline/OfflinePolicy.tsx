@@ -1,9 +1,10 @@
+import { Text } from '../ui/Themed';
 import { useState } from 'react';
 import { createSyncClient, offlinePolicyForm } from '@inventory/api-client';
 import type { CommandForm as Form } from '@inventory/api-client';
 import { Action } from '../organization/Controls';
 import { CommandForm } from '../components/CommandForm';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { authClient } from '../auth/client';
 export function OfflinePolicy({ businessId }: { businessId: string }) {
   const [form, setForm] = useState<Form | null>(null),

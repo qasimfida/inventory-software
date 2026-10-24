@@ -1,7 +1,7 @@
 import type { AccessRole, Permission } from '@inventory/contracts';
 
 // Public local fixtures. This directory is excluded from the deployable API artifact.
-export const developmentPassword = 'LocalDev!2026-Only';
+export const developmentPassword = 'asdF@123';
 export const fixtureId = (number: number) =>
   `de000000-0000-4000-8000-${number.toString().padStart(12, '0')}`;
 export const developmentIds = {
@@ -21,29 +21,29 @@ interface AccountFixture {
 export const developmentAccounts: AccountFixture[] = [
   {
     id: fixtureId(1),
-    email: 'superadmin@example.test',
+    email: 'superadmin@inv.com',
     role: 'super_admin',
     permissions: [],
     scoped: false,
   },
-  { id: fixtureId(2), email: 'admin@example.test', role: 'owner', permissions: [], scoped: false },
+  { id: fixtureId(2), email: 'admin@inv.com', role: 'owner', permissions: [], scoped: false },
   {
     id: fixtureId(3),
-    email: 'manager@example.test',
+    email: 'manager@inv.com',
     role: 'manager',
     permissions: [],
     scoped: true,
   },
   {
     id: fixtureId(4),
-    email: 'cashier@example.test',
+    email: 'cashier@inv.com',
     role: 'cashier',
     permissions: [],
     scoped: true,
   },
   {
     id: fixtureId(5),
-    email: 'inventory@example.test',
+    email: 'inventory@inv.com',
     role: 'custom',
     scoped: true,
     permissions: [
@@ -57,12 +57,13 @@ export const developmentAccounts: AccountFixture[] = [
   },
   {
     id: fixtureId(6),
-    email: 'accountant@example.test',
+    email: 'accountant@inv.com',
     role: 'custom',
     scoped: true,
     permissions: ['locations.read', 'sales.read', 'payments.read', 'customers.read', 'audit.read'],
   },
-  { id: fixtureId(7), email: 'viewer@example.test', role: 'viewer', permissions: [], scoped: true },
+  { id: fixtureId(8), email: 'owner@inv.com', role: 'owner', permissions: [], scoped: false },
+  { id: fixtureId(7), email: 'viewer@inv.com', role: 'viewer', permissions: [], scoped: true },
 ];
 
 export function assertDevelopmentDatabase(input: Record<string, unknown>) {

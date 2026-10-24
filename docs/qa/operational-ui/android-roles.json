@@ -1,0 +1,37 @@
+[
+  {
+    "account": "superadmin",
+    "landing": "Platform overview",
+    "checks": ["real API login", "role landing", "section navigation", "logout"]
+  },
+  {
+    "account": "admin",
+    "landing": "Welcome back",
+    "checks": ["real API login", "role landing", "section navigation", "logout"]
+  },
+  {
+    "account": "manager",
+    "landing": "Welcome back",
+    "checks": ["real API login", "role landing", "section navigation", "logout"]
+  },
+  {
+    "account": "cashier",
+    "landing": "Point of sale",
+    "checks": ["real API login", "role landing", "section navigation", "logout"]
+  },
+  {
+    "account": "inventory",
+    "landing": "Your workspace is ready",
+    "checks": ["real API login", "role landing", "section navigation", "logout"]
+  },
+  {
+    "account": "accountant",
+    "landing": "Your workspace is ready",
+    "checks": ["real API login", "role landing", "section navigation", "logout"]
+  },
+  {
+    "account": "viewer",
+    "landing": "Your workspace is ready",
+    "checks": ["real API login", "role landing", "section navigation", "logout"]
+  }
+]

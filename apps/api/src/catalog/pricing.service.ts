@@ -1,3 +1,4 @@
+import { PricingConflict } from '../http/pricing-conflict.js';
 import { CustomerAccess } from '../customers/customer-access.js';
 import {
   BadRequestException,
@@ -153,7 +154,7 @@ export class PricingService {
         [...args, input.customerId],
       )
     ).rows[0];
-    if (!price) throw new ConflictException();
+    if (!price) throw new PricingConflict('PRICE_UNAVAILABLE');
     const candidates = (
       await ctx.tx.query<{
         id: string;

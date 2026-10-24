@@ -1,5 +1,6 @@
 import { expect, it, vi } from 'vitest';
 import type { SaleQuote } from '@inventory/contracts';
+import type { OrganizationTransport } from './organization.js';
 import { PosModel } from './pos-model.js';
 import { createSalesClient } from './sales.js';
 const id = '00000000-0000-4000-8000-000000000001';
@@ -64,8 +65,10 @@ it('locks an uncertain cart and retries identical commands after lost and malfor
   await model.checkout('100', '100');
   expect(model.snapshot().uncertain).toBe(true);
   model.edit(0, { quantity: '99' });
+  model.add(item);
   model.remove(0);
   expect(model.snapshot().lines[0]!.quantity).toBe('1');
+  expect(model.snapshot().lines).toHaveLength(1);
   await model.checkout('999', '999');
   expect(model.snapshot().uncertain).toBe(true);
   await model.checkout('999', '999');
@@ -132,4 +135,23 @@ it('does not publish a stale quote when an invalidation arrives during calculati
   await calculating;
   expect(model.snapshot()).toMatchObject({ quote: null, busy: false });
   expect(model.snapshot().error).toContain('changed during calculation');
+});
+
+it('increments repeated product additions and requotes the combined quantity', async () => {
+  const transport = vi.fn<OrganizationTransport>(async () => quote);
+  const model = new PosModel(
+    createSalesClient(transport, () => id, id),
+    id,
+  );
+  model.add(item);
+  await model.preview();
+  model.add(item);
+  model.add(item);
+  expect(model.snapshot().lines).toHaveLength(1);
+  expect(model.snapshot().lines[0]?.quantity).toBe('3');
+  expect(model.snapshot().quote).toBeNull();
+  await model.preview();
+  expect(transport.mock.calls.at(-1)?.[2]).toMatchObject({
+    lines: [{ variantId: id, quantity: '3' }],
+  });
 });

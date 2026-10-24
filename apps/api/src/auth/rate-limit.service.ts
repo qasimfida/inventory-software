@@ -1,3 +1,4 @@
+import { securityEvent } from '../security/events.js';
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service.js';
 import { tokenHash } from './secrets.js';
@@ -14,6 +15,14 @@ export class RateLimitService {
       RETURNING attempts`,
       [tokenHash(key)],
     );
+    if (result.rows[0]!.attempts === limit + 1 && key.startsWith('credentials-'))
+      await this.database.transaction((tx) =>
+        securityEvent(tx, {
+          event: 'credentials.rate_limited',
+          outcome: 'denied',
+          subjectHash: tokenHash(key),
+        }),
+      );
     if (result.rows[0]!.attempts > limit) throw new HttpException('Too many requests.', 429);
   }
 }

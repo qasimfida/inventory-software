@@ -1,5 +1,9 @@
 import { expect } from '@playwright/test';
 export async function exercisePricing(page) {
+  await page
+    .getByRole('navigation', { name: 'Workspace sections' })
+    .getByRole('button', { name: 'Catalog & pricing', exact: true })
+    .click();
   await page.getByRole('button', { name: 'Edit product Browser product', exact: true }).click();
   await page.getByLabel('Product status', { exact: true }).selectOption('active');
   await page.getByRole('button', { name: 'Save product', exact: true }).click();

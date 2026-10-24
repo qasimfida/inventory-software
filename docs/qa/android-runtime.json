@@ -1,0 +1,9 @@
+{
+  "newErrorLinesSinceWalkStarted": 0,
+  "unexpectedTextWarnings": 0,
+  "fatalExceptions": 0,
+  "systemAnrObservedAfterWalk": true,
+  "note": "JS/fatal-log counts alone do not detect ANRs. Expo Go later displayed an Android not-responding dialog during rebuild/reload.",
+  "anrEvent": "2026-10-21 14:38:52: Expo Go ExperienceActivity input dispatch timed out waiting 9137ms for focus loss.",
+  "restartSmoke": "After force-stopping and reopening Expo Go, sign-in and the manager dashboard rendered again; final dark screenshot captured. Original light system mode restored."
+}

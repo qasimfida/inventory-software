@@ -1,5 +1,7 @@
+import { Text } from '../ui/Themed';
 import type { ComponentType } from 'react';
-import { Text } from 'react-native';
-export const BarcodeScanner: ComponentType<{ onCode: (code: string) => void }> = () => (
-  <Text>Use a keyboard barcode scanner or enter the code in the search field.</Text>
-);
+
+export const BarcodeScanner: ComponentType<{
+  onCode: (code: string) => void;
+  compact?: boolean;
+}> = () => <Text>Use a keyboard barcode scanner or enter the code in the search field.</Text>;

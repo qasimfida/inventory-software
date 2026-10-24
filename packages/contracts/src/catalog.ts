@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { pageQuerySchema } from './conventions.js';
+import { pageQuerySchema, currencySchema, decimalSchema } from './conventions.js';
 const code = z
   .string()
   .trim()
@@ -44,11 +44,17 @@ export const editProductSchema = z
   .object({ ...fields, version: z.number().int().positive() })
   .strict()
   .refine(validProduct, 'Invalid product');
+export const displayPriceSchema = z.object({
+  unitPrice: decimalSchema,
+  currency: currencySchema,
+  unit: z.string(),
+});
 export const productSchema = z.object({
   ...fields,
   id: z.uuid(),
   version: z.number().int().positive(),
   createdAt: z.iso.datetime(),
+  price: displayPriceSchema.nullable().optional(),
 });
 export const categoryInputSchema = z
   .object({
@@ -65,6 +71,7 @@ export const categorySchema = categoryInputSchema.extend({
   version: z.number().int().positive(),
 });
 export const catalogQuerySchema = pageQuerySchema.extend({
+  storeId: z.uuid().optional(),
   state: catalogStateSchema.optional(),
   categoryId: z.uuid().optional(),
   type: z.enum(['physical', 'service']).optional(),

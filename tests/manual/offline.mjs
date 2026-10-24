@@ -103,7 +103,8 @@ try {
     if (m.type() === 'error') console.error('Browser console', m.text());
   });
   page.on('requestfailed', (r) => console.log('Request failed', r.url()));
-  page.on('pageerror', (e) => console.error('Browser exception', e.message));
+  const runtimeErrors = [];
+  page.on('pageerror', (error) => runtimeErrors.push(error.message));
   await page.goto(process.env.E2E_WEB_URL);
   await page.evaluate(() =>
     Promise.race([
@@ -123,6 +124,14 @@ try {
     await expect(page.getByText(`Signed in as ${email}`, { exact: true })).toBeVisible();
   }
   await login();
+  async function unlockSavedRegister() {
+    await page.getByRole('button', { name: 'Offline cash register', exact: true }).click();
+    await page
+      .getByLabel('Separate offline passphrase (15–128 characters)')
+      .fill('offline separate passphrase');
+    await page.getByRole('button', { name: 'Unlock saved register', exact: true }).click();
+    await expect(page.getByLabel('Offline product', { exact: true })).toBeVisible();
+  }
   await page.getByRole('button', { name: 'Offline cash register', exact: true }).click();
   await page.getByLabel('Business ID for preparation').fill(business.id);
   await page.getByLabel('Warehouse ID for preparation').fill(warehouse.id);
@@ -134,6 +143,9 @@ try {
     .click();
   await expect(page.getByLabel('Offline product', { exact: true })).toBeVisible();
   await context.setOffline(true);
+  // The existing session boundary locks/remounts the register. Unlock its durable vault explicitly.
+  await expect(page.getByRole('button', { name: 'Log in', exact: true })).toBeVisible();
+  await unlockSavedRegister();
   await page.getByLabel('Offline product', { exact: true }).selectOption(product.id);
   await page.getByRole('button', { name: 'Save line to durable cart', exact: true }).click();
   await expect(page.getByText('Total (minor units): 1000', { exact: true })).toBeVisible();
@@ -158,8 +170,18 @@ try {
     .fill('offline separate passphrase');
   await page.getByRole('button', { name: 'Unlock saved register', exact: true }).click();
   await expect(page.getByText(/· pending ·/)).toBeVisible();
+  for (const width of [320, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+      width,
+      'Pending offline records remain readable without page overflow',
+    );
+    await page.screenshot({ path: `test-results/offline-pending-${width}.png`, fullPage: true });
+  }
   await context.setOffline(false);
   await expect(page.getByText(`Signed in as ${email}`, { exact: true })).toBeVisible();
+  await unlockSavedRegister();
   let lost = false;
   await page.route('**/sync/upload', async (route) => {
     const response = await route.fetch();
@@ -186,6 +208,11 @@ try {
     ).violations.map((v) => v.id),
   );
   assert.deepEqual(violations, []);
+  assert.deepEqual(
+    runtimeErrors,
+    [],
+    'Uncaught exceptions during offline/recovery/count workflows',
+  );
   console.log(
     'PASS production web shell airplane-mode reload, durable cart/sale restart, reconnect, lost committed response, same-ID replay, one sale, axe checks',
   );

@@ -19,8 +19,15 @@ export class CustomerService {
       await this.locations.store(ctx, q.storeId);
       const rows = (
         await ctx.tx.query(
-          `SELECT ${customerProjection} FROM customers WHERE business_id=$1 AND store_id=$2 AND (name ILIKE $3 OR code ILIKE $3 OR email ILIKE $3 OR phone ILIKE $3) ORDER BY lower(name),id LIMIT 26 OFFSET $4`,
-          [b, q.storeId, `%${q.search.replace(/[\\%_]/g, '\\$&')}%`, q.offset],
+          `SELECT ${customerProjection} FROM customers WHERE business_id=$1 AND store_id=$2 AND (name ILIKE $3 OR code ILIKE $3 OR email ILIKE $3 OR phone ILIKE $3) AND ($5::text IS NULL OR state=$5) AND ($6::text IS NULL OR currency=$6) ORDER BY lower(name),id LIMIT 26 OFFSET $4`,
+          [
+            b,
+            q.storeId,
+            `%${q.search.replace(/[\\%_]/g, '\\$&')}%`,
+            q.offset,
+            q.state ?? null,
+            q.currency ?? null,
+          ],
         )
       ).rows;
       return { customers: rows.slice(0, 25), hasMore: rows.length > 25, offset: q.offset };

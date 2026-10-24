@@ -147,6 +147,7 @@ export function purchaseDetailForms(client: Client, data: Detail): CommandForm[]
           })),
         },
         text('quantity', 'Return quantity', '1'),
+        text('damaged', 'Damaged quantity included in return', '0'),
         text('reason', 'Return reason'),
         text('creditReference', 'Supplier credit reference'),
       ],
@@ -154,6 +155,7 @@ export function purchaseDetailForms(client: Client, data: Detail): CommandForm[]
         client.returnGoods(order.id, {
           receiptId: String(v.receiptId),
           quantity: String(v.quantity),
+          damaged: String(v.damaged),
           reason: String(v.reason),
           creditReference: String(v.creditReference),
         }),

@@ -1,10 +1,18 @@
 import { DatabaseSync } from 'node:sqlite';
-import { expect, it, vi } from 'vitest';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { afterAll, expect, it, vi } from 'vitest';
 import { createVaultStore } from '../src/platform/vault-store';
 const database = vi.hoisted(() => ({ db: null as DatabaseSync | null }));
+const directory = mkdtempSync(join(tmpdir(), 'inventory-native-adapter-'));
+afterAll(() => {
+  database.db?.close();
+  rmSync(directory, { recursive: true, force: true });
+});
 vi.mock('expo-sqlite', () => ({
   openDatabaseAsync: async () => {
-    const db = (database.db ??= new DatabaseSync(':memory:'));
+    const db = (database.db ??= new DatabaseSync(join(directory, 'vault.sqlite')));
     const adapter = {
       getFirstAsync: async (sql: string, ...args: string[]) => db.prepare(sql).get(...args) ?? null,
       execAsync: async (sql: string) => {
@@ -31,6 +39,8 @@ it('runs the mobile adapter schema and conditional writes against SQLite and reo
   const first = createVaultStore();
   expect(await first.compareAndSwap('till', null, 'cipher')).toBe(true);
   expect(await first.compareAndSwap('till', null, 'overwrite')).toBe(false);
+  database.db!.close();
+  database.db = null;
   const reopened = createVaultStore();
   expect(await reopened.read('till')).toEqual({ revision: 1, envelope: 'cipher' });
   expect(await reopened.compareAndSwap('till', 0, 'stale')).toBe(false);

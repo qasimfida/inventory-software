@@ -1,55 +1,82 @@
+import { Pagination } from '@/components/common/Pagination';
+import { MoneyValue } from '@/components/common/DataValue';
+import { RecordDetails } from '@/components/common/RecordDetails';
+import { MetricCard } from '@/components/common/MetricCard';
 import { businessTime } from '@inventory/contracts';
 import type { Business } from '@inventory/contracts';
 import type { createCustomerClient } from '@inventory/api-client';
-import { Button } from '@/components/ui/Button';
 export function CustomerStatement({
   statement,
   business,
   statementOffset,
+  busy = false,
   setStatementOffset,
 }: {
   statement: Awaited<ReturnType<ReturnType<typeof createCustomerClient>['statement']>>;
   business: Business;
   statementOffset: number;
+  busy?: boolean;
   setStatementOffset: (v: number) => void;
 }) {
   return (
     <>
-      <p>
-        Outstanding: {statement.outstandingMinor} {statement.currency} minor units
-      </p>
+      <MetricCard
+        label="Outstanding"
+        value={<MoneyValue amount={statement.outstandingMinor} currency={statement.currency} />}
+        unit={statement.currency}
+        primary
+      />
       {statement.receivables.map((r) => (
-        <p key={r.id}>
-          Sale {r.saleId} · due {r.dueDate} · outstanding {r.outstandingMinor}
-        </p>
+        <RecordDetails
+          key={r.id}
+          label="Customer receivable"
+          items={[
+            { label: 'Sale', value: r.saleId },
+            { label: 'Due date', value: r.dueDate },
+            { label: `Outstanding (${statement.currency} minor units)`, value: r.outstandingMinor },
+          ]}
+        />
       ))}
       {statement.payments.map((p) => (
-        <p key={p.id}>
-          Cash {p.amountMinor} · {p.reference} · {businessTime(p.createdAt, business.timeZone)}
-        </p>
+        <RecordDetails
+          key={p.id}
+          label="Customer payment"
+          items={[
+            { label: `Cash (${statement.currency} minor units)`, value: p.amountMinor },
+            { label: 'Reference', value: p.reference },
+            { label: 'Time', value: businessTime(p.createdAt, business.timeZone) },
+          ]}
+        />
       ))}
       {statement.refunds.map((r) => (
-        <p key={r.id}>
-          Cash refund {r.amountMinor} · return {r.sourceId}
-        </p>
+        <RecordDetails
+          key={r.id}
+          label="Customer refund"
+          items={[
+            { label: `Cash refund (${statement.currency} minor units)`, value: r.amountMinor },
+            { label: 'Return', value: r.sourceId },
+          ]}
+        />
       ))}
       {statement.credits.map((c) => (
-        <p key={c.id}>
-          Credit {c.amountMinor} · source {c.sourceId}
-        </p>
+        <RecordDetails
+          key={c.id}
+          label="Customer credit"
+          items={[
+            { label: `Credit (${statement.currency} minor units)`, value: c.amountMinor },
+            { label: 'Source', value: c.sourceId },
+          ]}
+        />
       ))}
-      <Button
-        onClick={() => setStatementOffset(Math.max(0, statementOffset - 25))}
-        disabled={!statementOffset}
-      >
-        Previous statement page
-      </Button>
-      <Button
-        onClick={() => setStatementOffset(statementOffset + 25)}
-        disabled={!statement.hasMore}
-      >
-        Next statement page
-      </Button>
+
+      <Pagination
+        label="statement"
+        offset={statementOffset}
+        pageSize={25}
+        hasMore={statement.hasMore}
+        busy={busy}
+        onChange={setStatementOffset}
+      />
     </>
   );
 }

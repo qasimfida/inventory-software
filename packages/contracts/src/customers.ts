@@ -50,6 +50,8 @@ export const customerSchema = customerInputSchema.extend({
 export const customerQuerySchema = z
   .object({
     storeId: z.uuid(),
+    state: z.enum(['active', 'inactive', 'archived']).optional(),
+    currency: currencySchema.optional(),
     search: z.string().trim().max(120).default(''),
     offset: z.coerce.number().int().min(0).max(100000).default(0),
   })

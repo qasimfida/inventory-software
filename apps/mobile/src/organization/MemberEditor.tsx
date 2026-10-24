@@ -1,8 +1,9 @@
+import { Text } from '../ui/Themed';
 import { hasPermission } from '@inventory/contracts';
 import { AccessFields } from './AccessFields';
 import type { AssignmentAccess } from './AccessFields';
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { assignMemberSchema, editMemberSchema } from '@inventory/contracts';
 import type { Membership, Workspace } from '@inventory/contracts';
 import type { OrganizationModel } from '@inventory/api-client';

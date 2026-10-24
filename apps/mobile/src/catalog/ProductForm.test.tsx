@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+vi.mock('react-native-safe-area-context', () => import('../ui/safe-area-test-adapter'));
 import { afterEach, expect, it, vi } from 'vitest';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

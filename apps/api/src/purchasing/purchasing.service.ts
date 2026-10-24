@@ -191,6 +191,7 @@ export class PurchasingService {
           await audit(ctx, id, `purchase.${input.action}`, current, {
             ...current,
             state,
+            ...(input.action === 'approve' ? { approvalReason: input.reason } : {}),
             storeId: wh.storeId,
           });
           return detail(ctx, id);

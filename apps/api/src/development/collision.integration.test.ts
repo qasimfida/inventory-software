@@ -5,7 +5,7 @@ import { seedDevelopment } from './seed.js';
 
 const fixture = authFixture('inventory_dev_');
 it('refuses to adopt an existing account with a fixture email and creates nothing', async () => {
-  const existing = await fixture.register('admin@example.test');
+  const existing = await fixture.register('admin@inv.com');
   const before = (await fixture.db().query('SELECT * FROM auth_accounts')).rows;
   await expect(
     seedDevelopment(parseEnvironment({ ...process.env, NODE_ENV: 'development' })),

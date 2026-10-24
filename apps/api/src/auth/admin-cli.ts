@@ -2,6 +2,8 @@ import { z } from 'zod';
 import { parseEnvironment } from '../config/environment.js';
 import { DatabaseService } from '../database/database.service.js';
 import { newToken, tokenHash } from './secrets.js';
+import { issueRecovery } from './password-recovery.js';
+import { revokeOfflineAccess } from '../sync/revoke-offline-access.js';
 
 // Operator-only CLI. Input on stdin avoids credentials/contact data in process arguments.
 let database: DatabaseService | undefined;
@@ -16,7 +18,7 @@ try {
     .discriminatedUnion('action', [
       z
         .object({
-          action: z.literal('invite'),
+          action: z.enum(['invite', 'recover']),
           email: z
             .email()
             .max(254)
@@ -28,7 +30,11 @@ try {
     ])
     .parse(JSON.parse(input) as unknown);
   database = new DatabaseService(parseEnvironment(process.env));
-  if (command.action === 'invite') {
+  if (command.action === 'recover') {
+    const resetToken = await issueRecovery(database, command.email);
+    // Deliberate one-time operator output, like invitations; never application logs.
+    process.stdout.write(JSON.stringify({ resetToken, expiresInMinutes: 30 }) + '\n');
+  } else if (command.action === 'invite') {
     const token = newToken();
     await database
       .query(
@@ -48,8 +54,11 @@ try {
       "DELETE FROM auth_sessions WHERE absolute_expires_at<now()-interval '7 days'",
     );
     await database.query("DELETE FROM auth_invitations WHERE expires_at<now()-interval '7 days'");
+    await database.query(
+      "DELETE FROM auth_password_resets WHERE expires_at<now()-interval '7 days'",
+    );
     process.stdout.write('{"ok":true}\n');
-  } else {
+  } else if (command.action === 'disable' || command.action === 'enable') {
     await database.transaction(async (tx) => {
       const account = await tx.query(
         'UPDATE auth_accounts SET status=$1 WHERE id=$2 RETURNING id',
@@ -60,6 +69,11 @@ try {
         'UPDATE auth_sessions SET revoked_at=now() WHERE account_id=$1 AND revoked_at IS NULL',
         [command.accountId],
       );
+      await tx.query(
+        'UPDATE auth_password_resets SET consumed_at=now() WHERE account_id=$1 AND consumed_at IS NULL',
+        [command.accountId],
+      );
+      await revokeOfflineAccess(tx, command.accountId);
     });
     process.stdout.write('{"ok":true}\n');
   }

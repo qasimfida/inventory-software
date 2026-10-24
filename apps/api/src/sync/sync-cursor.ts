@@ -21,12 +21,17 @@ export async function revision(ctx: OrganizationContext) {
     ).rows[0]?.revision ?? '0'
   );
 }
-export async function cursor(ctx: OrganizationContext, warehouseId: string, rev: string) {
+export async function cursor(
+  ctx: OrganizationContext,
+  warehouseId: string,
+  rev: string,
+  currency: string,
+) {
   const id = randomUUID();
   await ctx.tx.query('DELETE FROM sync_cursors WHERE expires_at<now()');
   await ctx.tx.query(
-    "INSERT INTO sync_cursors(id,business_id,actor_id,warehouse_id,access_hash,revision,expires_at) VALUES($1,$2,$3,$4,$5,$6,now()+interval '7 days')",
-    [id, ctx.business.id, ctx.actor.accountId, warehouseId, accessHash(ctx), rev],
+    "INSERT INTO sync_cursors(id,business_id,actor_id,warehouse_id,access_hash,revision,currency,expires_at) VALUES($1,$2,$3,$4,$5,$6,$7,now()+interval '7 days')",
+    [id, ctx.business.id, ctx.actor.accountId, warehouseId, accessHash(ctx), rev, currency],
   );
   return id;
 }

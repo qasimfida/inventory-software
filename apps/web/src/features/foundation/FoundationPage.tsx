@@ -1,24 +1,65 @@
+import { NavigationControlsDemo } from './NavigationControlsDemo';
+import { AccordionSection } from '@/components/ui/Accordion';
+import { InventoryControlsDemo } from './InventoryControlsDemo';
+import { PreferenceControlsDemo } from './PreferenceControlsDemo';
+import { DataPresentationDemo } from './DataPresentationDemo';
+import { TokensDemo } from './TokensDemo';
+import { WorkspaceControlsDemo } from './WorkspaceControlsDemo';
+import { ComponentsDemo } from './ComponentsDemo';
+import { ShowcaseIndex } from './ShowcaseIndex';
+import { AppearanceProvider, AppearanceControl } from '@/theme/Appearance';
+import usage from '../../../../../docs/development/common-components.md?raw';
+import webCatalog from '../../../../../docs/development/component-catalog.md?raw';
+import nativeCatalog from '../../../../../docs/development/native-component-catalog.md?raw';
 import { Page, Grid, Stack } from '@/components/common/Layout';
-import { ConnectionPanel } from './ConnectionPanel';
 import { FormDemo } from './FormDemo';
 import { StateDemo } from './StateDemo';
-import { AuthPanel } from '../auth/AuthPanel';
 import { ReferencePanel } from './ReferencePanel';
 
 export function FoundationPage() {
   return (
+    <AppearanceProvider preview>
+      <Showcase />
+    </AppearanceProvider>
+  );
+}
+function Showcase() {
+  return (
     <Page>
       <Stack className="max-w-2xl gap-3">
-        <p className="text-sm font-medium tracking-wide text-primary">ONLINE WORKSPACE</p>
-        <h1>Inventory platform</h1>
+        <a href="#/" className="text-sm font-medium text-primary">
+          Back to workspace
+        </a>
+        <h1>Design system</h1>
         <p className="text-muted-foreground">
-          Manage your business, customers, stock and cash sales. Online checkout requires a
-          connection; prepared registers support bounded offline cash sales.
+          Actual application components. All examples are local and reset on reload; no account
+          preferences or business records are saved.
         </p>
       </Stack>
-      <AuthPanel />
+      <AppearanceControl />
+      <ShowcaseIndex />
+      <TokensDemo />
+      <ComponentsDemo />
+      <PreferenceControlsDemo />
+      <InventoryControlsDemo />
+      <NavigationControlsDemo />
+      <DataPresentationDemo />
+      <WorkspaceControlsDemo />
+      <AccordionSection
+        className="rounded-md border p-4"
+        title={<>Component usage documentation</>}
+      >
+        <pre className="mt-4 whitespace-pre-wrap break-words text-sm">{usage}</pre>
+      </AccordionSection>
+      {[
+        ['Web component API reference', webCatalog],
+        ['Native component API reference', nativeCatalog],
+      ].map(([title, content]) => (
+        <AccordionSection key={title} className="rounded-md border p-4" title={<>{title}</>}>
+          <pre className="mt-4 whitespace-pre-wrap break-words text-sm">{content}</pre>
+        </AccordionSection>
+      ))}
       <Grid>
-        <ConnectionPanel />
         <FormDemo />
         <StateDemo />
         <ReferencePanel />

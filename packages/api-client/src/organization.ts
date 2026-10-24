@@ -1,3 +1,4 @@
+import type { CancellationSignal } from './cancellation.js';
 import {
   auditListSchema,
   businessListSchema,
@@ -18,6 +19,7 @@ export type OrganizationTransport = (
   path: string,
   method?: string,
   body?: unknown,
+  signal?: CancellationSignal,
 ) => Promise<unknown>;
 export function createOrganizationClient(request: OrganizationTransport) {
   const segment = (id: string) => encodeURIComponent(id);

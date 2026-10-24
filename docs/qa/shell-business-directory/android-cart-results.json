@@ -1,0 +1,11 @@
+{
+  "platform": "Android 16 ARM64 / Expo Go",
+  "source": "isolated local demo",
+  "checks": [
+    "native POS add item",
+    "drawer footer Checkout visible",
+    "Checkout reveals cash review fields",
+    "close cart and logout"
+  ],
+  "saleSubmitted": false
+}

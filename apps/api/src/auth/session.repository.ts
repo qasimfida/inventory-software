@@ -1,3 +1,4 @@
+import { securityEvent } from '../security/events.js';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import { DatabaseService } from '../database/database.service.js';
@@ -46,18 +47,29 @@ export class SessionRepository {
     if (!result.rows[0]) throw new UnauthorizedException();
     return result.rows[0];
   }
-  async renew(identity: Identity, oldToken: string) {
+  async renew(identity: Identity, oldToken: string, requestId?: string) {
     const token = newToken();
-    const result = await this.database.query<Identity>(
-      `UPDATE auth_sessions s
+    return this.database.transaction(async (tx) => {
+      await tx.query('SELECT id FROM auth_accounts WHERE id=$1 FOR NO KEY UPDATE', [
+        identity.account_id,
+      ]);
+      const result = await tx.query<Identity>(
+        `UPDATE auth_sessions s
       SET token_hash=$1, expires_at=LEAST(now()+interval '30 minutes',absolute_expires_at)
       FROM auth_accounts a WHERE s.id=$2 AND s.token_hash=$3 AND a.id=s.account_id
       AND a.status='active' AND s.revoked_at IS NULL AND s.expires_at>now()
       AND s.absolute_expires_at>now() RETURNING ${projection}`,
-      [tokenHash(token), identity.id, tokenHash(oldToken)],
-    );
-    if (!result.rows[0]) throw new UnauthorizedException();
-    return { token, session: result.rows[0] };
+        [tokenHash(token), identity.id, tokenHash(oldToken)],
+      );
+      if (!result.rows[0]) throw new UnauthorizedException();
+      await securityEvent(tx, {
+        event: 'session.renewed',
+        sessionId: identity.id,
+        actorId: identity.account_id,
+        ...(requestId ? { requestId } : {}),
+      });
+      return { token, session: result.rows[0] };
+    });
   }
   async list(accountId: string) {
     return (
@@ -66,22 +78,31 @@ export class SessionRepository {
         created_at: Date;
         expires_at: Date;
         transport: SessionTransport;
+        device_id: string | null;
       }>(
-        `SELECT id,created_at,expires_at,transport FROM auth_sessions WHERE account_id=$1
+        `SELECT id,created_at,expires_at,transport,device_id FROM auth_sessions WHERE account_id=$1
       AND revoked_at IS NULL AND expires_at>now() ORDER BY created_at DESC`,
         [accountId],
       )
     ).rows;
   }
-  async revoke(accountId: string, sessionId?: string) {
+  async revoke(accountId: string, sessionId?: string, requestId?: string) {
     await this.database.transaction(async (tx) => {
       // Serialize revocation-all with login to give this operation a clear boundary.
-      await tx.query('SELECT id FROM auth_accounts WHERE id=$1 FOR UPDATE', [accountId]);
-      await tx.query(
+      await tx.query('SELECT id FROM auth_accounts WHERE id=$1 FOR NO KEY UPDATE', [accountId]);
+      const changed = await tx.query(
         `UPDATE auth_sessions SET revoked_at=now() WHERE account_id=$1
         AND ($2::uuid IS NULL OR id=$2::uuid) AND revoked_at IS NULL`,
         [accountId, sessionId ?? null],
       );
+      if (changed.rowCount) {
+        await securityEvent(tx, {
+          event: sessionId ? 'session.revoked' : 'session.revoked_all',
+          ...(sessionId ? { sessionId } : {}),
+          actorId: accountId,
+          ...(requestId ? { requestId } : {}),
+        });
+      }
     });
   }
 }

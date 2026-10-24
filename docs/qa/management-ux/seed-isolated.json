@@ -1,0 +1,11 @@
+{
+  "api": "http://127.0.0.1:3191",
+  "businessesPrepared": 4,
+  "businesses": 3,
+  "locations": 24,
+  "products": 48,
+  "prices": 48,
+  "stockCommands": 170,
+  "warehousesReconciled": 17,
+  "note": "Stock commands reuse stable IDs; reruns preserve existing records and cannot duplicate opening movements."
+}

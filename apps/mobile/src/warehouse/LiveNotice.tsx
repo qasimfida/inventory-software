@@ -1,7 +1,8 @@
+import { Text } from '../ui/Themed';
 import { useEffect, useState } from 'react';
 import { Invalidations, createSyncClient } from '@inventory/api-client';
 import { authClient } from '../auth/client';
-import { Text } from 'react-native';
+
 export function LiveNotice({
   businessId,
   warehouseId,

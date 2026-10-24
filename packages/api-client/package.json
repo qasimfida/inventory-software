@@ -7,6 +7,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./mock": {
+      "types": "./dist/mock/index.d.ts",
+      "default": "./dist/mock/index.js"
     }
   },
   "files": [
@@ -27,6 +31,8 @@
     "@inventory/contracts": "0.0.0",
     "@inventory/domain": "0.0.0",
     "@noble/ciphers": "2.4.0",
-    "@noble/hashes": "2.4.0"
+    "@noble/hashes": "2.4.0",
+    "fast-xml-parser": "^5.11.2",
+    "fflate": "^0.8.3"
   }
 }

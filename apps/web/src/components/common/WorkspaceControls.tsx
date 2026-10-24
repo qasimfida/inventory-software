@@ -2,9 +2,9 @@ import type { ReactNode } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Input, Select } from '@/components/ui/FormControls';
 export const Box = ({ children }: { children: ReactNode }) => (
-  <section className="space-y-3 border-t py-4">{children}</section>
+  <section className="screen-section border-t py-4">{children}</section>
 );
-export const Txt = ({ children }: { children: ReactNode }) => <p role="status">{children}</p>;
+export const Txt = ({ children }: { children: ReactNode }) => <p>{children}</p>;
 export const Act = ({
   label,
   onPress,

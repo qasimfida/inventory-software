@@ -1,4 +1,5 @@
 import { z } from 'zod';
+export const authMutationSchema = z.object({ ok: z.literal(true) }).strict();
 
 export const sessionSchema = z
   .object({
@@ -23,6 +24,7 @@ export const sessionsSchema = z
           createdAt: z.iso.datetime(),
           expiresAt: z.iso.datetime(),
           transport: z.enum(['cookie', 'bearer']),
+          deviceId: z.uuid().nullable().optional(),
         })
         .strict(),
     ),
@@ -30,3 +32,7 @@ export const sessionsSchema = z
   .strict();
 export type Session = z.infer<typeof sessionSchema>;
 export type ActiveSession = z.infer<typeof sessionsSchema>['sessions'][number];
+
+export const recoveryStatusSchema = z
+  .object({ valid: z.literal(true), expiresAt: z.iso.datetime() })
+  .strict();

@@ -1,3 +1,4 @@
+import type { CancellationSignal } from './cancellation.js';
 import type { PurchaseAddLine } from '@inventory/contracts';
 import {
   purchaseWorkspaceSchema,
@@ -27,9 +28,14 @@ export function createPurchasingClient(
   return {
     addLine: (id: string, input: Omit<PurchaseAddLine, 'idempotencyKey'>) =>
       commands.run(`${path}/purchases/${encodeURIComponent(id)}/lines`, input, parse),
-    load: async (q: Partial<PurchaseQuery>) =>
+    load: async (q: Partial<PurchaseQuery>, signal?: CancellationSignal) =>
       purchaseWorkspaceSchema.parse(
-        await request(`${path}/purchasing?${queryString(purchaseQuerySchema.parse(q))}`),
+        await request(
+          `${path}/purchasing?${queryString(purchaseQuerySchema.parse(q))}`,
+          'GET',
+          undefined,
+          signal,
+        ),
       ),
     detail: async (id: string) =>
       parse(await request(`${path}/purchases/${encodeURIComponent(id)}`)),
@@ -47,8 +53,11 @@ export function createPurchasingClient(
       input: Omit<PurchaseReceive, 'idempotencyKey' | 'damaged' | 'damageReason'> &
         Partial<Pick<PurchaseReceive, 'damaged' | 'damageReason'>>,
     ) => commands.run(`${path}/purchases/${encodeURIComponent(id)}/receipts`, input, parse),
-    returnGoods: (id: string, input: Omit<PurchaseReturn, 'idempotencyKey'>) =>
-      commands.run(`${path}/purchases/${encodeURIComponent(id)}/returns`, input, parse),
+    returnGoods: (
+      id: string,
+      input: Omit<PurchaseReturn, 'idempotencyKey' | 'damaged'> &
+        Partial<Pick<PurchaseReturn, 'damaged'>>,
+    ) => commands.run(`${path}/purchases/${encodeURIComponent(id)}/returns`, input, parse),
     invoice: (id: string, input: Omit<SupplierInvoice, 'idempotencyKey'>) =>
       commands.run(`${path}/purchases/${encodeURIComponent(id)}/invoices`, input, parse),
   };

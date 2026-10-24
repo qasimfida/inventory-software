@@ -1,3 +1,4 @@
+import { expectShift } from './record-facts.mjs';
 /* global window, document */
 import { expect } from '@playwright/test';
 import axe from 'axe-core';
@@ -29,7 +30,7 @@ export async function exerciseCommerce(page) {
   await open.getByLabel('Cash currency', { exact: true }).selectOption('USD');
   await open.getByLabel('Opening float (minor units)', { exact: true }).fill('10000');
   await open.getByRole('button', { name: 'Open cash shift', exact: true }).click();
-  await expect(page.getByText(/expected 10000 · counted/)).toBeVisible();
+  await expectShift(page, { Expected: '10000' });
   await tools.click();
   await page.getByRole('button', { name: 'Calculate checkout total', exact: true }).click();
   await page.getByRole('button', { name: 'Complete cash / credit sale', exact: true }).click();
@@ -73,7 +74,7 @@ export async function exerciseCommerce(page) {
   const close = page.getByRole('form', { name: /^Close cash shift / });
   await close.getByLabel('Counted cash (minor units)', { exact: true }).fill('9999');
   await close.getByRole('button', { name: /^Close cash shift / }).click();
-  await expect(page.getByText(/expected 10000 · counted 9999 · discrepancy -1/)).toBeVisible();
+  await expectShift(page, { Expected: '10000', Counted: '9999', Discrepancy: '-1' });
   await page.evaluate(axe.source);
   const issues = await page.evaluate(async () =>
     (
@@ -84,6 +85,10 @@ export async function exerciseCommerce(page) {
   );
   expect(issues).toEqual([]);
   await page.getByRole('button', { name: 'Back to management', exact: true }).click();
+  await page
+    .getByRole('navigation', { name: 'Workspace sections' })
+    .getByRole('button', { name: 'Inventory', exact: true })
+    .click();
   await page.getByRole('button', { name: 'Reconcile inventory', exact: true }).click();
   await expect(page.getByText('Ledger and balances reconcile.', { exact: true })).toBeVisible();
   console.log(

@@ -1,3 +1,4 @@
+import { parseAiConfiguration } from '../ai/configuration.js';
 import { z } from 'zod';
 import { apiOriginSchema } from '@inventory/contracts';
 
@@ -9,6 +10,10 @@ const desktopOrigins = [
 const originSchema = z.union([apiOriginSchema, z.enum(desktopOrigins)]);
 
 const environmentSchema = z.object({
+  APP_VERSION: z
+    .string()
+    .regex(/^[a-zA-Z0-9._+-]{1,80}$/)
+    .default('0.0.0'),
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   HOST: z.string().min(1).default('127.0.0.1'),
   PORT: z.coerce.number().int().min(1).max(65535).default(3100),
@@ -55,7 +60,7 @@ export function parseEnvironment(input: Record<string, unknown>) {
       throw new Error('Production requires HTTPS CORS origins.');
     }
   }
-  return { ...env, corsOrigins };
+  return { ...env, corsOrigins, ai: parseAiConfiguration(input) };
 }
 
 export type Environment = ReturnType<typeof parseEnvironment>;

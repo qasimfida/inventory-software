@@ -23,6 +23,8 @@ import type {
   StockCommand,
   StockQuery,
 } from '@inventory/contracts';
+import { stockOverviewQuerySchema } from '@inventory/contracts';
+import type { StockOverviewQuery } from '@inventory/contracts';
 import type { AuthRequest } from '../auth/auth.http.js';
 import { requestActor } from '../http/actor.js';
 import { SchemaPipe } from '../http/schema.pipe.js';
@@ -34,6 +36,13 @@ export class InventoryController {
     @Inject(InventoryService) private readonly inventory: InventoryService,
     @Inject(InventoryQueries) private readonly queries: InventoryQueries,
   ) {}
+  @Get('stock/overview') overview(
+    @Req() r: AuthRequest,
+    @Param('businessId', new ParseUUIDPipe()) b: string,
+    @Query(new SchemaPipe(stockOverviewQuerySchema)) q: StockOverviewQuery,
+  ) {
+    return this.queries.overview(requestActor(r), b, q);
+  }
   @Get('stock') read(
     @Req() r: AuthRequest,
     @Param('businessId', new ParseUUIDPipe()) b: string,

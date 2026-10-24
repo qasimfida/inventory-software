@@ -108,6 +108,7 @@ export const auditListSchema = z
         .object({
           id: z.string(),
           actorId: z.uuid(),
+          actorEmail: z.string().nullable().optional(),
           resourceId: z.uuid(),
           action: z.string(),
           storeId: z.uuid().nullable().default(null),

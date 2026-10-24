@@ -1,0 +1,66 @@
+[
+  {
+    "command": "npm run lint",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run typecheck",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run test",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run build:mobile",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run build:desktop",
+    "exitCode": 1
+  },
+  {
+    "command": "npm run build -w @inventory/desktop -- --bundles app",
+    "exitCode": 0,
+    "result": "macOS .app 12.27 MiB; DMG remains blocked by Finder automation"
+  },
+  {
+    "command": "npm_config_ignore_scripts=true npx playwright test --config playwright.shell.config.ts",
+    "exitCode": 0,
+    "result": "5 passed"
+  },
+  {
+    "command": "npm_config_ignore_scripts=true PLAYWRIGHT_CHANNEL=chrome npm run test:web:browser",
+    "exitCode": 0,
+    "result": "24 passed"
+  },
+  {
+    "command": "cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml",
+    "exitCode": 0,
+    "result": "2 passed"
+  },
+  {
+    "command": "Post-native-fix: mobile typecheck, targeted ESLint, npx vitest run, npm run build:mobile",
+    "exitCode": 0,
+    "result": "273 tests in 125 files pass; Android/iOS/web exports pass"
+  },
+  {
+    "command": "node tests/manual/shell-matrix.mjs",
+    "exitCode": 0,
+    "result": "810 role/theme/viewport route checks; 0 issues"
+  },
+  {
+    "command": "node tests/manual/native-shell-matrix.mjs",
+    "exitCode": 0,
+    "result": "268 React Native Web role/theme route checks; 0 issues"
+  },
+  {
+    "command": "ANDROID_ADB=... python3 tests/manual/android-shell.py; separate native directory/theme/keyboard checks",
+    "exitCode": 0,
+    "result": "134 role-visible Android routes plus platform directory (135 captures); dark inventory and hardware-keyboard/IME toolbar search captured; full software keyboard unverified"
+  }
+]

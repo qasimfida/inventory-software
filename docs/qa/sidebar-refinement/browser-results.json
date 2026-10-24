@@ -1,0 +1,21 @@
+{
+  "results": [
+    {
+      "width": 390,
+      "checks": "resize (desktop), workspace, selections, stripes, palette, dark theme, large/small text, settings overflow, axe",
+      "violations": []
+    },
+    {
+      "width": 768,
+      "checks": "resize (desktop), workspace, selections, stripes, palette, dark theme, large/small text, settings overflow, axe",
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "checks": "resize (desktop), workspace, selections, stripes, palette, dark theme, large/small text, settings overflow, axe",
+      "violations": []
+    }
+  ],
+  "errors": [],
+  "data": "local fixtures; no real transaction mutations"
+}

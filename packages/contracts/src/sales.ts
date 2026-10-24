@@ -1,5 +1,11 @@
+import { productSchema } from './catalog.js';
 import { z } from 'zod';
-import { positiveQuantitySchema, operationKeySchema, currencySchema } from './conventions.js';
+import {
+  decimalSchema,
+  positiveQuantitySchema,
+  operationKeySchema,
+  currencySchema,
+} from './conventions.js';
 import { nonnegativeMinorSchema } from './customers.js';
 export const cartLineSchema = z
   .object({
@@ -105,15 +111,31 @@ export const saleQuerySchema = z
     search: z.string().trim().max(120).default(''),
     code: z.string().trim().toUpperCase().max(120).default(''),
     offset: z.coerce.number().int().min(0).max(100000).default(0),
+    currency: currencySchema.optional(),
+    categoryId: z.uuid().optional(),
+    availability: z.enum(['all', 'in-stock', 'out-of-stock']).default('all'),
   })
   .strict();
 export const posItemsSchema = z.object({
+  categories: z
+    .array(z.object({ id: z.uuid(), name: z.string() }))
+    .max(100)
+    .default([]),
   items: z.array(
     z.object({
       id: z.uuid(),
       name: z.string(),
       sku: z.string(),
       unitId: z.uuid(),
+      price: z
+        .object({
+          unitPrice: decimalSchema,
+          currency: currencySchema,
+          unit: z.string().min(1).max(64),
+        })
+        .nullable()
+        .optional(),
+      images: productSchema.shape.images.optional(),
       units: z.array(z.object({ id: z.uuid(), code: z.string() })),
     }),
   ),

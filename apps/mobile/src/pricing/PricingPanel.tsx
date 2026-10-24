@@ -1,6 +1,10 @@
+import { useCatalogLive } from '../platform/useCatalogLive';
+import { FormSection } from '../ui/FormSection';
+import { LoadingState } from '../ui/AsyncState';
+import { ScreenBody, ScreenHeader } from '../ui/ScreenHeader';
+import { Text } from '../ui/Themed';
 import { formatMinorUnits } from '@inventory/api-client';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
-import { Text, View } from 'react-native';
 import {
   createPricingClient,
   ResourceModel,
@@ -12,7 +16,7 @@ import { hasPermission, businessTime } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
 import { authClient } from '../auth/client';
 import { CommandForm } from '../components/CommandForm';
-import { Action, Choice, styles } from '../organization/Controls';
+import { Action, Choice } from '../organization/Controls';
 export function PricingPanel({
   business,
   productId,
@@ -35,21 +39,18 @@ export function PricingPanel({
   const [selected, setSelected] = useState(''),
     [editing, setEditing] = useState(false),
     [quote, setQuote] = useState<Awaited<ReturnType<typeof client.quote>> | null>(null);
+  useCatalogLive(business.id, () => {
+    setQuote(null);
+    void model.refresh();
+  });
   const id = selected || state.data?.variants[0]?.id || '',
     manage = hasPermission(business, 'products.write');
   return (
-    <View style={styles.group}>
-      <Text accessibilityRole="header">Variants, units and pricing</Text>
-      {state.error && <Text accessibilityRole="alert">{state.error}</Text>}
-      {state.busy && <Text>Loading pricing…</Text>}
-      <Action
-        label="Refresh pricing"
-        disabled={state.busy}
-        onPress={() => {
-          setQuote(null);
-          void model.run();
-        }}
-      />
+    <ScreenBody>
+      <ScreenHeader title="Variants, units and pricing" />
+      {Boolean(state.error) && <Text accessibilityRole="alert">{state.error}</Text>}
+      {state.busy && <LoadingState message="Loading pricing…" />}
+
       {quote && (
         <Text accessibilityLiveRegion="polite">
           Server price: {formatMinorUnits(quote.totalMinor, quote.currency)}; tax{' '}
@@ -58,6 +59,18 @@ export function PricingPanel({
       )}
       {state.data && (
         <>
+          <Text>
+            Prices are set per sellable variant and base unit. To adjust a price, publish a new
+            effective price; existing receipts keep their recorded totals.
+          </Text>
+          {!state.data.variants.length && (
+            <Text>Create a variant with its stock unit below, then publish its selling price.</Text>
+          )}
+          {state.data.variants.length > 0 && !state.data.prices.length && (
+            <Text>
+              No selling price has been published. Use Publish price below before checkout.
+            </Text>
+          )}
           <Choice
             label="Selected variant"
             value={id}
@@ -70,42 +83,11 @@ export function PricingPanel({
               label: `${v.sku} · ${v.name} · ${v.state}`,
             }))}
           />
-          {state.data.variants.map((v) => (
-            <Text key={v.id}>
-              {v.name} · {v.sku} ·{' '}
-              {Object.entries(v.attributes)
-                .map(([k, value]) => `${k}: ${value}`)
-                .join(', ')}
-              {v.cost !== null && ` · cost ${v.cost} ${v.costCurrency}`}
-            </Text>
-          ))}
-          {state.data.prices.map((p) => (
-            <Text key={p.id}>
-              {p.unitPrice} {p.currency} ·{' '}
-              {p.storeId ? locations.find((l) => l.id === p.storeId)?.name : 'Business price'} ·
-              from {businessTime(p.startsAt, business.timeZone)}
-            </Text>
-          ))}
-          {state.data.promotions.map((p) => (
-            <Text key={p.id}>
-              {p.name} · {p.discountBasisPoints / 100}% · priority {p.priority}
-            </Text>
-          ))}
-          <CommandForm
-            key={`quote-${id}`}
-            definition={quoteForm(client, state.data, locations, id, setQuote)}
-            run={(work) => {
-              setQuote(null);
-              void model.run(work);
-            }}
-          />
-          {manage && !business.scope?.storeId && (
-            <>
-              <Action
-                label={editing ? 'Add new variant' : 'Edit selected variant'}
-                onPress={() => setEditing(!editing)}
-              />
-              {variantForms(client, state.data, id, editing).map((form) => (
+          {manage &&
+            !business.scope?.warehouseId &&
+            priceForms(client, state.data, business, locations, id)
+              .filter((form) => form.title === 'Publish price')
+              .map((form) => (
                 <CommandForm
                   key={`${form.title}-${id}`}
                   definition={form}
@@ -115,22 +97,72 @@ export function PricingPanel({
                   }}
                 />
               ))}
-            </>
-          )}
-          {manage &&
-            !business.scope?.warehouseId &&
-            priceForms(client, state.data, business, locations, id).map((form) => (
-              <CommandForm
-                key={`${form.title}-${id}`}
-                definition={form}
-                run={(work) => {
-                  setQuote(null);
-                  void model.run(work);
-                }}
-              />
+          {state.data.prices.map((p) => (
+            <Text key={p.id}>
+              {p.unitPrice} {p.currency} ·{' '}
+              {p.storeId ? locations.find((l) => l.id === p.storeId)?.name : 'Business price'} ·
+              from {businessTime(p.startsAt, business.timeZone)}
+            </Text>
+          ))}
+
+          <FormSection title="Variants and promotions">
+            {state.data.variants.map((v) => (
+              <Text key={v.id}>
+                {v.name} · {v.sku} ·{' '}
+                {Object.entries(v.attributes)
+                  .map(([k, value]) => `${k}: ${value}`)
+                  .join(', ')}
+                {v.cost !== null && ` · cost ${v.cost} ${v.costCurrency}`}
+              </Text>
             ))}
+            {state.data.promotions.map((p) => (
+              <Text key={p.id}>
+                {p.name} · {p.discountBasisPoints / 100}% · priority {p.priority}
+              </Text>
+            ))}
+            <CommandForm
+              key={`quote-${id}`}
+              definition={quoteForm(client, state.data, locations, id, setQuote)}
+              run={(work) => {
+                setQuote(null);
+                void model.run(work);
+              }}
+            />
+            {manage && !business.scope?.storeId && (
+              <>
+                <Action
+                  label={editing ? 'Add new variant' : 'Edit selected variant'}
+                  onPress={() => setEditing(!editing)}
+                />
+                {variantForms(client, state.data, id, editing).map((form) => (
+                  <CommandForm
+                    key={`${form.title}-${id}`}
+                    definition={form}
+                    run={(work) => {
+                      setQuote(null);
+                      void model.run(work);
+                    }}
+                  />
+                ))}
+              </>
+            )}
+            {manage &&
+              !business.scope?.warehouseId &&
+              priceForms(client, state.data, business, locations, id)
+                .filter((form) => form.title !== 'Publish price')
+                .map((form) => (
+                  <CommandForm
+                    key={`${form.title}-${id}`}
+                    definition={form}
+                    run={(work) => {
+                      setQuote(null);
+                      void model.run(work);
+                    }}
+                  />
+                ))}
+          </FormSection>
         </>
       )}
-    </View>
+    </ScreenBody>
   );
 }

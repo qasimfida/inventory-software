@@ -1,0 +1,65 @@
+{
+  "results": [
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "overview": "pass",
+      "currencySelection": "pass",
+      "currencyIsolation": "pass",
+      "trend": "pass",
+      "overflow": false,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "overview": "pass",
+      "currencySelection": "pass",
+      "currencyIsolation": "pass",
+      "trend": "pass",
+      "overflow": false,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "overview": "pass",
+      "currencySelection": "pass",
+      "currencyIsolation": "pass",
+      "trend": "pass",
+      "overflow": false,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "overview": "pass",
+      "currencySelection": "pass",
+      "currencyIsolation": "pass",
+      "trend": "pass",
+      "overflow": false,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "overview": "pass",
+      "currencySelection": "pass",
+      "currencyIsolation": "pass",
+      "trend": "pass",
+      "overflow": false,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "overview": "pass",
+      "currencySelection": "pass",
+      "currencyIsolation": "pass",
+      "trend": "pass",
+      "overflow": false,
+      "accessibilityViolations": 0
+    }
+  ],
+  "errors": []
+}

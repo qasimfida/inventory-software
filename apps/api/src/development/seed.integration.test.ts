@@ -37,12 +37,12 @@ beforeAll(async () => {
   }
 }, 20000);
 
-it('stores seven independently salted hashes and preserves identities, passwords and sessions on rerun', async () => {
+it('stores eight independently salted hashes and preserves identities, passwords and sessions on rerun', async () => {
   const before = (
     await fixture.db().query('SELECT id,email,password_hash FROM auth_accounts ORDER BY id')
   ).rows;
-  expect(before).toHaveLength(7);
-  expect(new Set(before.map((r) => r.password_hash)).size).toBe(7);
+  expect(before).toHaveLength(8);
+  expect(new Set(before.map((r) => r.password_hash)).size).toBe(8);
   for (const row of before) {
     expect(row.password_hash).toMatch(/^scrypt-v1\$/);
     expect(row.password_hash).not.toContain(password);
@@ -138,14 +138,19 @@ it('uses the browser cookie flow without exposing bearer tokens', async () => {
     .api()
     .post('/api/v1/auth/login')
     .set({ origin: 'http://localhost:5173', 'x-inventory-client': 'web' })
-    .send({ email: 'admin@example.test', password })
+    .send({ email: 'admin@inv.com', password })
     .expect(201);
   expect(response.body.token).toBeUndefined();
   expect(String(response.headers['set-cookie'])).toContain('HttpOnly');
   await fixture
     .api()
     .get('/api/v1/auth/session')
-    .set('Cookie', String(response.headers['set-cookie']).split(';')[0]!)
+    .set(
+      'Cookie',
+      (response.headers['set-cookie'] as unknown as string[])
+        .find((value) => value.startsWith('inventory_session='))!
+        .split(';')[0]!,
+    )
     .expect(200);
 });
 
@@ -164,7 +169,7 @@ it('refuses production before connecting and protects collisions atomically', as
     .expect(200);
   await fixture
     .db()
-    .query('UPDATE auth_accounts SET email=$1 WHERE id=$2', ['viewer@example.test', fixtureId(7)]);
+    .query('UPDATE auth_accounts SET email=$1 WHERE id=$2', ['viewer@inv.com', fixtureId(7)]);
 });
 
 it('explicit reset changes only fixture credentials, revokes their sessions and preserves unrelated users', async () => {

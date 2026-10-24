@@ -1,7 +1,8 @@
+import { Text as Txt } from '../ui/Themed';
 import { useMemo, useState } from 'react';
 import { createCountClient, countExport } from '@inventory/api-client';
 import type { Business, CountDetail } from '@inventory/contracts';
-import { Text as Txt, Share } from 'react-native';
+import { Share } from 'react-native';
 import { Action as Act, Field as F } from '../organization/Controls';
 import { authClient } from '../auth/client';
 import { operationKey as key } from '../platform/operation-key';

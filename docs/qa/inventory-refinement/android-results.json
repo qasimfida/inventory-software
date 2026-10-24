@@ -1,0 +1,13 @@
+{
+  "platform": "Android 16 Expo Go",
+  "resolution": "1080x2400",
+  "checks": [
+    "authentication",
+    "inventory overview",
+    "stock status navigation",
+    "header profile popup",
+    "preferences popup",
+    "bottom preferences popup"
+  ],
+  "result": "passed"
+}

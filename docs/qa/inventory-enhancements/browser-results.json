@@ -1,0 +1,65 @@
+{
+  "results": [
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "search": "pass",
+      "singlePageHidden": "pass",
+      "gridDrawer": "pass",
+      "scrollAppend": "pass",
+      "preferenceSwitch": "pass",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "search": "pass",
+      "singlePageHidden": "pass",
+      "gridDrawer": "pass",
+      "scrollAppend": "pass",
+      "preferenceSwitch": "pass",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "search": "pass",
+      "singlePageHidden": "pass",
+      "gridDrawer": "pass",
+      "scrollAppend": "pass",
+      "preferenceSwitch": "pass",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "search": "pass",
+      "singlePageHidden": "pass",
+      "gridDrawer": "pass",
+      "scrollAppend": "pass",
+      "preferenceSwitch": "pass",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "search": "pass",
+      "singlePageHidden": "pass",
+      "gridDrawer": "pass",
+      "scrollAppend": "pass",
+      "preferenceSwitch": "pass",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "search": "pass",
+      "singlePageHidden": "pass",
+      "gridDrawer": "pass",
+      "scrollAppend": "pass",
+      "preferenceSwitch": "pass",
+      "overflow": false
+    }
+  ],
+  "errors": []
+}

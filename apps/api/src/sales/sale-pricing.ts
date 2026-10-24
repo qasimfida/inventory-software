@@ -1,10 +1,5 @@
-import {
-  BadRequestException,
-  ConflictException,
-  ForbiddenException,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { PricingConflict } from '../http/pricing-conflict.js';
+import { BadRequestException, ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { createHash } from 'node:crypto';
 import { canonicalJson } from '@inventory/domain';
 import { hasPermission, currencySchema } from '@inventory/contracts';
@@ -22,7 +17,7 @@ export class SalePricing {
   ) {}
   async quote(ctx: OrganizationContext, input: Cart): Promise<SaleQuote> {
     const wh = await this.ledger.warehouse(ctx, input.warehouseId);
-    if (!wh.storeId) throw new ConflictException();
+    if (!wh.storeId) throw new PricingConflict('CHECKOUT_STORE_REQUIRED');
     if (input.customerId) {
       if (!hasPermission(ctx.business, 'customers.read')) throw new ForbiddenException();
       await this.customers.active(ctx, input.customerId, wh.storeId);
@@ -70,8 +65,9 @@ export class SalePricing {
     }
     const currency = lines[0]!.currency;
     if (input.customerId && (await this.customers.get(ctx, input.customerId)).currency !== currency)
-      throw new ConflictException();
-    if (lines.some((l) => l.currency !== currency)) throw new ConflictException();
+      throw new PricingConflict('CART_CURRENCY_MISMATCH');
+    if (lines.some((l) => l.currency !== currency))
+      throw new PricingConflict('CART_CURRENCY_MISMATCH');
     const net = lines.reduce((n, l) => n + BigInt(l.netMinor), 0n),
       tax = lines.reduce((n, l) => n + BigInt(l.taxMinor), 0n);
     if (net + tax > 999999999999999999999999n) throw new BadRequestException();

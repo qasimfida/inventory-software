@@ -14,6 +14,12 @@ const cli = fileURLToPath(
 
 const probes = [
   [
+    'shared logic importing presentation tokens',
+    "export { palettes } from '@inventory/design-tokens';",
+    'domain-and-server-no-design-dependencies',
+    'packages/api-client/src/audit.ts',
+  ],
+  [
     'API importing UI',
     "export { createElement } from 'react';",
     'api-no-ui-native-imports',

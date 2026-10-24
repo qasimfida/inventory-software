@@ -18,7 +18,7 @@ export function FormDemo() {
   }, [error, attempt]);
 
   return (
-    <Panel aria-labelledby="form-heading">
+    <Panel id="showcase-forms" tabIndex={-1} aria-labelledby="form-heading">
       <h2 id="form-heading">Form controls</h2>
       <p className="text-sm text-muted-foreground">
         A local preview only. Nothing is saved or sent.
@@ -71,11 +71,14 @@ export function FormDemo() {
             </Select>
           )}
         </FormField>
-        <label htmlFor="preview-hints" className="flex min-h-11 items-center gap-3 text-sm">
+        <label
+          htmlFor="preview-hints"
+          className="flex min-h-(--target-size) items-center gap-3 text-sm"
+        >
           <Checkbox
             id="preview-hints"
             checked={hints}
-            onChange={(event) => setHints(event.target.checked)}
+            onCheckedChange={(checked) => setHints(checked === true)}
           />
           Include supporting descriptions
         </label>

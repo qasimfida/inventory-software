@@ -1,6 +1,21 @@
 module.exports = {
   forbidden: [
     {
+      name: 'spreadsheet-parsers-only-in-import-adapter',
+      severity: 'error',
+      from: {
+        path: '^packages/',
+        pathNot: '^packages/api-client/src/import-(file|xlsx)\\.ts$|\\.test\\.ts$',
+      },
+      to: { path: 'node_modules/(fflate|fast-xml-parser)(/|$)' },
+    },
+    {
+      name: 'domain-and-server-no-design-dependencies',
+      severity: 'error',
+      from: { path: '^(apps/api/|packages/(contracts|domain|api-client)/)' },
+      to: { path: '(packages/design-tokens/|node_modules/@inventory/design-tokens)' },
+    },
+    {
       name: 'api-runtime-no-development-fixtures',
       severity: 'error',
       from: { path: '^apps/api/src/', pathNot: '(^apps/api/src/development/|\\.test\\.ts$)' },
@@ -21,7 +36,7 @@ module.exports = {
       to: {
         path: 'node_modules/',
         pathNot:
-          'node_modules/(zod|@noble/(ciphers|hashes)|@inventory/(contracts|api-client|domain))(/|$)',
+          'node_modules/(zod|fflate|fast-xml-parser|@noble/(ciphers|hashes)|@inventory/(contracts|api-client|domain|design-tokens))(/|$)',
       },
     },
     {
@@ -36,7 +51,10 @@ module.exports = {
     {
       name: 'web-no-native-server-imports',
       severity: 'error',
-      from: { path: '^apps/web/src/', pathNot: '^apps/web/src/platform/desktop-storage\\.ts$' },
+      from: {
+        path: '^apps/web/src/',
+        pathNot: '^apps/web/src/platform/desktop-(storage|links)\\.ts$',
+      },
       to: {
         path: '(node:|node_modules/(react-native|@react-native|expo[^/]*|@expo|@tauri-apps|@nestjs|pg)(/|$))',
       },

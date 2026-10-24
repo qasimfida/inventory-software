@@ -1,0 +1,71 @@
+{
+  "results": [
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "inventory": "pass",
+      "search": "pass",
+      "pagination": "pass",
+      "preferences": "pass",
+      "automaticQuote": "pass",
+      "cartRetention": "pass",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "inventory": "pass",
+      "search": "pass",
+      "pagination": "pass",
+      "preferences": "pass",
+      "automaticQuote": "pass",
+      "cartRetention": "pass",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "inventory": "pass",
+      "search": "pass",
+      "pagination": "pass",
+      "preferences": "pass",
+      "automaticQuote": "pass",
+      "cartRetention": "pass",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "inventory": "pass",
+      "search": "pass",
+      "pagination": "pass",
+      "preferences": "pass",
+      "automaticQuote": "pass",
+      "cartRetention": "pass",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "inventory": "pass",
+      "search": "pass",
+      "pagination": "pass",
+      "preferences": "pass",
+      "automaticQuote": "pass",
+      "cartRetention": "pass",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "inventory": "pass",
+      "search": "pass",
+      "pagination": "pass",
+      "preferences": "pass",
+      "automaticQuote": "pass",
+      "cartRetention": "pass",
+      "overflow": false
+    }
+  ],
+  "errors": []
+}

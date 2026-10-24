@@ -1,0 +1,1013 @@
+{
+  "results": [
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/dashboard",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/pos",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/sales",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/cash",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/catalog",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/inventory",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/warehouse",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/transfers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/storage",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/warehouse-view",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/purchasing",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/customers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/payables",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/accounting",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/reports",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/trading",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/integrations",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/profile",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/business",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/preferences",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/security",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/device",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/users",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/locations",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "owner",
+      "path": "/settings/audit",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/dashboard",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/pos",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/sales",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/cash",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/catalog",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/inventory",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/warehouse",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/transfers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/storage",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/warehouse-view",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/purchasing",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/customers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/payables",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/accounting",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/reports",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/integrations",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/profile",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/business",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/preferences",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/security",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/device",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/locations",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "manager",
+      "path": "/settings/audit",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/dashboard",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/pos",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/sales",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/cash",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/catalog",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/inventory",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/warehouse",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/transfers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/storage",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/warehouse-view",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/customers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/integrations",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/profile",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/business",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/preferences",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/security",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/device",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "light",
+      "role": "cashier",
+      "path": "/settings/locations",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/dashboard",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/pos",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/sales",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/cash",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/catalog",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/inventory",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/warehouse",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/transfers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/storage",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/warehouse-view",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/purchasing",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/customers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/payables",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/accounting",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/reports",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/trading",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/integrations",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/profile",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/business",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/preferences",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/security",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/device",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/users",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/locations",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "owner",
+      "path": "/settings/audit",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/dashboard",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/pos",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/sales",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/cash",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/catalog",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/inventory",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/warehouse",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/transfers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/storage",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/warehouse-view",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/purchasing",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/customers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/payables",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/accounting",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/reports",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/integrations",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/profile",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/business",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/preferences",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/security",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/device",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/locations",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "manager",
+      "path": "/settings/audit",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/dashboard",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/pos",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/sales",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/cash",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/catalog",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/inventory",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/warehouse",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/transfers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/storage",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/warehouse-view",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/customers",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/integrations",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/profile",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/business",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/preferences",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/security",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/device",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/notifications",
+      "alerts": [],
+      "overflow": false
+    },
+    {
+      "colorScheme": "dark",
+      "role": "cashier",
+      "path": "/settings/locations",
+      "alerts": [],
+      "overflow": false
+    }
+  ],
+  "issues": []
+}

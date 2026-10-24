@@ -1,3 +1,8 @@
+import { AccordionSection } from '@/components/ui/Accordion';
+import { lazy, Suspense, useRef, useState } from 'react';
+const ConfirmDialog = lazy(() =>
+  import('@/components/common/ConfirmDialog').then((module) => ({ default: module.ConfirmDialog })),
+);
 import type { Business } from '@inventory/contracts';
 import { editBusinessSchema } from '@inventory/contracts';
 import type { OrganizationModel } from '@inventory/api-client';
@@ -12,11 +17,16 @@ export function BusinessEditor({
   model: OrganizationModel;
   busy: boolean;
 }) {
+  const [state, setState] = useState<string>(business.state);
+  const approved = useRef(false);
+  const form = useRef<HTMLFormElement>(null);
   return (
     <form
-      className="space-y-2"
+      ref={form}
+      className="screen-form"
       onSubmit={(event) => {
         event.preventDefault();
+        if (state === 'archived' && !approved.current) return;
         const data = new FormData(event.currentTarget);
         void model.refresh(async () => {
           await model.client.editBusiness(
@@ -31,7 +41,7 @@ export function BusinessEditor({
         });
       }}
     >
-      <fieldset disabled={busy || business.state === 'archived'} className="space-y-2">
+      <fieldset disabled={busy || business.state === 'archived'} className="screen-form">
         <legend>Edit business</legend>
         <label htmlFor="business-name">Business name</label>
         <Input
@@ -49,14 +59,37 @@ export function BusinessEditor({
           required
           maxLength={100}
         />
-        <label htmlFor="business-state">Business state</label>
-        <Select id="business-state" name="state" defaultValue={business.state}>
-          {['active', 'suspended', 'archived'].map((state) => (
-            <option key={state}>{state}</option>
-          ))}
-        </Select>
-        <p className="text-sm">Suspension blocks child access. Archiving is permanent.</p>
-        <Button type="submit">Save business</Button>
+        <AccordionSection title="Business status and archiving">
+          <label htmlFor="business-state">Business state</label>
+          <Select
+            id="business-state"
+            name="state"
+            value={state}
+            onChange={(event) => setState(event.target.value)}
+          >
+            {['active', 'suspended', 'archived'].map((state) => (
+              <option key={state}>{state}</option>
+            ))}
+          </Select>
+          <p className="text-sm">Suspension blocks child access. Archiving is permanent.</p>
+        </AccordionSection>
+        {state === 'archived' ? (
+          <Suspense fallback={<Button disabled>Loading confirmation…</Button>}>
+            <ConfirmDialog
+              trigger={<Button>Save business</Button>}
+              title="Archive this business?"
+              description="Archiving is permanent and locks business operations. Review the business before confirming."
+              confirmLabel="Confirm archive"
+              onConfirm={() => {
+                approved.current = true;
+                form.current?.requestSubmit();
+                approved.current = false;
+              }}
+            />
+          </Suspense>
+        ) : (
+          <Button type="submit">Save business</Button>
+        )}
       </fieldset>
     </form>
   );

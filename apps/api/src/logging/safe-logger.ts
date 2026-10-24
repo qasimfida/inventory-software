@@ -1,12 +1,16 @@
 import type { LoggerService } from '@nestjs/common';
 
 const sensitiveKey =
-  /password|passwd|secret|token|authorization|cookie|credential|database.?url|connection.?string|body|headers|sql|query|params|stack|email|phone|address|customer.?name|contact/i;
+  /private.?key|prompt|response|completion|api.?key|model.?output|password|passwd|secret|token|authorization|cookie|credential|database.?url|connection.?string|body|headers|sql|query|params|stack|email|phone|address|customer.?name|contact/i;
 
 export function redact(value: unknown, seen = new WeakSet<object>()): unknown {
   if (value instanceof Error) return { name: 'Error', message: '[REDACTED]' };
   if (typeof value === 'string')
     return value
+      .replace(
+        /-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----/g,
+        '[REDACTED_KEY]',
+      )
       .replace(/\b(?:postgres(?:ql)?|https?):\/\/\S+/gi, '[REDACTED_URL]')
       .replace(/\bBearer\s+\S+/gi, 'Bearer [REDACTED]')
       .replace(

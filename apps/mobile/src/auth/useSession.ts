@@ -1,11 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
-import { AuthenticationError } from '@inventory/api-client';
+import { AuthenticationError, isTransientReadFailure } from '@inventory/api-client';
 import type { Session } from '@inventory/contracts';
 import { authClient } from './client';
+// A missing saved session is a normal signed-out state, not a connection failure.
+async function savedSession() {
+  try {
+    return await authClient.current();
+  } catch (error) {
+    if (error instanceof AuthenticationError && error.status === 401) return null;
+    throw error;
+  }
+}
+
 export function useSession() {
   const [session, setSession] = useState<Session | null>(null);
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState(true);
   const [message, setMessage] = useState('');
   const generation = useRef(0);
   const run = useCallback(async (action: () => Promise<Session | null>, background = false) => {
@@ -17,7 +27,9 @@ export function useSession() {
       if (current === generation.current) setSession(value);
     } catch (error) {
       if (current === generation.current) {
-        setSession(null);
+        // A temporary transport failure cannot extend the existing session expiry.
+        // Keep only an already verified session during background checks.
+        if (!background || !isTransientReadFailure(error)) setSession(null);
         setMessage(
           error instanceof AuthenticationError
             ? error.message
@@ -39,14 +51,14 @@ export function useSession() {
     };
     const check = () => {
       lock();
-      void run(() => authClient.current());
+      void run(savedSession);
     };
     check();
     const subscription = AppState.addEventListener('change', (state) =>
       state === 'active' ? check() : lock(),
     );
     const timer = setInterval(() => {
-      if (AppState.currentState === 'active') void run(() => authClient.current(), true);
+      if (AppState.currentState === 'active') void run(savedSession, true);
     }, 60000);
     return () => {
       invalidate();

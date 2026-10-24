@@ -3,6 +3,7 @@ import type { Checkout } from '@inventory/contracts';
 import type { createSalesClient } from './sales.js';
 type Client = ReturnType<typeof createSalesClient>;
 import type { PosItem, DraftLine, PosState } from './pos-types.js';
+import { addCartLine } from './cart-lines.js';
 export class PosModel {
   private state: PosState = {
     lines: [],
@@ -21,6 +22,9 @@ export class PosModel {
     private readonly client: Client,
     readonly warehouseId: string,
   ) {}
+  get quoteRevision() {
+    return this.invalidation;
+  }
   snapshot = () => this.state;
   subscribe = (listener: () => void) => {
     this.listeners.add(listener);
@@ -60,21 +64,28 @@ export class PosModel {
     return !this.state.busy && !this.state.uncertain;
   }
   add(item: PosItem) {
-    if (!this.editable() || this.state.lines.length >= 50) return;
+    if (!this.editable()) return;
+    let lines: DraftLine[];
+    try {
+      lines = addCartLine(this.state.lines, {
+        variantId: item.id,
+        unitId: item.unitId,
+        name: item.name,
+        sku: item.sku,
+        units: item.units,
+        ...(item.images ? { images: item.images } : {}),
+        quantity: '1',
+        locationId: null,
+        manualDiscountBasisPoints: 0,
+      });
+    } catch {
+      this.publish({
+        error: 'Check the existing quantity or remove a line before adding more items.',
+      });
+      return;
+    }
     this.publish({
-      lines: [
-        ...this.state.lines,
-        {
-          variantId: item.id,
-          unitId: item.unitId,
-          name: item.name,
-          sku: item.sku,
-          units: item.units,
-          quantity: '1',
-          locationId: null,
-          manualDiscountBasisPoints: 0,
-        },
-      ],
+      lines,
       quote: null,
       receipt: null,
       error: '',

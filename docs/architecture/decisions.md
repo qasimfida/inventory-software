@@ -63,3 +63,7 @@ Before the relevant feature: offline authorization lifetime and revocation limit
 ## Organization management (Command 7)
 
 Implemented exclusive business ownership, account-based owner/manager/viewer memberships and store-bound warehouses/terminals. Branches use the store entity. Role/lifecycle transitions serialize on the business row and use optimistic record versions; all changes append transactional audit events. Web/desktop and native mobile share contracts and in-memory coordination, not UI frameworks. No new dependencies, offline persistence or product tables. [Organization management](../development/organization-management.md) records the permission matrix, assignment flow, explicit RLS deferral and validation limits.
+
+## Stage 6 — 2026-10-20
+
+Use explicitly consented bilateral order snapshots for B2B coordination; do not cross tenant repository boundaries or infer shared catalog access. Use a separate append-only double-entry journal with database balancing/immutability and controlled source posting rather than rewriting historic AR/AP or inventing inventory costs. Reuse existing compositional financial permissions and require business-wide access. Keep external providers unconfigured until approved and implemented; expose honest status and guarded navigation-only AI. New workflows are online-only and preserve the cash outbox. See [scope, posting rules and release limitations](../development/stage-6.md).

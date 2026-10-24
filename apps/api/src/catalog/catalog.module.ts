@@ -21,6 +21,6 @@ import { CategoryService } from './category.service.js';
     PricingService,
     CatalogAccess,
   ],
-  exports: [PricingService, CatalogAccess, CatalogSearch],
+  exports: [ProductService, PricingService, CatalogAccess, CatalogSearch],
 })
 export class CatalogModule {}

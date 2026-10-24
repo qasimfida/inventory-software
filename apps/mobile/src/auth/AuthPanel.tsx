@@ -1,179 +1,125 @@
-import { OfflinePanel } from '../offline/OfflinePanel';
-import { lockOffline } from '../offline/offline-lock';
+import { IconAction } from '../ui/IconAction';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { ManagementPanel } from '../organization/ManagementPanel';
-import { useSession } from './useSession';
-import type { ActiveSession, Session } from '@inventory/contracts';
+import { View } from 'react-native';
+import { Text, TextInput } from '../ui/Themed';
+import { Action } from '../ui/Controls';
+import { useTheme } from '../theme';
+import { metrics } from '../ui/metrics';
+import { useAccount } from '../shell/SessionContext';
 import { authClient } from './client';
-import { theme } from '../theme';
-
-export function AuthPanel() {
-  const { session, busy, message, run } = useSession();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [invitation, setInvitation] = useState('');
-  const [invited, setInvited] = useState(false);
-  const [sessions, setSessions] = useState<ActiveSession[]>([]);
-  const [sessionsOwner, setSessionsOwner] = useState('');
-  function action(label: string, work: () => Promise<Session | null>) {
-    return (
-      <Pressable
-        accessibilityRole="button"
-        accessibilityState={{ disabled: busy }}
-        disabled={busy}
-        style={styles.button}
-        onPress={() => void run(work)}
-      >
-        <Text style={styles.buttonText}>{label}</Text>
-      </Pressable>
-    );
+import type { AuthLink } from '@inventory/api-client';
+export function AuthPanel({
+  invited = false,
+  link,
+  navigate,
+}: {
+  invited?: boolean;
+  link?: AuthLink | null;
+  navigate: (path: string) => void;
+}) {
+  const theme = useTheme(),
+    { busy, message, run } = useAccount();
+  const [email, setEmail] = useState(link?.email ?? ''),
+    [password, setPassword] = useState(''),
+    [code, setCode] = useState(link?.token ?? '');
+  const [visible, setVisible] = useState(false),
+    [error, setError] = useState('');
+  async function submit() {
+    if (!email.trim() || !password || (invited && (password.length < 15 || code.length !== 43))) {
+      setError('Enter your email, password and a valid invitation code where required.');
+      return;
+    }
+    setError('');
+    const secret = password,
+      token = code;
+    setPassword('');
+    setCode('');
+    await run(async () => {
+      const session = invited
+        ? await authClient.accept(email.trim(), secret, token)
+        : await authClient.login(email.trim(), secret);
+      navigate('/dashboard');
+      return session;
+    });
   }
   return (
-    <View style={styles.container}>
-      <Text accessibilityRole="header" style={styles.heading}>
-        Account access
+    <View style={{ gap: theme.spacing.medium, paddingVertical: theme.spacing.large }}>
+      <Text
+        accessibilityRole="header"
+        style={{ fontSize: metrics.title, fontWeight: '600', textAlign: 'center' }}
+      >
+        Inventory
       </Text>
-      <Text>
-        Invitation required. Management requires a connection; offline cash uses a separate bounded
-        permission below.
+      <Text accessibilityRole="header" style={{ fontSize: metrics.heading }}>
+        {invited ? 'Accept your invitation' : 'Sign in'}
       </Text>
-      {message ? (
-        <Text accessibilityRole="alert" style={styles.error}>
-          {message}
+      <Text tone="muted">Sign in to manage your inventory.</Text>
+      {Boolean(error || message) && (
+        <Text tone="error" accessibilityRole="alert">
+          {error || message}
         </Text>
-      ) : null}
-      {busy ? <Text accessibilityLiveRegion="polite">Verifying session…</Text> : null}
-      {session ? (
-        <>
-          <Text>Signed in as {session.user.email}</Text>
-          {!busy && <ManagementPanel key={session.user.id} />}
-          <Text>
-            Expires {new Date(session.expiresAt).toLocaleTimeString()}. Sign in again after 12
-            hours.
-          </Text>
-          {action('Renew session', () => authClient.renew())}
-          {action('Log out', async () => {
-            lockOffline();
-            await authClient.logout();
-            setSessions([]);
-            return null;
-          })}
-          {action('Log out all sessions', async () => {
-            lockOffline();
-            await authClient.logout(true);
-            setSessions([]);
-            return null;
-          })}
-          {action('Show active sessions', async () => {
-            setSessions(await authClient.list());
-            setSessionsOwner(session.user.id);
-            return authClient.current();
-          })}
-          {(sessionsOwner === session.user.id ? sessions : []).map((entry) => (
-            <View key={entry.id}>
-              <Text>
-                {entry.id === session.sessionId ? 'This session' : 'Other session'} ·{' '}
-                {new Date(entry.createdAt).toLocaleString()}
-              </Text>
-              {action(`Revoke session ${entry.id.slice(0, 8)}`, async () => {
-                await authClient.revoke(entry.id);
-                setSessions([]);
-                return authClient.current();
-              })}
-            </View>
-          ))}
-        </>
-      ) : (
-        <>
-          <Text>Account email</Text>
-          <TextInput
-            accessibilityLabel="Account email"
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
-            autoCorrect={false}
-            autoComplete="username"
-            keyboardType="email-address"
-            maxLength={254}
-            editable={!busy}
+      )}
+      <Text>Account email</Text>
+      <TextInput
+        accessibilityLabel="Account email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        autoCorrect={false}
+        autoComplete="username"
+        editable={!busy}
+      />
+      <Text>Password{invited ? ' (15–128 characters)' : ''}</Text>
+      <View style={{ position: 'relative' }}>
+        <TextInput
+          style={{ paddingRight: metrics.target }}
+          accessibilityLabel="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!visible}
+          autoCapitalize="none"
+          autoCorrect={false}
+          autoComplete={invited ? 'new-password' : 'current-password'}
+          maxLength={128}
+          editable={!busy}
+        />
+        <View
+          style={{ position: 'absolute', right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
+        >
+          <IconAction
+            label={visible ? 'Hide password' : 'Show password'}
+            icon={visible ? 'eye-off' : 'eye'}
+            disabled={busy}
+            onPress={() => setVisible(!visible)}
           />
-          <Text>Password{invited ? ' (15–128 characters)' : ''}</Text>
+        </View>
+      </View>
+      {invited && (
+        <>
+          <Text>Invitation code</Text>
           <TextInput
-            accessibilityLabel="Password"
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
+            accessibilityLabel="Invitation code"
+            value={code}
+            onChangeText={setCode}
             secureTextEntry
             autoCapitalize="none"
             autoCorrect={false}
-            autoComplete={invited ? 'new-password' : 'current-password'}
-            maxLength={128}
-            editable={!busy}
+            maxLength={43}
           />
-          {invited && (
-            <>
-              <Text>Invitation code</Text>
-              <TextInput
-                accessibilityLabel="Invitation code"
-                style={styles.input}
-                value={invitation}
-                onChangeText={setInvitation}
-                secureTextEntry
-                autoCapitalize="none"
-                autoCorrect={false}
-                maxLength={43}
-                editable={!busy}
-              />
-            </>
-          )}
-          {action(invited ? 'Accept invitation' : 'Log in', async () => {
-            const secret = password;
-            const code = invitation;
-            setPassword('');
-            setInvitation('');
-            const result = await (invited
-              ? authClient.accept(email, secret, code)
-              : authClient.login(email, secret));
-            setInvited(false);
-            return result;
-          })}
-          <Pressable
-            accessibilityRole="button"
-            disabled={busy}
-            onPress={() => setInvited(!invited)}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>
-              {invited ? 'Use existing account' : 'I have an invitation'}
-            </Text>
-          </Pressable>
-          {action('Check saved session', () => authClient.current())}
         </>
       )}
-      <OfflinePanel />
+      <Action variant="link" label="Forgot password?" onPress={() => navigate('/auth/forgot')} />
+      <Action
+        label={busy ? 'Signing in…' : invited ? 'Accept invitation' : 'Continue'}
+        disabled={busy}
+        onPress={() => void submit()}
+      />
+      <Action
+        variant="link"
+        label={invited ? 'Use existing account' : 'I have an invitation'}
+        onPress={() => navigate(invited ? '/auth/login' : '/auth/invitation')}
+      />
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: { gap: 12, paddingVertical: 24 },
-  heading: { fontSize: 24, fontWeight: '600' },
-  input: {
-    borderWidth: 1,
-    borderColor: theme.colors.muted,
-    borderRadius: theme.radius,
-    minHeight: 48,
-    padding: 12,
-    color: theme.colors.foreground,
-  },
-  button: {
-    minHeight: 48,
-    padding: 12,
-    borderRadius: theme.radius,
-    backgroundColor: theme.colors.primary,
-    justifyContent: 'center',
-  },
-  buttonText: { color: theme.colors.onPrimary, fontSize: 16 },
-  error: { color: theme.colors.error },
-});

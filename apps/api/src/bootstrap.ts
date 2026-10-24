@@ -1,3 +1,4 @@
+import { CatalogLiveService } from './live/catalog-live.service.js';
 import 'reflect-metadata';
 import { SafeLogger } from './logging/safe-logger.js';
 import type { Server } from 'node:http';
@@ -20,6 +21,7 @@ export async function createApplication(logging = true) {
   server.requestTimeout = environment.HTTP_REQUEST_TIMEOUT_MS;
   server.headersTimeout = Math.min(30000, environment.HTTP_REQUEST_TIMEOUT_MS);
   server.keepAliveTimeout = 5000;
+  app.get(CatalogLiveService).attach(server);
   app.enableShutdownHooks();
   return app;
 }

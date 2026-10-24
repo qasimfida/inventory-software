@@ -7,13 +7,18 @@ export const Dialog = Primitive.Root;
 export const DialogTrigger = Primitive.Trigger;
 export const DialogClose = Primitive.Close;
 
-export function DialogContent({ className, ...props }: ComponentProps<typeof Primitive.Content>) {
+export function DialogContent({
+  className,
+  size = 'default',
+  ...props
+}: ComponentProps<typeof Primitive.Content> & { size?: 'default' | 'compact' }) {
   return (
     <Primitive.Portal>
-      <Primitive.Overlay className="fixed inset-0 z-40 bg-black/50" />
+      <Primitive.Overlay className="fixed inset-0 z-40 bg-overlay" />
       <Primitive.Content
         className={cn(
-          'fixed top-1/2 left-1/2 z-50 max-h-[85dvh] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 space-y-5 overflow-y-auto rounded-xl border bg-card p-6 shadow-xl',
+          'fixed top-1/2 left-1/2 z-50 max-h-[85dvh] w-[calc(100%-2rem)] max-w-(--dialog-width) -translate-x-1/2 -translate-y-1/2 space-y-5 overflow-y-auto overscroll-contain [overflow-wrap:anywhere] rounded-(--surface-radius) border bg-elevated p-(--panel-padding) shadow-xl',
+          size === 'compact' && 'max-w-(--dialog-compact-width)',
           className,
         )}
         {...props}

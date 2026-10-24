@@ -1,10 +1,22 @@
+import { ManageProduct } from '../catalog/ManageProduct';
+import { StockAdjustment } from './StockAdjustment';
+import { AccordionSection } from '@/components/ui/Accordion';
+import { CursorPagination } from '@/components/common/CursorPagination';
+import { usePageCollection } from '@/components/common/usePageCollection';
+import { Pagination } from '@/components/common/Pagination';
+import { RefreshCw } from 'lucide-react';
+import { InventoryOverview } from './InventoryOverview';
+import { MovementHistory } from './MovementHistory';
+import { ScreenHeader } from '@/components/common/ScreenHeader';
+import { StockTable } from './StockTable';
+import { LoadingState } from '@/components/common/AsyncState';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
-import { createInventoryClient, ResourceModel, inventoryForms } from '@inventory/api-client';
-import { hasPermission, businessTime } from '@inventory/contracts';
+import { createInventoryClient, cancellableResource, inventoryForms } from '@inventory/api-client';
+import { hasPermission } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
 import { authClient } from '@/platform/auth-client';
 import { CommandForm } from '@/components/common/CommandForm';
-import { Input, Select } from '@/components/ui/FormControls';
+import { Input } from '@/components/ui/FormControls';
 import { Button } from '@/components/ui/Button';
 export function InventoryPanel({
   business,
@@ -13,165 +25,212 @@ export function InventoryPanel({
   business: Business;
   locations: Location[];
 }) {
+  const [editingProduct, setEditingProduct] = useState<string | null>(null);
+  const [adjusting, setAdjusting] = useState('');
   const warehouses = locations.filter((l) => l.kind === 'warehouses' && l.state === 'active');
-  const [warehouseId, setWarehouseId] = useState(warehouses[0]?.id ?? ''),
-    [search, setSearch] = useState(''),
+  const warehouseId = warehouses[0]?.id ?? '';
+  const [search, setSearch] = useState(''),
     [offset, setOffset] = useState(0),
     [cursor, setCursor] = useState<string | undefined>(undefined),
-    [reconciliation, setReconciliation] = useState('');
+    [reconciliation, setReconciliation] = useState(''),
+    [actionsOpen, setActionsOpen] = useState(false);
   const client = useMemo(
     () =>
       createInventoryClient(authClient.organizationRequest, () => crypto.randomUUID(), business.id),
     [business.id],
   );
-  const model = useMemo(
+  const request = useMemo(
     () =>
-      new ResourceModel(() =>
-        client.load({ warehouseId, search, offset, ...(cursor ? { cursor } : {}) }),
+      cancellableResource(
+        (signal) =>
+          client.load({ warehouseId, search, offset, ...(cursor ? { cursor } : {}) }, signal),
+        () => new AbortController(),
       ),
     [client, warehouseId, search, offset, cursor],
   );
-  const state = useSyncExternalStore(model.subscribe, model.snapshot);
+  const { model } = request;
+  const rawPageState = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
+  const state = usePageCollection(
+    rawPageState,
+    [business, warehouseId, search],
+    [offset, cursor],
+    ['items', 'balances', 'reservations', 'movements'],
+    () => {
+      setOffset(0);
+      setCursor(undefined);
+    },
+  );
   useEffect(() => {
-    if (warehouseId) void model.run();
-    return model.reset;
-  }, [model, warehouseId]);
+    const timer = setTimeout(() => {
+      if (warehouseId) void model.run();
+    }, 250);
+    return () => {
+      clearTimeout(timer);
+      request.cancel();
+    };
+  }, [model, request, warehouseId]);
   return (
-    <section aria-label="Inventory ledger" className="space-y-3 border-t pt-4">
-      <h2>Inventory ledger</h2>
-      <p>
-        On hand includes damaged units. Available = on hand − reserved − damaged. In transit is
-        separate. If a request outcome is uncertain after reload or sign-in, inspect history before
-        creating another command.
-      </p>
+    <section aria-label="Inventory ledger" className="screen-section">
+      <ScreenHeader title="Inventory" description="Monitor available stock by warehouse." />
       {!warehouses.length ? (
         <p>Create an active warehouse to manage stock.</p>
       ) : (
         <>
-          <label htmlFor="stock-warehouse">Inventory warehouse</label>
-          <Select
-            id="stock-warehouse"
-            value={warehouseId}
-            onChange={(e) => {
-              setWarehouseId(e.target.value);
-              setOffset(0);
-              setCursor(undefined);
-              setReconciliation('');
-            }}
-          >
-            {warehouses.map((w) => (
-              <option key={w.id} value={w.id}>
-                {w.name}
-              </option>
-            ))}
-          </Select>
-          <label htmlFor="stock-search">Search stock item / SKU</label>
-          <Input
-            id="stock-search"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setOffset(0);
-            }}
-            maxLength={120}
+          {hasPermission(business, 'stock.write') && (
+            <StockAdjustment
+              sku={adjusting}
+              data={state.data ?? null}
+              client={client}
+              warehouseId={warehouseId}
+              error={state.error}
+              busy={state.busy}
+              run={(work) => void model.run(work)}
+              onClose={() => setAdjusting('')}
+            />
+          )}
+          {editingProduct && (
+            <ManageProduct
+              business={business}
+              locations={locations}
+              productId={editingProduct}
+              onClose={() => setEditingProduct(null)}
+            />
+          )}
+          <InventoryOverview
+            onEdit={
+              hasPermission(business, 'products.write') && !business.scope?.storeId
+                ? setEditingProduct
+                : undefined
+            }
+            key={warehouseId}
+            businessId={business.id}
+            warehouseId={warehouseId}
+            revision={state.data}
+            onAdjust={
+              hasPermission(business, 'stock.write')
+                ? (sku) => {
+                    setSearch(sku);
+                    setOffset(0);
+                    setAdjusting(sku);
+                  }
+                : undefined
+            }
           />
-          {state.error && <p role="alert">{state.error}</p>}
-          {state.busy && <p role="status">Loading inventory…</p>}
-          <Button disabled={state.busy} onClick={() => void model.run()}>
-            Refresh inventory
-          </Button>
-          {state.data && (
-            <>
-              <p>
-                {state.data.totals.balances} balance records; negative stock{' '}
-                {state.data.policy.allowNegative ? 'allowed' : 'blocked'}.
-              </p>
-              <ul>
-                {state.data.balances.map((b) => (
-                  <li key={`${b.variantId}-${b.locationId}`}>
-                    {b.sku} · {b.locationName} · on hand {b.onHand} · reserved {b.reserved} ·
-                    damaged {b.damaged} · available {b.available} · in transit {b.inTransit}
-                  </li>
-                ))}
-              </ul>
+          <AccordionSection
+            open={actionsOpen}
+            onOpenChange={setActionsOpen}
+            id="stock-actions"
+            className="space-y-4 rounded-lg border p-4"
+            title={<>Stock operations and movement history</>}
+          >
+            <p className="text-sm text-muted-foreground">
+              Available = on hand − reserved − damaged. In transit is separate. After an uncertain
+              request followed by reload or sign-in, inspect history before creating another
+              command.
+            </p>
+            <div className="collection-toolbar">
+              <div className="collection-search">
+                <label htmlFor="stock-search">Search stock item / SKU</label>
+                <Input
+                  id="stock-search"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setOffset(0);
+                  }}
+                  maxLength={120}
+                />
+              </div>
               <Button
-                disabled={!offset}
-                onClick={() => setOffset(Math.max(0, offset - state.data!.limit))}
+                disabled={state.busy}
+                onClick={() => void model.run()}
+                variant="ghost"
+                size="icon"
+                aria-label="Refresh inventory"
+                title="Refresh"
               >
-                Previous stock page
+                <RefreshCw aria-hidden="true" />
               </Button>
-              <Button
-                disabled={!state.data.hasMore}
-                onClick={() => setOffset(offset + state.data!.limit)}
-              >
-                Next stock page
-              </Button>
-              {hasPermission(business, 'stock.write') &&
-                inventoryForms(client, state.data, warehouseId).map((form) => (
+            </div>
+            {state.error && <p role="alert">{state.error}</p>}
+            {state.busy && <LoadingState message="Loading inventory…" />}
+
+            {state.data && (
+              <>
+                <p>
+                  {state.data.totals.balances} balance records; negative stock{' '}
+                  {state.data.policy.allowNegative ? 'allowed' : 'blocked'}.
+                </p>
+                <h3>Balances by location</h3>
+                <StockTable stock={state.data} />
+                <Pagination
+                  label="stock records"
+                  offset={offset}
+                  pageSize={state.data.limit}
+                  total={Math.max(...Object.values(state.data.totals))}
+                  hasMore={state.data.hasMore}
+                  busy={state.busy || Boolean(state.error)}
+                  onChange={setOffset}
+                />
+                {hasPermission(business, 'stock.write') &&
+                  inventoryForms(client, state.data, warehouseId).map((form) => (
+                    <CommandForm
+                      key={form.title}
+                      definition={form}
+                      run={(work) => void model.run(work)}
+                    />
+                  ))}
+                {hasPermission(business, 'business.write') && (
                   <CommandForm
-                    key={form.title}
-                    definition={form}
+                    definition={{
+                      title: 'Save inventory policy',
+                      fields: [
+                        {
+                          name: 'allowNegative',
+                          label: 'Allow negative stock',
+                          kind: 'boolean',
+                          value: state.data.policy.allowNegative,
+                        },
+                      ],
+                      submit: (v) =>
+                        client.policy({
+                          allowNegative: v.allowNegative === true,
+                          version: state.data!.policy.version,
+                        }),
+                    }}
                     run={(work) => void model.run(work)}
                   />
-                ))}
-              {hasPermission(business, 'business.write') && (
-                <CommandForm
-                  definition={{
-                    title: 'Save inventory policy',
-                    fields: [
-                      {
-                        name: 'allowNegative',
-                        label: 'Allow negative stock',
-                        kind: 'boolean',
-                        value: state.data.policy.allowNegative,
-                      },
-                    ],
-                    submit: (v) =>
-                      client.policy({
-                        allowNegative: v.allowNegative === true,
-                        version: state.data!.policy.version,
-                      }),
-                  }}
-                  run={(work) => void model.run(work)}
-                />
-              )}
-              <Button
-                onClick={() =>
-                  void model.run(async () => {
-                    const result = await client.reconcile(warehouseId);
-                    setReconciliation(
-                      result.consistent
-                        ? 'Ledger and balances reconcile.'
-                        : `${result.mismatches.length} mismatches require investigation.`,
-                    );
-                  })
-                }
-              >
-                Reconcile inventory
-              </Button>
-              {reconciliation && <p role="status">{reconciliation}</p>}
-              <h3>Movement history</h3>
-              <ul>
-                {state.data.movements.map((m) => (
-                  <li key={m.id}>
-                    {businessTime(m.createdAt, business.timeZone)} · {m.type} ·{' '}
-                    {state.data!.items.find((i) => i.id === m.variantId)?.sku ?? m.variantId} ·
-                    quantity {m.quantityDelta} · reserved {m.reservedDelta} · damaged{' '}
-                    {m.damagedDelta} · in transit {m.transitDelta} · {m.reason} · source{' '}
-                    {m.sourceKind}/{m.sourceId}
-                  </li>
-                ))}
-              </ul>
-              {state.data.nextCursor && (
-                <Button onClick={() => setCursor(state.data!.nextCursor ?? undefined)}>
-                  Older stock movements
+                )}
+                <Button
+                  onClick={() =>
+                    void model.run(async () => {
+                      const result = await client.reconcile(warehouseId);
+                      setReconciliation(
+                        result.consistent
+                          ? 'Ledger and balances reconcile.'
+                          : `${result.mismatches.length} mismatches require investigation.`,
+                      );
+                    })
+                  }
+                >
+                  Reconcile inventory
                 </Button>
-              )}
-              {cursor && (
-                <Button onClick={() => setCursor(undefined)}>Latest stock movements</Button>
-              )}
-            </>
-          )}
+                {reconciliation && <p role="status">{reconciliation}</p>}
+                <h3>Movement history</h3>
+                <MovementHistory stock={state.data} timeZone={business.timeZone} />
+                {state.data && (
+                  <CursorPagination
+                    label="stock movements"
+                    previous={Boolean(cursor)}
+                    hasMore={Boolean(state.data.nextCursor)}
+                    busy={state.busy || Boolean(state.error)}
+                    onReset={() => setCursor(undefined)}
+                    onNext={() => setCursor(state.data?.nextCursor ?? undefined)}
+                  />
+                )}
+              </>
+            )}
+          </AccordionSection>
         </>
       )}
     </section>

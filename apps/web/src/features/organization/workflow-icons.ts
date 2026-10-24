@@ -1,0 +1,38 @@
+import {
+  LayoutDashboard,
+  Package,
+  Warehouse,
+  ArrowLeftRight,
+  ShoppingBag,
+  Users,
+  ChartNoAxesCombined,
+  Bell,
+  Map,
+  Layers,
+  Wallet,
+  BookOpen,
+  Handshake,
+  Plug,
+  Settings,
+  Boxes,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+
+export const workflowIcons: Record<string, LucideIcon> = {
+  overview: LayoutDashboard,
+  catalog: Package,
+  inventory: Boxes,
+  warehouse: Warehouse,
+  transfers: ArrowLeftRight,
+  purchasing: ShoppingBag,
+  customers: Users,
+  reports: ChartNoAxesCombined,
+  notifications: Bell,
+  'warehouse-view': Map,
+  storage: Layers,
+  payables: Wallet,
+  accounting: BookOpen,
+  trading: Handshake,
+  integrations: Plug,
+  administration: Settings,
+};

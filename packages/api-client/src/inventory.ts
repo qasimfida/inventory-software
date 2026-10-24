@@ -1,3 +1,6 @@
+import type { CancellationSignal } from './cancellation.js';
+import { stockOverviewSchema, stockOverviewQuerySchema } from '@inventory/contracts';
+import type { StockOverviewQuery } from '@inventory/contracts';
 import {
   stockWorkspaceSchema,
   reconciliationSchema,
@@ -18,9 +21,23 @@ export function createInventoryClient(
   const path = `/${encodeURIComponent(businessId)}`,
     commands = new RetryableCommands(request, newKey);
   return {
-    load: async (query: Partial<StockQuery>) =>
+    overview: async (query: Partial<StockOverviewQuery>, signal?: CancellationSignal) =>
+      stockOverviewSchema.parse(
+        await request(
+          `${path}/stock/overview?${queryString(stockOverviewQuerySchema.parse(query))}`,
+          'GET',
+          undefined,
+          signal,
+        ),
+      ),
+    load: async (query: Partial<StockQuery>, signal?: CancellationSignal) =>
       stockWorkspaceSchema.parse(
-        await request(`${path}/stock?${queryString(stockQuerySchema.parse(query))}`),
+        await request(
+          `${path}/stock?${queryString(stockQuerySchema.parse(query))}`,
+          'GET',
+          undefined,
+          signal,
+        ),
       ),
     post: (input: Omit<MovementInput, 'idempotencyKey'>) =>
       commands.run(`${path}/stock/movements`, input, (v) => movementSchema.parse(v)),

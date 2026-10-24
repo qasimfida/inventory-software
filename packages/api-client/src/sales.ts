@@ -1,3 +1,4 @@
+import type { CancellationSignal } from './cancellation.js';
 import {
   saleReturnSchema,
   returnResultSchema,
@@ -21,12 +22,24 @@ export function createSalesClient(
   const path = `/${encodeURIComponent(businessId)}`,
     commands = new RetryableCommands(request, newKey);
   return {
-    items: async (q: Partial<SaleQuery>) =>
+    items: async (q: Partial<SaleQuery>, signal?: CancellationSignal) =>
       posItemsSchema.parse(
-        await request(`${path}/pos/items?${queryString(saleQuerySchema.parse(q))}`),
+        await request(
+          `${path}/pos/items?${queryString(saleQuerySchema.parse(q))}`,
+          'GET',
+          undefined,
+          signal,
+        ),
       ),
-    list: async (q: Partial<SaleQuery>) =>
-      salePageSchema.parse(await request(`${path}/sales?${queryString(saleQuerySchema.parse(q))}`)),
+    list: async (q: Partial<SaleQuery>, signal?: CancellationSignal) =>
+      salePageSchema.parse(
+        await request(
+          `${path}/sales?${queryString(saleQuerySchema.parse(q))}`,
+          'GET',
+          undefined,
+          signal,
+        ),
+      ),
     receipt: async (id: string) =>
       saleReceiptSchema.parse(await request(`${path}/sales/${encodeURIComponent(id)}/receipt`)),
     quote: async (input: Cart) =>

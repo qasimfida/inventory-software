@@ -1,3 +1,4 @@
+import type { CancellationSignal } from './cancellation.js';
 import { storageWorkspaceSchema, storageQuerySchema } from '@inventory/contracts';
 import type { StorageInput, StorageQuery, StorageMove } from '@inventory/contracts';
 import type { OrganizationTransport } from './organization.js';
@@ -11,9 +12,14 @@ export function createStorageClient(
   const path = `/${encodeURIComponent(businessId)}/storage`,
     commands = new RetryableCommands(request, newKey);
   return {
-    load: async (q: Partial<StorageQuery>) =>
+    load: async (q: Partial<StorageQuery>, signal?: CancellationSignal) =>
       storageWorkspaceSchema.parse(
-        await request(`${path}?${queryString(storageQuerySchema.parse(q))}`),
+        await request(
+          `${path}?${queryString(storageQuerySchema.parse(q))}`,
+          'GET',
+          undefined,
+          signal,
+        ),
       ),
     save: (input: StorageInput, id?: string, version?: number) =>
       request(`${path}${id ? '/' + encodeURIComponent(id) : ''}`, id ? 'PATCH' : 'POST', {

@@ -84,7 +84,7 @@ export class BusinessService {
   async events(actor: Actor, id: string, cursor?: string) {
     return this.scope.run(actor, id, 'audit.read', async (context) => {
       const result = await context.tx.query(
-        `SELECT id::text,actor_id AS "actorId",resource_id AS "resourceId",action,
+        `SELECT id::text,actor_id AS "actorId",(SELECT email FROM auth_accounts WHERE id=organization_audit.actor_id) AS "actorEmail",resource_id AS "resourceId",action,
         store_id AS "storeId",warehouse_id AS "warehouseId",request_id AS "requestId",occurred_at AS "occurredAt",before_data AS before,after_data AS after FROM organization_audit
         WHERE business_id=$1 AND ($2::bigint IS NULL OR id<$2::bigint) AND ($3::uuid IS NULL OR store_id=$3) AND ($4::uuid IS NULL OR warehouse_id=$4) ORDER BY id DESC LIMIT 51`,
         [

@@ -4,6 +4,7 @@ import { offlineQuote, decimal } from '@inventory/domain';
 import type { VaultStore, RandomBytes } from './offline-store.js';
 import { VaultCipher } from './offline-crypto.js';
 import { migrateVault } from './offline-state.js';
+import { addCartLine } from './cart-lines.js';
 import type { VaultState } from './offline-state.js';
 export class OfflineVault {
   private constructor(
@@ -71,13 +72,22 @@ export class OfflineVault {
   async append(line: OfflineSale['lines'][number]) {
     return this.update((s) => {
       this.allow(s);
-      s.cart.push(line);
+      s.cart = addCartLine(s.cart, line);
     });
   }
   async cart(lines: OfflineSale['lines']) {
     return this.update((s) => {
       this.allow(s);
       s.cart = lines;
+    });
+  }
+  async editCart(index: number, quantity: string | null) {
+    return this.update((state) => {
+      this.allow(state);
+      if (!Number.isInteger(index) || !state.cart[index])
+        throw new Error('Cart line changed. Refresh the cart.');
+      if (quantity === null) state.cart.splice(index, 1);
+      else state.cart[index] = { ...state.cart[index], quantity };
     });
   }
   async enqueue(id: string, cashReceivedMinor: string) {

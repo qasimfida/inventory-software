@@ -1,8 +1,12 @@
+import { Pagination } from '../ui/Pagination';
+import { usePageCollection } from '../ui/usePageCollection';
+import { IconAction } from '../ui/IconAction';
+import { RecordDetails } from '../ui/RecordDetails';
+import { ScreenBody, ScreenHeader } from '../ui/ScreenHeader';
+import { Text } from '../ui/Themed';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { createCashClient, cashForms, ResourceModel } from '@inventory/api-client';
 import type { Business, Location } from '@inventory/contracts';
-import { View, Text } from 'react-native';
-import { Action } from '../organization/Controls';
 import { CommandForm } from '../components/CommandForm';
 import { authClient } from '../auth/client';
 import { operationKey } from '../platform/operation-key';
@@ -25,40 +29,59 @@ export function CashPanel({
       () => new ResourceModel(() => client.list(warehouseId, offset)),
       [client, warehouseId, offset],
     ),
-    state = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
+    rawPageState = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
+  const state = usePageCollection(rawPageState, [business, warehouseId], offset, ['shifts'], () => {
+    setOffset(0);
+  });
   useEffect(() => {
     void model.run();
     return model.reset;
   }, [model]);
   return (
-    <View>
-      <Text accessibilityRole="header">Cash shifts</Text>
-      <Text>
-        Cash only. Open a shift before collecting cash. Confirm money received before recording.
-        Closed shifts are immutable.
-      </Text>
-      {state.error && <Text accessibilityRole="alert">{state.error}</Text>}
-      <Action label="Refresh cash shifts" onPress={() => void model.run()} disabled={state.busy} />
-      {state.data?.shifts.map((s) => (
-        <Text key={s.id}>
-          Shift {s.id} · {s.state} · {s.currency} minor units · expected {s.expectedMinor} · counted{' '}
-          {s.countedMinor ?? '—'} · discrepancy {s.discrepancyMinor ?? '—'}
-        </Text>
-      ))}
-      <Action
-        label="Previous shifts"
-        onPress={() => setOffset(Math.max(0, offset - 25))}
-        disabled={!offset}
+    <ScreenBody>
+      <ScreenHeader
+        title="Cash shifts"
+        description={
+          <>
+            Cash only. Open a shift before collecting cash. Confirm money received before recording.
+            Closed shifts are immutable.
+          </>
+        }
       />
-      <Action
-        label="Next shifts"
-        onPress={() => setOffset(offset + 25)}
-        disabled={!state.data?.hasMore}
+      {Boolean(state.error) && <Text accessibilityRole="alert">{state.error}</Text>}
+      <IconAction
+        label="Refresh cash shifts"
+        onPress={() => void model.run()}
+        disabled={state.busy}
+        icon="↻"
+      />
+      {state.data?.shifts.map((s) => (
+        <RecordDetails
+          key={s.id}
+          label="Cash shift"
+          items={[
+            { label: 'Shift', value: s.id },
+            { label: 'State', value: s.state },
+            { label: 'Currency', value: `${s.currency} minor units` },
+            { label: 'Expected', value: s.expectedMinor },
+            { label: 'Counted', value: s.countedMinor ?? '—' },
+            { label: 'Discrepancy', value: s.discrepancyMinor ?? '—' },
+          ]}
+        />
+      ))}
+
+      <Pagination
+        label="cash shifts"
+        offset={offset}
+        pageSize={25}
+        hasMore={state.data?.hasMore ?? false}
+        busy={state.busy || Boolean(state.error)}
+        onChange={setOffset}
       />
       {state.data &&
         cashForms(client, business, warehouseId, locations, state.data.shifts).map((f) => (
           <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
         ))}
-    </View>
+    </ScreenBody>
   );
 }

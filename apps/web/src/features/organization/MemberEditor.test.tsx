@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { selectOption } from '@/../test/select-option';
 import { afterEach, expect, it, vi } from 'vitest';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -44,8 +45,8 @@ it('assigns a cashier to the selected store with labelled controls', async () =>
   );
   const user = userEvent.setup();
   await user.type(screen.getByLabelText('Member email'), 'cashier@example.test');
-  await user.selectOptions(screen.getByLabelText('Role'), 'cashier');
-  await user.selectOptions(screen.getByLabelText('Access scope: store'), storeId);
+  await selectOption(screen.getByLabelText('Role'), 'cashier');
+  await selectOption(screen.getByLabelText('Access scope: store'), storeId);
   await user.click(screen.getByRole('button', { name: 'Assign member' }));
   await waitFor(() =>
     expect(request).toHaveBeenCalledWith(`/${businessId}/members`, 'POST', {
@@ -68,4 +69,37 @@ it('read-only user permission never presents assignment controls', () => {
     />,
   );
   expect(screen.queryByRole('button', { name: 'Assign member' })).toBeNull();
+});
+it('submits checked custom permissions even after their groups are collapsed', async () => {
+  const request = vi.fn().mockResolvedValue({});
+  const model = new OrganizationModel(createOrganizationClient(request));
+  vi.spyOn(model, 'refresh').mockImplementation(async (work) => {
+    try {
+      await work?.();
+    } catch {
+      /* Response is immaterial; assert the actual outbound contract. */
+    }
+  });
+  render(<MemberEditor workspace={workspace} model={model} busy={false} />);
+  const user = userEvent.setup();
+  await user.type(screen.getByLabelText('Member email'), 'inventory@example.test');
+  await selectOption(screen.getByLabelText('Role'), 'custom');
+  await selectOption(screen.getByLabelText('Access scope: store'), storeId);
+  await user.click(screen.getByRole('button', { name: /Inventory and transfers · 0 selected/ }));
+  await user.click(
+    screen.getByRole('checkbox', { name: 'Create and edit · Inventory and transfers' }),
+  );
+  await user.click(screen.getByRole('button', { name: /Inventory and transfers · 1 selected/ }));
+  await user.click(screen.getByRole('button', { name: 'Assign member' }));
+  await waitFor(() =>
+    expect(request).toHaveBeenCalledWith(
+      `/${businessId}/members`,
+      'POST',
+      expect.objectContaining({
+        role: 'custom',
+        permissions: ['stock.write'],
+        scope: { storeId, warehouseId: null },
+      }),
+    ),
+  );
 });

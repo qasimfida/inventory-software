@@ -1,16 +1,25 @@
+import { View } from 'react-native';
+import { RecordCollection } from '../ui/RecordCollection';
+import { SidePanel } from '../ui/SidePanel';
+import { WarehouseSelect } from '../ui/WarehouseSelect';
+import { usePageCollection } from '../ui/usePageCollection';
+import { Pagination } from '../ui/Pagination';
+import { SearchControl } from '../ui/SearchControl';
+import { IconAction } from '../ui/IconAction';
+import { TransferDetails } from './TransferDetails';
+import { ScreenBody, ScreenHeader } from '../ui/ScreenHeader';
+import { Text } from '../ui/Themed';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import {
   createTransferClient,
   createInventoryClient,
-  ResourceModel,
+  cancellableResource,
   transferCreateForm,
   transferDetailForms,
   transferAddLineForm,
 } from '@inventory/api-client';
-import { hasPermission, businessTime } from '@inventory/contracts';
+import { hasPermission } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
-import { Text, View } from 'react-native';
-import { Action, Choice, Field, styles } from '../organization/Controls';
 import { CommandForm } from '../components/CommandForm';
 import { authClient } from '../auth/client';
 import { operationKey } from '../platform/operation-key';
@@ -34,20 +43,38 @@ export function TransferPanel({
       () => createInventoryClient(authClient.organizationRequest, operationKey, business.id),
       [business.id],
     );
-  const model = useMemo(
+  const request = useMemo(
     () =>
-      new ResourceModel(async () => ({
-        workspace: await client.load({ warehouseId, search, offset }),
-        stock: await stock.load({ warehouseId, search, offset }),
-        detail: transferId ? await client.detail(transferId) : null,
-      })),
+      cancellableResource(
+        async (signal) => ({
+          workspace: await client.load({ warehouseId, search, offset }, signal),
+          stock: await stock.load({ warehouseId, search, offset }, signal),
+          detail: transferId ? await client.detail(transferId) : null,
+        }),
+        () => new AbortController(),
+      ),
     [client, stock, warehouseId, search, offset, transferId],
   );
-  const state = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
+  const { model } = request;
+  const rawPageState = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
+  const state = usePageCollection(
+    rawPageState,
+    [business, warehouseId, search],
+    offset,
+    ['workspace.transfers'],
+    () => {
+      setOffset(0);
+    },
+  );
   useEffect(() => {
-    if (warehouseId) void model.run();
-    return model.reset;
-  }, [model, warehouseId]);
+    const timer = setTimeout(() => {
+      if (warehouseId) void model.run();
+    }, 250);
+    return () => {
+      clearTimeout(timer);
+      request.cancel();
+    };
+  }, [model, request, warehouseId]);
   const forms =
     state.data && hasPermission(business, 'stock.write')
       ? [
@@ -58,15 +85,46 @@ export function TransferPanel({
           ...(state.data.detail ? transferDetailForms(client, state.data.detail) : []),
         ]
       : [];
+  const toolbar = (
+    <>
+      <View style={{ flexGrow: 1, flexBasis: 160 }}>
+        <SearchControl
+          suggestions={
+            state.data?.workspace.transfers.map((item) => ({
+              value: item.reference,
+              label: item.reference,
+            })) ?? []
+          }
+          busy={state.busy || (!state.data && !state.error)}
+          label="Search transfer reference / item"
+          value={search}
+          onChange={(v) => {
+            setSearch(v);
+            setOffset(0);
+          }}
+        />
+      </View>
+      <IconAction
+        label="Refresh transfers"
+        onPress={() => void model.run()}
+        disabled={state.busy || !warehouseId}
+        icon="↻"
+      />
+    </>
+  );
   return (
-    <View style={styles.group}>
-      <Text accessibilityRole="header">Stock transfers</Text>
-      <Text>
-        Approval reserves stock. Dispatch moves it into transit. Receipt records good, damaged and
-        explicitly confirmed lost quantities. Access to both warehouses is required; inter-business
-        transfers are blocked.
-      </Text>
-      <Choice
+    <ScreenBody>
+      <ScreenHeader
+        title="Stock transfers"
+        description={
+          <>
+            Approval reserves stock. Dispatch moves it into transit. Receipt records good, damaged
+            and explicitly confirmed lost quantities. Access to both warehouses is required;
+            inter-business transfers are blocked.
+          </>
+        }
+      />
+      <WarehouseSelect
         label="Transfer warehouse"
         value={warehouseId}
         options={warehouses.map((w) => ({ value: w.id, label: w.name }))}
@@ -76,73 +134,52 @@ export function TransferPanel({
           setOffset(0);
         }}
       />
-      <Field
-        label="Search transfer reference / item"
-        value={search}
-        onChange={(v) => {
-          setSearch(v);
-          setOffset(0);
-        }}
-      />
-      {state.error && <Text accessibilityRole="alert">{state.error}</Text>}
-      <Action
-        label="Refresh transfers"
-        onPress={() => void model.run()}
-        disabled={state.busy || !warehouseId}
-      />
+
+      {Boolean(state.error) && <Text accessibilityRole="alert">{state.error}</Text>}
+
+      {!state.data && <View>{toolbar}</View>}
       {state.data && (
         <>
-          <Choice
-            label="Transfer document"
-            value={transferId}
-            options={[
-              { value: '', label: 'Select transfer' },
-              ...state.data.workspace.transfers.map((t) => ({
-                value: t.id,
-                label: `${t.reference} · ${t.state}`,
-              })),
-            ]}
-            onChange={setTransferId}
+          <RecordCollection
+            toolbar={toolbar}
+            label="transfers"
+            onOpen={setTransferId}
+            items={state.data.workspace.transfers.map((t) => ({
+              id: t.id,
+              title: t.reference,
+              subtitle: `${locations.find((l) => l.id === t.sourceWarehouseId)?.name ?? 'Source warehouse'} → ${locations.find((l) => l.id === t.destinationWarehouseId)?.name ?? 'Destination warehouse'}`,
+              detail: new Date(t.createdAt).toLocaleDateString(),
+              status: t.state.replaceAll('_', ' '),
+              tone:
+                t.state === 'completed'
+                  ? 'success'
+                  : t.state === 'cancelled'
+                    ? 'neutral'
+                    : 'warning',
+            }))}
           />
-          <Action
-            label="Previous transfers page"
-            disabled={!offset}
-            onPress={() => setOffset(Math.max(0, offset - 25))}
+          <Pagination
+            label="transfers"
+            offset={offset}
+            pageSize={25}
+            hasMore={state.data?.workspace.hasMore ?? false}
+            busy={state.busy || (!state.data && !state.error)}
+            onChange={setOffset}
           />
-          <Action
-            label="Next transfers page"
-            disabled={!state.data.workspace.hasMore}
-            onPress={() => setOffset(offset + 25)}
-          />
-          {state.data.detail && (
-            <>
-              <Text>
-                {state.data.detail.transfer.reference} · {state.data.detail.transfer.state}
-              </Text>
-              {state.data.detail.lines.map((l) => (
-                <Text key={l.id}>
-                  {l.variantId} · approved base units {l.baseQuantity} · settled {l.settled}
-                </Text>
-              ))}
-              {state.data.detail.receipts.map((r) => (
-                <Text key={r.id}>
-                  Receipt {r.id} · good {r.received} · damaged {r.damaged} · shortage {r.shortage} ·{' '}
-                  {r.reason}
-                </Text>
-              ))}
-              {state.data.detail.events.map((e) => (
-                <Text key={e.id}>
-                  {businessTime(e.createdAt, business.timeZone)} · {e.action} · actor {e.actorId} ·{' '}
-                  {e.reason}
-                </Text>
-              ))}
-            </>
-          )}
-          {forms.map((f) => (
+          {forms.slice(0, 1).map((f) => (
             <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
           ))}
+          <SidePanel title="Transfer details" open={!!transferId} onClose={() => setTransferId('')}>
+            {state.error && <Text accessibilityRole="alert">{state.error}</Text>}
+            {state.data.detail && (
+              <TransferDetails detail={state.data.detail} timeZone={business.timeZone} />
+            )}
+            {forms.slice(1).map((f) => (
+              <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
+            ))}
+          </SidePanel>
         </>
       )}
-    </View>
+    </ScreenBody>
   );
 }

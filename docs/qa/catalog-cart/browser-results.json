@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "cartControlsUnderDelete": true,
+      "noPageOverflow": true
+    },
+    {
+      "width": 768,
+      "cartControlsUnderDelete": true,
+      "noPageOverflow": true
+    },
+    {
+      "width": 390,
+      "cartControlsUnderDelete": true,
+      "noPageOverflow": true
+    }
+  ],
+  "errors": []
+}

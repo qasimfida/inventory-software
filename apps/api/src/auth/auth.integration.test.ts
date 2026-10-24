@@ -132,7 +132,9 @@ it('uses HttpOnly cookies, rejects CSRF and prevents switching session transport
     .send(body)
     .expect(201);
   expect(response.body.token).toBeUndefined();
-  const cookie = response.headers['set-cookie']![0] as string;
+  const cookie = (response.headers['set-cookie'] as unknown as string[]).find((value) =>
+    value.startsWith('inventory_session='),
+  )!;
   expect(cookie).toContain('HttpOnly');
   expect(cookie).toContain('SameSite=Strict');
   const rawCookie = cookie.split(';')[0]!;

@@ -1,8 +1,11 @@
+import { expectFacts } from './record-facts.mjs';
 import { expect } from '@playwright/test';
 export async function exerciseTransfers(page) {
+  await page
+    .getByRole('navigation', { name: 'Workspace sections' })
+    .getByRole('button', { name: 'Storage locations', exact: true })
+    .click();
   const form = page.getByRole('form', { name: 'Create transfer draft', exact: true });
-  await page.getByRole('button', { name: 'Refresh transfers', exact: true }).click();
-  await form.getByLabel('Transfer reference', { exact: true }).fill('BROWSER-TR');
   // Same-warehouse transfer exercises the lifecycle between two storage locations.
   const bin = await page
     .getByRole('form', { name: 'Move stock between locations', exact: true })
@@ -10,6 +13,12 @@ export async function exerciseTransfers(page) {
     .locator('option')
     .filter({ hasText: 'BIN-BROWSER' })
     .getAttribute('value');
+  await page
+    .getByRole('navigation', { name: 'Workspace sections' })
+    .getByRole('button', { name: 'Transfers', exact: true })
+    .click();
+  await page.getByRole('button', { name: 'Refresh transfers', exact: true }).click();
+  await form.getByLabel('Transfer reference', { exact: true }).fill('BROWSER-TR');
   await form.getByLabel('Destination location ID (blank = root)', { exact: true }).fill(bin);
   await form.getByLabel('Transfer quantity', { exact: true }).fill('2');
   await form.getByRole('button', { name: 'Create transfer draft', exact: true }).click();
@@ -32,17 +41,23 @@ export async function exerciseTransfers(page) {
   await receipt.getByLabel('Good received (base units)', { exact: true }).fill('1');
   await receipt.getByLabel('Receipt / discrepancy reason', { exact: true }).fill('Partial arrival');
   await receipt.getByRole('button', { name: 'Confirm destination receipt', exact: true }).click();
-  await expect(
-    page.getByRole('paragraph').filter({ hasText: /^BROWSER-TR · partially_received$/ }),
-  ).toBeVisible();
+  await expectFacts(page.getByLabel('Transfer document details', { exact: true }), {
+    Reference: 'BROWSER-TR',
+    State: 'partially_received',
+  });
   await receipt.getByLabel('Damaged received (base units)', { exact: true }).fill('1');
   await receipt
     .getByLabel('Receipt / discrepancy reason', { exact: true })
     .fill('Final damaged arrival');
   await receipt.getByRole('button', { name: 'Confirm destination receipt', exact: true }).click();
-  await expect(
-    page.getByRole('paragraph').filter({ hasText: /^BROWSER-TR · completed$/ }),
-  ).toBeVisible();
+  await expectFacts(page.getByLabel('Transfer document details', { exact: true }), {
+    Reference: 'BROWSER-TR',
+    State: 'completed',
+  });
+  await page
+    .getByRole('navigation', { name: 'Workspace sections' })
+    .getByRole('button', { name: 'Inventory', exact: true })
+    .click();
   await page.getByRole('button', { name: 'Reconcile inventory', exact: true }).click();
   await expect(page.getByText('Ledger and balances reconcile.', { exact: true })).toBeVisible();
   console.log(

@@ -1,13 +1,7 @@
-import {
-  BadRequestException,
-  ConflictException,
-  Inject,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, ConflictException, Inject, Injectable } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
-import { decimal, decimalString, baseQuantity } from '@inventory/domain';
-import type { PurchaseReceive, PurchaseReturn, SupplierInvoice } from '@inventory/contracts';
+import { decimal, baseQuantity } from '@inventory/domain';
+import type { PurchaseReceive, SupplierInvoice } from '@inventory/contracts';
 import { OrganizationScope, audit } from '../organization/organization.scope.js';
 import type { Actor } from '../organization/organization.scope.js';
 import { idempotent } from '../database/idempotency.js';
@@ -79,69 +73,6 @@ export class PurchaseReceiving {
           await ctx.tx.query(
             `UPDATE purchase_orders SET state=CASE WHEN EXISTS(SELECT 1 FROM purchase_lines WHERE business_id=$1 AND purchase_id=$2 AND received<quantity) THEN 'partially_received' ELSE 'completed' END,version=version+1 WHERE business_id=$1 AND id=$2`,
             [b, id],
-          );
-          return detail(ctx, id);
-        },
-      );
-    });
-  }
-  returnGoods(actor: Actor, b: string, id: string, input: PurchaseReturn) {
-    return this.scope.run(actor, b, 'purchases.write', async (ctx) => {
-      const order = await purchase(ctx, id);
-      await this.ledger.warehouse(ctx, order.warehouseId);
-      return idempotent(
-        ctx,
-        'purchase.return',
-        input.idempotencyKey,
-        { ...input, id },
-        async () => {
-          const receipt = (
-            await ctx.tx.query<{
-              lineId: string;
-              locationId: string;
-              quantity: string;
-              baseQuantity: string;
-              returned: string;
-              damaged: string;
-            }>(
-              `SELECT r.line_id AS "lineId",r.location_id AS "locationId",r.quantity::text,r.damaged::text,r.base_quantity::text AS "baseQuantity",COALESCE((SELECT sum(quantity) FROM purchase_returns WHERE business_id=r.business_id AND receipt_id=r.id),0)::text AS returned FROM purchase_receipts r JOIN purchase_lines l ON l.business_id=r.business_id AND l.id=r.line_id WHERE r.business_id=$1 AND r.id=$2 AND l.purchase_id=$3`,
-              [b, input.receiptId, id],
-            )
-          ).rows[0];
-          if (!receipt) throw new NotFoundException();
-          if (decimal(receipt.damaged) > 0n)
-            throw new ConflictException(
-              'Damaged receipt returns require supervised stock reconciliation.',
-            );
-          if (decimal(receipt.returned) + decimal(input.quantity) > decimal(receipt.quantity))
-            throw new ConflictException();
-          const item = await line(ctx, id, receipt.lineId),
-            base = receivedBaseQuantity(input.quantity, receipt.baseQuantity, receipt.quantity),
-            returnId = randomUUID();
-          const movement = await this.ledger.apply(ctx, {
-            variantId: item.variantId,
-            warehouseId: order.warehouseId,
-            locationId: receipt.locationId,
-            quantityDelta: decimalString(-decimal(base)),
-            type: 'purchase_return',
-            sourceKind: 'purchase_return',
-            sourceId: returnId,
-            commandId: input.idempotencyKey,
-            reason: input.reason,
-          });
-          await ctx.tx.query(
-            `INSERT INTO purchase_returns(id,business_id,receipt_id,quantity,base_quantity,movement_id,reason,credit_reference,actor_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
-            [
-              returnId,
-              b,
-              input.receiptId,
-              input.quantity,
-              base,
-              movement.id,
-              input.reason,
-              input.creditReference,
-              actor.accountId,
-            ],
           );
           return detail(ctx, id);
         },

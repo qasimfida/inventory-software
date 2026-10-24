@@ -1,0 +1,25 @@
+[
+  {
+    "width": 1440,
+    "overflow": false,
+    "stickyTabs": true
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "stickyTabs": true
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "stickyTabs": true
+  },
+  {
+    "platformChart": true,
+    "counts": true,
+    "gridLocationDrawer": true,
+    "iconSizes": [16, 20, 24],
+    "logs": true,
+    "errors": []
+  }
+]

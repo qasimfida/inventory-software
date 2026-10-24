@@ -109,6 +109,11 @@ it('preserves the last owner under concurrent changes and records immutable scop
   const token = finalOwner === ownerId ? ownerToken : managerToken;
   const history = await api().get(`${root}/${a}/audit`).set(native(token)).expect(200);
   expect(
+    history.body.events.every((event: { actorEmail: string | null }) =>
+      event.actorEmail?.includes('@'),
+    ),
+  ).toBe(true);
+  expect(
     history.body.events.some((event: { action: string }) => event.action === 'business.created'),
   ).toBe(true);
   expect(

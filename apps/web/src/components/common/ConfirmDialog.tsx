@@ -29,6 +29,7 @@ export function ConfirmDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent
+        size="compact"
         role="alertdialog"
         onPointerDownOutside={(event) => event.preventDefault()}
         onOpenAutoFocus={(event) => {

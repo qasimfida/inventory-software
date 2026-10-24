@@ -35,8 +35,8 @@ export function parseApiOrigin(baseUrl: unknown): string {
 export function createApiClient(baseUrl: string, transport: HttpTransport) {
   const origin = parseApiOrigin(baseUrl);
   return {
-    async getHealth(): Promise<HealthResponse> {
-      const response = await transport(`${origin}${API_PREFIX}/health/live`);
+    async getHealth(check: 'live' | 'ready' = 'live'): Promise<HealthResponse> {
+      const response = await transport(`${origin}${API_PREFIX}/health/${check}`);
       let payload: unknown;
       try {
         payload = await response.json();
@@ -56,6 +56,7 @@ export function createApiClient(baseUrl: string, transport: HttpTransport) {
 
 export { createAuthClient, memoryCredentialStore, AuthenticationError } from './auth.js';
 export type { AuthTransport, CredentialStore } from './auth.js';
+export { withReadRetries } from './read-retry.js';
 export { createOrganizationClient } from './organization.js';
 export type { OrganizationTransport } from './organization.js';
 export { OrganizationModel } from './organization-model.js';
@@ -115,3 +116,52 @@ export * from './scanning.js';
 export * from './warehouse-forms.js';
 
 export * from './vault-partition.js';
+export * from './payables.js';
+export * from './payable-forms.js';
+export * from './settings/client.js';
+export * from './settings/model.js';
+export * from './settings/fields.js';
+export * from './settings/security-model.js';
+export * from './reports.js';
+export * from './business-notifications.js';
+export * from './warehouse-view.js';
+export * from './approval-review.js';
+export * from './stage6.js';
+export * from './trading-forms.js';
+export * from './accounting-forms.js';
+
+export { createDashboardClient, dashboardGrowth, dashboardHeights } from './dashboard.js';
+export * from './workspace-navigation.js';
+export * from './auth-links.js';
+
+export { searchWorkspace } from './workspace-search.js';
+export type { WorkspaceSearchResult } from './workspace-search.js';
+
+export * from './stock-presentation.js';
+export { observeCartQuotes } from './auto-quote.js';
+export { stepQuantity } from './quantity-step.js';
+export { cancellableResource } from './cancellable-resource.js';
+
+export { mergePageCollections } from './page-collections.js';
+export type { ResourceState } from './resource-model.js';
+export { posPriceLabel } from './pos-presentation.js';
+
+export { selectedLocations } from './location-selection.js';
+export { companyFields } from './company-profile.js';
+
+export * from './platform-businesses.js';
+export * from './access-presentation.js';
+export { createOperationsClient } from './operations.js';
+export * from './operation-forms.js';
+export * from './import-file.js';
+export * from './import-client.js';
+
+export { decodeUtf8 } from './import-file.js';
+
+export { catalogLive } from './catalog-live.js';
+export type { CatalogSocket } from './catalog-live.js';
+export { catalogCsv } from './catalog-export.js';
+export type { SyncProgress } from './sync-progress.js';
+export { syncActivity } from './sync-activity.js';
+
+export { isTransientReadFailure } from './auth.js';

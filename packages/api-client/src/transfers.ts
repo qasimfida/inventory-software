@@ -1,3 +1,4 @@
+import type { CancellationSignal } from './cancellation.js';
 import type { TransferAddLine } from '@inventory/contracts';
 import {
   transferWorkspaceSchema,
@@ -24,9 +25,14 @@ export function createTransferClient(
   return {
     addLine: (id: string, input: Omit<TransferAddLine, 'idempotencyKey'>) =>
       commands.run(`${path}/${encodeURIComponent(id)}/lines`, input, parse),
-    load: async (q: Partial<TransferQuery>) =>
+    load: async (q: Partial<TransferQuery>, signal?: CancellationSignal) =>
       transferWorkspaceSchema.parse(
-        await request(`${path}?${queryString(transferQuerySchema.parse(q))}`),
+        await request(
+          `${path}?${queryString(transferQuerySchema.parse(q))}`,
+          'GET',
+          undefined,
+          signal,
+        ),
       ),
     detail: async (id: string) => parse(await request(`${path}/${encodeURIComponent(id)}`)),
     create: (input: Omit<TransferInput, 'idempotencyKey'>) => commands.run(path, input, parse),

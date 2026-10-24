@@ -1,69 +1,15 @@
+import { offlineFixture } from '../test/offline-fixture.js';
 import { expect, it, vi } from 'vitest';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { OfflineVault } from './offline-vault.js';
 import { VaultCipher } from './offline-crypto.js';
 import { SyncEngine } from './sync-engine.js';
 import { migrateVault } from './offline-state.js';
-import { leaseSchema } from '@inventory/contracts';
-import type { VaultRecord, VaultStore } from './offline-store.js';
 import { Invalidations } from './invalidations.js';
 const random = (n: number) => new Uint8Array(randomBytes(n)),
   password = 'separate testing passphrase';
-function fixture() {
-  const variantId = randomUUID(),
-    unitId = randomUUID(),
-    warehouseId = randomUUID();
-  const lease = leaseSchema.parse({
-    id: randomUUID(),
-    businessId: randomUUID(),
-    actorId: randomUUID(),
-    deviceId: randomUUID(),
-    warehouseId,
-    shiftId: randomUUID(),
-    currency: 'USD',
-    createdAt: new Date(Date.now() - 1000).toISOString(),
-    expiresAt: new Date(Date.now() + 3600000).toISOString(),
-    policy: { enabled: true },
-    snapshot: {
-      warehouseId,
-      storeId: randomUUID(),
-      currency: 'USD',
-      revision: '1',
-      cursor: randomUUID(),
-      items: [
-        {
-          id: variantId,
-          name: 'Test',
-          sku: 'TEST',
-          barcodes: [],
-          trackInventory: true,
-          units: [{ id: unitId, code: 'EA', numerator: '1', denominator: '1' }],
-          priceId: randomUUID(),
-          unitPrice: '10',
-          currency: 'USD',
-          taxBasisPoints: 0,
-          taxInclusive: false,
-          promotions: [],
-          available: '10',
-        },
-      ],
-    },
-  });
-  let row: VaultRecord | null = null;
-  const store: VaultStore = {
-    read: async () => row,
-    compareAndSwap: async (key, expected, envelope) => {
-      void key;
-      if ((row?.revision ?? null) !== expected) return false;
-      row = { revision: (expected ?? 0) + 1, envelope };
-      return true;
-    },
-  };
-  const line = { variantId, unitId, quantity: '1', locationId: null, manualDiscountBasisPoints: 0 };
-  return { lease, store, line };
-}
 it('persists cart, sale and stable ID across restart; lost commit responses replay without duplicate sale', async () => {
-  const { lease, store, line } = fixture();
+  const { lease, store, line } = offlineFixture();
   let vault = await OfflineVault.create(store, 'test', password, random, lease);
   await vault.cart([line]);
   vault.lock();
@@ -111,15 +57,34 @@ it('persists cart, sale and stable ID across restart; lost commit responses repl
   expect((await vault.read()).outbox[0]!.state).toBe('pending');
   vault.lock();
   vault = await OfflineVault.unlock(store, 'test', password, random);
-  const engine = new SyncEngine(vault, client);
+  const progress = vi.fn();
+  const engine = new SyncEngine(
+    vault,
+    client,
+    () => Date.now(),
+    () => 0.5,
+    progress,
+  );
   await engine.retry(id);
   await engine.cycle();
+  expect(progress).toHaveBeenCalledWith({
+    phase: 'uploading',
+    total: 1,
+    confirmed: 0,
+    remaining: 1,
+  });
+  expect(progress).toHaveBeenCalledWith({
+    phase: 'downloading',
+    total: 1,
+    confirmed: 1,
+    remaining: 0,
+  });
   expect(committed.size).toBe(1);
   expect((await vault.read()).outbox[0]!.result?.saleId).toBe(saleId);
   expect((await vault.read()).cache.cursor).not.toBe(lease.snapshot.cursor);
 }, 20000);
 it('fails closed for wrong passwords, tampering, future schemas and preserves ciphertext', async () => {
-  const { lease, store } = fixture();
+  const { lease, store } = offlineFixture();
   const vault = await OfflineVault.create(store, 'safe', password, random, lease),
     before = await store.read('safe');
   await expect(
@@ -142,7 +107,7 @@ it('fails closed for wrong passwords, tampering, future schemas and preserves ci
   cipher.lock();
 }, 20000);
 it('migrates old documents, rejects expired permission and protects the original account partition', async () => {
-  const { lease, store, line } = fixture();
+  const { lease, store, line } = offlineFixture();
   const vault = await OfflineVault.create(store, 'test', password, random, lease);
   const state = await vault.read();
   expect(migrateVault({ ...state, schema: 1 }).schema).toBe(2);
@@ -191,3 +156,21 @@ it('deduplicates notifications and recovers missed revisions and time-sensitive 
   await feed.tick();
   expect(changed).toHaveBeenCalledTimes(3);
 });
+it('edits durable cart quantities and restores encrypted backups without overwriting a vault', async () => {
+  const { lease, store, line } = offlineFixture();
+  const vault = await OfflineVault.create(store, 'original', password, random, lease);
+  await vault.cart([line]);
+  await vault.editCart(0, '2');
+  expect((await vault.read()).cart[0]?.quantity).toBe('2');
+  const before = await vault.read();
+  await expect(vault.editCart(0, '-1')).rejects.toThrow();
+  expect((await vault.read()).cart).toEqual(before.cart);
+  const backup = await vault.backup();
+  await expect(OfflineVault.restore(store, 'original', backup, password, random)).rejects.toThrow();
+  await OfflineVault.restore(store, 'restored', backup, password, random);
+  const restored = await OfflineVault.unlock(store, 'restored', password, random);
+  expect((await restored.read()).cart).toEqual(before.cart);
+  await restored.editCart(0, null);
+  expect((await restored.read()).cart).toEqual([]);
+  expect((await vault.read()).cart).toEqual(before.cart);
+}, 20000);

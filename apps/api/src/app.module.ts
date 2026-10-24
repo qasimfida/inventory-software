@@ -1,3 +1,15 @@
+import { CatalogLiveModule } from './live/catalog-live.module.js';
+import { ImportsModule } from './imports/imports.module.js';
+import { OperationsModule } from './operations/operations.module.js';
+import { IntegrationsModule } from './integrations/integrations.module.js';
+import { AccountingModule } from './accounting/accounting.module.js';
+import { TradingModule } from './trading/trading.module.js';
+import { ReportsModule } from './reports/reports.module.js';
+import { NotificationsModule } from './notifications/notifications.module.js';
+import { VisualizationModule } from './visualization/visualization.module.js';
+import { SecurityModule } from './security/security.module.js';
+import { SettingsModule } from './settings/settings.module.js';
+import { AiModule } from './ai/ai.module.js';
 import { CountModule } from './counts/count.module.js';
 import { SyncModule } from './sync/sync.module.js';
 import { SalesModule } from './sales/sales.module.js';
@@ -18,6 +30,18 @@ import { OrganizationModule } from './organization/organization.module.js';
 
 @Module({
   imports: [
+    CatalogLiveModule,
+    OperationsModule,
+    ImportsModule,
+    IntegrationsModule,
+    AccountingModule,
+    TradingModule,
+    ReportsModule,
+    NotificationsModule,
+    VisualizationModule,
+    SettingsModule,
+    SecurityModule,
+    AiModule,
     CountModule,
     ConfigurationModule,
     HealthModule,

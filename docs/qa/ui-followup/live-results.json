@@ -1,0 +1,8 @@
+{
+  "source": "local PostgreSQL API",
+  "products": 4,
+  "unpriced": 3,
+  "errors": [],
+  "checks": ["login", "POS products", "Settings shortcut", "logout"],
+  "businessMutations": false
+}

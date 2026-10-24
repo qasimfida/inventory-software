@@ -1,5 +1,14 @@
-import { Text, Switch, View } from 'react-native';
-import { permissionSchema } from '@inventory/contracts';
+import { Text } from '../ui/Themed';
+import { View } from 'react-native';
+import {
+  permissionGroups,
+  permissionLabel,
+  roleGuidance,
+  roleCapabilities,
+} from '@inventory/api-client';
+import { assignableRoleSchema } from '@inventory/contracts';
+import { FormSection } from '../ui/FormSection';
+import { Checkbox } from '../ui/Checkbox';
 import type { Permission, Workspace } from '@inventory/contracts';
 import { Choice } from './Controls';
 export interface AssignmentAccess {
@@ -19,8 +28,17 @@ export function AccessFields({
   workspace: Workspace;
   busy: boolean;
 }) {
+  const parsedRole = assignableRoleSchema.safeParse(role);
   return (
     <>
+      <Text tone="muted">{roleGuidance[role]}</Text>
+      {parsedRole.success && role !== 'custom' && (
+        <FormSection title="View included permissions">
+          {roleCapabilities(parsedRole.data).map((label) => (
+            <Text key={label}>{label}</Text>
+          ))}
+        </FormSection>
+      )}
       {role !== 'owner' && (
         <>
           <Choice
@@ -63,30 +81,29 @@ export function AccessFields({
       {role === 'custom' && (
         <View>
           <Text accessibilityRole="header">Custom permissions</Text>
-          {permissionSchema.options
-            .filter(
-              (p) =>
-                p !== 'users.write' &&
-                (!value.scope.storeId || !['users.read', 'business.write'].includes(p)),
-            )
-            .map((p) => (
-              <View key={p}>
-                <Text>{p}</Text>
-                <Switch
-                  accessibilityLabel={p}
+          {permissionGroups(!!value.scope.storeId).map((group) => (
+            <FormSection
+              key={group.key}
+              title={`${group.label} · ${group.permissions.filter((p) => value.permissions.includes(p)).length} selected`}
+            >
+              {group.permissions.map((permission) => (
+                <Checkbox
+                  key={permission}
+                  label={permissionLabel(permission)}
                   disabled={busy}
-                  value={value.permissions.includes(p)}
-                  onValueChange={(enabled) =>
+                  value={value.permissions.includes(permission)}
+                  onChange={(enabled) =>
                     onChange({
                       ...value,
                       permissions: enabled
-                        ? [...value.permissions, p]
-                        : value.permissions.filter((item) => item !== p),
+                        ? [...value.permissions, permission]
+                        : value.permissions.filter((p) => p !== permission),
                     })
                   }
                 />
-              </View>
-            ))}
+              ))}
+            </FormSection>
+          ))}
         </View>
       )}
     </>

@@ -1,6 +1,8 @@
+import type { SyncProgress } from './sync-progress.js';
 import { canonicalJson } from '@inventory/domain';
 import type { OfflineVault } from './offline-vault.js';
 import type { createSyncClient } from './sync-client.js';
+import { claimOutbox } from './outbox-claim.js';
 export class SyncEngine {
   private running = false;
   constructor(
@@ -8,6 +10,7 @@ export class SyncEngine {
     private client: ReturnType<typeof createSyncClient>,
     private now = () => Date.now(),
     private random = () => Math.random(),
+    private progress: (value: SyncProgress) => void = () => {},
   ) {}
   async cycle() {
     if (this.running) return;
@@ -16,7 +19,22 @@ export class SyncEngine {
       const s = await this.vault.read();
       if ((await this.client.identity()).actorId !== s.leases[s.activeLeaseId]!.actorId)
         throw new Error('Sign in with the original vault account before synchronizing.');
-      await this.upload();
+      const ids = s.outbox.filter((e) => e.state !== 'synced').map((e) => e.operation.id);
+      this.progress({ phase: 'uploading', total: ids.length, confirmed: 0, remaining: ids.length });
+      let batchSize: number;
+      do {
+        batchSize = await this.upload();
+        const uploaded = await this.vault.read();
+        const confirmed = uploaded.outbox.filter(
+          (e) => ids.includes(e.operation.id) && e.state === 'synced',
+        ).length;
+        this.progress({
+          phase: batchSize === 20 ? 'uploading' : 'downloading',
+          total: ids.length,
+          confirmed,
+          remaining: ids.length - confirmed,
+        });
+      } while (batchSize === 20);
       await this.download();
       const latest = await this.vault.read(),
         lease = latest.leases[latest.activeLeaseId]!;
@@ -38,26 +56,11 @@ export class SyncEngine {
     }
   }
   private async upload() {
-    const before = await this.vault.read(),
-      ids = before.outbox
-        .filter(
-          (e) => (e.state === 'pending' || e.state === 'sending') && e.nextRetryAt <= this.now(),
-        )
-        .slice(0, 20)
-        .map((e) => e.operation.id);
-    if (!ids.length) return;
-    const ready = await this.vault.update((s) => {
-      for (const e of s.outbox)
-        if (ids.includes(e.operation.id)) {
-          e.state = 'sending';
-          e.attempts++;
-          e.error = '';
-        }
-    });
+    const claimed = await claimOutbox(this.vault, this.now(), this.random);
+    const ids = claimed.map((entry) => entry.operation.id);
+    if (!ids.length) return 0;
     try {
-      const response = await this.client.upload(
-        ready.outbox.filter((e) => ids.includes(e.operation.id)).map((e) => e.operation),
-      );
+      const response = await this.client.upload(claimed.map((e) => e.operation));
       if (
         response.results.length !== ids.length ||
         new Set(response.results.map((r) => r.id)).size !== ids.length ||
@@ -67,18 +70,22 @@ export class SyncEngine {
       await this.vault.update((s) => {
         for (const result of response.results) {
           const e = s.outbox.find((e) => e.operation.id === result.id);
-          if (!e) continue;
+          if (!e || e.state === 'synced') continue;
           e.state = result.state;
           e.result = result;
           e.error = result.state === 'synced' ? '' : result.code;
         }
         s.error = '';
       });
+      return ids.length;
     } catch (error) {
       await this.vault.update((s) => {
         const status = error instanceof Error && 'status' in error ? Number(error.status) : 0;
         for (const e of s.outbox)
-          if (ids.includes(e.operation.id) && e.state === 'sending') {
+          if (
+            e.state === 'sending' &&
+            claimed.some((c) => c.operation.id === e.operation.id && c.attempts === e.attempts)
+          ) {
             e.state = e.attempts >= 8 || [401, 403, 404].includes(status) ? 'conflict' : 'pending';
             e.error = [401, 403, 404].includes(status)
               ? 'Sign in with the original account; review access before retry.'

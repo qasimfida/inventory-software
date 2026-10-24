@@ -1,0 +1,10 @@
+{
+  "runtime": "Android 16 ARM64 Expo Go 58",
+  "resolution": "1080x2400",
+  "data": "existing demo fixtures, no live transaction mutations",
+  "period": "7 days",
+  "panels": ["Growth", "Inventory snapshot", "Quick POS", "Sales trend", "Top products"],
+  "exactDailyValues": "pass",
+  "currencySelection": "PKR",
+  "currencyEmptyState": "pass"
+}

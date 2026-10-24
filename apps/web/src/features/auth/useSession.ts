@@ -1,11 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AuthenticationError } from '@inventory/api-client';
+import { AuthenticationError, isTransientReadFailure } from '@inventory/api-client';
 import type { Session } from '@inventory/contracts';
 import { authClient } from '@/platform/auth-client';
 
+// A missing saved session is a normal signed-out state, not a connection failure.
+async function savedSession() {
+  try {
+    return await authClient.current();
+  } catch (error) {
+    if (error instanceof AuthenticationError && error.status === 401) return null;
+    throw error;
+  }
+}
+
 export function useSession() {
   const [session, setSession] = useState<Session | null>(null);
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState(true);
   const [message, setMessage] = useState('');
   const generation = useRef(0);
   const run = useCallback(async (action: () => Promise<Session | null>, background = false) => {
@@ -17,7 +27,9 @@ export function useSession() {
       if (current === generation.current) setSession(result);
     } catch (error) {
       if (current === generation.current) {
-        setSession(null);
+        // A temporary transport failure cannot extend the existing session expiry.
+        // Keep only an already verified session during background checks.
+        if (!background || !isTransientReadFailure(error)) setSession(null);
         setMessage(
           error instanceof AuthenticationError
             ? error.message
@@ -40,23 +52,24 @@ export function useSession() {
     const check = () => {
       if (!document.hidden) {
         lock();
-        void run(() => authClient.current());
+        void run(savedSession);
       }
     };
     const visibility = () => (document.hidden ? lock() : check());
     check();
     const timer = setInterval(() => {
-      if (!document.hidden) void run(() => authClient.current(), true);
+      if (!document.hidden) void run(savedSession, true);
     }, 60000);
-    window.addEventListener('offline', lock);
-    window.addEventListener('online', check);
+    const reconnect = () => {
+      if (!document.hidden) void run(savedSession, true);
+    };
+    window.addEventListener('online', reconnect);
     window.addEventListener('focus', check);
     document.addEventListener('visibilitychange', visibility);
     return () => {
       invalidate();
       clearInterval(timer);
-      window.removeEventListener('offline', lock);
-      window.removeEventListener('online', check);
+      window.removeEventListener('online', reconnect);
       window.removeEventListener('focus', check);
       document.removeEventListener('visibilitychange', visibility);
     };

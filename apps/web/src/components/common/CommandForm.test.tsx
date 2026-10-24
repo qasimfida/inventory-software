@@ -8,6 +8,7 @@ it('preserves decimal quantity text instead of coercing it to floating point', a
   const submit = vi.fn().mockResolvedValue({});
   render(
     <CommandForm
+      inline
       definition={{
         title: 'Post movement',
         fields: [{ name: 'quantity', label: 'Movement quantity', value: '1' }],

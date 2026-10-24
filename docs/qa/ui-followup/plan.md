@@ -1,0 +1,11 @@
+# Navigation, selection and POS follow-up
+
+Scope: seven requested UI changes; preserve authorization, pricing calculations, transaction commands and preference persistence.
+
+| Layer                   | Impact                                                                                                                                                                                                                                                                         |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Source                  | CatalogSearch now keeps active unpriced SKUs visible when the preferred currency filter is applied; priced SKUs in another currency remain filtered. Checkout still rejects missing prices.                                                                                    |
+| Web / Tauri             | Header owns sidebar collapse; workspace/profile chevrons share dimensions; settings route tabs reuse existing Radix/shadcn tab styling with icons; profile menu links to Settings. Inventory and common record grids use circular corner checkboxes and selected tint.         |
+| Native                  | Equivalent icon tabs, Settings shortcut and circular selection controls. Native already uses matching workspace/profile menu IconAction icons and has no desktop sidebar. Both POS panels recover when authorized warehouses arrive after mount or the location scope changes. |
+| Contracts / persistence | No schema, migration, permission, settings-storage, offline or outbox changes. No new dependencies.                                                                                                                                                                            |
+| Verification            | Delayed warehouse regression on both renderers, selection/detail regression, real PostgreSQL unpriced/currency/authorization tests, browser responsive checks, Android emulator and macOS build/launch where available.                                                        |

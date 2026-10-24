@@ -1,0 +1,235 @@
+.stock-metric {
+  position: relative;
+  text-align: left;
+  border-radius: var(--surface-radius);
+  overflow: hidden;
+  min-width: 0;
+}
+.stock-metric > svg {
+  position: absolute;
+  right: var(--space-large);
+  top: var(--space-large);
+  width: var(--font-heading);
+  height: var(--font-heading);
+}
+.stock-metric .metric-card {
+  height: 100%;
+  padding-right: calc(var(--space-large) * 2);
+}
+.stock-metric-all {
+  color: var(--primary-foreground);
+}
+.stock-metric-in-stock .metric-card {
+  background: color-mix(in srgb, var(--success) 8%, var(--card));
+}
+.stock-metric-low-stock .metric-card {
+  background: color-mix(in srgb, var(--warning) 8%, var(--card));
+}
+.stock-metric-out-of-stock .metric-card {
+  background: color-mix(in srgb, var(--destructive) 6%, var(--card));
+}
+.stock-metric[aria-pressed='true'] {
+  box-shadow: inset 0 0 0 var(--border-width) var(--ring);
+}
+.stock-metric:focus-visible {
+  outline: var(--focus-width) solid var(--ring);
+  outline-offset: var(--focus-offset);
+}
+.inventory-snapshot {
+  padding: var(--space-large);
+  border-radius: var(--surface-radius);
+  background: var(--card);
+}
+.inventory-snapshot tbody tr:nth-child(even) {
+  background: var(--muted);
+}
+.inventory-snapshot tbody tr:hover {
+  background: var(--table-hover);
+}
+.connection-dot {
+  width: var(--space-small);
+  height: var(--space-small);
+  border-radius: var(--surface-radius);
+  background: var(--destructive);
+}
+.connection-dot[data-online='true'] {
+  background: var(--success);
+}
+/* Search remains visible; suggestions retain their existing keyboard contract. */
+.search-control {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+.search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-field input {
+  width: 100%;
+  padding-inline: var(--control-height);
+}
+.search-leading-icon {
+  position: absolute;
+  left: var(--space-medium);
+  width: var(--icon-size);
+  height: var(--icon-size);
+  pointer-events: none;
+  color: var(--muted-foreground);
+}
+.search-clear {
+  position: absolute;
+  right: var(--space-unit);
+}
+.search-suggestions {
+  position: absolute;
+  z-index: 40;
+  top: 100%;
+  left: 0;
+  width: min(32rem, 80vw);
+  max-height: 50vh;
+  overflow: auto;
+  padding: var(--space-small);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--elevation-high);
+}
+.search-suggestions button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--space-small);
+  border-radius: var(--radius);
+}
+.search-suggestions button:hover,
+.search-suggestions [aria-selected='true'] {
+  background: var(--selected);
+  color: var(--selected-foreground);
+}
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+.quantity-control input {
+  min-width: 0;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  border: 0;
+  background: transparent;
+}
+.inventory-snapshot table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.inventory-snapshot th,
+.inventory-snapshot td {
+  border: 0;
+}
+.inventory-snapshot tbody th:first-child {
+  border-radius: 0;
+}
+.inventory-snapshot tbody td:last-child {
+  border-radius: 0;
+}
+.header-actions .profile-trigger {
+  width: auto;
+}
+.data-table tbody tr > :first-child {
+  border-radius: 0;
+}
+.data-table tbody tr > :last-child {
+  border-radius: 0;
+}
+.pagination svg,
+.sidebar-brand [data-slot='button'] svg {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+.shell-nav-link > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.profile-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  flex-shrink: 0;
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  font-weight: var(--weight-strong);
+}
+.profile-identity {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--space-small);
+  text-align: left;
+}
+.profile-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.profile-copy > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profile-role {
+  font-size: var(--font-small);
+  color: var(--muted-foreground);
+}
+.profile-menu {
+  width: var(--profile-menu-width);
+  min-width: min(var(--profile-menu-width), calc(100vw - var(--space-large)));
+}
+.profile-menu [role='menuitem'] {
+  gap: var(--space-small);
+}
+.profile-menu [role='menuitem'] svg {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  flex-shrink: 0;
+}
+.header-actions > :first-child {
+  min-width: 0;
+  flex: 1;
+}
+.header-actions .search-control {
+  width: min(22rem, 100%);
+}
+
+.inventory-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-medium);
+}
+.inventory-product-card {
+  text-align: left;
+  background: var(--muted);
+  border-radius: var(--surface-radius);
+  padding: var(--space-medium);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+  min-width: 0;
+}
+.inventory-product-card:hover {
+  background: var(--table-hover);
+}
+.inventory-product-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  border-radius: var(--radius);
+  height: calc(var(--control-large) * 2);
+  color: var(--muted-foreground);
+}

@@ -30,7 +30,7 @@ export async function detail(ctx: OrganizationContext, id: string) {
     ).rows,
     returns: (
       await ctx.tx.query(
-        `SELECT t.id,t.receipt_id AS "receiptId",t.quantity::text,t.movement_id AS "movementId",t.credit_reference AS "creditReference",t.reason FROM purchase_returns t JOIN purchase_receipts r ON r.business_id=t.business_id AND r.id=t.receipt_id JOIN purchase_lines l ON l.business_id=r.business_id AND l.id=r.line_id WHERE l.business_id=$1 AND l.purchase_id=$2 ORDER BY t.created_at,t.id`,
+        `SELECT t.id,t.receipt_id AS "receiptId",t.quantity::text,t.damaged::text,t.movement_id AS "movementId",t.credit_reference AS "creditReference",t.reason FROM purchase_returns t JOIN purchase_receipts r ON r.business_id=t.business_id AND r.id=t.receipt_id JOIN purchase_lines l ON l.business_id=r.business_id AND l.id=r.line_id WHERE l.business_id=$1 AND l.purchase_id=$2 ORDER BY t.created_at,t.id`,
         [b, id],
       )
     ).rows,

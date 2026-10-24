@@ -13,7 +13,7 @@
     "format:check": "prettier --check .",
     "check:foundation": "node scripts/check-foundation.mjs",
     "validate": "npm run format:check && npm run check:foundation && npm run lint && npm run typecheck && npm test && npm run build",
-    "build:shared": "npm run build -w @inventory/api-client",
+    "build:shared": "npm run build -w @inventory/design-tokens && npm run build -w @inventory/api-client",
     "dev:web": "npm run dev -w @inventory/web",
     "dev:api": "npm run dev -w @inventory/api",
     "dev:mobile": "npm run dev -w @inventory/mobile",
@@ -42,7 +42,15 @@
     "preandroid": "npm run setup && node scripts/doctor.mjs android",
     "preios": "npm run setup && node scripts/doctor.mjs ios",
     "package:api": "npm run build -w @inventory/api && node scripts/package-api.mjs",
-    "test:web:browser": "playwright test"
+    "test:web:browser": "playwright test",
+    "dev:mock:web": "node scripts/dev-mock.mjs web",
+    "dev:mock:mobile": "node scripts/dev-mock.mjs mobile",
+    "dev:mock:desktop": "node scripts/dev-mock.mjs desktop",
+    "db:seed:showcase": "node scripts/seed-showcase.mjs",
+    "db:backup": "node scripts/database-backup.mjs",
+    "package:desktop:remote": "node scripts/desktop-profile.mjs remote",
+    "package:desktop:local": "node scripts/desktop-profile.mjs local-network",
+    "db:seed:transactions": "node scripts/seed-transactions.mjs"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

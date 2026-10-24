@@ -1,4 +1,8 @@
 // @vitest-environment jsdom
+vi.mock('expo-image-picker', () => ({ launchImageLibraryAsync: async () => ({ canceled: true }) }));
+vi.mock('expo-font', () => ({ useFonts: () => [true, null] }));
+vi.hoisted(() => vi.stubGlobal('__DEV__', false));
+vi.mock('react-native-safe-area-context', () => import('./ui/safe-area-test-adapter'));
 vi.mock('expo-crypto', () => ({
   getRandomBytes: (n: number) => crypto.getRandomValues(new Uint8Array(n)),
   randomUUID: () => crypto.randomUUID(),
@@ -23,5 +27,5 @@ vi.mock('react-native', () => vi.importActual('react-native-web'));
 it('registers the mobile app and renders its browser-compatible native shell', async () => {
   await import('../index');
   expect(registerRootComponent).toHaveBeenCalledWith(App);
-  expect(renderToStaticMarkup(createElement(App))).toContain('Inventory platform');
+  expect(renderToStaticMarkup(createElement(App))).toContain('Checking saved session');
 });

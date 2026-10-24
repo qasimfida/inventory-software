@@ -1,3 +1,4 @@
+import { DatabaseService } from '../database/database.service.js';
 import { randomUUID } from 'node:crypto';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import type { INestApplication } from '@nestjs/common';
@@ -34,7 +35,11 @@ export function configureHttp(app: INestApplication, environment: Environment) {
       parameterLimit: 100,
     }),
   );
-  app.enableCors({ origin: environment.corsOrigins, credentials: true });
+  app.enableCors({
+    origin: environment.corsOrigins,
+    credentials: true,
+    exposedHeaders: ['x-request-id', 'retry-after'],
+  });
   app.use((request: Request, response: Response, next: NextFunction) => {
     if (request.path.startsWith(`${API_PREFIX}/`) && request.path !== `${API_PREFIX}/`)
       return next();
@@ -55,5 +60,5 @@ export function configureHttp(app: INestApplication, environment: Environment) {
       validationError: { target: false, value: false },
     }),
   );
-  app.useGlobalFilters(new ApiErrorFilter());
+  app.useGlobalFilters(new ApiErrorFilter(environment, app.get(DatabaseService)));
 }

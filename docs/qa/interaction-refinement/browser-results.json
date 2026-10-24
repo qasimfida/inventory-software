@@ -1,0 +1,71 @@
+{
+  "results": [
+    {
+      "width": 390,
+      "colorScheme": "light",
+      "pos": "pass",
+      "suggestions": "pass",
+      "cart": "pass",
+      "table": "pass",
+      "preferences": "pass",
+      "notifications": "pass",
+      "accessibility": []
+    },
+    {
+      "width": 390,
+      "colorScheme": "dark",
+      "pos": "pass",
+      "suggestions": "pass",
+      "cart": "pass",
+      "table": "pass",
+      "preferences": "pass",
+      "notifications": "pass",
+      "accessibility": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "light",
+      "pos": "pass",
+      "suggestions": "pass",
+      "cart": "pass",
+      "table": "pass",
+      "preferences": "pass",
+      "notifications": "pass",
+      "accessibility": []
+    },
+    {
+      "width": 768,
+      "colorScheme": "dark",
+      "pos": "pass",
+      "suggestions": "pass",
+      "cart": "pass",
+      "table": "pass",
+      "preferences": "pass",
+      "notifications": "pass",
+      "accessibility": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "light",
+      "pos": "pass",
+      "suggestions": "pass",
+      "cart": "pass",
+      "table": "pass",
+      "preferences": "pass",
+      "notifications": "pass",
+      "accessibility": []
+    },
+    {
+      "width": 1440,
+      "colorScheme": "dark",
+      "pos": "pass",
+      "suggestions": "pass",
+      "cart": "pass",
+      "table": "pass",
+      "preferences": "pass",
+      "notifications": "pass",
+      "accessibility": []
+    }
+  ],
+  "errors": []
+}

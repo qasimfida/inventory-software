@@ -1,0 +1,679 @@
+{
+  "results": [
+    {
+      "role": "superadmin",
+      "path": "/dashboard",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/dashboard.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/pos",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/pos.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/sales",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/sales.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/cash",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/cash.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/catalog",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/catalog.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/inventory",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/inventory.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/warehouse",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/warehouse.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/transfers",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/transfers.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/storage",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/storage.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/warehouse-view",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/warehouse-view.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/purchasing",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/purchasing.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/customers",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/customers.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/payables",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/payables.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/accounting",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/accounting.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/reports",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/reports.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/logs",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/logs.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/notifications.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/trading",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/trading.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/integrations",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/integrations.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/settings/profile",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/settings-profile.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/settings/company",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/settings-company.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/settings/business",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/settings-business.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/settings/preferences",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/settings-preferences.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/settings/security",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/settings-security.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/settings/device",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/settings-device.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/settings/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/settings-notifications.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/staff",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/staff.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/team",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/team.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/settings/locations",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/settings-locations.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/settings/audit",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/settings-audit.png"
+    },
+    {
+      "role": "owner",
+      "path": "/dashboard",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/dashboard.png"
+    },
+    {
+      "role": "owner",
+      "path": "/pos",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/pos.png"
+    },
+    {
+      "role": "owner",
+      "path": "/sales",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/sales.png"
+    },
+    {
+      "role": "owner",
+      "path": "/cash",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/cash.png"
+    },
+    {
+      "role": "owner",
+      "path": "/catalog",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/catalog.png"
+    },
+    {
+      "role": "owner",
+      "path": "/inventory",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/inventory.png"
+    },
+    {
+      "role": "owner",
+      "path": "/warehouse",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/warehouse.png"
+    },
+    {
+      "role": "owner",
+      "path": "/transfers",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/transfers.png"
+    },
+    {
+      "role": "owner",
+      "path": "/storage",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/storage.png"
+    },
+    {
+      "role": "owner",
+      "path": "/warehouse-view",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/warehouse-view.png"
+    },
+    {
+      "role": "owner",
+      "path": "/purchasing",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/purchasing.png"
+    },
+    {
+      "role": "owner",
+      "path": "/customers",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/customers.png"
+    },
+    {
+      "role": "owner",
+      "path": "/payables",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/payables.png"
+    },
+    {
+      "role": "owner",
+      "path": "/accounting",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/accounting.png"
+    },
+    {
+      "role": "owner",
+      "path": "/reports",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/reports.png"
+    },
+    {
+      "role": "owner",
+      "path": "/logs",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/logs.png"
+    },
+    {
+      "role": "owner",
+      "path": "/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/notifications.png"
+    },
+    {
+      "role": "owner",
+      "path": "/trading",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/trading.png"
+    },
+    {
+      "role": "owner",
+      "path": "/integrations",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/integrations.png"
+    },
+    {
+      "role": "owner",
+      "path": "/settings/profile",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/settings-profile.png"
+    },
+    {
+      "role": "owner",
+      "path": "/settings/company",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/settings-company.png"
+    },
+    {
+      "role": "owner",
+      "path": "/settings/business",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/settings-business.png"
+    },
+    {
+      "role": "owner",
+      "path": "/settings/preferences",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/settings-preferences.png"
+    },
+    {
+      "role": "owner",
+      "path": "/settings/security",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/settings-security.png"
+    },
+    {
+      "role": "owner",
+      "path": "/settings/device",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/settings-device.png"
+    },
+    {
+      "role": "owner",
+      "path": "/settings/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/settings-notifications.png"
+    },
+    {
+      "role": "owner",
+      "path": "/staff",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/staff.png"
+    },
+    {
+      "role": "owner",
+      "path": "/team",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/team.png"
+    },
+    {
+      "role": "owner",
+      "path": "/settings/locations",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/settings-locations.png"
+    },
+    {
+      "role": "owner",
+      "path": "/settings/audit",
+      "screenshot": "docs/qa/screens/mobile/android-light-owner/settings-audit.png"
+    },
+    {
+      "role": "manager",
+      "path": "/dashboard",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/dashboard.png"
+    },
+    {
+      "role": "manager",
+      "path": "/pos",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/pos.png"
+    },
+    {
+      "role": "manager",
+      "path": "/sales",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/sales.png"
+    },
+    {
+      "role": "manager",
+      "path": "/cash",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/cash.png"
+    },
+    {
+      "role": "manager",
+      "path": "/catalog",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/catalog.png"
+    },
+    {
+      "role": "manager",
+      "path": "/inventory",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/inventory.png"
+    },
+    {
+      "role": "manager",
+      "path": "/warehouse",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/warehouse.png"
+    },
+    {
+      "role": "manager",
+      "path": "/transfers",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/transfers.png"
+    },
+    {
+      "role": "manager",
+      "path": "/storage",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/storage.png"
+    },
+    {
+      "role": "manager",
+      "path": "/warehouse-view",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/warehouse-view.png"
+    },
+    {
+      "role": "manager",
+      "path": "/purchasing",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/purchasing.png"
+    },
+    {
+      "role": "manager",
+      "path": "/customers",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/customers.png"
+    },
+    {
+      "role": "manager",
+      "path": "/payables",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/payables.png"
+    },
+    {
+      "role": "manager",
+      "path": "/reports",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/reports.png"
+    },
+    {
+      "role": "manager",
+      "path": "/logs",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/logs.png"
+    },
+    {
+      "role": "manager",
+      "path": "/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/notifications.png"
+    },
+    {
+      "role": "manager",
+      "path": "/integrations",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/integrations.png"
+    },
+    {
+      "role": "manager",
+      "path": "/settings/profile",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/settings-profile.png"
+    },
+    {
+      "role": "manager",
+      "path": "/settings/preferences",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/settings-preferences.png"
+    },
+    {
+      "role": "manager",
+      "path": "/settings/security",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/settings-security.png"
+    },
+    {
+      "role": "manager",
+      "path": "/settings/device",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/settings-device.png"
+    },
+    {
+      "role": "manager",
+      "path": "/settings/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/settings-notifications.png"
+    },
+    {
+      "role": "manager",
+      "path": "/settings/locations",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/settings-locations.png"
+    },
+    {
+      "role": "manager",
+      "path": "/settings/audit",
+      "screenshot": "docs/qa/screens/mobile/android-light-manager/settings-audit.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/pos",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/pos.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/sales",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/sales.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/cash",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/cash.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/catalog",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/catalog.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/inventory",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/inventory.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/warehouse",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/warehouse.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/transfers",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/transfers.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/storage",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/storage.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/warehouse-view",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/warehouse-view.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/customers",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/customers.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/notifications.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/integrations",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/integrations.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/settings/profile",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/settings-profile.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/settings/preferences",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/settings-preferences.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/settings/security",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/settings-security.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/settings/device",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/settings-device.png"
+    },
+    {
+      "role": "cashier",
+      "path": "/settings/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-cashier/settings-notifications.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/dashboard",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/dashboard.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/catalog",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/catalog.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/inventory",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/inventory.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/warehouse",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/warehouse.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/transfers",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/transfers.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/storage",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/storage.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/warehouse-view",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/warehouse-view.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/purchasing",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/purchasing.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/notifications.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/integrations",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/integrations.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/settings/profile",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/settings-profile.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/settings/preferences",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/settings-preferences.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/settings/security",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/settings-security.png"
+    },
+    {
+      "role": "inventory",
+      "path": "/settings/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-inventory/settings-notifications.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/dashboard",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/dashboard.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/sales",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/sales.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/cash",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/cash.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/customers",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/customers.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/logs",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/logs.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/notifications.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/integrations",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/integrations.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/settings/profile",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/settings-profile.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/settings/preferences",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/settings-preferences.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/settings/security",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/settings-security.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/settings/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/settings-notifications.png"
+    },
+    {
+      "role": "accountant",
+      "path": "/settings/audit",
+      "screenshot": "docs/qa/screens/mobile/android-light-accountant/settings-audit.png"
+    },
+    {
+      "role": "viewer",
+      "path": "/dashboard",
+      "screenshot": "docs/qa/screens/mobile/android-light-viewer/dashboard.png"
+    },
+    {
+      "role": "viewer",
+      "path": "/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-viewer/notifications.png"
+    },
+    {
+      "role": "viewer",
+      "path": "/integrations",
+      "screenshot": "docs/qa/screens/mobile/android-light-viewer/integrations.png"
+    },
+    {
+      "role": "viewer",
+      "path": "/settings/profile",
+      "screenshot": "docs/qa/screens/mobile/android-light-viewer/settings-profile.png"
+    },
+    {
+      "role": "viewer",
+      "path": "/settings/preferences",
+      "screenshot": "docs/qa/screens/mobile/android-light-viewer/settings-preferences.png"
+    },
+    {
+      "role": "viewer",
+      "path": "/settings/security",
+      "screenshot": "docs/qa/screens/mobile/android-light-viewer/settings-security.png"
+    },
+    {
+      "role": "viewer",
+      "path": "/settings/notifications",
+      "screenshot": "docs/qa/screens/mobile/android-light-viewer/settings-notifications.png"
+    },
+    {
+      "role": "superadmin",
+      "path": "/admin/businesses",
+      "screenshot": "docs/qa/screens/mobile/android-light-superadmin/admin-businesses.png"
+    }
+  ]
+}

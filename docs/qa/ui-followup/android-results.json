@@ -1,0 +1,12 @@
+{
+  "platform": "Android 16 ARM64 / Expo Go",
+  "data": "isolated development fixtures",
+  "checks": [
+    "POS products and add to cart",
+    "inventory grid circular checkbox",
+    "Settings menu shortcut",
+    "icon settings tabs and preferences",
+    "logout"
+  ],
+  "financialMutations": false
+}

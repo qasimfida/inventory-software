@@ -1,3 +1,4 @@
+import { isTransientReadFailure } from './auth.js';
 import type { Business, Workspace } from '@inventory/contracts';
 import type { createOrganizationClient } from './organization.js';
 type Client = ReturnType<typeof createOrganizationClient>;
@@ -57,7 +58,8 @@ export class OrganizationModel {
       )
         this.publish({ ...empty(), businesses, selectedId: selected?.id ?? null, workspace });
     } catch (error) {
-      this.fail(generation, error);
+      // Session expiry is enforced by the owning app; cached cash grants remain separate.
+      if (!isTransientReadFailure(error)) this.fail(generation, error);
     }
   }
   async refresh(work?: () => Promise<string | void>) {
@@ -74,7 +76,10 @@ export class OrganizationModel {
     try {
       const createdId = await work?.();
       const businesses = await this.client.list();
-      const selected = businesses.find((b) => b.id === (createdId ?? selectedId));
+      const selected =
+        businesses.find((b) => b.id === (createdId ?? selectedId)) ??
+        businesses.find((b) => b.state === 'active') ??
+        businesses[0];
       const workspace =
         selected?.state === 'active' ? await this.client.workspace(selected.id) : null;
       if (generation === this.generation)
