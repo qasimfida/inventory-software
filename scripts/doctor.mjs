@@ -25,7 +25,7 @@ if (includes('desktop'))
   check(
     'Desktop Rust/Cargo',
     works('cargo', ['--version']),
-    'Install Rust stable; see docs/platforms/setup.md.',
+    'Install Rust stable; see docs/development.md.',
   );
 if (includes('android')) {
   check(
@@ -63,6 +63,6 @@ if (includes('ios')) {
   }
 }
 console.log(
-  'These are prerequisite checks, not proof of a successful native build. See docs/platforms/setup.md.',
+  'These are prerequisite checks, not proof of a successful native build. See docs/development.md.',
 );
 process.exitCode = missing ? 1 : 0;

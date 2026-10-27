@@ -55,7 +55,7 @@ try {
         );
       }
       await page.screenshot({
-        path: `docs/qa/interaction-refinement/pos-${width}-${colorScheme}.png`,
+        path: `artifacts/qa/interaction-refinement/pos-${width}-${colorScheme}.png`,
         fullPage: true,
       });
       expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
@@ -82,7 +82,7 @@ try {
         }),
       );
       await page.screenshot({
-        path: `docs/qa/interaction-refinement/inventory-${width}-${colorScheme}.png`,
+        path: `artifacts/qa/interaction-refinement/inventory-${width}-${colorScheme}.png`,
         fullPage: true,
       });
       await page.getByRole('button', { name: 'Open profile menu' }).last().click();
@@ -101,7 +101,7 @@ try {
         .poll(() => page.locator('body').evaluate((e) => getComputedStyle(e).fontFamily))
         .toContain('Karla');
       await page.screenshot({
-        path: `docs/qa/interaction-refinement/preferences-${width}-${colorScheme}.png`,
+        path: `artifacts/qa/interaction-refinement/preferences-${width}-${colorScheme}.png`,
         fullPage: true,
       });
       await page.getByRole('button', { name: /^Notifications/ }).hover();
@@ -128,7 +128,7 @@ try {
     }
 } finally {
   await writeFile(
-    'docs/qa/interaction-refinement/browser-results.json',
+    'artifacts/qa/interaction-refinement/browser-results.json',
     JSON.stringify({ results, errors }, null, 2),
   );
   await browser.close();

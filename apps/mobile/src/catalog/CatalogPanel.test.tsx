@@ -11,6 +11,7 @@ vi.mock('../auth/client', () => ({
         : { items: [], total: 0, offset: 0, limit: 25, hasMore: false },
   },
 }));
+import { NavigationProvider } from '../shell/Navigation';
 import { CatalogPanel } from './CatalogPanel';
 afterEach(cleanup);
 
@@ -18,16 +19,18 @@ it('renders an empty native catalog without placing an error string directly ins
   const errors = vi.spyOn(console, 'error');
   try {
     render(
-      <CatalogPanel
-        business={{
-          id: '00000000-0000-4000-8000-000000000001',
-          name: 'Demo',
-          role: 'owner',
-          state: 'active',
-          version: 1,
-        }}
-        locations={[]}
-      />,
+      <NavigationProvider>
+        <CatalogPanel
+          business={{
+            id: '00000000-0000-4000-8000-000000000001',
+            name: 'Demo',
+            role: 'owner',
+            state: 'active',
+            version: 1,
+          }}
+          locations={[]}
+        />
+      </NavigationProvider>,
     );
     await screen.findByText('0 products');
     expect(screen.queryByRole('alert')).toBeNull();

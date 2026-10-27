@@ -17,15 +17,16 @@ interface Reservation {
 @Injectable()
 export class ReservationCore {
   constructor(@Inject(LedgerCore) private readonly ledger: LedgerCore) {}
-  async get(ctx: OrganizationContext, id: string) {
+  async get(ctx: OrganizationContext, id: string, releasing = false) {
     const row = (
       await ctx.tx.query<Reservation>(
-        'SELECT id,variant_id AS "variantId",warehouse_id AS "warehouseId",location_id AS "locationId",quantity::text,remaining::text,state,source_kind AS "sourceKind",source_id AS "sourceId" FROM stock_reservations WHERE business_id=$1 AND id=$2',
+        'SELECT id,variant_id AS "variantId",warehouse_id AS "warehouseId",location_id AS "locationId",quantity::text,remaining::text,state,source_kind AS "sourceKind",source_id AS "sourceId" FROM stock_reservations WHERE business_id=$1 AND id=$2 FOR UPDATE',
         [ctx.business.id, id],
       )
     ).rows[0];
     if (!row) throw new NotFoundException();
-    await this.ledger.warehouse(ctx, row.warehouseId);
+    if (releasing) await this.ledger.warehouseRecord(ctx, row.warehouseId);
+    else await this.ledger.warehouse(ctx, row.warehouseId);
     return row;
   }
   async reserve(
@@ -67,18 +68,22 @@ export class ReservationCore {
     return { id, quantity: input.quantity, locationId: movement.locationId };
   }
   async release(ctx: OrganizationContext, id: string, commandId: string, reason: string) {
-    const reservation = await this.get(ctx, id);
+    const reservation = await this.get(ctx, id, true);
     if (reservation.state !== 'active') throw new ConflictException();
-    await this.ledger.apply(ctx, {
-      ...reservation,
-      quantityDelta: '0',
-      reservedDelta: decimalString(-decimal(reservation.remaining)),
-      type: 'release',
-      sourceKind: 'reservation_release',
-      sourceId: commandId,
-      commandId,
-      reason,
-    });
+    await this.ledger.apply(
+      ctx,
+      {
+        ...reservation,
+        quantityDelta: '0',
+        reservedDelta: decimalString(-decimal(reservation.remaining)),
+        type: 'release',
+        sourceKind: 'reservation_release',
+        sourceId: commandId,
+        commandId,
+        reason,
+      },
+      true,
+    );
     await ctx.tx.query(
       "UPDATE stock_reservations SET remaining=0,state='released' WHERE business_id=$1 AND id=$2",
       [ctx.business.id, id],

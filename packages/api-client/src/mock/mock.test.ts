@@ -4,6 +4,7 @@ import { demoController, demoTransport } from './index.js';
 import { createAuthClient, memoryCredentialStore } from '../auth.js';
 import { demoId } from './identity.js';
 const schemas = [
+  ['setup', c.setupChecklistSchema],
   ['products', c.productPageSchema],
   ['operations', c.operationsPageSchema],
   [`operations/costs/${demoId(7100)}`, c.costDetailSchema],

@@ -1,3 +1,6 @@
+import { OnlineCollectionFeedback } from '../storefront/OnlineCollectionFeedback';
+import { Checkbox } from '../ui/Checkbox';
+import { useOnlineCollection } from '../storefront/useOnlineCollection';
 import { EmptyState } from '../ui/AsyncState';
 import { posPriceLabel } from '@inventory/api-client';
 import { ViewTabs } from '../ui/ViewTabs';
@@ -29,8 +32,10 @@ export function InventoryProducts({
   controls,
   onAdjust,
   onEdit,
+  onDetails,
 }: {
   items: Item[];
+  onDetails?: ((productId: string) => void) | undefined;
   showEmpty?: boolean;
   controls?: ReactNode;
   onEdit?: ((productId: string) => void) | undefined;
@@ -41,9 +46,26 @@ export function InventoryProducts({
     [selection, setSelected] = useState<Item | null>(null);
   const { width, fontScale } = useWindowDimensions();
   const columns = grid && width >= 600 && fontScale <= 1.3;
+  const channels = useOnlineCollection(items.flatMap((i) => (i.productId ? [i.productId] : [])));
   const selected = items.find((item) => item.id === selection?.id) ?? null;
   return (
     <>
+      <OnlineCollectionFeedback channels={channels} />
+      {channels.manage && channels.selected.length > 0 && (
+        <>
+          <Text>{channels.selected.length} selected</Text>
+          <Action
+            disabled={channels.busy}
+            label="Add to online store"
+            onPress={() => void channels.add(channels.selected)}
+          />
+          <Action
+            variant="ghost"
+            label="Clear selection"
+            onPress={() => channels.setSelected([])}
+          />
+        </>
+      )}
       <View
         style={{
           flexDirection: 'row',
@@ -83,6 +105,23 @@ export function InventoryProducts({
               backgroundColor: index % 2 === 0 ? theme.tokens.muted : theme.tokens.card,
             }}
           >
+            {channels.manage && item.productId && (
+              <>
+                <Checkbox
+                  label={`Select ${item.name} for online store`}
+                  value={channels.selected.includes(item.productId)}
+                  onChange={() => channels.toggle(item.productId!)}
+                />
+                <Action
+                  disabled={channels.busy}
+                  label="Add to online store"
+                  onPress={() => void channels.add([item.productId!])}
+                />
+              </>
+            )}
+            {channels.items.some(
+              (l) => l.productId === item.productId && l.status === 'active',
+            ) && <StatusBadge label="Online" tone="success" />}
             <Pressable
               accessibilityRole="button"
               accessibilityLabel={`View ${item.name}`}
@@ -136,6 +175,15 @@ export function InventoryProducts({
         {selected && (
           <>
             <Text accessibilityRole="header">{selected.name}</Text>
+            {onDetails && selected.productId && (
+              <Action
+                label="Open full product details"
+                onPress={() => {
+                  setSelected(null);
+                  onDetails(selected.productId!);
+                }}
+              />
+            )}
             <Badge item={selected} />
             <Text>{selected.price ? posPriceLabel({ price: selected.price }) : 'Not priced'}</Text>
             {onEdit && selected.productId && (

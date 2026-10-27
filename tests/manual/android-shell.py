@@ -2,7 +2,7 @@
 import json, os, re, shlex, subprocess, time, xml.etree.ElementTree as ET
 from pathlib import Path
 adb = os.environ.get('ANDROID_ADB', 'adb')
-results = json.loads(Path('docs/qa/android-matrix.json').read_text())['results'] if os.environ.get('QA_RESUME') == '1' else []
+results = json.loads(Path('artifacts/qa/android-matrix.json').read_text())['results'] if os.environ.get('QA_RESUME') == '1' else []
 def run(*args):
     return subprocess.check_output([adb, *args], text=True)
 def nodes():
@@ -53,12 +53,12 @@ try:
                 raise RuntimeError('Unexpected normal-scenario failure: ' + page['path'])
             if expected not in texts:
                 raise RuntimeError('Route title missing: ' + page['path'])
-            screenshot = Path('docs/qa/screens/mobile') / ('android-light-' + role) / (page['path'][1:].replace('/', '-') + '.png')
+            screenshot = Path('artifacts/qa/screens/mobile') / ('android-light-' + role) / (page['path'][1:].replace('/', '-') + '.png')
             shot(screenshot)
             results.append({'role':role, 'path':page['path'], 'screenshot':str(screenshot)})
-            Path('docs/qa/android-matrix.json').write_text(json.dumps({'results':results}, indent=2)+'\n')
+            Path('artifacts/qa/android-matrix.json').write_text(json.dumps({'results':results}, indent=2)+'\n')
             print(role, page['path'], flush=True)
         if role != 'viewer':
             tap('Role: ' + role)
 finally:
-    Path('docs/qa/android-matrix.json').write_text(json.dumps({'results':results}, indent=2)+'\n')
+    Path('artifacts/qa/android-matrix.json').write_text(json.dumps({'results':results}, indent=2)+'\n')

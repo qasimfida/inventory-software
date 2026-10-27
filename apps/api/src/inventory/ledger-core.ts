@@ -19,6 +19,9 @@ export class LedgerCore {
     @Inject(CatalogAccess) readonly catalog: CatalogAccess,
     @Inject(LocationAccess) private readonly locations: LocationAccess,
   ) {}
+  warehouseRecord(ctx: OrganizationContext, id: string) {
+    return this.locations.warehouse(ctx, id);
+  }
   async warehouse(ctx: OrganizationContext, id: string) {
     const warehouse = await this.locations.warehouse(ctx, id);
     if (warehouse.state !== 'active') throw new ConflictException();
@@ -41,10 +44,26 @@ export class LedgerCore {
     if (!row) throw new NotFoundException();
     return { id, warehouse };
   }
-  async apply(ctx: OrganizationContext, input: StockEntry) {
-    const { product } = await this.catalog.active(ctx, input.variantId);
-    if (!product.trackInventory) throw new ConflictException();
-    const target = await this.location(ctx, input.warehouseId, input.locationId),
+  async apply(ctx: OrganizationContext, input: StockEntry, releaseOnly = false) {
+    if (
+      releaseOnly &&
+      (input.type !== 'release' ||
+        input.sourceKind !== 'reservation_release' ||
+        decimal(input.quantityDelta) !== 0n ||
+        decimal(input.reservedDelta ?? '0') >= 0n ||
+        decimal(input.damagedDelta ?? '0') !== 0n ||
+        decimal(input.transitDelta ?? '0') !== 0n ||
+        !input.locationId)
+    )
+      throw new ConflictException();
+    if (!releaseOnly) {
+      const { product } = await this.catalog.active(ctx, input.variantId);
+      if (!product.trackInventory) throw new ConflictException();
+    }
+    // Releasing an existing hold must remain possible after catalog/location deactivation.
+    const target = releaseOnly
+        ? { id: input.locationId!, warehouse: await this.warehouseRecord(ctx, input.warehouseId) }
+        : await this.location(ctx, input.warehouseId, input.locationId),
       args = [ctx.business.id, input.variantId, input.warehouseId, target.id];
     if (
       input.type === 'opening' &&
@@ -104,7 +123,7 @@ export class LedgerCore {
     }
     const id = randomUUID();
     await ctx.tx.query(
-      `INSERT INTO stock_movements(id,business_id,variant_id,warehouse_id,location_id,quantity_delta,reserved_delta,damaged_delta,transit_delta,type,source_kind,source_id,command_id,actor_id,reason,reversal_of) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`,
+      `INSERT INTO stock_movements(id,business_id,variant_id,warehouse_id,location_id,quantity_delta,reserved_delta,damaged_delta,transit_delta,type,source_kind,source_id,command_id,actor_id,reason,reversal_of,reason_code,reason_label) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)`,
       [
         id,
         ...args,
@@ -119,6 +138,8 @@ export class LedgerCore {
         ctx.actor.accountId,
         input.reason,
         input.reversalOf ?? null,
+        input.reasonCode ?? null,
+        input.reasonLabel ?? null,
       ],
     );
     await ctx.tx.query(
@@ -131,9 +152,9 @@ export class LedgerCore {
       locationId: target.id,
     });
     await lowStock(ctx, input);
-    return this.movement(ctx, id);
+    return this.movement(ctx, id, releaseOnly);
   }
-  async movement(ctx: OrganizationContext, id: string) {
+  async movement(ctx: OrganizationContext, id: string, releaseOnly = false) {
     const row = (
       await ctx.tx.query<{
         id: string;
@@ -157,8 +178,9 @@ export class LedgerCore {
       ])
     ).rows[0];
     if (!row) throw new NotFoundException();
-    await this.warehouse(ctx, row.warehouseId);
+    if (releaseOnly) await this.warehouseRecord(ctx, row.warehouseId);
+    else await this.warehouse(ctx, row.warehouseId);
     return { ...row, createdAt: row.createdAt.toISOString() };
   }
 }
-export const movementProjection = `id,variant_id AS "variantId",warehouse_id AS "warehouseId",location_id AS "locationId",quantity_delta::text AS "quantityDelta",reserved_delta::text AS "reservedDelta",damaged_delta::text AS "damagedDelta",transit_delta::text AS "transitDelta",type,source_kind AS "sourceKind",source_id AS "sourceId",actor_id AS "actorId",reason,created_at AS "createdAt",reversal_of AS "reversalOf"`;
+export const movementProjection = `id,variant_id AS "variantId",warehouse_id AS "warehouseId",location_id AS "locationId",quantity_delta::text AS "quantityDelta",reserved_delta::text AS "reservedDelta",damaged_delta::text AS "damagedDelta",transit_delta::text AS "transitDelta",type,source_kind AS "sourceKind",source_id AS "sourceId",actor_id AS "actorId",reason,reason_code AS "reasonCode",reason_label AS "reasonLabel",created_at AS "createdAt",reversal_of AS "reversalOf"`;

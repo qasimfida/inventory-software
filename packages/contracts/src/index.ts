@@ -28,6 +28,10 @@ export const apiErrorSchema = z
       'PRICE_UNAVAILABLE',
       'CART_CURRENCY_MISMATCH',
       'CHECKOUT_STORE_REQUIRED',
+      'LISTING_CHANGED',
+      'STOREFRONT_CHANGED',
+      'LISTING_TRANSITION_INVALID',
+      'STOREFRONT_SETUP_INCOMPLETE',
     ]),
     message: z.string(),
     requestId: z.string().uuid(),
@@ -82,3 +86,15 @@ export * from './company-profile.js';
 export * from './platform-businesses.js';
 export * from './operations.js';
 export * from './bulk-import.js';
+
+export * from './setup-checklist.js';
+export * from './stock-planning.js';
+export * from './storefront.js';
+export * from './storefront-readiness.js';
+export * from './storefront-management.js';
+export * from './storefront-transitions.js';
+export * from './storefront-commands.js';
+export * from './storefront-media.js';
+export * from './storefront-products.js';
+
+export * from './storefront-messages.js';

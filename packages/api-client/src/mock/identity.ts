@@ -11,7 +11,21 @@ export const demoRoles = [
   'viewer',
 ] as const;
 export type DemoRole = (typeof demoRoles)[number];
-export type DemoScenario = 'normal' | 'empty' | 'error' | 'offline';
+export type DemoScenario =
+  | 'store-all-clear'
+  | 'store-no-catalog'
+  | 'store-live'
+  | 'store-disabled'
+  | 'store-sold-out-hidden'
+  | 'normal'
+  | 'empty'
+  | 'error'
+  | 'offline'
+  | 'denied'
+  | 'stale'
+  | 'partial'
+  | 'slow'
+  | 'rate-limited';
 export function identitySeed(index: number, role: DemoRole) {
   const base = index * 10000,
     id = (n: number) => demoId(base + n);
@@ -42,7 +56,7 @@ export function identitySeed(index: number, role: DemoRole) {
           : [],
     scope: ['superadmin', 'owner'].includes(role)
       ? { storeId: null, warehouseId: null }
-      : { storeId: id(2), warehouseId: id(3) },
+      : { storeId: id(2), warehouseId: role === 'manager' ? null : id(3) },
   });
   const locations = [
     {

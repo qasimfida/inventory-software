@@ -8,7 +8,7 @@ export function Surface({ children, muted = false }: { children: ReactNode; mute
       style={{
         padding: theme.spacing.medium,
         gap: theme.spacing.small,
-        borderRadius: Number.parseFloat(theme.tokens['surface-radius']),
+        borderRadius: theme.radius,
         backgroundColor: muted ? theme.tokens.muted : theme.colors.card,
         borderWidth: 1,
         borderColor: theme.tokens.border,

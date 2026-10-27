@@ -40,7 +40,7 @@ try {
       false,
     );
     await page.screenshot({
-      path: `docs/qa/catalog-cart/catalog-${width}.png`,
+      path: `artifacts/qa/catalog-cart/catalog-${width}.png`,
       animations: 'disabled',
     });
   }
@@ -81,7 +81,7 @@ try {
     expect(quantity.y).toBeGreaterThan(remove.y);
     await cart.scrollIntoViewIfNeeded();
     await page.screenshot({
-      path: `docs/qa/catalog-cart/cart-${width}.png`,
+      path: `artifacts/qa/catalog-cart/cart-${width}.png`,
       animations: 'disabled',
     });
     results.push({ width, cartControlsUnderDelete: true, noPageOverflow: true });
@@ -90,7 +90,7 @@ try {
 } finally {
   await browser.close();
   await writeFile(
-    'docs/qa/catalog-cart/browser-results.json',
+    'artifacts/qa/catalog-cart/browser-results.json',
     JSON.stringify({ results, errors }, null, 2) + '\n',
   );
 }

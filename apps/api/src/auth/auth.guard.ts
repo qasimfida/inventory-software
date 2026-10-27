@@ -18,11 +18,16 @@ export class AuthGuard implements CanActivate {
   ) {}
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest<AuthRequest>();
-    const isPublic = this.reflector.getAllAndOverride<'credentials' | 'health'>(PUBLIC_ROUTE, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+    const isPublic = this.reflector.getAllAndOverride<'credentials' | 'health' | 'storefront'>(
+      PUBLIC_ROUTE,
+      [context.getHandler(), context.getClass()],
+    );
     if (isPublic === 'health') return true;
+    if (isPublic === 'storefront') {
+      if (!['GET', 'HEAD'].includes(request.method)) return false;
+      await this.limits.consume(`storefront-ip:${request.socket.remoteAddress ?? 'unknown'}`, 60);
+      return true;
+    }
     validateOrigin(request, this.environment);
     if (isPublic) {
       await this.limits.consume(`credentials-ip:${request.socket.remoteAddress ?? 'unknown'}`, 60);

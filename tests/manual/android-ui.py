@@ -6,7 +6,7 @@ import time
 import xml.etree.ElementTree as ET
 
 ADB = os.environ.get('ADB', '/tmp/inventory-android-sdk/platform-tools/adb')
-OUT = 'docs/qa/feedback-sync'
+OUT = 'artifacts/qa/feedback-sync'
 
 def run(*args):
     return subprocess.check_output([ADB, *args], text=True)

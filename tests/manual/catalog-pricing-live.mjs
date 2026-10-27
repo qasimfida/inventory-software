@@ -61,12 +61,15 @@ try {
   await expect(page.getByRole('dialog', { name: 'Edit product' })).toBeVisible();
   await page.getByRole('button', { name: 'Set / adjust price', exact: true }).click();
   await price('14.75');
-  await page.screenshot({ path: 'docs/qa/catalog-cart/live-pricing.png', animations: 'disabled' });
+  await page.screenshot({
+    path: 'artifacts/qa/catalog-cart/live-pricing.png',
+    animations: 'disabled',
+  });
   expect(evidence.errors).toEqual([]);
 } finally {
   await browser.close();
   await writeFile(
-    'docs/qa/catalog-cart/live-pricing-results.json',
+    'artifacts/qa/catalog-cart/live-pricing-results.json',
     JSON.stringify(evidence, null, 2) + '\n',
   );
 }

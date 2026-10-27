@@ -45,7 +45,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-small);
-  font-size: var(--font-small);
+  font-size: calc(var(--font-small) * var(--text-scale));
 }
 .cart-line-unit [role='combobox'] {
   width: auto;
@@ -319,7 +319,7 @@ table td:has(> .ui-checkbox) + td {
   border-radius: var(--radius-circle);
   background: var(--primary);
   color: var(--primary-foreground);
-  font-size: var(--font-small);
+  font-size: calc(var(--font-small) * var(--text-scale));
 }
 
 .sync-toast {
@@ -331,7 +331,7 @@ table td:has(> .ui-checkbox) + td {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--card);
-  color: var(--card-foreground);
+  color: var(--foreground);
   padding: 1rem;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--elevation-high);
 }

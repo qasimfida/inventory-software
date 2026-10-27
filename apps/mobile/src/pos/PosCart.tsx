@@ -1,3 +1,4 @@
+import { HeldCarts } from './HeldCarts';
 import { useState } from 'react';
 import { CreateCustomerSheet } from '../customers/CreateCustomerSheet';
 import type { createCustomerClient } from '@inventory/api-client';
@@ -8,9 +9,8 @@ import { RecordDetails } from '../ui/RecordDetails';
 import { Surface } from '../ui/Surface';
 import { Text } from '../ui/Themed';
 import { Action, Choice } from '../organization/Controls';
-import { CommandForm } from '../components/CommandForm';
+import { PaymentReview } from './PaymentReview';
 import { CartLines } from './CartLines';
-import { checkoutForm } from '@inventory/api-client';
 import type { PosModel, PosState } from '@inventory/api-client';
 import { hasPermission } from '@inventory/contracts';
 import type { Business, Customer } from '@inventory/contracts';
@@ -115,6 +115,7 @@ export function PosCart({
         onClose={() => setCreatingCustomer(false)}
         onCreated={onCustomerCreated}
       />
+      <HeldCarts model={model} state={state} />
       <CartLines
         model={model}
         state={state}
@@ -167,12 +168,11 @@ export function PosCart({
       )}
       {((state.quote && reviewedQuote === state.quote.quoteFingerprint) || state.uncertain) &&
         !state.busy && (
-          <CommandForm
-            inline
-            definition={checkoutForm(model, state, hasPermission(business, 'customers.override'))}
-            run={(work) => {
-              void work();
-            }}
+          <PaymentReview
+            key={state.quote?.quoteFingerprint ?? 'uncertain'}
+            model={model}
+            state={state}
+            canOverride={hasPermission(business, 'customers.override')}
           />
         )}
       {state.receipt && (

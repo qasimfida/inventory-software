@@ -93,7 +93,7 @@ export function NotificationMenu({
           notifications.slice(0, 5).map((n) => (
             <MenuItem key={n.id} onSelect={() => void navigate('/notifications')}>
               <span>
-                <strong>{businessNotificationTitle(n.event)}</strong>
+                <strong>{businessNotificationTitle(n.event, n.summary)}</strong>
                 <small className="block text-muted-foreground">
                   {new Date(n.createdAt).toLocaleString()}
                   {!n.readAt ? ' · Unread' : ''}

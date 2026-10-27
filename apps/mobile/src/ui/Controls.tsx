@@ -13,6 +13,7 @@ export function Field({
   maxLength = 254,
   multiline = false,
   readOnly = false,
+  autoFocus = false,
   description,
   error,
 }: {
@@ -23,6 +24,8 @@ export function Field({
   maxLength?: number;
   multiline?: boolean;
   readOnly?: boolean;
+  /** Focus only after an explicit user action, such as Fix field. */
+  autoFocus?: boolean;
   description?: string;
   error?: string;
 }) {
@@ -32,6 +35,7 @@ export function Field({
     <View style={[styles.group, { gap: theme.spacing.small, marginVertical: theme.spacing.small }]}>
       <Text>{label}</Text>
       <TextInput
+        autoFocus={autoFocus}
         accessibilityLabel={label}
         accessibilityHint={[description, error].filter(Boolean).join('. ') || undefined}
         {...(Platform.OS === 'web'
@@ -162,13 +166,11 @@ export const styles = StyleSheet.create({
     minHeight: metrics.target,
     borderWidth: metrics.border,
     padding: metrics.unit * 3,
-    borderRadius: metrics.radius,
   },
   choice: {
     padding: metrics.unit * 3,
     minHeight: metrics.target,
     borderWidth: metrics.border,
-    borderRadius: metrics.radius,
   },
   heading: { fontSize: metrics.heading, fontWeight: metrics.strong },
 });

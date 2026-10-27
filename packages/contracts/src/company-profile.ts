@@ -1,7 +1,12 @@
 import { z } from 'zod';
+import { currencySchema } from './conventions.js';
 const optionalText = (max: number) => z.string().trim().max(max).default('');
 export const companyProfileSchema = z
   .object({
+    transactionCurrency: currencySchema.nullable().default(null),
+    taxBasisPoints: z.number().int().min(0).max(10000).nullable().default(null),
+    taxInclusive: z.boolean().default(false),
+    receiptFooter: optionalText(500),
     displayName: optionalText(120),
     legalName: optionalText(160),
     email: z.union([z.email(), z.literal('')]).default(''),

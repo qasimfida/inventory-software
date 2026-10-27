@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { reasonCodeSchema, stockReasonSchema } from './stock-planning.js';
 import { operationKeySchema, positiveQuantitySchema } from './conventions.js';
 const target = {
   variantId: z.uuid(),
@@ -8,6 +9,7 @@ const target = {
 export const movementInputSchema = z
   .object({
     ...target,
+    reasonCode: reasonCodeSchema.optional(),
     unitId: z.uuid(),
     quantity: positiveQuantitySchema,
     type: z.enum([
@@ -41,6 +43,7 @@ export const inventoryPolicySchema = z
   .strict();
 export const stockQuerySchema = z
   .object({
+    productId: z.uuid().optional(),
     warehouseId: z.uuid(),
     limit: z.coerce.number().int().min(1).max(100).default(25),
     offset: z.coerce.number().int().min(0).max(100000).default(0),
@@ -65,10 +68,13 @@ export const movementSchema = z.object({
   sourceId: z.uuid(),
   actorId: z.uuid(),
   reason: z.string(),
+  reasonCode: z.string().nullable().default(null),
+  reasonLabel: z.string().nullable().default(null),
   createdAt: z.iso.datetime(),
   reversalOf: z.uuid().nullable(),
 });
 export const stockWorkspaceSchema = z.object({
+  reasons: z.array(stockReasonSchema).default([]),
   totals: z.object({ items: z.number(), balances: z.number(), reservations: z.number() }),
   limit: z.number(),
   offset: z.number(),
@@ -101,6 +107,8 @@ export const stockWorkspaceSchema = z.object({
       quantity: z.string(),
       remaining: z.string(),
       state: z.string(),
+      sourceKind: z.string().default('manual'),
+      sourceId: z.uuid().nullable().default(null),
       locationId: z.uuid(),
     }),
   ),

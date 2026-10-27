@@ -3,7 +3,13 @@ import { ScrollView, View } from 'react-native';
 import { IconAction } from './IconAction';
 import { useTheme } from '../theme';
 /** Native overflow controls keep the tab bar reachable without a persistent scrollbar. */
-export function ScrollableTabs({ children }: { children: ReactNode }) {
+export function ScrollableTabs({
+  children,
+  label = 'Settings',
+}: {
+  children: ReactNode;
+  label?: string;
+}) {
   const theme = useTheme(),
     ref = useRef<ElementRef<typeof ScrollView>>(null);
   const [offset, setOffset] = useState(0),
@@ -21,7 +27,7 @@ export function ScrollableTabs({ children }: { children: ReactNode }) {
     >
       {overflow && (
         <IconAction
-          label="Scroll settings tabs left"
+          label={`Scroll ${label.toLowerCase()} tabs left`}
           icon="‹"
           disabled={offset <= 1}
           onPress={() =>
@@ -37,7 +43,7 @@ export function ScrollableTabs({ children }: { children: ReactNode }) {
         horizontal
         showsHorizontalScrollIndicator={false}
         accessibilityRole="tablist"
-        accessibilityLabel="Settings navigation"
+        accessibilityLabel={`${label} navigation`}
         style={{ flex: 1 }}
         contentContainerStyle={{
           gap: parseFloat(theme.tokens['space-unit']),
@@ -52,7 +58,7 @@ export function ScrollableTabs({ children }: { children: ReactNode }) {
       </ScrollView>
       {overflow && (
         <IconAction
-          label="Scroll settings tabs right"
+          label={`Scroll ${label.toLowerCase()} tabs right`}
           icon="›"
           disabled={offset + width >= content - 1}
           onPress={() =>

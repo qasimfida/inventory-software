@@ -1,3 +1,4 @@
+import { companyProfileSchema } from '@inventory/contracts';
 import { randomUUID } from 'node:crypto';
 import type { Transaction } from '../database/transaction.js';
 import { developmentAccounts, developmentIds as ids, fixtureId } from './fixtures.js';
@@ -8,6 +9,18 @@ export async function seedOrganization(tx: Transaction) {
     'Local Development Business',
     ids.isolatedBusiness,
     'Local Isolation Business',
+  ]);
+  await tx.query('INSERT INTO settings_policies(scope_id,business_id,data) VALUES($1,$1,$2)', [
+    ids.business,
+    JSON.stringify({
+      company: companyProfileSchema.parse({
+        displayName: 'Local Development Business',
+        address: 'Development fixture address',
+        transactionCurrency: 'USD',
+        taxBasisPoints: 0,
+        receiptFooter: 'Thank you for shopping with us.',
+      }),
+    }),
   ]);
   await tx.query(
     "INSERT INTO stores(id,business_id,name,code,type) VALUES($1,$2,'Development Store','DEV_STORE','store')",

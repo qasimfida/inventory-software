@@ -1,3 +1,4 @@
+import { SetupCard } from '@/components/common/SetupCard';
 import { RowActions } from '@/components/common/RowActions';
 import { Select } from '@/components/ui/FormControls';
 import { LoadMore } from '@/components/common/LoadMore';
@@ -13,9 +14,17 @@ export function InventoryControlsDemo() {
   return (
     <section className="space-y-4">
       <h2>Inventory controls</h2>
+      <SetupCard
+        title="Example setup"
+        steps={[
+          { id: 'one', title: 'Read component guide', path: '/dev/components', done: true },
+          { id: 'two', title: 'Review examples', path: '/dev/components', done: false },
+        ]}
+      />
       <p>Local examples; no business requests are made.</p>
       <SearchControl
         label="Find example product"
+        placeholder="Search products"
         value={search}
         onChange={setSearch}
         suggestions={[{ value: 'SAMPLE-1', label: 'Example product · SAMPLE-1' }].filter((item) =>

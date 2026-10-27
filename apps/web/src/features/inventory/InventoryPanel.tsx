@@ -1,3 +1,4 @@
+import { StockPlanning } from './StockPlanning';
 import { ManageProduct } from '../catalog/ManageProduct';
 import { StockAdjustment } from './StockAdjustment';
 import { AccordionSection } from '@/components/ui/Accordion';
@@ -96,13 +97,22 @@ export function InventoryPanel({
               onClose={() => setEditingProduct(null)}
             />
           )}
+          {state.data && (
+            <StockPlanning
+              key={`planning-${warehouseId}`}
+              business={business}
+              warehouseId={warehouseId}
+              stock={state.data}
+              onChanged={() => void model.run()}
+            />
+          )}
           <InventoryOverview
             onEdit={
               hasPermission(business, 'products.write') && !business.scope?.storeId
                 ? setEditingProduct
                 : undefined
             }
-            key={warehouseId}
+            key={`overview-${warehouseId}`}
             businessId={business.id}
             warehouseId={warehouseId}
             revision={state.data}

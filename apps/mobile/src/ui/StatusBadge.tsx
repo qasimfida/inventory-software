@@ -21,7 +21,7 @@ export function StatusBadge({
       style={{
         alignSelf: 'flex-start',
         maxWidth: '100%',
-        borderRadius: theme.radius,
+        borderRadius: theme.controlRadius,
         borderWidth: 1,
         borderColor: color,
         backgroundColor:
@@ -38,7 +38,7 @@ export function StatusBadge({
         accessible={false}
         style={[
           StyleSheet.absoluteFill,
-          { backgroundColor: color, opacity: 0.08, borderRadius: theme.radius },
+          { backgroundColor: color, opacity: 0.08, borderRadius: theme.controlRadius },
         ]}
       />
       <Text tone={tone === 'neutral' ? 'muted' : tone}>{label}</Text>

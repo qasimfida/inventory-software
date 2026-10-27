@@ -11,7 +11,7 @@ import {
 } from '../../apps/api/dist/development/fixtures.js';
 const base = process.env.E2E_WEB_URL ?? 'http://127.0.0.1:5191';
 const api = process.env.E2E_API_URL ?? 'http://127.0.0.1:3191';
-const out = 'docs/qa/catalog-cart';
+const out = 'artifacts/qa/catalog-cart';
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome' });
 const results = [],

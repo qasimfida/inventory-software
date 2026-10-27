@@ -51,3 +51,22 @@ describe('environment validation', () => {
     ).toBe('production');
   });
 });
+
+it('requires operator-owned canonical HTTPS media origins and fails closed by default', () => {
+  expect(parseEnvironment(development).storefrontMediaOrigins).toEqual([]);
+  expect(
+    parseEnvironment({ ...development, STOREFRONT_MEDIA_ORIGINS: 'https://media.example.test' })
+      .storefrontMediaOrigins,
+  ).toEqual(['https://media.example.test']);
+  for (const origin of [
+    '*',
+    'http://media.example.test',
+    'https://127.0.0.1',
+    'https://localhost',
+    'https://media.example.test/path',
+    'https://user:secret@media.example.test',
+  ])
+    expect(() => parseEnvironment({ ...development, STOREFRONT_MEDIA_ORIGINS: origin })).toThrow(
+      /STOREFRONT_MEDIA_ORIGINS/,
+    );
+});

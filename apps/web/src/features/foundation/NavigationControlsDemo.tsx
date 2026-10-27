@@ -1,3 +1,4 @@
+import { ProfileIdentity } from '@/shell/ProfileIdentity';
 import { SearchControl } from '@/components/common/SearchControl';
 import { OverflowTabs } from '@/components/common/OverflowTabs';
 import * as Tabs from '@radix-ui/react-tabs';
@@ -15,6 +16,18 @@ export function NavigationControlsDemo() {
   return (
     <section className="space-y-4">
       <h2>Navigation, drawers and record views</h2>
+      <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="min-w-0 rounded-lg border p-3">
+          <ProfileIdentity email="alex@example.test" role={String('owner')} />
+        </div>
+        <div className="min-w-0 rounded-lg border p-3">
+          <ProfileIdentity
+            email=""
+            displayName="Example business"
+            role={String('owner · Main store')}
+          />
+        </div>
+      </div>
       <AccordionSection title="Example section" defaultOpen>
         <p>Chevron accordion with keyboard navigation.</p>
       </AccordionSection>

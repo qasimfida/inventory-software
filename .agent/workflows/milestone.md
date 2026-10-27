@@ -2,4 +2,4 @@
 description: milestone
 ---
 
-Read AGENTS.md, then read and execute docs/prompts/milestone.md exactly. $ARGUMENTS
+Read AGENTS.md, then docs/development.md (Workflow and reusable commands). Apply the `/milestone` workflow only to the user-specified scope. Read the relevant canonical guide. $ARGUMENTS

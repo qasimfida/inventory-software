@@ -35,7 +35,7 @@ try {
   await expect(drawer).toContainText('Record ID');
   await drawer.getByRole('button', { name: 'Edit staff details' }).click();
   await expect(drawer.getByRole('textbox', { name: 'Full name' })).toHaveValue(name);
-  await page.screenshot({ path: 'docs/qa/staff-navigation/details.png' });
+  await page.screenshot({ path: 'artifacts/qa/staff-navigation/details.png' });
   await drawer.getByRole('link', { name: 'Manage permissions and access' }).click();
   await expect(page).toHaveURL(/#\/team$/);
   await page
@@ -64,7 +64,7 @@ try {
   evidence.checks.push('Staff page has no document overflow at 390, 768, 1440px');
 } finally {
   await writeFile(
-    'docs/qa/staff-navigation/browser.json',
+    'artifacts/qa/staff-navigation/browser.json',
     JSON.stringify(evidence, null, 2) + '\n',
   );
   await browser.close();

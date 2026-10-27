@@ -165,3 +165,27 @@ export type { SyncProgress } from './sync-progress.js';
 export { syncActivity } from './sync-activity.js';
 
 export { isTransientReadFailure } from './auth.js';
+
+export { setupSteps, createSetupClient, dismissSetup } from './setup-checklist.js';
+
+export { productDetailId, productDetailTabs } from './product-detail.js';
+export type { ProductDetailTab } from './product-detail.js';
+export { createStockPlanningClient } from './stock-planning.js';
+export { stockPlanningForms } from './stock-planning-forms.js';
+export { paymentAllocation } from './payment-allocation.js';
+
+export * from './storefront.js';
+export * from './storefront-management.js';
+export * from './storefront-resource.js';
+export * from './online-store-setup.js';
+export * from './online-store-fields.js';
+export * from './online-store-model.js';
+export * from './online-products.js';
+export * from './online-picker.js';
+export * from './online-messages.js';
+export * from './online-overview.js';
+
+export { productChannels } from './product-channels.js';
+
+export { demoCatalogChanges } from './mock/catalog-events.js';
+export { onlineResultTone, canReviewOnlineResult } from './online-result-presentation.js';

@@ -12,7 +12,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check:foundation": "node scripts/check-foundation.mjs",
-    "validate": "npm run format:check && npm run check:foundation && npm run lint && npm run typecheck && npm test && npm run build",
+    "validate": "npm run format:check && npm run check:foundation && npm run check:parity && npm run audit:ui && npm run lint && npm run typecheck && npm test && npm run build",
     "build:shared": "npm run build -w @inventory/design-tokens && npm run build -w @inventory/api-client",
     "dev:web": "npm run dev -w @inventory/web",
     "dev:api": "npm run dev -w @inventory/api",
@@ -50,7 +50,9 @@
     "db:backup": "node scripts/database-backup.mjs",
     "package:desktop:remote": "node scripts/desktop-profile.mjs remote",
     "package:desktop:local": "node scripts/desktop-profile.mjs local-network",
-    "db:seed:transactions": "node scripts/seed-transactions.mjs"
+    "db:seed:transactions": "node scripts/seed-transactions.mjs",
+    "check:parity": "node scripts/check-parity.mjs",
+    "audit:ui": "node scripts/audit-ui.mjs"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

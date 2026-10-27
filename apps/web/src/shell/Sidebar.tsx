@@ -1,7 +1,8 @@
+import { WorkspaceSwitcher } from './WorkspaceSwitcher';
 import { Hint } from '@/components/ui/Tooltip';
 import { useState } from 'react';
 import { AccordionSection } from '@/components/ui/Accordion';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Boxes } from 'lucide-react';
 import { availableRoutes } from '@inventory/api-client';
 import { useWorkspace } from './WorkspaceContext';
@@ -15,10 +16,7 @@ export function Sidebar({ collapsed, close }: { collapsed: boolean; close: () =>
   return (
     <aside className="app-sidebar" data-collapsed={collapsed} aria-label="Application sidebar">
       <div className="sidebar-brand">
-        <Link to="/dashboard" onClick={close} aria-label="Inventory home">
-          <Boxes aria-hidden="true" />
-          {!collapsed && <strong>Inventory</strong>}
-        </Link>
+        <WorkspaceSwitcher collapsed={collapsed} close={close} />
       </div>
       <nav className="sidebar-navigation" aria-label="Main navigation">
         {groups.map((group) => {
@@ -39,6 +37,12 @@ export function Sidebar({ collapsed, close }: { collapsed: boolean; close: () =>
               </Hint>
             );
           });
+          if (group === 'Online store')
+            return (
+              <div key={group} className="sidebar-group">
+                {links}
+              </div>
+            );
           return (
             <AccordionSection
               key={group}

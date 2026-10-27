@@ -40,7 +40,7 @@ try {
       await page.keyboard.press('Escape');
       await page.evaluate(() => globalThis.scrollTo(0, 0));
       await page.screenshot({
-        path: `docs/qa/navigation-refinement/pos-${width}-${colorScheme}.png`,
+        path: `artifacts/qa/navigation-refinement/pos-${width}-${colorScheme}.png`,
         fullPage: true,
       });
       await page.evaluate(() => {
@@ -56,7 +56,7 @@ try {
       await expect(page.getByText(/\d+ selected/, { exact: true })).toBeVisible();
       await page.evaluate(() => globalThis.scrollTo(0, 0));
       await page.screenshot({
-        path: `docs/qa/navigation-refinement/inventory-${width}-${colorScheme}.png`,
+        path: `artifacts/qa/navigation-refinement/inventory-${width}-${colorScheme}.png`,
         fullPage: true,
       });
       expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
@@ -81,7 +81,7 @@ try {
       ).toBe('flex');
       await page.evaluate(() => globalThis.scrollTo(0, 0));
       await page.screenshot({
-        path: `docs/qa/navigation-refinement/company-${width}-${colorScheme}.png`,
+        path: `artifacts/qa/navigation-refinement/company-${width}-${colorScheme}.png`,
         fullPage: true,
       });
       expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
@@ -100,7 +100,7 @@ try {
     }
 } finally {
   await writeFile(
-    'docs/qa/navigation-refinement/browser-results.json',
+    'artifacts/qa/navigation-refinement/browser-results.json',
     JSON.stringify({ results, errors }, null, 2),
   );
   await browser.close();

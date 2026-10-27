@@ -1,3 +1,4 @@
+import { resolveStockReason } from './stock-reasons.js';
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { decimal, decimalString } from '@inventory/domain';
 import type { MovementInput, ReservationInput, StockCommand } from '@inventory/contracts';
@@ -29,6 +30,7 @@ export class InventoryService {
           restore = input.type === 'restore';
         return this.ledger.apply(ctx, {
           ...input,
+          ...(await resolveStockReason(ctx, input.reasonCode ?? 'other', input.type)),
           quantityDelta: damage || restore ? '0' : decimalString(negative ? -q : q),
           damagedDelta: damage ? converted.quantity : restore ? decimalString(-q) : '0',
           sourceKind: 'manual',

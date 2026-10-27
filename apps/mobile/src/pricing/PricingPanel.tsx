@@ -1,3 +1,4 @@
+import { settingsModel } from '../settings/model';
 import { useCatalogLive } from '../platform/useCatalogLive';
 import { FormSection } from '../ui/FormSection';
 import { LoadingState } from '../ui/AsyncState';
@@ -21,11 +22,16 @@ export function PricingPanel({
   business,
   productId,
   locations,
+  focusField,
 }: {
   business: Business;
   productId: string;
   locations: Location[];
+  focusField?: string;
 }) {
+  const settings = useSyncExternalStore(settingsModel.subscribe, settingsModel.snapshot);
+  const defaults =
+    settings.businessId === business.id ? settings.business?.values.company : undefined;
   const client = useMemo(
     () => createPricingClient(authClient.organizationRequest, business.id, productId),
     [business.id, productId],
@@ -36,8 +42,8 @@ export function PricingPanel({
     void model.run();
     return model.reset;
   }, [model]);
-  const [selected, setSelected] = useState(''),
-    [editing, setEditing] = useState(false),
+  const [selected, setSelected] = useState(focusField?.split('.')[1] ?? ''),
+    [editing, setEditing] = useState(!!focusField),
     [quote, setQuote] = useState<Awaited<ReturnType<typeof client.quote>> | null>(null);
   useCatalogLive(business.id, () => {
     setQuote(null);
@@ -85,10 +91,11 @@ export function PricingPanel({
           />
           {manage &&
             !business.scope?.warehouseId &&
-            priceForms(client, state.data, business, locations, id)
+            priceForms(client, state.data, business, locations, id, defaults)
               .filter((form) => form.title === 'Publish price')
               .map((form) => (
                 <CommandForm
+                  inline={!!focusField}
                   key={`${form.title}-${id}`}
                   definition={form}
                   run={(work) => {
@@ -105,7 +112,7 @@ export function PricingPanel({
             </Text>
           ))}
 
-          <FormSection title="Variants and promotions">
+          <FormSection title="Variants and promotions" defaultOpen={!!focusField}>
             {state.data.variants.map((v) => (
               <Text key={v.id}>
                 {v.name} · {v.sku} ·{' '}
@@ -148,7 +155,7 @@ export function PricingPanel({
             )}
             {manage &&
               !business.scope?.warehouseId &&
-              priceForms(client, state.data, business, locations, id)
+              priceForms(client, state.data, business, locations, id, defaults)
                 .filter((form) => form.title !== 'Publish price')
                 .map((form) => (
                   <CommandForm

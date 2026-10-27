@@ -1,3 +1,5 @@
+import { requireBusinessScope } from '../catalog/catalog.repository.js';
+import { setupChecklist } from './setup-checklist.js';
 import {
   BadRequestException,
   ConflictException,
@@ -25,6 +27,36 @@ export class SettingsService {
     @Inject(DatabaseService) private readonly db: DatabaseService,
     @Inject(OrganizationScope) private readonly scope: OrganizationScope,
   ) {}
+  setup(actor: Actor, businessId: string) {
+    return this.scope.run(actor, businessId, 'business.write', setupChecklist);
+  }
+  dismissSetup(actor: Actor, businessId: string) {
+    return this.scope.run(actor, businessId, 'business.write', async (ctx) => {
+      const status = await setupChecklist(ctx);
+      if (
+        ![
+          status.profile,
+          status.currency,
+          status.tax,
+          status.locations,
+          status.product,
+          status.stock,
+        ].every(Boolean)
+      )
+        throw new BadRequestException('Complete all setup steps before dismissing.');
+      if (!status.dismissed) {
+        await ctx.tx.query('UPDATE businesses SET setup_dismissed=true WHERE id=$1', [businessId]);
+        await audit(
+          ctx,
+          businessId,
+          'business.setup_dismissed',
+          { dismissed: false },
+          { dismissed: true },
+        );
+      }
+      return { ...status, dismissed: true };
+    });
+  }
   snapshot(actor: Actor) {
     return this.db.transaction(async (tx) => ({
       preferences: await readPreferences(tx, actor.accountId),
@@ -82,6 +114,7 @@ export class SettingsService {
       async (ctx) => {
         const before = await readPolicy(ctx.tx, businessId);
         if (!input) return before;
+        if (input.values.company || before.values.company) requireBusinessScope(ctx);
         if (
           input.values.notifications.notifyUser !== undefined ||
           input.values.notifications.notifyPlatformAdmins !== undefined

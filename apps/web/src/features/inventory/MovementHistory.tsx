@@ -27,6 +27,12 @@ export function MovementHistory({
             { label: 'Damaged change', value: m.damagedDelta },
             { label: 'In-transit change', value: m.transitDelta },
             { label: 'Reason', value: m.reason },
+            {
+              label: 'Reason code',
+              value: m.reasonCode
+                ? `${m.reasonCode} · ${m.reasonLabel}`
+                : 'Unclassified (legacy or source-managed)',
+            },
             { label: 'Source', value: `${m.sourceKind}/${m.sourceId}` },
           ]}
         />

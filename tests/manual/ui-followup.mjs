@@ -103,7 +103,7 @@ try {
     await page.getByRole('button', { name: 'Dark', exact: true }).click();
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
     await page.keyboard.press('Escape');
-    await page.screenshot({ path: `docs/qa/ui-followup/inventory-${width}-dark.png` });
+    await page.screenshot({ path: `artifacts/qa/ui-followup/inventory-${width}-dark.png` });
     await navigate(page, '/settings/preferences');
     await expect(page.getByRole('heading', { name: 'Typography', exact: true })).toBeVisible();
     const tabs = page.locator('.settings-tabs');
@@ -117,7 +117,7 @@ try {
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
       false,
     );
-    await page.screenshot({ path: `docs/qa/ui-followup/preferences-${width}-dark.png` });
+    await page.screenshot({ path: `artifacts/qa/ui-followup/preferences-${width}-dark.png` });
     await page.addScriptTag({ content: axe.source });
     const violations = await page.evaluate(async () =>
       (
@@ -161,7 +161,7 @@ try {
       await expect(page.getByRole('heading', { name: 'Point of sale', exact: true })).toBeVisible();
       await expect(page.getByRole('button', { name: 'Switch workspace' })).toBeDisabled();
       await expect(page.getByRole('button', { name: 'Back to management' })).toHaveCount(0);
-      await page.screenshot({ path: 'docs/qa/ui-followup/cashier-pos.png' });
+      await page.screenshot({ path: 'artifacts/qa/ui-followup/cashier-pos.png' });
       await page.getByRole('combobox', { name: 'Role', exact: true }).click();
       await page.getByRole('option', { name: 'Manager', exact: true }).click();
       await navigate(page, '/dashboard');
@@ -178,7 +178,7 @@ try {
   }
   expect(errors).toEqual([]);
   await writeFile(
-    'docs/qa/ui-followup/browser-results.json',
+    'artifacts/qa/ui-followup/browser-results.json',
     JSON.stringify(
       { results, errors, data: 'local fixtures; no real transaction mutations' },
       null,

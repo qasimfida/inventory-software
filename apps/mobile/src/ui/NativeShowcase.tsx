@@ -1,3 +1,4 @@
+import { SetupCard } from './SetupCard';
 import { FilterButton } from './FilterButton';
 import { RecordTable } from './RecordTable';
 import { FormSection } from './FormSection';
@@ -34,6 +35,7 @@ export function NativeShowcase() {
 function Showcase() {
   const [open, setOpen] = useState(false);
   const [panel, setPanel] = useState(false);
+  const [focusExample, setFocusExample] = useState(false);
   const [search, setSearch] = useState('');
   const [loaded, setLoaded] = useState(1);
   const [value, setValue] = useState('Example');
@@ -62,6 +64,13 @@ function Showcase() {
           }}
         >
           <ScreenBody>
+            <SetupCard
+              navigate={() => {}}
+              title="Example setup"
+              steps={[
+                { id: 'one', title: 'Review components', path: '/dev/components', done: true },
+              ]}
+            />
             <FormSection title="Grouped form example" defaultOpen>
               <Field label="Section draft" value={value} onChange={setValue} />
             </FormSection>
@@ -112,6 +121,10 @@ function Showcase() {
           <Surface muted>
             <Text>Muted surface · local example</Text>
           </Surface>
+          <Action label="Show focused field example" onPress={() => setFocusExample(true)} />
+          {focusExample && (
+            <Field autoFocus label="Focused field example" value={value} onChange={setValue} />
+          )}
           <Field label="Native example field" value={value} onChange={setValue} />
           <Choice
             label="Example density"

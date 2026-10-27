@@ -16,7 +16,7 @@ export function StatusBadge({
   return (
     <span
       data-tone={tone}
-      className={`inline-flex max-w-full items-center break-words rounded-md border px-2 py-0.5 text-xs font-medium ${tones[tone]}`}
+      className={`inline-flex max-w-full items-center break-words rounded-(--control-radius) border px-2 py-0.5 text-xs font-medium ${tones[tone]}`}
     >
       {children}
     </span>

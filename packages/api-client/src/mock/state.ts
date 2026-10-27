@@ -29,6 +29,11 @@ export const demoController = {
     demoState.role = role;
     demoState.scenario = scenario;
     demoState.seeds = [createDemoSeed(0, role), createDemoSeed(1, role)];
+    if (scenario === 'store-no-catalog')
+      for (const seed of demoState.seeds) {
+        seed.business.role = 'custom';
+        seed.business.permissions = ['business.read', 'onlineStore.view', 'onlineStore.manage'];
+      }
     demoState.authenticated = true;
     demoState.generation += 1;
     listeners.forEach((listener) => listener());

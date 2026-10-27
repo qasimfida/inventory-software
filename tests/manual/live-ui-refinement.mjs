@@ -5,7 +5,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { developmentPassword } from '../../apps/api/dist/development/fixtures.js';
 const base = process.env.E2E_WEB_URL ?? 'http://127.0.0.1:5173';
-const out = 'docs/qa/live-ui-refinement';
+const out = 'artifacts/qa/live-ui-refinement';
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome' });
 const evidence = { roles: [], live: {}, errors: [] };

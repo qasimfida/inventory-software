@@ -109,7 +109,9 @@ export function NativeStatus({ go }: { go: (path: string) => void }) {
         ) : (
           result.notifications.slice(0, 5).map((n) => (
             <View key={n.id} style={{ paddingVertical: theme.spacing.small }}>
-              <Text style={{ fontWeight: '600' }}>{businessNotificationTitle(n.event)}</Text>
+              <Text style={{ fontWeight: '600' }}>
+                {businessNotificationTitle(n.event, n.summary)}
+              </Text>
               <Text>
                 {new Date(n.createdAt).toLocaleString()}
                 {!n.readAt ? ' · Unread' : ''}

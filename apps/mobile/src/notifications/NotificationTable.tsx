@@ -31,7 +31,7 @@ export function NotificationTable({
             <Action
               key={n.id}
               variant="ghost"
-              label={businessNotificationTitle(n.event)}
+              label={businessNotificationTitle(n.event, n.summary)}
               onPress={() => setSelectedId(n.id)}
             />,
             businessTime(n.createdAt, timeZone),
@@ -46,7 +46,9 @@ export function NotificationTable({
       <SidePanel title="Notification details" open={!!detail} onClose={() => setSelectedId(null)}>
         {detail && (
           <>
-            <Text accessibilityRole="header">{businessNotificationTitle(detail.event)}</Text>
+            <Text accessibilityRole="header">
+              {businessNotificationTitle(detail.event, detail.summary)}
+            </Text>
             <Text>{detail.readAt ? 'Read' : 'Unread'}</Text>
             <Text>Received: {businessTime(detail.createdAt, timeZone)}</Text>
             <Text>Record: {detail.resourceId}</Text>

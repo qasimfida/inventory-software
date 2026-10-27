@@ -58,7 +58,7 @@ await request('/stock/movements', {
   idempotencyKey: '9bd97427-ad3b-4ace-a899-27e65f77f5f4',
 });
 await writeFile(
-  'docs/qa/operational-ui/seed.json',
+  'artifacts/qa/operational-ui/seed.json',
   JSON.stringify(
     {
       productId: product.id,

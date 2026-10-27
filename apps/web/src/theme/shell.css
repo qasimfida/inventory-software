@@ -137,11 +137,14 @@
     position: absolute;
     top: 0;
     right: 0;
+    transform: translate(25%, -25%);
+    pointer-events: none;
+    border: var(--border-width) solid var(--background);
     border-radius: var(--radius);
     padding: 0 var(--space-unit);
     background: var(--primary);
     color: var(--primary-foreground);
-    font-size: var(--font-small);
+    font-size: calc(var(--font-small) * var(--text-scale));
   }
   .connection-indicator {
     display: flex;
@@ -324,7 +327,7 @@
   padding: var(--space-small) var(--space-medium);
   background: var(--secondary);
   color: var(--secondary-foreground);
-  font-size: var(--font-small);
+  font-size: calc(var(--font-small) * var(--text-scale));
 }
 .demo-toolbar label {
   display: flex;

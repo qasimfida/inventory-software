@@ -1,3 +1,4 @@
+import { hasPermission } from '@inventory/contracts';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { randomBytes, createHash } from 'node:crypto';
 import { DatabaseService } from '../database/database.service.js';
@@ -54,7 +55,12 @@ export class CatalogLiveAccess {
       [identity.sessionId, identity.actor.accountId],
     );
     if (!active.rowCount) throw new UnauthorizedException();
-    return this.scope.run(identity.actor, identity.businessId, 'products.read', async (ctx) => {
+    return this.scope.run(identity.actor, identity.businessId, 'business.read', async (ctx) => {
+      if (
+        !hasPermission(ctx.business, 'products.read') &&
+        !hasPermission(ctx.business, 'onlineStore.view')
+      )
+        throw new UnauthorizedException();
       const result = await ctx.tx.query<{ revision: string }>(
         `SELECT COALESCE(max(revision),0)::text AS revision FROM sync_changes
         WHERE business_id=$1 AND ($2::uuid IS NULL OR store_id IS NULL OR store_id=$2)

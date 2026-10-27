@@ -11,5 +11,7 @@ export interface StockEntry {
   sourceId: string;
   commandId: string;
   reason: string;
+  reasonCode?: string | null;
+  reasonLabel?: string | null;
   reversalOf?: string;
 }

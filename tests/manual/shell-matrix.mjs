@@ -41,7 +41,7 @@ try {
           );
           if (alerts.length || overflow)
             issues.push({ width, colorScheme, role, path: route.path, alerts, overflow });
-          const directory = `docs/qa/screens/web/${width}-${colorScheme}-${role}`;
+          const directory = `artifacts/qa/screens/web/${width}-${colorScheme}-${role}`;
           await mkdir(directory, { recursive: true });
           await page.screenshot({
             path: `${directory}/${route.path.slice(1).replaceAll('/', '-')}.png`,
@@ -54,7 +54,10 @@ try {
     }
 } finally {
   await browser.close();
-  await writeFile('docs/qa/web-matrix.json', JSON.stringify({ results, issues }, null, 2) + '\n');
+  await writeFile(
+    'artifacts/qa/web-matrix.json',
+    JSON.stringify({ results, issues }, null, 2) + '\n',
+  );
 }
 console.log(JSON.stringify({ screens: results.length, issues }));
 if (issues.length) process.exitCode = 1;

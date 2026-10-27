@@ -8,6 +8,7 @@ import type { createCatalogClient } from '@inventory/api-client';
 import { Action, Choice, choices, Field, styles } from '../organization/Controls';
 export function ProductForm({
   product,
+  focusField,
   categories,
   client,
   run,
@@ -16,6 +17,7 @@ export function ProductForm({
   busy = false,
 }: {
   product: Product | null;
+  focusField?: string;
   busy?: boolean;
   categories: Category[];
   client: ReturnType<typeof createCatalogClient>;
@@ -35,11 +37,22 @@ export function ProductForm({
   const [track, setTrack] = useState(product?.trackInventory === false ? 'no' : 'yes');
   return (
     <View style={styles.group}>
+      {focusField && (
+        <Text accessibilityRole="alert">
+          Fix field: {focusField}. Review the expanded sections below.
+        </Text>
+      )}
       <Text accessibilityRole="header">{product ? 'Edit product' : 'Create product'}</Text>
-      <FormSection title="Product basics" defaultOpen>
-        <Field label="Product name" value={name} onChange={setName} />
-        <Field label="SKU" value={sku} onChange={setSku} />
+      <FormSection defaultOpen title="Product basics">
         <Field
+          autoFocus={focusField === 'title'}
+          label="Product name"
+          value={name}
+          onChange={setName}
+        />
+        <Field autoFocus={focusField === 'sku'} label="SKU" value={sku} onChange={setSku} />
+        <Field
+          autoFocus={focusField === 'description'}
           label="Description"
           value={description}
           onChange={setDescription}
@@ -47,8 +60,9 @@ export function ProductForm({
           multiline
         />
       </FormSection>
-      <FormSection title="Images and product codes">
+      <FormSection defaultOpen={!!focusField} title="Images and product codes">
         <Field
+          autoFocus={focusField?.startsWith('images') ?? false}
           label="Image HTTPS URLs (one per line)"
           value={images}
           onChange={setImages}
@@ -70,7 +84,7 @@ export function ProductForm({
           multiline
         />
       </FormSection>
-      <FormSection title="Category and inventory settings">
+      <FormSection defaultOpen={!!focusField} title="Category and inventory settings">
         <Choice
           label="Category"
           value={categoryId}

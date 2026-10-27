@@ -7,7 +7,7 @@ import { SearchControl } from '../ui/SearchControl';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { Pressable, View } from 'react-native';
 import { createInventoryClient, cancellableResource, stockViews } from '@inventory/api-client';
-import { stockStatusSchema } from '@inventory/contracts';
+import { stockStatusSchema, hasPermission } from '@inventory/contracts';
 import { authClient } from '../auth/client';
 import { operationKey } from '../platform/operation-key';
 import { useNavigation } from '../shell/Navigation';
@@ -31,6 +31,7 @@ export function InventoryOverview({
   onEdit?: ((productId: string) => void) | undefined;
   onAdjust?: ((sku: string) => void) | undefined;
 }) {
+  const { navigate: openProductPage } = useNavigation();
   const scope = useOptionalWorkspace();
   const warehouseKey = scope?.warehouseIds.join(',');
   const { stock, navigate } = useNavigation(),
@@ -105,7 +106,7 @@ export function InventoryOverview({
               flexBasis: '45%',
               borderWidth: parseFloat(theme.tokens['border-width']),
               borderColor: status === view.status ? theme.colors.primary : 'transparent',
-              borderRadius: parseFloat(theme.tokens['surface-radius']),
+              borderRadius: theme.radius,
             }}
           >
             <MetricCard
@@ -146,6 +147,11 @@ export function InventoryOverview({
         )}
         {(state.busy || (!data && !state.error)) && <LoadingState message="Loading stock…" />}
         <InventoryProducts
+          onDetails={
+            scope?.business && hasPermission(scope.business, 'products.read')
+              ? (id) => openProductPage(`/catalog/${id}`)
+              : undefined
+          }
           showEmpty={!!data && !state.busy && !state.error}
           onEdit={onEdit}
           items={data?.items ?? []}

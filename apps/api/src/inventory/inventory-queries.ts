@@ -1,4 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { stockReasons } from './stock-reasons.js';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { stockOverview } from './stock-overview.js';
 import type { StockOverviewQuery } from '@inventory/contracts';
 import type { StockQuery } from '@inventory/contracts';
@@ -21,11 +22,21 @@ export class InventoryQueries {
   workspace(actor: Actor, b: string, q: StockQuery) {
     return this.scope.run(actor, b, 'stock.read', async (ctx) => {
       await this.ledger.warehouse(ctx, q.warehouseId);
+      if (
+        q.productId &&
+        !(
+          await ctx.tx.query('SELECT 1 FROM catalog_products WHERE business_id=$1 AND id=$2', [
+            b,
+            q.productId,
+          ])
+        ).rowCount
+      )
+        throw new NotFoundException();
       const search = `%${q.search.replace(/[\\%_]/g, '\\$&')}%`;
       const items = (
         await ctx.tx.query(
-          "SELECT v.id,v.name,v.sku,v.base_unit_id AS \"baseUnitId\" FROM catalog_variants v JOIN catalog_products p ON p.business_id=v.business_id AND p.id=v.product_id WHERE v.business_id=$1 AND v.state='active' AND p.state='active' AND p.track_inventory AND (v.name ILIKE $2 OR v.sku ILIKE $2) ORDER BY v.sku,v.id LIMIT $3 OFFSET $4",
-          [b, search, q.limit, q.offset],
+          "SELECT v.id,v.name,v.sku,v.base_unit_id AS \"baseUnitId\" FROM catalog_variants v JOIN catalog_products p ON p.business_id=v.business_id AND p.id=v.product_id WHERE v.business_id=$1 AND v.state='active' AND p.state='active' AND p.track_inventory AND (v.name ILIKE $2 OR v.sku ILIKE $2) AND ($5::uuid IS NULL OR v.product_id=$5) ORDER BY v.sku,v.id LIMIT $3 OFFSET $4",
+          [b, search, q.limit, q.offset, q.productId ?? null],
         )
       ).rows;
       const units = (
@@ -42,14 +53,14 @@ export class InventoryQueries {
       ).rows;
       const balances = (
         await ctx.tx.query(
-          `SELECT s.variant_id AS "variantId",v.sku,s.location_id AS "locationId",l.name AS "locationName",s.on_hand::text AS "onHand",s.reserved::text,s.damaged::text,s.in_transit::text AS "inTransit",(s.on_hand-s.reserved-s.damaged)::text AS available,s.version FROM stock_balances s JOIN catalog_variants v ON v.business_id=s.business_id AND v.id=s.variant_id JOIN storage_locations l ON l.business_id=s.business_id AND l.id=s.location_id WHERE s.business_id=$1 AND s.warehouse_id=$2 AND (v.name ILIKE $3 OR v.sku ILIKE $3) ORDER BY v.sku,s.location_id LIMIT $4 OFFSET $5`,
-          [b, q.warehouseId, search, q.limit, q.offset],
+          `SELECT s.variant_id AS "variantId",v.sku,s.location_id AS "locationId",l.name AS "locationName",s.on_hand::text AS "onHand",s.reserved::text,s.damaged::text,s.in_transit::text AS "inTransit",(s.on_hand-s.reserved-s.damaged)::text AS available,s.version FROM stock_balances s JOIN catalog_variants v ON v.business_id=s.business_id AND v.id=s.variant_id JOIN storage_locations l ON l.business_id=s.business_id AND l.id=s.location_id WHERE s.business_id=$1 AND s.warehouse_id=$2 AND (v.name ILIKE $3 OR v.sku ILIKE $3) AND ($6::uuid IS NULL OR v.product_id=$6) ORDER BY v.sku,s.location_id LIMIT $4 OFFSET $5`,
+          [b, q.warehouseId, search, q.limit, q.offset, q.productId ?? null],
         )
       ).rows;
       const history = (
         await ctx.tx.query<{ createdAt: Date; sequence: string }>(
-          `SELECT ${movementProjection},sequence::text FROM stock_movements WHERE business_id=$1 AND warehouse_id=$2 AND ($3::bigint IS NULL OR sequence<$3::bigint) ORDER BY sequence DESC LIMIT 51`,
-          [b, q.warehouseId, q.cursor ?? null],
+          `SELECT ${movementProjection},sequence::text FROM stock_movements WHERE business_id=$1 AND warehouse_id=$2 AND ($3::bigint IS NULL OR sequence<$3::bigint) AND ($4::uuid IS NULL OR variant_id IN (SELECT id FROM catalog_variants WHERE business_id=$1 AND product_id=$4)) ORDER BY stock_movements.sequence DESC LIMIT 51`,
+          [b, q.warehouseId, q.cursor ?? null, q.productId ?? null],
         )
       ).rows;
       const movements = history
@@ -57,8 +68,8 @@ export class InventoryQueries {
         .map((row) => ({ ...row, createdAt: row.createdAt.toISOString() }));
       const reservations = (
         await ctx.tx.query(
-          'SELECT id,variant_id AS "variantId",quantity::text,remaining::text,state,location_id AS "locationId" FROM stock_reservations WHERE business_id=$1 AND warehouse_id=$2 AND state=\'active\' ORDER BY created_at,id LIMIT $3 OFFSET $4',
-          [b, q.warehouseId, q.limit, q.offset],
+          'SELECT id,variant_id AS "variantId",quantity::text,remaining::text,state,source_kind AS "sourceKind",source_id AS "sourceId",location_id AS "locationId" FROM stock_reservations WHERE business_id=$1 AND warehouse_id=$2 AND state=\'active\' AND ($5::uuid IS NULL OR variant_id IN (SELECT id FROM catalog_variants WHERE business_id=$1 AND product_id=$5)) ORDER BY created_at,id LIMIT $3 OFFSET $4',
+          [b, q.warehouseId, q.limit, q.offset, q.productId ?? null],
         )
       ).rows;
       const policy = (
@@ -68,16 +79,16 @@ export class InventoryQueries {
         )
       ).rows[0] ?? { allowNegative: false, version: 1 };
       const itemCount = await ctx.tx.query(
-        "SELECT count(*) FROM catalog_variants v JOIN catalog_products p ON p.business_id=v.business_id AND p.id=v.product_id WHERE v.business_id=$1 AND v.state='active' AND p.state='active' AND p.track_inventory AND (v.name ILIKE $2 OR v.sku ILIKE $2)",
-        [b, search],
+        "SELECT count(*) FROM catalog_variants v JOIN catalog_products p ON p.business_id=v.business_id AND p.id=v.product_id WHERE v.business_id=$1 AND v.state='active' AND p.state='active' AND p.track_inventory AND (v.name ILIKE $2 OR v.sku ILIKE $2) AND ($3::uuid IS NULL OR v.product_id=$3)",
+        [b, search, q.productId ?? null],
       );
       const balanceCount = await ctx.tx.query(
-        'SELECT count(*) FROM stock_balances s JOIN catalog_variants v ON v.business_id=s.business_id AND v.id=s.variant_id WHERE s.business_id=$1 AND s.warehouse_id=$2 AND (v.name ILIKE $3 OR v.sku ILIKE $3)',
-        [b, q.warehouseId, search],
+        'SELECT count(*) FROM stock_balances s JOIN catalog_variants v ON v.business_id=s.business_id AND v.id=s.variant_id WHERE s.business_id=$1 AND s.warehouse_id=$2 AND (v.name ILIKE $3 OR v.sku ILIKE $3) AND ($4::uuid IS NULL OR v.product_id=$4)',
+        [b, q.warehouseId, search, q.productId ?? null],
       );
       const reservationCount = await ctx.tx.query(
-        "SELECT count(*) FROM stock_reservations WHERE business_id=$1 AND warehouse_id=$2 AND state='active'",
-        [b, q.warehouseId],
+        "SELECT count(*) FROM stock_reservations WHERE business_id=$1 AND warehouse_id=$2 AND state='active' AND ($3::uuid IS NULL OR variant_id IN (SELECT id FROM catalog_variants WHERE business_id=$1 AND product_id=$3))",
+        [b, q.warehouseId, q.productId ?? null],
       );
       const totals = {
         items: Number(itemCount.rows[0]?.count ?? 0),
@@ -85,6 +96,7 @@ export class InventoryQueries {
         reservations: Number(reservationCount.rows[0]?.count ?? 0),
       };
       return {
+        reasons: await stockReasons(ctx),
         totals,
         limit: q.limit,
         offset: q.offset,

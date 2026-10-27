@@ -120,7 +120,11 @@ export class PricingService {
   quote(actor: Actor, b: string, input: QuoteInput) {
     return this.scope.run(actor, b, 'products.read', (ctx) => this.quoteInTransaction(ctx, input));
   }
-  async quoteInTransaction(ctx: OrganizationContext, input: QuoteInput) {
+  async quoteInTransaction(
+    ctx: OrganizationContext,
+    input: QuoteInput,
+    onlineOverride?: { unitPrice: string; currency: string },
+  ) {
     const store = await this.locations.store(ctx, input.storeId);
     if (store.state !== 'active') throw new ConflictException();
     await activeVariant(ctx, input.variantId);
@@ -174,8 +178,8 @@ export class PricingService {
     try {
       amounts = priceLine({
         quantity,
-        unitPrice: price.unitPrice,
-        currency: price.currency,
+        unitPrice: onlineOverride?.unitPrice ?? price.unitPrice,
+        currency: onlineOverride?.currency ?? price.currency,
         discountBasisPoints: discount,
         taxBasisPoints: price.taxBasisPoints,
         taxInclusive: price.taxInclusive,
@@ -187,9 +191,9 @@ export class PricingService {
       variantId: input.variantId,
       priceId: price.id,
       promotionId: promotion && discount === promotion.discountBasisPoints ? promotion.id : null,
-      currency: price.currency,
+      currency: onlineOverride?.currency ?? price.currency,
       baseQuantity: quantity,
-      unitPrice: price.unitPrice,
+      unitPrice: onlineOverride?.unitPrice ?? price.unitPrice,
       discountBasisPoints: discount,
       taxBasisPoints: price.taxBasisPoints,
       taxInclusive: price.taxInclusive,

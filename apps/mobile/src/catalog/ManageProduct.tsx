@@ -12,13 +12,15 @@ export function ManageProduct({
   locations,
   productId,
   onClose,
+  focusField,
 }: {
   business: Business;
   locations: Location[];
   productId: string;
   onClose: () => void;
+  focusField?: string;
 }) {
-  const [pricing, setPricing] = useState(false);
+  const [pricing, setPricing] = useState(!!focusField?.startsWith('variants'));
   const client = useMemo(
     () => createCatalogClient(authClient.organizationRequest, business.id),
     [business.id],
@@ -39,7 +41,12 @@ export function ManageProduct({
   if (pricing)
     return (
       <SidePanel title="Variants and pricing" open onClose={onClose}>
-        <PricingPanel business={business} locations={locations} productId={productId} />
+        <PricingPanel
+          business={business}
+          locations={locations}
+          productId={productId}
+          {...(focusField ? { focusField } : {})}
+        />
       </SidePanel>
     );
   if (!state.data)
@@ -51,6 +58,7 @@ export function ManageProduct({
     );
   return (
     <ProductEditor
+      {...(focusField ? { focusField } : {})}
       product={state.data.product}
       categories={state.data.categories}
       client={client}

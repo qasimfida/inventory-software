@@ -36,7 +36,7 @@ try {
     await checkout.click();
     await expect(page.getByLabel('Cash tendered (minor units)', { exact: true })).toBeVisible();
     await page.screenshot({
-      path: `docs/qa/shell-business-directory/cart-${width}.png`,
+      path: `artifacts/qa/shell-business-directory/cart-${width}.png`,
       animations: 'disabled',
     });
     await page.evaluate(axe.source);
@@ -61,7 +61,7 @@ try {
     await page.close();
   }
   await writeFile(
-    'docs/qa/shell-business-directory/cart-results.json',
+    'artifacts/qa/shell-business-directory/cart-results.json',
     JSON.stringify(results, null, 2),
   );
 } finally {

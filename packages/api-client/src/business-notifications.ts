@@ -40,6 +40,12 @@ const notificationTitles: Record<string, string> = {
   'sale.void': 'Sale voided',
   'settings.policy_changed': 'Business settings changed',
 };
-export function businessNotificationTitle(event: string) {
-  return notificationTitles[event] ?? 'Business activity';
+export function businessNotificationTitle(event: string, summary?: string) {
+  return (
+    summary ||
+    notificationTitles[event] ||
+    (event === 'storefront.readiness_batch'
+      ? 'Online store readiness changed'
+      : 'Business activity')
+  );
 }

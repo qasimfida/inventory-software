@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useCatalogLive } from '@/platform/useCatalogLive';
 import { useOptionalWorkspace } from '@/shell/WorkspaceContext';
 import { Select } from '@/components/ui/FormControls';
@@ -6,7 +7,7 @@ import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Package, ArrowUpRight, ArrowDownRight, PackageX, RefreshCw } from 'lucide-react';
 import { createInventoryClient, cancellableResource, stockViews } from '@inventory/api-client';
-import { stockStatusSchema } from '@inventory/contracts';
+import { stockStatusSchema, hasPermission } from '@inventory/contracts';
 import { authClient } from '@/platform/auth-client';
 import { MetricCard } from '@/components/common/MetricCard';
 import { Pagination } from '@/components/common/Pagination';
@@ -28,6 +29,7 @@ export function InventoryOverview({
   onEdit?: ((productId: string) => void) | undefined;
   onAdjust?: ((sku: string) => void) | undefined;
 }) {
+  const openProductPage = useNavigate();
   const scope = useOptionalWorkspace();
   const warehouseKey = scope?.warehouseIds.join(',');
   const [params, setParams] = useSearchParams();
@@ -135,6 +137,13 @@ export function InventoryOverview({
         )}
         {(state.busy || (!data && !state.error)) && <LoadingState message="Loading stock…" />}
         <InventoryProducts
+          onDetails={
+            scope?.business && hasPermission(scope.business, 'products.read')
+              ? (id) => {
+                  void openProductPage(`/catalog/${id}`);
+                }
+              : undefined
+          }
           showEmpty={!!data && !state.busy && !state.error}
           onEdit={onEdit}
           items={data?.items ?? []}

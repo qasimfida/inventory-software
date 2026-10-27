@@ -26,6 +26,9 @@ export const permissionSchema = z.enum([
   'users.read',
   'users.write',
   'audit.read',
+  'onlineStore.view',
+  'onlineStore.manage',
+  'onlineStore.orders',
 ]);
 export type Permission = z.infer<typeof permissionSchema>;
 export const assignableRoleSchema = z.enum(['owner', 'manager', 'cashier', 'viewer', 'custom']);
@@ -49,7 +52,14 @@ export function rolePermissions(role: AccessRole, custom: Permission[] = []): Pe
       return [...permissionSchema.options];
     case 'manager':
       return permissionSchema.options.filter(
-        (p) => !['business.write', 'users.read', 'users.write'].includes(p),
+        (p) =>
+          ![
+            'business.write',
+            'users.read',
+            'users.write',
+            'onlineStore.manage',
+            'onlineStore.orders',
+          ].includes(p),
       );
     case 'cashier':
       return [
@@ -76,7 +86,11 @@ export function hasPermission(
   access: { role: AccessRole; permissions?: Permission[] },
   permission: Permission,
 ) {
-  return rolePermissions(access.role, access.permissions).includes(permission);
+  const granted = rolePermissions(access.role, access.permissions);
+  return (
+    granted.includes(permission) ||
+    (permission === 'onlineStore.view' && granted.includes('onlineStore.manage'))
+  );
 }
 export function validAssignment(value: {
   role: string;
@@ -88,7 +102,9 @@ export function validAssignment(value: {
   if (value.permissions.includes('users.write')) return false; // Membership delegation stays owner-only.
   if (
     value.scope.storeId &&
-    value.permissions.some((p) => ['users.read', 'business.write'].includes(p))
+    value.permissions.some((p) =>
+      ['users.read', 'business.write', 'onlineStore.manage'].includes(p),
+    )
   )
     return false;
   return true;

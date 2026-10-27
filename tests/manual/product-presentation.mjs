@@ -2,7 +2,7 @@
 import { chromium, expect } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
 import { developmentPassword } from '../../apps/api/dist/development/fixtures.js';
-const out = 'docs/qa/product-presentation';
+const out = 'artifacts/qa/product-presentation';
 const browser = await chromium.launch({ channel: 'chrome' });
 const results = { layouts: [], errors: [] };
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });

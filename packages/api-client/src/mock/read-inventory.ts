@@ -1,10 +1,23 @@
+import { readStockPlanning } from './read-stock-planning.js';
+import { readProductStock } from './read-product-stock.js';
 import type { DemoSeed } from './seed.js';
 import { demoPage } from './seed.js';
 export interface DemoQuery {
   get(key: string): string | null;
 }
 export function readInventory(s: DemoSeed, path: string, q: DemoQuery, empty: boolean): unknown {
-  const products = empty ? [] : s.products;
+  const products = empty
+    ? []
+    : s.products.map((product) => {
+        const price = s.prices.find((p) => p.variantId === product.id);
+        return {
+          ...product,
+          price: price
+            ? { unitPrice: price.unitPrice, currency: price.currency, unit: s.units[0]!.code }
+            : null,
+        };
+      });
+  if (/^products\/[^/]+$/.test(path)) return products.find((p) => p.id === path.split('/')[1]);
   const page = demoPage(products, q, (p) => `${p.name} ${p.sku} ${p.barcodes.join(' ')}`);
   if (path === 'products')
     return {
@@ -71,21 +84,8 @@ export function readInventory(s: DemoSeed, path: string, q: DemoQuery, empty: bo
     );
     return { ...result, counts, threshold };
   }
-  if (path === 'stock')
-    return {
-      totals: { items: products.length, balances: empty ? 0 : s.balances.length, reservations: 0 },
-      limit: page.limit,
-      offset: page.offset,
-      hasMore: page.hasMore,
-      items: page.items.map((p) => ({ id: p.id, name: p.name, sku: p.sku, baseUnitId: s.id(10) })),
-      units: s.units,
-      locations: s.storage,
-      balances: empty ? [] : s.balances.filter((b) => page.items.some((p) => p.id === b.variantId)),
-      movements: empty ? [] : s.movements.slice(page.offset, page.offset + page.limit),
-      nextCursor: null,
-      reservations: [],
-      policy: { allowNegative: false, version: 1 },
-    };
+  if (path === 'stock/planning') return readStockPlanning(s, q, empty);
+  if (path === 'stock') return readProductStock(s, q, empty);
   if (path === 'storage')
     return {
       locations: empty ? [] : s.storage,

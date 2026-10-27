@@ -58,7 +58,7 @@ try {
     const header = await page.locator('.app-header').boundingBox();
     expect(tabs.y).toBeGreaterThanOrEqual(header.y + header.height - 1);
     await page.screenshot({
-      path: `docs/qa/operational-ui/preferences-${width}.png`,
+      path: `artifacts/qa/operational-ui/preferences-${width}.png`,
       animations: 'disabled',
     });
     results.push({ width, overflow: false, stickyTabs: true });
@@ -80,5 +80,8 @@ try {
   });
 } finally {
   await browser.close();
-  await writeFile('docs/qa/operational-ui/browser-results.json', JSON.stringify(results, null, 2));
+  await writeFile(
+    'artifacts/qa/operational-ui/browser-results.json',
+    JSON.stringify(results, null, 2),
+  );
 }

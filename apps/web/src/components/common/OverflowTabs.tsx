@@ -2,7 +2,13 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 /** Native scrolling and tab keyboard semantics remain owned by the child tablist. */
-export function OverflowTabs({ children }: { children: ReactNode }) {
+export function OverflowTabs({
+  children,
+  label = 'Settings',
+}: {
+  children: ReactNode;
+  label?: string;
+}) {
   const root = useRef<HTMLDivElement>(null);
   const [edges, setEdges] = useState({ left: false, right: false });
   useEffect(() => {
@@ -35,7 +41,7 @@ export function OverflowTabs({ children }: { children: ReactNode }) {
         className="tabs-scroll tabs-scroll-start"
         variant="ghost"
         size="icon"
-        aria-label="Scroll settings tabs left"
+        aria-label={`Scroll ${label.toLowerCase()} tabs left`}
         disabled={!edges.left}
         onClick={() => move(-1)}
       >
@@ -46,7 +52,7 @@ export function OverflowTabs({ children }: { children: ReactNode }) {
         className="tabs-scroll tabs-scroll-end"
         variant="ghost"
         size="icon"
-        aria-label="Scroll settings tabs right"
+        aria-label={`Scroll ${label.toLowerCase()} tabs right`}
         disabled={!edges.right}
         onClick={() => move(1)}
       >

@@ -4,6 +4,8 @@ import type { AccessRole, Permission } from '@inventory/contracts';
 import type { Transaction } from '../database/transaction.js';
 import { readPolicy } from '../settings/settings-store.js';
 const routes: Record<string, Permission> = {
+  'storefront.readiness_batch': 'onlineStore.manage',
+  'storefront.delisted': 'onlineStore.manage',
   'purchase.created': 'purchases.write',
   'purchase.approve': 'purchases.read',
   'purchase.cancel': 'purchases.read',

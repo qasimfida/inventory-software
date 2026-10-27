@@ -61,6 +61,8 @@ it('locks an uncertain cart and retries identical commands after lost and malfor
     id,
   );
   model.add(item);
+  model.heldCart({ type: 'hold', name: 'Next customer' });
+  model.add(item);
   await model.preview();
   await model.checkout('100', '100');
   expect(model.snapshot().uncertain).toBe(true);
@@ -75,6 +77,7 @@ it('locks an uncertain cart and retries identical commands after lost and malfor
   expect(bodies[0]).toEqual(bodies[1]);
   expect(bodies[1]).toEqual(bodies[2]);
   expect(model.snapshot()).toMatchObject({ uncertain: false, lines: [], receipt });
+  expect(model.snapshot().heldCarts.map((cart) => cart.name)).toEqual(['Next customer']);
 });
 it('rejects malformed amounts before submission and permits repricing after definitive stock rejection', async () => {
   const transport = vi.fn(async (path: string) => {

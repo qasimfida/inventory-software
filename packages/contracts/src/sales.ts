@@ -60,6 +60,7 @@ export const saleQuoteSchema = z.object({
   lines: z.array(saleQuoteLineSchema),
 });
 export const saleSchema = z.object({
+  receiptFooter: z.string().max(500).optional(),
   id: z.uuid(),
   storeId: z.uuid(),
   warehouseId: z.uuid(),

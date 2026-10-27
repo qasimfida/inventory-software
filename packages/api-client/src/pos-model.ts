@@ -1,3 +1,5 @@
+import { changeHeldCart } from './held-carts.js';
+import type { HeldCartAction } from './held-carts.js';
 import { cartSchema, checkoutSchema } from '@inventory/contracts';
 import type { Checkout } from '@inventory/contracts';
 import type { createSalesClient } from './sales.js';
@@ -6,6 +8,7 @@ import type { PosItem, DraftLine, PosState } from './pos-types.js';
 import { addCartLine } from './cart-lines.js';
 export class PosModel {
   private state: PosState = {
+    heldCarts: [],
     lines: [],
     customerId: null,
     quote: null,
@@ -51,6 +54,7 @@ export class PosModel {
     this.generation++;
     this.pending = null;
     this.publish({
+      heldCarts: [],
       lines: [],
       customerId: null,
       quote: null,
@@ -60,6 +64,13 @@ export class PosModel {
       error: '',
     });
   };
+  heldCart(action: HeldCartAction) {
+    const patch = changeHeldCart(this.state, action);
+    if (patch) {
+      this.generation++;
+      this.publish(patch);
+    }
+  }
   private editable() {
     return !this.state.busy && !this.state.uncertain;
   }

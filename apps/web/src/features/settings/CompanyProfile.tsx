@@ -1,3 +1,4 @@
+import { TransactionFields } from './TransactionFields';
 import { useState, useSyncExternalStore } from 'react';
 import { companyProfileSchema, hasPermission } from '@inventory/contracts';
 import type { Business, CompanyProfile as Profile, PolicyRecord } from '@inventory/contracts';
@@ -55,6 +56,7 @@ function ProfileForm({ policy, editable }: { policy: PolicyRecord; editable: boo
       </div>
       {(error || state.message) && <p role="alert">{error || state.message}</p>}
       <fieldset disabled={!editable || state.busy} className="space-y-4">
+        <TransactionFields profile={profile} onChange={setProfile} />
         <div className="company-logo-editor">
           {profile.logo && <img src={profile.logo} alt="Company logo" className="company-logo" />}
           <label htmlFor="company-logo">
@@ -99,7 +101,9 @@ function ProfileForm({ policy, editable }: { policy: PolicyRecord; editable: boo
           {companyFields.map((field) => (
             <label key={field.key}>
               {field.label}
-              {field.key === 'description' || field.key === 'address' ? (
+              {field.key === 'description' ||
+              field.key === 'address' ||
+              field.key === 'receiptFooter' ? (
                 <Textarea
                   value={profile[field.key]}
                   maxLength={field.max}

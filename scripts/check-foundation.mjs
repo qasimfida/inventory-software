@@ -22,24 +22,12 @@ const ignoredDirectories = new Set([
 const requiredDocuments = [
   'AGENTS.md',
   'README.md',
-  'docs/architecture/repository-inspection.md',
-  'docs/architecture/overview.md',
-  'docs/architecture/decisions.md',
-  'docs/architecture/platforms.md',
-  'docs/development/code-standards.md',
-  'docs/development/feature-workflow.md',
-  'docs/development/testing.md',
-  'docs/development/migrations.md',
-  'docs/development/validation-status.md',
-  'docs/development/foundation-audit.md',
-  'docs/platforms/setup.md',
-  'docs/development/roadmap.md',
-  'docs/domain/inventory-and-finance.md',
-  'docs/offline/synchronization.md',
-  'docs/security/authorization.md',
-  'docs/ai/feature-prompt-template.md',
-  'docs/ai/architecture-map.md',
+  'docs/architecture.md',
+  'docs/design-system.md',
+  'docs/security-and-data.md',
+  'docs/development.md',
 ];
+
 const sourcePattern = /\.(?:[cm]?[jt]sx?|rs|swift|kt|java|py|sql)$/;
 const failures = [];
 
@@ -84,6 +72,11 @@ async function checkLinks(file, contents) {
 }
 
 const files = await collectFiles(root);
+const activeDocs = files.filter((file) => file.startsWith('docs/'));
+if (activeDocs.length !== 4 || activeDocs.some((file) => !requiredDocuments.includes(file)))
+  failures.push(
+    'Keep docs flat: exactly the four canonical Markdown guides; put generated evidence in artifacts.',
+  );
 const exceptions = JSON.parse(
   await readFile(path.join(root, 'scripts/source-size-exceptions.json'), 'utf8'),
 );

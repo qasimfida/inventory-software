@@ -1,3 +1,4 @@
+import { readPolicy } from '../settings/settings-store.js';
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import { decimal, decimalString } from '@inventory/domain';
@@ -49,7 +50,7 @@ export class CheckoutService {
     const id = randomUUID(),
       b = ctx.business.id;
     await ctx.tx.query(
-      'INSERT INTO sales(id,business_id,store_id,warehouse_id,customer_id,currency,net_minor,tax_minor,total_minor,cash_received_minor,change_minor,actor_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)',
+      'INSERT INTO sales(id,business_id,store_id,warehouse_id,customer_id,currency,net_minor,tax_minor,total_minor,cash_received_minor,change_minor,actor_id,receipt_footer) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)',
       [
         id,
         b,
@@ -63,6 +64,7 @@ export class CheckoutService {
         input.cashReceivedMinor,
         (received - paid).toString(),
         ctx.actor.accountId,
+        (await readPolicy(ctx.tx, b)).values.company?.receiptFooter ?? '',
       ],
     );
     for (const line of quote.lines) {

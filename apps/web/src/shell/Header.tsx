@@ -1,3 +1,4 @@
+import { productDetailId } from '@inventory/api-client';
 import { hasPermission } from '@inventory/contracts';
 import { WarehouseSelect } from '@/components/common/WarehouseSelect';
 import { useHeaderHeight } from './useHeaderHeight';
@@ -29,11 +30,13 @@ export function Header({ onMenu }: { onMenu: () => void }) {
   const rootPath = overviewDestination(business, location.pathname === '/admin');
   const title =
     route?.title ??
-    (location.pathname === '/admin'
-      ? 'Platform overview'
-      : location.pathname === '/admin/businesses'
-        ? 'Registered businesses'
-        : 'Workspace');
+    (productDetailId(location.pathname)
+      ? 'Product details'
+      : location.pathname === '/admin'
+        ? 'Platform overview'
+        : location.pathname === '/admin/businesses'
+          ? 'Registered businesses'
+          : 'Workspace');
   const [online, setOnline] = useState(navigator.onLine);
   const [inbox, setInbox] = useState<{
     id: string;
@@ -85,21 +88,22 @@ export function Header({ onMenu }: { onMenu: () => void }) {
   return (
     <header ref={headerRef} className="app-header">
       <div className="header-title">
-        {location.pathname !== rootPath && (
-          <Button
-            variant="ghost"
-            size="icon"
-            disabled={locked}
-            title="Go back"
-            aria-label="Go back"
-            onClick={() => {
-              if (window.history.state?.idx > 0) void navigate(-1);
-              else void navigate(rootPath);
-            }}
-          >
-            <ArrowLeft />
-          </Button>
-        )}
+        {location.pathname.split('/').filter(Boolean).length > 1 &&
+          location.pathname !== rootPath && (
+            <Button
+              variant="ghost"
+              size="icon"
+              disabled={locked}
+              title="Go back"
+              aria-label="Go back"
+              onClick={() => {
+                if (window.history.state?.idx > 0) void navigate(-1);
+                else void navigate(rootPath);
+              }}
+            >
+              <ArrowLeft />
+            </Button>
+          )}
         <h1>{title}</h1>
         <Button
           className="mobile-menu-trigger"

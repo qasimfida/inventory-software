@@ -1,12 +1,11 @@
 import { useState, useSyncExternalStore } from 'react';
-import { View } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { useWorkspace } from './WorkspaceContext';
 import { useNavigation } from './Navigation';
 import { settingsModel } from '../settings/model';
 import { SidePanel } from '../ui/SidePanel';
 import { canSwitchWorkspace } from '@inventory/api-client';
 import { Action } from '../ui/Controls';
-import { IconAction } from '../ui/IconAction';
 import { Text } from '../ui/Themed';
 import { ProfileIdentity } from './ProfileIdentity';
 import { useTheme } from '../theme';
@@ -28,14 +27,33 @@ export function WorkspaceSwitcher() {
   }
   return (
     <>
-      <IconAction
-        label="Switch workspace"
-        icon="⌄"
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Switch workspace"
+        accessibilityState={{ disabled: !canSwitch }}
         disabled={!canSwitch}
-        onPress={() => {
-          setOpen(true);
+        onPress={() => setOpen(true)}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: theme.spacing.small,
+          padding: theme.spacing.small,
         }}
-      />
+      >
+        <View style={{ flex: 1, minWidth: 0 }}>
+          <ProfileIdentity
+            email=""
+            displayName={business?.name ?? 'Choose a business'}
+            role={business?.role ?? 'Account'}
+            logo={
+              settings.businessId === business?.id
+                ? (settings.business?.values.company?.logo ?? '')
+                : ''
+            }
+          />
+        </View>
+        {canSwitch && <Text accessible={false}>⌄</Text>}
+      </Pressable>
       <SidePanel title="Switch workspace" open={open} onClose={() => setOpen(false)}>
         <View style={{ gap: theme.spacing.medium }}>
           <ProfileIdentity

@@ -98,7 +98,7 @@ html[data-accent] {
   height: 22px;
 }
 .notification-heading {
-  font-size: var(--font-body);
+  font-size: calc(var(--font-body) * var(--text-scale));
   font-weight: var(--weight-strong);
   padding: var(--space-small) var(--space-medium);
 }
@@ -212,7 +212,7 @@ html[data-accent] {
   min-height: var(--control-small);
   padding: var(--space-unit) var(--space-small);
   border-radius: var(--control-radius);
-  font-size: var(--font-control);
+  font-size: calc(var(--font-control) * var(--text-scale));
   color: var(--muted-foreground);
 }
 .view-tabs button[data-state='active'] {
@@ -256,7 +256,7 @@ html[data-accent] {
   width: 100%;
 }
 .settings-navigation.view-tabs button {
-  font-size: var(--font-small);
+  font-size: calc(var(--font-small) * var(--text-scale));
   gap: var(--space-unit);
   flex: 0 0 auto;
   white-space: nowrap;

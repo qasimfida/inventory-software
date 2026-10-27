@@ -4,12 +4,64 @@ import type { DemoSeed } from './seed.js';
 import { demoDate } from './identity.js';
 import { demoSession } from './account.js';
 export function readAdministration(s: DemoSeed, path: string, empty: boolean): unknown {
-  if (path === 'audit') return empty ? { events: [], nextCursor: null } : s.audit;
-  if (path === 'settings')
+  if (path === 'storefront')
     return {
-      version: 0,
-      values: { defaults: {}, enforced: {}, notifications: {}, industry: s.industry },
+      defaults: {
+        name: s.policy.values.company?.displayName || s.business.name,
+        slug: 'demo-store',
+        storeId: s.locations.find((l) => l.kind === 'stores')!.id,
+        currency: s.currency,
+        contact: s.policy.values.company?.address || 'Demo contact',
+      },
+      settings: empty
+        ? null
+        : {
+            slug: 'demo-store',
+            name: s.business.name,
+            storeId: s.locations.find((l) => l.kind === 'stores')!.id,
+            currency: s.currency,
+            contact: 'Demo contact',
+            fulfillment: 'pickup',
+            returnPolicy: 'Demo return policy only.',
+            shippingPolicy: '',
+            hideSoldOut: false,
+            enabled: false,
+            version: 1,
+          },
+      prerequisites: empty ? ['Configure the online store'] : [],
+      listings: empty
+        ? []
+        : [
+            {
+              id: s.id(980),
+              productId: s.products[0]!.id,
+              productName: s.products[0]!.name,
+              title: '',
+              description: '',
+              images: [],
+              weightGrams: null,
+              version: 1,
+              state: 'needs_changes',
+              issues: ['Image origin is not trusted'],
+              ruleVersion: 1,
+              projection: null,
+            },
+          ],
+      trustedMediaOrigins: [],
     };
+  if (path === 'setup')
+    return {
+      dismissed: s.setupDismissed,
+      profile:
+        !empty && !!(s.policy.values.company?.displayName && s.policy.values.company.address),
+      currency: !empty && !!s.policy.values.company?.transactionCurrency,
+      tax: !empty && s.policy.values.company?.taxBasisPoints != null,
+      locations: !empty,
+      product: !empty,
+      stock: !empty,
+    };
+  if (path === 'audit') return empty ? { events: [], nextCursor: null } : s.audit;
+  if (path === 'settings') return s.policy;
   if (path === 'notifications') {
     const access: Record<string, Permission> = {
       'purchase.created': 'purchases.write',

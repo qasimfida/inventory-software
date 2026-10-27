@@ -17,7 +17,7 @@ const bin = candidates.find(
 );
 if (bin === undefined) {
   console.error(
-    'Install PostgreSQL and put its bin directory on PATH, or set PG_BIN. See docs/platforms/setup.md.',
+    'Install PostgreSQL and put its bin directory on PATH, or set PG_BIN. See docs/development.md.',
   );
   process.exit(1);
 }

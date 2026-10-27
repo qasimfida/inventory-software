@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
 import type { CatalogSocket } from '@inventory/api-client';
-import { catalogLive } from '@inventory/api-client';
+import { catalogLive, demoCatalogChanges } from '@inventory/api-client';
 import { authClient } from '../auth/client';
 // This workspace also includes DOM declarations, which omit RN's native headers overload.
 const NativeSocket = WebSocket as typeof WebSocket & {
@@ -36,11 +36,9 @@ export function useCatalogLive(businessId: string | undefined, changed: () => vo
     callback.current = changed;
   }, [changed]);
   useEffect(() => {
-    if (
-      !businessId ||
-      (typeof __DEV__ !== 'undefined' && __DEV__ && process.env.EXPO_PUBLIC_USE_MOCKS === 'true')
-    )
-      return;
+    if (!businessId) return;
+    if (typeof __DEV__ !== 'undefined' && __DEV__ && process.env.EXPO_PUBLIC_USE_MOCKS === 'true')
+      return demoCatalogChanges.subscribe(businessId, () => callback.current());
     let subscription = subscriptions.get(businessId);
     if (!subscription) {
       const callbacks = new Set<() => void>();

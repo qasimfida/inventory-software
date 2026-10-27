@@ -11,7 +11,22 @@ export default function DemoWorkspace({ children }: { children: ReactElement }) 
     theme = useTheme(),
     insets = useSafeAreaInsets();
   const roles = demoRoles,
-    scenarios = ['normal', 'empty', 'error', 'offline'] as const;
+    scenarios = [
+      'normal',
+      'empty',
+      'error',
+      'offline',
+      'denied',
+      'stale',
+      'partial',
+      'slow',
+      'rate-limited',
+      'store-live',
+      'store-all-clear',
+      'store-no-catalog',
+      'store-disabled',
+      'store-sold-out-hidden',
+    ] as const;
   return (
     <View style={{ flex: 1 }}>
       <View

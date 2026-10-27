@@ -29,5 +29,6 @@ export function receiptText(
     ...r.finance.refunds.map(
       (f) => `Refund ${f.id} against cash payment ${f.paymentId}: ${money(f.amountMinor)}`,
     ),
+    ...(r.sale.receiptFooter ? [r.sale.receiptFooter] : []),
   ].join('\n');
 }

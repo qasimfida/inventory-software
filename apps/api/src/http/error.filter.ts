@@ -1,3 +1,4 @@
+import { StorefrontConflict, storefrontConflicts } from '../storefront/storefront-errors.js';
 import { PricingConflict, pricingConflicts } from './pricing-conflict.js';
 import type { AuthRequest } from '../auth/auth.http.js';
 import type { Environment } from '../config/environment.js';
@@ -22,43 +23,47 @@ export class ApiErrorFilter implements ExceptionFilter {
     const status = httpStatus(exception);
     const requestId = String(response.getHeader('x-request-id'));
     const code =
-      exception instanceof PricingConflict
+      exception instanceof StorefrontConflict
         ? exception.publicCode
-        : status === 409
-          ? 'CONFLICT'
-          : status === 401
-            ? 'UNAUTHENTICATED'
-            : status === 403
-              ? 'FORBIDDEN'
-              : status === 429
-                ? 'RATE_LIMITED'
-                : status === 400
-                  ? 'BAD_REQUEST'
-                  : status === 404
-                    ? 'NOT_FOUND'
-                    : status === 503
-                      ? 'UNAVAILABLE'
-                      : status >= 500
-                        ? 'INTERNAL_ERROR'
-                        : 'REQUEST_FAILED';
+        : exception instanceof PricingConflict
+          ? exception.publicCode
+          : status === 409
+            ? 'CONFLICT'
+            : status === 401
+              ? 'UNAUTHENTICATED'
+              : status === 403
+                ? 'FORBIDDEN'
+                : status === 429
+                  ? 'RATE_LIMITED'
+                  : status === 400
+                    ? 'BAD_REQUEST'
+                    : status === 404
+                      ? 'NOT_FOUND'
+                      : status === 503
+                        ? 'UNAVAILABLE'
+                        : status >= 500
+                          ? 'INTERNAL_ERROR'
+                          : 'REQUEST_FAILED';
     const message =
-      exception instanceof PricingConflict
-        ? pricingConflicts[exception.publicCode]
-        : status === 409
-          ? 'The record changed, a code is in use, or this state transition is not allowed.'
-          : status === 401
-            ? 'Authentication required or credentials invalid.'
-            : status === 403
-              ? 'Request not allowed.'
-              : status === 429
-                ? 'Too many attempts. Try again later.'
-                : status === 400
-                  ? 'Request validation failed.'
-                  : status === 404
-                    ? 'Resource not found.'
-                    : status >= 500
-                      ? 'Service unavailable.'
-                      : 'Request could not be completed.';
+      exception instanceof StorefrontConflict
+        ? storefrontConflicts[exception.publicCode]
+        : exception instanceof PricingConflict
+          ? pricingConflicts[exception.publicCode]
+          : status === 409
+            ? 'The record changed, a code is in use, or this state transition is not allowed.'
+            : status === 401
+              ? 'Authentication required or credentials invalid.'
+              : status === 403
+                ? 'Request not allowed.'
+                : status === 429
+                  ? 'Too many attempts. Try again later.'
+                  : status === 400
+                    ? 'Request validation failed.'
+                    : status === 404
+                      ? 'Resource not found.'
+                      : status >= 500
+                        ? 'Service unavailable.'
+                        : 'Request could not be completed.';
     if (this.environment) {
       const event = diagnosticMetadata(
         host.switchToHttp().getRequest<AuthRequest>(),

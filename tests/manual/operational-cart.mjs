@@ -40,7 +40,7 @@ try {
     await checkout.click();
     await expect(page.getByLabel('Cash tendered (minor units)', { exact: true })).toBeVisible();
     await page.screenshot({
-      path: `docs/qa/operational-ui/cart-${width}.png`,
+      path: `artifacts/qa/operational-ui/cart-${width}.png`,
       animations: 'disabled',
     });
     await page.evaluate(axe.source);
@@ -64,7 +64,10 @@ try {
     });
     await page.close();
   }
-  await writeFile('docs/qa/operational-ui/cart-results.json', JSON.stringify(results, null, 2));
+  await writeFile(
+    'artifacts/qa/operational-ui/cart-results.json',
+    JSON.stringify(results, null, 2),
+  );
 } finally {
   await browser.close();
 }

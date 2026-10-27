@@ -1,3 +1,4 @@
+import { WorkspaceSwitcher } from './WorkspaceSwitcher';
 import { DisclosureTrigger } from '../ui/DisclosureTrigger';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
@@ -65,6 +66,7 @@ export function MoreScreen({ go }: { go: (path: string) => void }) {
   }, [business, state.workspace, search, key]);
   return (
     <>
+      <WorkspaceSwitcher />
       <Field label="Search pages and records" value={search} onChange={setSearch} />
       {groups.map((group) => {
         const items = routes.filter(
@@ -72,15 +74,17 @@ export function MoreScreen({ go }: { go: (path: string) => void }) {
         );
         return items.length ? (
           <View key={group} style={{ gap: theme.spacing.small }}>
-            <DisclosureTrigger
-              label={group}
-              expanded={!collapsed.includes(group) || !!search}
-              onPress={() =>
-                setCollapsed((old) =>
-                  old.includes(group) ? old.filter((g) => g !== group) : [...old, group],
-                )
-              }
-            />
+            {group !== 'Online store' && (
+              <DisclosureTrigger
+                label={group}
+                expanded={!collapsed.includes(group) || !!search}
+                onPress={() =>
+                  setCollapsed((old) =>
+                    old.includes(group) ? old.filter((g) => g !== group) : [...old, group],
+                  )
+                }
+              />
+            )}
             {(!collapsed.includes(group) || !!search) &&
               items.map((r) => (
                 <Action key={r.path} variant="outline" label={r.title} onPress={() => go(r.path)} />

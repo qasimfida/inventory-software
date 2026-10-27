@@ -1,3 +1,11 @@
+import { onlineRoute } from '@inventory/api-client';
+import { OnlineStorePage } from '@/features/storefront/OnlineStorePage';
+import { lazy } from 'react';
+const ProductPage = lazy(() =>
+  import('@/features/catalog/ProductPage').then((module) => ({ default: module.ProductPage })),
+);
+import { productDetailId } from '@inventory/api-client';
+import { SetupChecklist } from '@/features/reports/SetupChecklist';
 import { OperationsPanel } from '@/features/operations/OperationsPanel';
 import { MemberEditor } from '@/features/organization/MemberEditor';
 import { LogsPage } from '@/features/settings/LogsPage';
@@ -27,12 +35,13 @@ export function WorkspaceScreens() {
         ? '/staff'
         : location.pathname === '/settings/users'
           ? '/team'
-          : location.pathname,
-    route = workspaceRoutes.find((r) => r.path === path);
+          : onlineRoute(location.pathname),
+    route = workspaceRoutes.find((r) => r.path === (productDetailId(path) ? '/catalog' : path));
   const settings = useSyncExternalStore(settingsModel.subscribe, settingsModel.snapshot);
   const [visited, setVisited] = useState<string[]>([path]);
   if (!visited.includes(path)) setVisited([...visited, path]);
-  if (path !== location.pathname) return <Navigate to={path} replace />;
+  if (!location.pathname.startsWith('/online-store') && path !== location.pathname)
+    return <Navigate to={path} replace />;
   const destination =
     path === '/dashboard' && settings.snapshot
       ? overviewDestination(business, settings.snapshot.canManagePlatform)
@@ -79,6 +88,33 @@ export function WorkspaceScreens() {
   return (
     <>
       {['/admin', '/admin/businesses'].includes(path) && platformPage}
+      {productDetailId(path) && (
+        <Suspense fallback={<Skeleton label="Loading product…" />}>
+          <ProductPage
+            key={path}
+            business={business}
+            locations={locations}
+            productId={productDetailId(path)!}
+          />
+        </Suspense>
+      )}
+      {[
+        '/online-store',
+        '/online-store/products',
+        '/online-store/products/add',
+        '/online-store/products/:id',
+        '/online-store/settings',
+        '/online-store/settings/general',
+        '/online-store/settings/fulfillment',
+        '/online-store/settings/policies',
+        '/online-store/settings/images',
+      ].includes(path) && (
+        <OnlineStorePage
+          business={business}
+          locations={state.workspace.locations}
+          path={location.pathname}
+        />
+      )}
       {path === '/logs' && <LogsPage />}
       {path === '/staff' && (
         <OperationsPanel business={business} locations={state.workspace.locations} />
@@ -89,6 +125,7 @@ export function WorkspaceScreens() {
       {path.startsWith('/settings/') && <SettingsPage />}
       {path === '/dashboard' && (!destination || destination === path) && (
         <div className="space-y-5">
+          <SetupChecklist business={business} />
           {hasPermission(business, 'reports.read') ? (
             <Dashboard
               business={business}

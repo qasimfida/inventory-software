@@ -48,7 +48,7 @@ try {
     .toBe(1440);
   await page.waitForTimeout(400);
   await page.screenshot({
-    path: 'docs/qa/business-directory/grid-locations.png',
+    path: 'artifacts/qa/business-directory/grid-locations.png',
     animations: 'disabled',
   });
   await drawer.getByRole('button', { name: 'Main warehouse', exact: true }).click();
@@ -90,7 +90,7 @@ try {
       const wrapper = await page.locator('.overflow-tabs').boundingBox();
       expect(wrapper.width).toBeLessThanOrEqual(width);
       await page.screenshot({
-        path: `docs/qa/business-directory/preferences-${radius}-${width}.png`,
+        path: `artifacts/qa/business-directory/preferences-${radius}-${width}.png`,
         animations: 'disabled',
       });
       results.push({
@@ -106,7 +106,7 @@ try {
 } finally {
   await browser.close();
   await writeFile(
-    'docs/qa/business-directory/browser-results.json',
+    'artifacts/qa/business-directory/browser-results.json',
     JSON.stringify({ results, errors }, null, 2) + '\n',
   );
 }

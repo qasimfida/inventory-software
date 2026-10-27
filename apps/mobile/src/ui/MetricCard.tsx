@@ -29,7 +29,7 @@ export function MetricCard({
         minWidth: 0,
         gap: theme.spacing.small,
         padding: theme.spacing.large,
-        borderRadius: parseFloat(theme.tokens['surface-radius']),
+        borderRadius: theme.radius,
         backgroundColor: primary
           ? theme.colors.primary
           : tone
@@ -44,7 +44,7 @@ export function MetricCard({
           style={[
             StyleSheet.absoluteFill,
             {
-              borderRadius: parseFloat(theme.tokens['surface-radius']),
+              borderRadius: theme.radius,
               backgroundColor: theme.tokens[tone],
               opacity: 0.08,
             },

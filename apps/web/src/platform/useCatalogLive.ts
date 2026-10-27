@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { CatalogSocket } from '@inventory/api-client';
-import { catalogLive } from '@inventory/api-client';
+import { catalogLive, demoCatalogChanges } from '@inventory/api-client';
 import { authClient } from '@/platform/auth-client';
 function openSocket(): CatalogSocket {
   const socket = new WebSocket(authClient.catalogSocketUrl);
@@ -26,7 +26,9 @@ export function useCatalogLive(businessId: string | undefined, changed: () => vo
     callback.current = changed;
   }, [changed]);
   useEffect(() => {
-    if (!businessId || (import.meta.env.DEV && import.meta.env.VITE_USE_MOCKS === 'true')) return;
+    if (!businessId) return;
+    if (import.meta.env.DEV && import.meta.env.VITE_USE_MOCKS === 'true')
+      return demoCatalogChanges.subscribe(businessId, () => callback.current());
     let subscription = subscriptions.get(businessId);
     if (!subscription) {
       const callbacks = new Set<() => void>();

@@ -2,7 +2,7 @@
 import { chromium, expect } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { developmentPassword } from '../../apps/api/dist/development/fixtures.js';
-const out = 'docs/qa/cart-role-fixes';
+const out = 'artifacts/qa/cart-role-fixes';
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome' });
 const evidence = { cart: false, hiddenSettings: false, ownerSettings: false, errors: [] };

@@ -1,5 +1,8 @@
+import { editOnlineDemoPrice } from './edit-online-price.js';
+import { editOnlineDemoProduct } from './edit-online-catalog.js';
+import { mockStorefrontManagement } from './storefront-management.js';
 import { demoId } from './identity.js';
-import { apiErrorSchema, hasPermission } from '@inventory/contracts';
+import { apiErrorSchema, hasPermission, policyRecordSchema } from '@inventory/contracts';
 import type { Permission } from '@inventory/contracts';
 import type { AuthTransport } from '../auth.js';
 import { demoState } from './state.js';
@@ -15,6 +18,8 @@ export { demoRoles } from './identity.js';
 export { demoController } from './state.js';
 export type { DemoRole, DemoScenario } from './identity.js';
 const permissions: Record<string, Permission[]> = {
+  storefront: ['onlineStore.view'],
+  setup: ['business.write'],
   operations: ['users.write'],
   products: ['products.read'],
   categories: ['products.read'],
@@ -73,7 +78,9 @@ export const demoTransport: AuthTransport = async (url, options) => {
             members: hasPermission(seed.business, 'users.read') ? seed.members : [],
           };
         else {
-          const required = permissions[segments[0]!] ?? ['business.write'];
+          const required = resource.includes('/online-store/')
+            ? (['business.read'] as const)
+            : (permissions[segments[0]!] ?? ['business.write']);
           if (!required.every((p) => hasPermission(seed.business, p)))
             throw new DemoFailure(403, 'This demonstration role cannot access this module.');
           if (demoState.scenario === 'offline')
@@ -81,7 +88,23 @@ export const demoTransport: AuthTransport = async (url, options) => {
           if (demoState.scenario === 'error')
             throw new DemoFailure(503, 'Demonstration service failure. Switch to Normal to retry.');
           const empty = demoState.scenario === 'empty';
-          if (options.method === 'GET')
+          if (resource.includes('/online-store/'))
+            result = await mockStorefrontManagement(seed, resource, options.method, body, q);
+          else if (resource === 'prices' && options.method === 'POST')
+            result = editOnlineDemoPrice(seed, body);
+          else if (options.method === 'PATCH' && /^products\/[^/]+$/.test(resource))
+            result = editOnlineDemoProduct(seed, segments[1]!, body);
+          else if (resource === 'setup/dismiss' && options.method === 'POST') {
+            const status = readAdministration(seed, 'setup', empty) as Record<string, boolean>;
+            if (
+              !Object.entries(status)
+                .filter(([k]) => k !== 'dismissed')
+                .every(([, v]) => v)
+            )
+              throw new DemoFailure(400, 'Complete all setup steps first.');
+            seed.setupDismissed = true;
+            result = { ...status, dismissed: true };
+          } else if (options.method === 'GET')
             result =
               resource === 'reports/overview'
                 ? readDashboard(seed, q, empty)
@@ -91,7 +114,15 @@ export const demoTransport: AuthTransport = async (url, options) => {
                     readCommerce(seed, resource, q, empty) ??
                     readAdministration(seed, resource, empty) ??
                     readStaff(seed, resource, q, empty));
-          else if (resource === 'pos/quotes')
+          else if (resource === 'settings' && options.method === 'PUT') {
+            if (!hasPermission(seed.business, 'business.write') || seed.business.scope?.storeId)
+              throw new DemoFailure(403, 'Business management permission required.');
+            const input = policyRecordSchema.parse(body);
+            if (input.version !== seed.policy.version)
+              throw new DemoFailure(409, 'Reload demonstration company settings.');
+            seed.policy = { ...input, version: input.version + 1 };
+            result = seed.policy;
+          } else if (resource === 'pos/quotes')
             result = demoQuote(body, seed.id, seed, seed.currency);
           else if (/^notifications\/[^/]+\/read$/.test(resource)) {
             const item = seed.inbox.notifications.find((n) => n.id === segments[1]);
@@ -115,15 +146,19 @@ export const demoTransport: AuthTransport = async (url, options) => {
         json: async () =>
           apiErrorSchema.parse({
             code:
-              error.status === 503
-                ? 'UNAVAILABLE'
-                : error.status === 401
-                  ? 'UNAUTHENTICATED'
-                  : error.status === 403
-                    ? 'FORBIDDEN'
-                    : error.status === 404
-                      ? 'NOT_FOUND'
-                      : 'BAD_REQUEST',
+              error.status === 429
+                ? 'RATE_LIMITED'
+                : error.status === 409
+                  ? 'CONFLICT'
+                  : error.status === 503
+                    ? 'UNAVAILABLE'
+                    : error.status === 401
+                      ? 'UNAUTHENTICATED'
+                      : error.status === 403
+                        ? 'FORBIDDEN'
+                        : error.status === 404
+                          ? 'NOT_FOUND'
+                          : 'BAD_REQUEST',
             message: error.message,
             requestId: demoId(9999),
             retryable: error.status === 503,

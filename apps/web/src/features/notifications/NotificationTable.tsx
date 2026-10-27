@@ -42,7 +42,7 @@ export function NotificationTable({
                     className="product-card-title"
                     onClick={() => setSelected(n)}
                   >
-                    {businessNotificationTitle(n.event)}
+                    {businessNotificationTitle(n.event, n.summary)}
                   </Button>
                 </th>
                 <td>{businessTime(n.createdAt, timeZone)}</td>
@@ -73,7 +73,7 @@ export function NotificationTable({
       >
         {detail && (
           <>
-            <h3>{businessNotificationTitle(detail.event)}</h3>
+            <h3>{businessNotificationTitle(detail.event, detail.summary)}</h3>
             <StatusBadge tone={detail.readAt ? 'neutral' : 'info'}>
               {detail.readAt ? 'Read' : 'Unread'}
             </StatusBadge>

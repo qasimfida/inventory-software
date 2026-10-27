@@ -26,6 +26,7 @@ const environmentSchema = z.object({
   REQUEST_BODY_LIMIT_BYTES: z.coerce.number().int().min(1024).max(1048576).default(102400),
   HTTP_REQUEST_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120000).default(30000),
   SHUTDOWN_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120000).default(15000),
+  STOREFRONT_MEDIA_ORIGINS: z.string().default(''),
   CORS_ORIGINS: z.string().default('http://localhost:5173,http://127.0.0.1:5173'),
 });
 
@@ -43,6 +44,23 @@ export function parseEnvironment(input: Record<string, unknown>) {
   if (!parsedOrigins.success)
     throw new Error('CORS_ORIGINS must contain explicit HTTP(S) or packaged desktop origins.');
   const corsOrigins = parsedOrigins.data;
+  const storefrontMediaOrigins = env.STOREFRONT_MEDIA_ORIGINS.split(',')
+    .map((v) => v.trim())
+    .filter(Boolean);
+  for (const origin of storefrontMediaOrigins) {
+    const url = z.url({ protocol: /^https$/ }).safeParse(origin);
+    if (!url.success) throw new Error('Invalid STOREFRONT_MEDIA_ORIGINS');
+    const parsed = new URL(origin);
+    if (
+      parsed.origin !== origin ||
+      parsed.username ||
+      parsed.password ||
+      parsed.hostname === 'localhost' ||
+      !parsed.hostname.includes('.') ||
+      /^[0-9.]+$/.test(parsed.hostname)
+    )
+      throw new Error('STOREFRONT_MEDIA_ORIGINS requires explicit HTTPS DNS origins');
+  }
   // Do not allow URL query options to override certificate verification.
   const databaseUrl = new URL(env.DATABASE_URL);
   if (!databaseUrl.hostname || databaseUrl.pathname.length < 2 || databaseUrl.hash)
@@ -60,7 +78,7 @@ export function parseEnvironment(input: Record<string, unknown>) {
       throw new Error('Production requires HTTPS CORS origins.');
     }
   }
-  return { ...env, corsOrigins, ai: parseAiConfiguration(input) };
+  return { ...env, corsOrigins, storefrontMediaOrigins, ai: parseAiConfiguration(input) };
 }
 
 export type Environment = ReturnType<typeof parseEnvironment>;

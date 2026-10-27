@@ -1,9 +1,0 @@
-{
-  "checks": [
-    "Real transfer draft → approve → dispatch → receive using detail drawer",
-    "Source and destination ledger projections reconcile",
-    "Real sale history → receipt detail with print and authorized corrections"
-  ],
-  "errors": [],
-  "transferReference": "UI-MOVE-1792692316094"
-}

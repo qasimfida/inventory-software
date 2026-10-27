@@ -1,3 +1,6 @@
+import { OnlineCollectionFeedback } from '../storefront/OnlineCollectionFeedback';
+import { Checkbox } from '@/components/ui/Checkbox';
+import { useOnlineCollection } from '../storefront/useOnlineCollection';
 import { posPriceLabel } from '@inventory/api-client';
 import { ProductImage } from './ProductImage';
 import { CatalogDetails } from './CatalogDetails';
@@ -25,6 +28,7 @@ export function CatalogProducts({
   onEdit: (product: Product) => void;
   view?: 'list' | 'grid';
 }) {
+  const channels = useOnlineCollection(products.map((p) => p.id));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selected = products.find((p) => p.id === selectedId);
   const name = (product: Product) => (
@@ -41,6 +45,9 @@ export function CatalogProducts({
     <RowActions
       label={product.sku}
       actions={[
+        ...(channels.manage
+          ? [{ label: 'Add to online store', onSelect: () => void channels.add([product.id]) }]
+          : []),
         { label: 'View details', onSelect: () => setSelectedId(product.id) },
         { label: 'Variants and pricing', onSelect: () => onPricing(product.id) },
         ...(writable && product.state !== 'archived'
@@ -67,6 +74,18 @@ export function CatalogProducts({
     );
   return (
     <>
+      <OnlineCollectionFeedback channels={channels} />
+      {channels.manage && channels.selected.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2">
+          <span>{channels.selected.length} selected</span>
+          <Button disabled={channels.busy} onClick={() => void channels.add(channels.selected)}>
+            Add to online store
+          </Button>
+          <Button variant="ghost" onClick={() => channels.setSelected([])}>
+            Clear selection
+          </Button>
+        </div>
+      )}
       {view === 'list' ? (
         <TableScroll label="Catalog products">
           <Table>
@@ -82,7 +101,23 @@ export function CatalogProducts({
             <tbody>
               {products.map((product) => (
                 <tr key={product.id}>
-                  <th scope="row">{name(product)}</th>
+                  <th scope="row">
+                    <div className="flex items-center gap-2">
+                      {channels.manage && (
+                        <Checkbox
+                          aria-label={`Select ${product.name} for online store`}
+                          checked={channels.selected.includes(product.id)}
+                          onCheckedChange={() => channels.toggle(product.id)}
+                        />
+                      )}
+                      <span>
+                        {name(product)}
+                        {channels.items.some(
+                          (l) => l.productId === product.id && l.status === 'active',
+                        ) && <StatusBadge>Online</StatusBadge>}
+                      </span>
+                    </div>
+                  </th>
                   <td>{product.sku}</td>
                   <td className="tabular-nums">
                     {product.price ? posPriceLabel({ price: product.price }) : 'Not priced'}
@@ -102,6 +137,16 @@ export function CatalogProducts({
         <ul className="catalog-product-grid">
           {products.map((product) => (
             <li key={product.id} className="product-card selectable-card">
+              {channels.manage && (
+                <Checkbox
+                  aria-label={`Select ${product.name} for online store`}
+                  checked={channels.selected.includes(product.id)}
+                  onCheckedChange={() => channels.toggle(product.id)}
+                />
+              )}
+              {channels.items.some((l) => l.productId === product.id && l.status === 'active') && (
+                <StatusBadge>Online</StatusBadge>
+              )}
               <ProductImage key={product.images[0] ?? ''} product={product} />
               <h3>{name(product)}</h3>
               <div className="product-card-summary">
@@ -114,6 +159,11 @@ export function CatalogProducts({
                 {product.price ? posPriceLabel({ price: product.price }) : 'Not priced'}
               </p>
               <div className="flex flex-wrap gap-2">
+                {channels.manage && (
+                  <Button disabled={channels.busy} onClick={() => void channels.add([product.id])}>
+                    Add to online store
+                  </Button>
+                )}
                 <Button
                   variant="outline"
                   size="sm"

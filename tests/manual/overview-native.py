@@ -1,7 +1,7 @@
 # Manual Android QA: start the existing mock Expo app on port 8088, sign in as the demo owner, and open Overview.
 import subprocess,time,re,json,xml.etree.ElementTree as ET
 from pathlib import Path
-adb='/tmp/inventory-android-sdk/platform-tools/adb'; out=Path('docs/qa/overview-currency'); seen=set()
+adb='/tmp/inventory-android-sdk/platform-tools/adb'; out=Path('artifacts/qa/overview-currency'); seen=set()
 def cmd(*a):return subprocess.check_output([adb,*a],text=True)
 def dump():
  cmd('shell','uiautomator','dump','/sdcard/overview-qa.xml')

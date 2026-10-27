@@ -1,4 +1,8 @@
-import { movementInputSchema, reservationInputSchema } from '@inventory/contracts';
+import {
+  movementInputSchema,
+  reservationInputSchema,
+  builtInStockReasons,
+} from '@inventory/contracts';
 import type { CommandForm, CommandField } from './forms.js';
 import type { createInventoryClient } from './inventory.js';
 import { formText } from './forms.js';
@@ -37,6 +41,16 @@ export function inventoryForms(client: Client, data: Data, warehouseId: string):
       title: 'Post stock movement',
       fields: [
         ...target,
+        {
+          name: 'reasonCode',
+          label: 'Reason code (must match movement direction)',
+          kind: 'select',
+          value: 'other',
+          options: (data.reasons.length
+            ? data.reasons.filter((r) => r.active)
+            : builtInStockReasons
+          ).map((r) => ({ value: r.code, label: r.label })),
+        },
         {
           name: 'type',
           label: 'Movement type',
@@ -88,10 +102,12 @@ export function inventoryForms(client: Client, data: Data, warehouseId: string):
           name: 'id',
           label: 'Active reservation',
           kind: 'select',
-          options: data.reservations.map((r) => ({
-            value: r.id,
-            label: `${data.items.find((i) => i.id === r.variantId)?.sku ?? r.variantId} · ${r.remaining}`,
-          })),
+          options: data.reservations
+            .filter((r) => r.sourceKind === 'manual')
+            .map((r) => ({
+              value: r.id,
+              label: `${data.items.find((i) => i.id === r.variantId)?.sku ?? r.variantId} · ${r.remaining}`,
+            })),
         },
         { name: 'reason', label: 'Release reason' },
       ],

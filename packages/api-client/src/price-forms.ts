@@ -1,6 +1,6 @@
 import { percentageBasisPoints } from '@inventory/domain';
 import { priceInputSchema, promotionInputSchema, quoteInputSchema } from '@inventory/contracts';
-import type { Location, Business } from '@inventory/contracts';
+import type { Location, Business, CompanyProfile } from '@inventory/contracts';
 import type { createPricingClient } from './pricing.js';
 import type { CommandForm, CommandField } from './forms.js';
 type Client = ReturnType<typeof createPricingClient>;
@@ -11,6 +11,7 @@ export function priceForms(
   business: Business,
   locations: Location[],
   selectedId: string,
+  defaults?: CompanyProfile | undefined,
 ): CommandForm[] {
   const variants = data.variants
     .filter((v) => v.state === 'active')
@@ -70,10 +71,20 @@ export function priceForms(
             value: c,
             label: c,
           })),
-          value: 'USD',
+          value: defaults?.transactionCurrency ?? 'USD',
         },
-        { name: 'taxBasisPoints', label: 'Tax rate (%)', kind: 'text', value: '0' },
-        { name: 'taxInclusive', label: 'Price includes tax', kind: 'boolean', value: false },
+        {
+          name: 'taxBasisPoints',
+          label: 'Tax rate (%)',
+          kind: 'text',
+          value: String((defaults?.taxBasisPoints ?? 0) / 100),
+        },
+        {
+          name: 'taxInclusive',
+          label: 'Price includes tax',
+          kind: 'boolean',
+          value: defaults?.taxInclusive ?? false,
+        },
         ...period,
       ],
       submit: (v) =>

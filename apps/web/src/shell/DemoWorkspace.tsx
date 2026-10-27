@@ -35,7 +35,22 @@ export default function DemoWorkspace({ children }: { children: ReactElement }) 
               demoController.configure(demoController.role, e.target.value as DemoScenario)
             }
           >
-            {['normal', 'empty', 'error', 'offline'].map((value) => (
+            {[
+              'normal',
+              'empty',
+              'error',
+              'offline',
+              'denied',
+              'stale',
+              'partial',
+              'slow',
+              'rate-limited',
+              'store-live',
+              'store-all-clear',
+              'store-no-catalog',
+              'store-disabled',
+              'store-sold-out-hidden',
+            ].map((value) => (
               <option key={value} value={value}>
                 {value}
               </option>

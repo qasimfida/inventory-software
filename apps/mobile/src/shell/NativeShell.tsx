@@ -1,3 +1,7 @@
+import {
+  OnlineSelectionDockProvider,
+  useOnlineSelectionDock,
+} from '../storefront/OnlineSelectionDock';
 import { NativeHeader } from './NativeHeader';
 import { PageTitleContext } from '../ui/ScreenHeader';
 import { SettingsTabs } from './SettingsScreen';
@@ -28,13 +32,16 @@ import { NativeScreens } from './NativeScreens';
 import { MoreScreen } from './MoreScreen';
 export function NativeShell() {
   return (
-    <CartDockProvider>
-      <ShellContent />
-    </CartDockProvider>
+    <OnlineSelectionDockProvider>
+      <CartDockProvider>
+        <ShellContent />
+      </CartDockProvider>
+    </OnlineSelectionDockProvider>
   );
 }
 function ShellContent() {
   const { cart } = useCartDock();
+  const { selection } = useOnlineSelectionDock();
   const scrollEvents = useScrollEvents();
   const theme = useTheme(),
     { path, navigate } = useNavigation(),
@@ -95,6 +102,14 @@ function ShellContent() {
             </View>
           </ScrollView>
         </ScrollEvents.Provider>
+        {path.startsWith('/online-store/products') && selection && (
+          <View style={{ padding: theme.spacing.small, backgroundColor: theme.colors.card }}>
+            <Action
+              label={`${selection.count} selected · Review bulk actions`}
+              onPress={selection.open}
+            />
+          </View>
+        )}
         {['/pos', '/cash', '/sales'].includes(path) && cart && (
           <View style={{ padding: theme.spacing.small, backgroundColor: theme.colors.card }}>
             <Action label={cart.label} onPress={cart.open} />

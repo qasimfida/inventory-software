@@ -4,7 +4,7 @@ import type { Environment } from '../config/environment.js';
 import type { Identity, SessionTransport } from './session.repository.js';
 
 export const PUBLIC_ROUTE = Symbol('PUBLIC_ROUTE');
-export const PublicRoute = (kind: 'credentials' | 'health' = 'credentials') =>
+export const PublicRoute = (kind: 'credentials' | 'health' | 'storefront' = 'credentials') =>
   SetMetadata(PUBLIC_ROUTE, kind);
 export interface AuthRequest extends Request {
   identity: Identity;

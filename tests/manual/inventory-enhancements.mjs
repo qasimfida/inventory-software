@@ -58,7 +58,7 @@ try {
       await expect(overview.locator('tbody')).toContainText('HP-036');
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.screenshot({
-        path: `docs/qa/inventory-enhancements/web-${width}-${colorScheme}.png`,
+        path: `artifacts/qa/inventory-enhancements/web-${width}-${colorScheme}.png`,
         fullPage: true,
       });
       await page.locator('.app-header').getByRole('button', { name: 'Open profile menu' }).click();
@@ -86,7 +86,7 @@ try {
 } finally {
   await browser.close();
   await writeFile(
-    'docs/qa/inventory-enhancements/browser-results.json',
+    'artifacts/qa/inventory-enhancements/browser-results.json',
     JSON.stringify({ results, errors }, null, 2) + '\n',
   );
 }

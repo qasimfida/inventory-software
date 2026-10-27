@@ -43,9 +43,12 @@ try {
   await expect(page.getByRole('dialog', { name: 'Edit product', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Set / adjust price', exact: true })).toBeVisible();
   result.catalogEdit = true;
-  await page.screenshot({ path: 'docs/qa/live-ui-refinement/product-edit.png' });
+  await page.screenshot({ path: 'artifacts/qa/live-ui-refinement/product-edit.png' });
   expect(result.errors).toEqual([]);
 } finally {
-  await writeFile('docs/qa/live-ui-refinement/product-edit.json', JSON.stringify(result, null, 2));
+  await writeFile(
+    'artifacts/qa/live-ui-refinement/product-edit.json',
+    JSON.stringify(result, null, 2),
+  );
   await browser.close();
 }

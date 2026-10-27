@@ -38,7 +38,8 @@
 .sidebar-profile > * {
   width: 100%;
 }
-.settings-layout > .overflow-tabs {
+.settings-layout > .overflow-tabs,
+.settings-layout > .online-store-navigation {
   position: sticky;
   top: var(--header-occupied-height, var(--shell-header-height));
   z-index: 20;
@@ -107,7 +108,7 @@
   flex-wrap: wrap;
   gap: var(--space-medium);
   color: var(--muted-foreground);
-  font-size: var(--font-small);
+  font-size: calc(var(--font-small) * var(--text-scale));
 }
 .business-card-counts span {
   display: inline-flex;
@@ -118,7 +119,7 @@
   color: var(--primary);
 }
 .pos-policy {
-  font-size: var(--font-small);
+  font-size: calc(var(--font-small) * var(--text-scale));
   color: var(--muted-foreground);
 }
 .pos-toolbar {

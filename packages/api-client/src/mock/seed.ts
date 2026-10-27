@@ -1,4 +1,4 @@
-import { defaultIndustry } from '@inventory/contracts';
+import { defaultIndustry, policyRecordSchema } from '@inventory/contracts';
 import { identitySeed } from './identity.js';
 import { staffSeed } from './staff-seed.js';
 import type { DemoRole } from './identity.js';
@@ -11,6 +11,20 @@ export function createDemoSeed(index: number, role: DemoRole) {
   const catalog = catalogSeed(identity.id, identity.currency);
   return {
     ...identity,
+    setupDismissed: false,
+    policy: policyRecordSchema.parse({
+      version: 0,
+      values: {
+        company: {
+          displayName: identity.business.name,
+          address: 'Demo business address',
+          transactionCurrency: identity.currency,
+          taxBasisPoints: 0,
+          receiptFooter: 'Thank you for shopping with us.',
+        },
+        industry: { ...defaultIndustry, lowStockThreshold: '5' },
+      },
+    }),
     ...catalog,
     industry: { ...defaultIndustry, lowStockThreshold: '5' },
     ...operationsSeed(identity.id, identity.currency),

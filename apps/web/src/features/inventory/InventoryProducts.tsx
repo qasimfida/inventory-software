@@ -1,3 +1,6 @@
+import { OnlineCollectionFeedback } from '../storefront/OnlineCollectionFeedback';
+import { Checkbox } from '@/components/ui/Checkbox';
+import { useOnlineCollection } from '../storefront/useOnlineCollection';
 import { EmptyState } from '@/components/common/AsyncState';
 import { posPriceLabel } from '@inventory/api-client';
 import { ViewTabs } from '@/components/common/ViewTabs';
@@ -29,8 +32,10 @@ export function InventoryProducts({
   controls,
   onAdjust,
   onEdit,
+  onDetails,
 }: {
   items: Item[];
+  onDetails?: ((productId: string) => void) | undefined;
   showEmpty?: boolean;
   controls?: ReactNode;
   onEdit?: ((productId: string) => void) | undefined;
@@ -39,9 +44,22 @@ export function InventoryProducts({
   const viewId = useId();
   const [view, setView] = useState<'list' | 'grid'>('list');
   const [selection, setSelected] = useState<Item | null>(null);
+  const channels = useOnlineCollection(items.flatMap((i) => (i.productId ? [i.productId] : [])));
   const selected = items.find((item) => item.id === selection?.id) ?? null;
   return (
     <>
+      <OnlineCollectionFeedback channels={channels} />
+      {channels.manage && channels.selected.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2">
+          <span>{channels.selected.length} selected</span>
+          <Button disabled={channels.busy} onClick={() => void channels.add(channels.selected)}>
+            Add to online store
+          </Button>
+          <Button variant="ghost" onClick={() => channels.setSelected([])}>
+            Clear selection
+          </Button>
+        </div>
+      )}
       <div className="inventory-controls" role="group" aria-label="Inventory view">
         {controls}
         <ViewTabs panelId={viewId} label="Inventory" value={view} onChange={setView} />
@@ -72,6 +90,16 @@ export function InventoryProducts({
                 {items.map((item) => (
                   <tr key={item.id}>
                     <th scope="row">
+                      {channels.manage && item.productId && (
+                        <Checkbox
+                          aria-label={`Select ${item.name} for online store`}
+                          checked={channels.selected.includes(item.productId)}
+                          onCheckedChange={() => channels.toggle(item.productId!)}
+                        />
+                      )}
+                      {channels.items.some(
+                        (l) => l.productId === item.productId && l.status === 'active',
+                      ) && <StatusBadge>Online</StatusBadge>}
                       <Button
                         variant="ghost"
                         className="text-left justify-start"
@@ -94,6 +122,14 @@ export function InventoryProducts({
                       <RowActions
                         label={item.sku}
                         actions={[
+                          ...(channels.manage && item.productId
+                            ? [
+                                {
+                                  label: 'Add to online store',
+                                  onSelect: () => void channels.add([item.productId!]),
+                                },
+                              ]
+                            : []),
                           { label: 'View details', onSelect: () => setSelected(item) },
                           ...(onEdit && item.productId
                             ? [
@@ -118,6 +154,24 @@ export function InventoryProducts({
           <div className="catalog-product-grid">
             {items.map((item) => (
               <article key={item.id} className="product-card selectable-card">
+                {channels.manage && item.productId && (
+                  <>
+                    <Checkbox
+                      aria-label={`Select ${item.name} for online store`}
+                      checked={channels.selected.includes(item.productId)}
+                      onCheckedChange={() => channels.toggle(item.productId!)}
+                    />
+                    <Button
+                      disabled={channels.busy}
+                      onClick={() => void channels.add([item.productId!])}
+                    >
+                      Add to online store
+                    </Button>
+                  </>
+                )}
+                {channels.items.some(
+                  (l) => l.productId === item.productId && l.status === 'active',
+                ) && <StatusBadge>Online</StatusBadge>}
                 <div className="product-art" aria-hidden="true">
                   <Package />
                   <span>{item.sku}</span>
@@ -177,6 +231,16 @@ export function InventoryProducts({
           {selected && (
             <>
               <h3>{selected.name}</h3>
+              {onDetails && selected.productId && (
+                <Button
+                  onClick={() => {
+                    setSelected(null);
+                    onDetails(selected.productId!);
+                  }}
+                >
+                  Open full product details
+                </Button>
+              )}
               <StockBadge item={selected} />
               <p>{selected.price ? posPriceLabel({ price: selected.price }) : 'Not priced'}</p>
               {onEdit && selected.productId && (

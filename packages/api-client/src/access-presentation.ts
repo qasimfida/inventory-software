@@ -12,9 +12,12 @@ const areas: Record<string, string> = {
   reports: 'Reports',
   users: 'Team',
   audit: 'Audit history',
+  onlineStore: 'Online store',
 };
 const actions: Record<string, string> = {
   read: 'View',
+  view: 'View',
+  manage: 'Manage',
   write: 'Create and edit',
   refund: 'Issue refunds',
   void: 'Void sales',
@@ -29,7 +32,9 @@ export function permissionLabel(permission: Permission) {
 /** Presentation of existing assignable grants, not backend authorization. */
 export function permissionGroups(storeScoped: boolean) {
   const allowed = permissionSchema.options.filter(
-    (p) => p !== 'users.write' && (!storeScoped || !['users.read', 'business.write'].includes(p)),
+    (p) =>
+      p !== 'users.write' &&
+      (!storeScoped || !['users.read', 'business.write', 'onlineStore.manage'].includes(p)),
   );
   return Object.entries(areas)
     .map(([key, label]) => ({

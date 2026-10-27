@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AccordionSection } from '@/components/ui/Accordion';
 import { createProductSchema, editProductSchema } from '@inventory/contracts';
 import type { Product, Category } from '@inventory/contracts';
@@ -7,6 +7,7 @@ import { Input, Select, Textarea } from '@/components/ui/FormControls';
 import { Button } from '@/components/ui/Button';
 export function ProductForm({
   product,
+  focusField,
   categories,
   client,
   run,
@@ -15,6 +16,7 @@ export function ProductForm({
   busy = false,
 }: {
   product: Product | null;
+  focusField?: string;
   busy?: boolean;
   categories: Category[];
   client: ReturnType<typeof createCatalogClient>;
@@ -22,6 +24,17 @@ export function ProductForm({
   cancel: () => void;
   onSaved?: (product: Product) => void;
 }) {
+  useEffect(() => {
+    if (focusField) {
+      const field =
+        focusField === 'title'
+          ? 'name'
+          : focusField === 'categoryId'
+            ? 'category'
+            : focusField.split('.')[0];
+      requestAnimationFrame(() => document.getElementById('product-' + field)?.focus());
+    }
+  }, [focusField]);
   const [basicsOpen, setBasicsOpen] = useState(true);
   return (
     <form
@@ -93,7 +106,7 @@ export function ProductForm({
           maxLength={2000}
         />
       </AccordionSection>
-      <AccordionSection title="Images and product codes">
+      <AccordionSection title="Images and product codes" defaultOpen={!!focusField}>
         {(
           [
             ['images', 'Image HTTPS URLs (one per line)', product?.images ?? []],
@@ -111,7 +124,7 @@ export function ProductForm({
           </div>
         ))}
       </AccordionSection>
-      <AccordionSection title="Category and inventory settings">
+      <AccordionSection title="Category and inventory settings" defaultOpen={!!focusField}>
         <label htmlFor="product-category">Category</label>
         <Select id="product-category" name="categoryId" defaultValue={product?.categoryId ?? ''}>
           <option value="">Uncategorized</option>

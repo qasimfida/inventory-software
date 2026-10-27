@@ -1,0 +1,26 @@
+/** Canonical readiness explanations, shared by API, native and DOM clients. */
+export const storefrontIssueMessages = {
+  PRODUCT_NOT_FOUND: 'The product no longer exists. Remove this selection.',
+  PRODUCT_ARCHIVED: 'This product is archived. Reactivate it if permitted, or remove it.',
+  PRODUCT_INACTIVE: 'Reactivate this product if permitted, or remove it.',
+  TITLE_MISSING: 'Add a product title.',
+  TITLE_TOO_SHORT: 'Use at least 2 characters for the title.',
+  DESCRIPTION_MISSING: 'Add a description of the product.',
+  DESCRIPTION_TOO_SHORT: 'Describe the product using at least 20 characters.',
+  NO_IMAGE: 'Add at least one allowed HTTPS product image.',
+  IMAGE_URL_INVALID: 'Use a valid HTTPS image URL without credentials.',
+  IMAGE_HOST_NOT_ALLOWED:
+    'Choose an image from an allowed source, or ask an administrator to approve its host.',
+  SINGLE_IMAGE: 'Consider adding another view of this product.',
+  CATEGORY_MISSING: 'Choose an active category.',
+  NO_STOCK_SOURCE: 'Create a stock record in a linked warehouse. Zero stock is allowed.',
+  VARIANT_INCOMPLETE: 'Complete the affected variants before publishing.',
+  SKU_MISSING: 'Add a SKU to this variant.',
+  UNIT_MISSING: 'Choose an active unit for this variant.',
+  PRICE_MISSING: 'Set an effective default-store price.',
+  PRICE_NOT_POSITIVE: 'Set a price greater than zero.',
+  PRICE_CURRENCY_MISMATCH: 'Use the storefront currency for this price.',
+  PRICE_BELOW_COST: 'Review the price: it is below recorded cost.',
+  OVERRIDE_DIFFERS_FROM_POS_PRICE: 'The online override differs from the POS price.',
+  LOW_STOCK: 'Stock is running low. Review replenishment.',
+} as const;

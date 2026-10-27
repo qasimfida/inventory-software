@@ -5,3 +5,4 @@ export * from './canonical.js';
 export * from './location-label.js';
 
 export * from './scanner.js';
+export * from './sellable-stock.js';

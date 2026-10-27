@@ -24,6 +24,9 @@ export function CatalogDetails({
         <>
           <ProductImage product={product} />
           <h3>{product.name}</h3>
+          <a className="text-primary underline" href={`#/catalog/${product.id}`} onClick={onClose}>
+            Open full product details
+          </a>
           <p>
             {product.sku} · {product.state}
           </p>

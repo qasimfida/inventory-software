@@ -67,7 +67,7 @@ try {
         false,
       );
       await page.screenshot({
-        path: `docs/qa/management-ux/${path.split('/').pop()}-${width}.png`,
+        path: `artifacts/qa/management-ux/${path.split('/').pop()}-${width}.png`,
         animations: 'disabled',
       });
     }
@@ -99,5 +99,5 @@ try {
   expect(evidence.errors).toEqual([]);
 } finally {
   await browser.close();
-  await writeFile('docs/qa/management-ux/browser.json', JSON.stringify(evidence, null, 2));
+  await writeFile('artifacts/qa/management-ux/browser.json', JSON.stringify(evidence, null, 2));
 }

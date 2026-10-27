@@ -1,3 +1,4 @@
+import { HeldCarts } from './HeldCarts';
 import { useCatalogLive } from '@/platform/useCatalogLive';
 import { useCartHeight } from './useCartHeight';
 import { CreateCustomerSheet } from '../customers/CreateCustomerSheet';
@@ -13,7 +14,6 @@ import {
   PosModel,
   observeCartQuotes,
   cancellableResource,
-  checkoutForm,
 } from '@inventory/api-client';
 import { hasPermission } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
@@ -22,7 +22,7 @@ import { ProductPicker } from './ProductPicker';
 import { CartLines } from './CartLines';
 import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/FormControls';
-import { CommandForm } from '@/components/common/CommandForm';
+import { PaymentReview } from './PaymentReview';
 import { authClient } from '@/platform/auth-client';
 const operationKey = () => crypto.randomUUID();
 export function PosCheckout({
@@ -99,8 +99,10 @@ export function PosCheckout({
     };
   }, [model, business.id, warehouse.id]);
   useEffect(() => {
-    onLockChange(state.busy || state.uncertain || state.lines.length > 0);
-  }, [onLockChange, state.busy, state.uncertain, state.lines.length]);
+    onLockChange(
+      state.busy || state.uncertain || state.lines.length > 0 || state.heldCarts.length > 0,
+    );
+  }, [onLockChange, state.busy, state.uncertain, state.lines.length, state.heldCarts.length]);
   const cartRef = useCartHeight();
   const [priceRevision, setPriceRevision] = useState(0);
   useCatalogLive(business.id, () => {
@@ -120,6 +122,7 @@ export function PosCheckout({
         />
         <aside ref={cartRef} className="pos-cart space-y-4" aria-label="Cart details">
           <div className="pos-cart-scroll">
+            <HeldCarts model={model} state={state} />
             <div className="product-card-summary">
               <h3>Cart details</h3>{' '}
               <div role="status">
@@ -243,16 +246,11 @@ export function PosCheckout({
             {((state.quote && reviewedQuote === state.quote.quoteFingerprint) || state.uncertain) &&
               !state.busy && (
                 <div ref={checkoutReview}>
-                  <CommandForm
-                    inline
-                    definition={checkoutForm(
-                      model,
-                      state,
-                      hasPermission(business, 'customers.override'),
-                    )}
-                    run={(work) => {
-                      void work();
-                    }}
+                  <PaymentReview
+                    key={state.quote?.quoteFingerprint ?? 'uncertain'}
+                    model={model}
+                    state={state}
+                    canOverride={hasPermission(business, 'customers.override')}
                   />
                 </div>
               )}

@@ -1,9 +1,12 @@
+import { normalizeAppUrl } from './normalize-app-url';
 import { createHashRouter } from 'react-router-dom';
 import { RouteError } from './RouteError';
 import { captureWebAuthLink } from '@/features/auth/link-state';
 import { RouteLoading } from './RouteLoading';
 
 captureWebAuthLink();
+const canonicalUrl = normalizeAppUrl(window.location);
+if (canonicalUrl) window.history.replaceState(null, '', canonicalUrl);
 
 // Hash routing also works in the packaged desktop shell without server rewrites.
 export const router = createHashRouter([

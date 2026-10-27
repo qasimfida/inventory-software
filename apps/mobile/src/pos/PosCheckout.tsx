@@ -91,8 +91,10 @@ export function PosCheckout({
     };
   }, [model, business.id, warehouse.id]);
   useEffect(() => {
-    onLockChange(state.busy || state.uncertain || state.lines.length > 0);
-  }, [onLockChange, state.busy, state.uncertain, state.lines.length]);
+    onLockChange(
+      state.busy || state.uncertain || state.lines.length > 0 || state.heldCarts.length > 0,
+    );
+  }, [onLockChange, state.busy, state.uncertain, state.lines.length, state.heldCarts.length]);
   useEffect(() => {
     setDock({
       label: `View cart · ${state.lines.length} items${state.quote ? ` · ${formatMinorUnits(state.quote.totalMinor, state.quote.currency)}` : ''}`,

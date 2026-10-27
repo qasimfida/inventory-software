@@ -24,14 +24,14 @@ try {
   await expect(p.getByRole('menuitem', { name: 'Light', exact: true })).toBeVisible();
   await p.getByRole('menuitem', { name: 'Dark', exact: true }).click();
   await expect(p.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await p.screenshot({ path: 'docs/qa/navigation-refinement/sidebar-theme.png' });
+  await p.screenshot({ path: 'artifacts/qa/navigation-refinement/sidebar-theme.png' });
   await p.keyboard.press('Escape');
   await p.keyboard.press('Escape');
   await p.getByRole('button', { name: 'Theme and colors' }).click();
   await expect(p.getByRole('button', { name: 'System', exact: true })).toBeVisible();
   await p.getByRole('button', { name: 'Light', exact: true }).click();
   await expect(p.locator('html')).toHaveAttribute('data-theme', 'light');
-  await p.screenshot({ path: 'docs/qa/navigation-refinement/header-theme.png' });
+  await p.screenshot({ path: 'artifacts/qa/navigation-refinement/header-theme.png' });
   console.log('Workspace single-location selection and both theme popups passed');
 } finally {
   await b.close();

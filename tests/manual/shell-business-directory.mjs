@@ -4,7 +4,7 @@ import { writeFile } from 'node:fs/promises';
 const browser = await chromium.launch({ channel: 'chrome' });
 const checks = [],
   errors = [];
-const out = 'docs/qa/shell-business-directory';
+const out = 'artifacts/qa/shell-business-directory';
 try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   page.on('pageerror', (e) => errors.push(e.message));

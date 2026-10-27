@@ -258,7 +258,7 @@ details[open] > summary::after {
 .scope-choice small {
   display: block;
   color: var(--muted-foreground);
-  font-size: var(--font-small);
+  font-size: calc(var(--font-small) * var(--text-scale));
 }
 [data-palette='default'] {
   --palette-primary: var(--info);

@@ -56,7 +56,7 @@ try {
         );
         if (alerts.length || overflow)
           issues.push({ colorScheme, role, path: route.path, alerts, overflow });
-        const dir = `docs/qa/screens/mobile/expo-web-${colorScheme}-${role}`;
+        const dir = `artifacts/qa/screens/mobile/expo-web-${colorScheme}-${role}`;
         await mkdir(dir, { recursive: true });
         await page.screenshot({ path: `${dir}/${route.path.slice(1).replaceAll('/', '-')}.png` });
         results.push({ colorScheme, role, path: route.path, alerts, overflow });
@@ -70,7 +70,7 @@ try {
 } finally {
   await browser.close();
   await writeFile(
-    'docs/qa/mobile-matrix.json',
+    'artifacts/qa/mobile-matrix.json',
     JSON.stringify({ results, issues }, null, 2) + '\n',
   );
 }

@@ -1,7 +1,7 @@
 """Android Expo Go demo walkthrough; never submits a sale or changes real records."""
 import json, os, re, subprocess, time, xml.etree.ElementTree as ET
 ADB=os.environ.get('ADB','/tmp/inventory-android-sdk/platform-tools/adb')
-OUT='docs/qa/sidebar-refinement'
+OUT='artifacts/qa/sidebar-refinement'
 def run(*args): return subprocess.check_output([ADB,*args],text=True)
 def nodes():
  run('shell','uiautomator','dump','/sdcard/interaction-ui.xml')

@@ -80,11 +80,14 @@ try {
     } else await cart.getByRole('button', { name: 'Remove line 1' }).click();
     expect(errors).toEqual([]);
     results.push({ account, cartSurvivesOverviewAndInventory: true, errors });
-    await page.screenshot({ path: `docs/qa/feature-audit/${account}-cart.png` });
+    await page.screenshot({ path: `artifacts/qa/feature-audit/${account}-cart.png` });
     await context.close();
   }
 } finally {
   await browser.close();
-  await writeFile('docs/qa/feature-audit/checkout.json', JSON.stringify(results, null, 2) + '\n');
+  await writeFile(
+    'artifacts/qa/feature-audit/checkout.json',
+    JSON.stringify(results, null, 2) + '\n',
+  );
 }
 console.log('Cart retention, server-confirmed cash checkout and receipt passed.');

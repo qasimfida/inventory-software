@@ -5,5 +5,6 @@ export const companyFields = [
   { key: 'phone', label: 'Contact phone', max: 40 },
   { key: 'address', label: 'Address', max: 500 },
   { key: 'website', label: 'Website (HTTPS)', max: 2048 },
+  { key: 'receiptFooter', label: 'Receipt footer', max: 500 },
   { key: 'description', label: 'About the company', max: 1000 },
 ] as const;

@@ -39,9 +39,15 @@ export class AuthenticationError extends Error {
   ) {
     super(
       details &&
-        ['PRICE_UNAVAILABLE', 'CART_CURRENCY_MISMATCH', 'CHECKOUT_STORE_REQUIRED'].includes(
-          details.code,
-        )
+        [
+          'PRICE_UNAVAILABLE',
+          'CART_CURRENCY_MISMATCH',
+          'CHECKOUT_STORE_REQUIRED',
+          'LISTING_CHANGED',
+          'STOREFRONT_CHANGED',
+          'LISTING_TRANSITION_INVALID',
+          'STOREFRONT_SETUP_INCOMPLETE',
+        ].includes(details.code)
         ? details.message
         : status === 401
           ? 'Sign in again. Credentials may be invalid or the session has ended.'

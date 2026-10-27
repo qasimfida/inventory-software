@@ -12,6 +12,7 @@ export function ProductEditor({
   onSaved,
   onPricing,
   onClose,
+  focusField,
 }: {
   product: Product | null;
   categories: Category[];
@@ -19,6 +20,7 @@ export function ProductEditor({
   onSaved: (product: Product) => void;
   onPricing: (id: string) => void;
   onClose: () => void;
+  focusField?: string;
 }) {
   const savingRef = useRef(false),
     [saving, setSaving] = useState(false),
@@ -59,6 +61,7 @@ export function ProductEditor({
         />
       )}
       <ProductForm
+        {...(focusField ? { focusField } : {})}
         product={product}
         categories={categories}
         client={client}

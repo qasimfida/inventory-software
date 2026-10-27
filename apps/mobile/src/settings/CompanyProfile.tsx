@@ -1,3 +1,4 @@
+import { TransactionFields } from './TransactionFields';
 import { useState, useSyncExternalStore } from 'react';
 import { Image, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
@@ -59,6 +60,7 @@ function ProfileForm({ policy, editable }: { policy: PolicyRecord; editable: boo
       {!!(error || state.message) && (
         <Text accessibilityRole="alert">{error || state.message}</Text>
       )}
+      <TransactionFields profile={profile} onChange={setProfile} disabled={disabled} />
       {!!profile.logo && (
         <Image
           accessibilityLabel="Company logo"

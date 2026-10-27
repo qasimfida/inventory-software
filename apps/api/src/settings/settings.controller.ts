@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Inject, Param, ParseUUIDPipe, Put, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  ParseUUIDPipe,
+  Put,
+  Post,
+  Req,
+} from '@nestjs/common';
 import { preferenceRecordSchema, policyRecordSchema } from '@inventory/contracts';
 import type { z } from 'zod';
 import type { AuthRequest } from '../auth/auth.http.js';
@@ -8,6 +18,14 @@ import { SettingsService } from './settings.service.js';
 @Controller()
 export class SettingsController {
   constructor(@Inject(SettingsService) private readonly settings: SettingsService) {}
+  @Get('businesses/:businessId/setup')
+  setup(@Req() req: AuthRequest, @Param('businessId', new ParseUUIDPipe()) id: string) {
+    return this.settings.setup(actor(req), id);
+  }
+  @Post('businesses/:businessId/setup/dismiss')
+  dismissSetup(@Req() req: AuthRequest, @Param('businessId', new ParseUUIDPipe()) id: string) {
+    return this.settings.dismissSetup(actor(req), id);
+  }
   @Get('auth/settings')
   get(@Req() req: AuthRequest) {
     return this.settings.snapshot(actor(req));

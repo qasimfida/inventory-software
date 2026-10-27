@@ -17,6 +17,7 @@ export const businessInboxSchema = z
           .object({
             id: z.uuid(),
             event: z.string(),
+            summary: z.string().max(500).optional(),
             resourceId: z.uuid(),
             createdAt: z.iso.datetime(),
             readAt: z.iso.datetime().nullable(),

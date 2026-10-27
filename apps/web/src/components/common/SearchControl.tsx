@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/FormControls';
 /** Local suggestions only; the owner debounces/cancels its authorized query. */
 export function SearchControl({
   label,
+  placeholder = label,
   value,
   onChange,
   suggestions: allSuggestions = [],
@@ -16,6 +17,8 @@ export function SearchControl({
   disabled = false,
 }: {
   label: string;
+  /** Short visual hint; the accessible label remains descriptive. */
+  placeholder?: string;
   value: string;
   onChange: (value: string) => void;
   suggestions?: { value: string; label: string }[];
@@ -57,7 +60,7 @@ export function SearchControl({
           value={value}
           disabled={disabled}
           maxLength={120}
-          placeholder={label}
+          placeholder={placeholder}
           onFocus={() => setOpen(true)}
           onChange={(e) => {
             onChange(e.target.value);

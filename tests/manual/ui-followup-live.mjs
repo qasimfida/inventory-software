@@ -21,7 +21,7 @@ try {
   expect(items.length).toBeGreaterThan(0);
   await expect(page.locator('.product-card')).toHaveCount(items.length);
   expect(items.some((item) => item.price === null)).toBe(true);
-  await page.screenshot({ path: 'docs/qa/ui-followup/live-pos.png', fullPage: true });
+  await page.screenshot({ path: 'artifacts/qa/ui-followup/live-pos.png', fullPage: true });
   await page.getByRole('button', { name: 'Open profile menu' }).click();
   await page.getByRole('menuitem', { name: 'Settings', exact: true }).click();
   await expect(page.getByRole('tab', { name: 'Profile', exact: true })).toHaveAttribute(
@@ -33,7 +33,7 @@ try {
   await expect(page.getByLabel('Account email')).toBeVisible();
   expect(errors).toEqual([]);
   await writeFile(
-    'docs/qa/ui-followup/live-results.json',
+    'artifacts/qa/ui-followup/live-results.json',
     JSON.stringify(
       {
         source: 'local PostgreSQL API',

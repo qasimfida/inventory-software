@@ -1,3 +1,8 @@
+import { onlineRoute } from '@inventory/api-client';
+import { OnlineStorePage } from '../storefront/OnlineStorePage';
+import { ProductPage } from '../catalog/ProductPage';
+import { productDetailId } from '@inventory/api-client';
+import { SetupChecklist } from '../reports/SetupChecklist';
 import { OperationsPanel } from '../operations/OperationsPanel';
 import { MemberEditor } from '../organization/MemberEditor';
 import { LogsPage } from '../settings/LogsPage';
@@ -21,8 +26,9 @@ import { useNavigation } from './Navigation';
 import { SettingsScreen } from './SettingsScreen';
 import { BusinessSettings } from './BusinessSettings';
 export function NativeScreens() {
-  const { path, search, navigate } = useNavigation(),
+  const { path: rawPath, search, navigate } = useNavigation(),
     { state, model, business, locations, storeId, warehouseIds, setLocked } = useWorkspace();
+  const path = onlineRoute(rawPath);
   const settings = useSyncExternalStore(settingsModel.subscribe, settingsModel.snapshot);
   const [visited, setVisited] = useState<string[]>([]);
   const destination = overviewDestination(business, settings.snapshot?.canManagePlatform ?? false);
@@ -51,7 +57,9 @@ export function NativeScreens() {
   if (path === '/dashboard' && settings.snapshot && destination !== path)
     return <LoadingState message="Opening your workspace…" />;
   const route = workspaceRoutes.find(
-    (r) => r.path === (path === '/more' ? '/settings/profile' : path),
+    (r) =>
+      r.path ===
+      (productDetailId(path) ? '/catalog' : path === '/more' ? '/settings/profile' : path),
   );
   if (
     (!route && !['/admin', '/admin/businesses'].includes(path)) ||
@@ -81,7 +89,35 @@ export function NativeScreens() {
     <>
       {['/admin', '/admin/businesses'].includes(path) && platformPage}
       {path === '/dashboard' && destination === path && (
-        <Dashboard business={business} storeId={storeId || undefined} warehouseIds={warehouseIds} />
+        <>
+          <SetupChecklist business={business} />
+          <Dashboard
+            business={business}
+            storeId={storeId || undefined}
+            warehouseIds={warehouseIds}
+          />
+        </>
+      )}
+      {productDetailId(path) && (
+        <ProductPage
+          key={path}
+          business={business}
+          locations={locations}
+          productId={productDetailId(path)!}
+        />
+      )}
+      {[
+        '/online-store',
+        '/online-store/products',
+        '/online-store/products/add',
+        '/online-store/products/:id',
+        '/online-store/settings',
+        '/online-store/settings/general',
+        '/online-store/settings/fulfillment',
+        '/online-store/settings/policies',
+        '/online-store/settings/images',
+      ].includes(path) && (
+        <OnlineStorePage business={business} locations={state.workspace.locations} path={rawPath} />
       )}
       {path === '/logs' && <LogsPage />}
       {path === '/staff' && (

@@ -32,7 +32,7 @@ try {
         accessibility.violations.map((v) => ({ id: v.id, nodes: v.nodes.map((n) => n.target) })),
       ).toEqual([]);
       await page.screenshot({
-        path: `docs/qa/overview-currency/web-${width}-${colorScheme}.png`,
+        path: `artifacts/qa/overview-currency/web-${width}-${colorScheme}.png`,
         fullPage: true,
       });
       expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
@@ -82,7 +82,7 @@ try {
 } finally {
   await browser.close();
   await writeFile(
-    'docs/qa/overview-currency/browser-results.json',
+    'artifacts/qa/overview-currency/browser-results.json',
     JSON.stringify({ results, errors }, null, 2) + '\n',
   );
 }

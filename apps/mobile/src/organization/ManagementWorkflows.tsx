@@ -1,3 +1,4 @@
+import { StorefrontPanel } from '../storefront/StorefrontPanel';
 import { Dashboard } from '../reports/Dashboard';
 import { DisclosureTrigger } from '../ui/DisclosureTrigger';
 import { useState } from 'react';
@@ -21,6 +22,7 @@ import { InventoryPanel } from '../inventory/InventoryPanel';
 import { CatalogPanel } from '../catalog/CatalogPanel';
 import { PayablePanel } from '../purchasing/PayablePanel';
 export const panels = [
+  { name: 'storefront', Component: StorefrontPanel, permissions: ['onlineStore.view'] },
   { name: 'trading', Component: TradingPanel, permissions: ['business.write'] },
   {
     name: 'accounting',
@@ -58,6 +60,7 @@ export function ManagementWorkflows({
         )
       : [];
   const labels: Record<string, string> = {
+    storefront: 'Online store',
     catalog: 'Catalog & pricing',
     inventory: 'Inventory',
     warehouse: 'Warehouse operations',

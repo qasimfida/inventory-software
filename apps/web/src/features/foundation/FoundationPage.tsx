@@ -8,13 +8,16 @@ import { WorkspaceControlsDemo } from './WorkspaceControlsDemo';
 import { ComponentsDemo } from './ComponentsDemo';
 import { ShowcaseIndex } from './ShowcaseIndex';
 import { AppearanceProvider, AppearanceControl } from '@/theme/Appearance';
-import usage from '../../../../../docs/development/common-components.md?raw';
-import webCatalog from '../../../../../docs/development/component-catalog.md?raw';
-import nativeCatalog from '../../../../../docs/development/native-component-catalog.md?raw';
+import usage from '../../../../../docs/design-system.md?raw';
 import { Page, Grid, Stack } from '@/components/common/Layout';
 import { FormDemo } from './FormDemo';
 import { StateDemo } from './StateDemo';
 import { ReferencePanel } from './ReferencePanel';
+
+const webCatalog =
+  usage.split('## Web component API reference')[1]?.split('## Native component API reference')[0] ??
+  '';
+const nativeCatalog = usage.split('## Native component API reference')[1] ?? '';
 
 export function FoundationPage() {
   return (

@@ -51,6 +51,7 @@ export function HeaderSearch() {
     <div>
       <SearchControl
         label="Search routes and records"
+        placeholder="Search"
         value={query}
         onChange={setQuery}
         suggestions={items.map((item) => ({ value: item.path, label: item.title }))}

@@ -28,6 +28,7 @@ export function catalogSeed(id: (n: number) => string, currency: string) {
       id: id(100 + i),
       name: `${names[i % names.length]} · ${['Natural', 'Slate', 'Sand', 'Forest'][Math.floor(i / names.length) % 4]} ${i + 1}`,
       sku: `HP-${String(i + 1).padStart(3, '0')}`,
+      images: [`https://images.example.com/demo/product-${i + 1}.png`],
       barcodes: [`8900000${String(i + 1).padStart(6, '0')}`],
       categoryId: categories[i % categories.length]!.id,
       description:

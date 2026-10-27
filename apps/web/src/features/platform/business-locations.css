@@ -30,7 +30,7 @@
   overflow-wrap: anywhere;
 }
 .business-location-cards p {
-  font-size: var(--font-small);
+  font-size: calc(var(--font-small) * var(--text-scale));
   color: var(--muted-foreground);
   overflow-wrap: anywhere;
 }

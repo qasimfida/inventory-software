@@ -28,6 +28,8 @@ export class NotificationsService {
       const rows = (
         await ctx.tx.query<{ position: string }>(
           `SELECT d.position::text,d.id,e.action AS event,e.resource_id AS "resourceId",
+        CASE WHEN e.action='storefront.readiness_batch' THEN
+        COALESCE(e.after_data->>'quantity','0')||' products moved to Changes required; '||COALESCE(e.after_data->>'amount','0')||' repaired. Review Online store. Reason: '||COALESCE(e.after_data->>'reasonCode','readiness_revalidated') ELSE NULL END AS summary,
         e.occurred_at AS "createdAt",d.read_at AS "readAt",d.warehouse_id AS "warehouseId"
         FROM business_deliveries d JOIN organization_audit e ON e.id=d.event_id
         WHERE ${access} AND d.state='delivered' AND ($6::bigint IS NULL OR d.position<$6)
@@ -40,7 +42,9 @@ export class NotificationsService {
       return {
         notifications: rows.map(({ position, ...row }) => {
           void position;
-          return row;
+          return Object.fromEntries(
+            Object.entries(row).filter(([key, value]) => key !== 'summary' || value !== null),
+          );
         }),
         nextCursor: rows.length === 50 ? rows.at(-1)!.position : null,
       };

@@ -29,7 +29,7 @@
   border-radius: var(--radius);
   background: var(--foreground);
   color: var(--background);
-  font-size: var(--font-small);
+  font-size: calc(var(--font-small) * var(--text-scale));
   box-shadow: var(--elevation-low);
 }
 .overflow-tabs {
@@ -132,7 +132,7 @@
 .workspace-trigger,
 .sidebar-profile .profile-trigger {
   padding: var(--space-small);
-  font-size: var(--font-control);
+  font-size: calc(var(--font-control) * var(--text-scale));
 }
 .profile-identity {
   width: 100%;
@@ -142,12 +142,12 @@
 .workspace-copy,
 .profile-copy {
   font-weight: var(--weight-medium);
-  font-size: var(--font-control);
+  font-size: calc(var(--font-control) * var(--text-scale));
   line-height: var(--line-body);
 }
 .workspace-copy small,
 .profile-role {
-  font-size: var(--font-small);
+  font-size: calc(var(--font-small) * var(--text-scale));
   font-weight: var(--weight-regular);
   color: var(--muted-foreground);
 }
@@ -211,4 +211,43 @@
   width: max-content;
   min-width: 0;
   gap: var(--space-unit);
+}
+
+/* Workspace and account identities use the same sizing and alignment. */
+.workspace-trigger .profile-identity {
+  flex: 1;
+}
+.workspace-trigger .profile-copy {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+.workspace-trigger .profile-copy > span {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.workspace-trigger .profile-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.online-result-notice {
+  position: fixed;
+  z-index: 60;
+  bottom: var(--space-large);
+  inset-inline-end: var(--space-medium);
+  max-width: min(var(--profile-menu-width), calc(100vw - var(--space-large)));
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  padding: var(--space-medium);
+  background: var(--card);
+  color: var(--foreground);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--surface-radius);
+  box-shadow: var(--elevation-low);
 }

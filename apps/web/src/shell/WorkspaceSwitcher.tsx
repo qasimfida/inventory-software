@@ -1,3 +1,4 @@
+import { ProfileIdentity } from './ProfileIdentity';
 import { useState, useSyncExternalStore } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Boxes, ChevronsUpDown, Building2, ShieldCheck, Check } from 'lucide-react';
@@ -33,6 +34,7 @@ export function WorkspaceSwitcher({
     : selection.length === 1
       ? locations.find((l) => l.id === selection[0])?.name
       : `${selection.length} locations selected`;
+  const identityRole = `${business?.role.replaceAll('_', ' ') ?? 'Account'} · ${summary}`;
   return (
     <Popover
       open={open}
@@ -46,31 +48,25 @@ export function WorkspaceSwitcher({
       <PopoverTrigger asChild>
         <Button
           variant="ghost"
-          className="workspace-trigger"
+          className="workspace-trigger profile-trigger"
           disabled={!canSwitch}
           aria-label="Switch workspace"
           title="Switch workspace"
         >
-          <span className="workspace-logo">
-            {settings.businessId === business?.id && settings.business?.values.company?.logo ? (
-              <img
-                src={settings.business.values.company.logo}
-                alt=""
-                className="size-full object-contain"
-              />
-            ) : (
-              <Boxes />
-            )}
-          </span>
-          {!collapsed && (
-            <span className="workspace-copy">
-              <span>{business?.name ?? 'Inventory'}</span>
-              <small>
-                {business?.role.replaceAll('_', ' ') ?? 'Account'} · {summary}
-              </small>
-            </span>
+          <ProfileIdentity
+            email=""
+            displayName={business?.name ?? 'Inventory'}
+            role={identityRole}
+            compact={collapsed}
+            logo={
+              settings.businessId === business?.id
+                ? (settings.business?.values.company?.logo ?? '')
+                : ''
+            }
+          />
+          {!collapsed && canSwitch && (
+            <ChevronsUpDown className="profile-chevron size-5" aria-hidden="true" />
           )}
-          {!collapsed && <ChevronsUpDown className="size-5" />}
         </Button>
       </PopoverTrigger>
       <PopoverContent side="right" align="start" className="workspace-menu space-y-3">

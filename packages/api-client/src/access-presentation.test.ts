@@ -10,6 +10,10 @@ it('groups only currently assignable permissions and preserves scope exclusions'
   expect(scoped).not.toContain('business.write');
   expect(scoped).not.toContain('users.read');
   expect(scoped).toContain('sales.refund');
+  expect(business).toContain('onlineStore.view');
+  expect(business).toContain('onlineStore.manage');
+  expect(scoped).toContain('onlineStore.view');
+  expect(scoped).not.toContain('onlineStore.manage');
 });
 it('describes roles using the canonical permissions without inventing grants', () => {
   for (const role of ['owner', 'manager', 'cashier', 'viewer'] as const)

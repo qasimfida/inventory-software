@@ -43,7 +43,17 @@ const AccountingPanel = lazy(() =>
 const IntegrationsPanel = lazy(() =>
   import('../integrations/IntegrationsPanel').then((m) => ({ default: m.IntegrationsPanel })),
 );
+const StorefrontPanel = lazy(() =>
+  import('../storefront/StorefrontPanel').then((m) => ({ default: m.StorefrontPanel })),
+);
 export const panels = [
+  {
+    name: 'storefront',
+    label: 'Online store',
+    description: 'Published catalog settings and readiness.',
+    Component: StorefrontPanel,
+    permissions: ['onlineStore.view'],
+  },
   {
     name: 'trading',
     label: 'Business trading',

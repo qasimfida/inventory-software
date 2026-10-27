@@ -2,7 +2,7 @@ import { receiptFinance } from './receipt-finance.js';
 import { NotFoundException } from '@nestjs/common';
 import type { Sale } from '@inventory/contracts';
 import type { OrganizationContext } from '../organization/organization.scope.js';
-export const saleProjection = `id,store_id AS "storeId",warehouse_id AS "warehouseId",customer_id AS "customerId",currency,net_minor::text AS "netMinor",tax_minor::text AS "taxMinor",total_minor::text AS "totalMinor",cash_received_minor::text AS "cashReceivedMinor",change_minor::text AS "changeMinor",state,actor_id AS "actorId",created_at AS "createdAt"`;
+export const saleProjection = `receipt_footer AS "receiptFooter",id,store_id AS "storeId",warehouse_id AS "warehouseId",customer_id AS "customerId",currency,net_minor::text AS "netMinor",tax_minor::text AS "taxMinor",total_minor::text AS "totalMinor",cash_received_minor::text AS "cashReceivedMinor",change_minor::text AS "changeMinor",state,actor_id AS "actorId",created_at AS "createdAt"`;
 export async function getSale(ctx: OrganizationContext, id: string) {
   const row = (
     await ctx.tx.query<Sale & { createdAt: Date }>(

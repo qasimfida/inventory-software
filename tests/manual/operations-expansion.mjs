@@ -2,7 +2,7 @@
 import { chromium } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { developmentPassword } from '../../apps/api/dist/development/fixtures.js';
-const folder = 'docs/qa/operations-expansion';
+const folder = 'artifacts/qa/operations-expansion';
 mkdirSync(folder, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome' }),
   context = await browser.newContext({ viewport: { width: 1440, height: 1000 } }),

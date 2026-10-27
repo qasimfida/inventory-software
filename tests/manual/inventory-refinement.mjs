@@ -39,7 +39,7 @@ try {
       await overview.getByRole('button', { name: 'Clear and close search' }).click();
       await expect(overview.locator('tbody tr')).toHaveCount(25);
       await page.screenshot({
-        path: `docs/qa/inventory-refinement/web-${width}-${colorScheme}.png`,
+        path: `artifacts/qa/inventory-refinement/web-${width}-${colorScheme}.png`,
         fullPage: true,
       });
       await page.locator('.app-header').getByRole('button', { name: 'Open profile menu' }).click();
@@ -94,7 +94,7 @@ try {
 } finally {
   await browser.close();
   await writeFile(
-    'docs/qa/inventory-refinement/browser-results.json',
+    'artifacts/qa/inventory-refinement/browser-results.json',
     JSON.stringify({ results, errors }, null, 2) + '\n',
   );
 }

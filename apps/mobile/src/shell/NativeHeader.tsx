@@ -1,3 +1,4 @@
+import { productDetailId } from '@inventory/api-client';
 import { View } from 'react-native';
 import { hasPermission } from '@inventory/contracts';
 import { overviewDestination, workspaceRoutes } from '@inventory/api-client';
@@ -23,19 +24,22 @@ export function NativeHeader() {
       }}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: theme.spacing.small }}>
-        {path !== overviewDestination(business, path === '/admin') && (
-          <IconAction disabled={locked} label="Go back" icon="←" onPress={back} />
-        )}
+        {path.split('/').filter(Boolean).length > 1 &&
+          path !== overviewDestination(business, path === '/admin') && (
+            <IconAction disabled={locked} label="Go back" icon="←" onPress={back} />
+          )}
         <Text
           accessibilityRole="header"
           style={{ flex: 1, fontSize: metrics.heading, fontWeight: '600' }}
         >
           {workspaceRoutes.find((r) => r.path === path)?.title ??
-            (path === '/more'
-              ? 'More'
-              : path === '/admin/businesses'
-                ? 'Registered businesses'
-                : 'Platform overview')}
+            (productDetailId(path)
+              ? 'Product details'
+              : path === '/more'
+                ? 'More'
+                : path === '/admin/businesses'
+                  ? 'Registered businesses'
+                  : 'Platform overview')}
         </Text>
       </View>
       {business && hasPermission(business, 'locations.read') && (

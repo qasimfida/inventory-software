@@ -33,7 +33,7 @@ try {
   await page.getByRole('button', { name: 'Open profile menu' }).click();
   await page.getByRole('menuitem', { name: 'Sign out', exact: true }).click();
   await writeFile(
-    'docs/qa/shell-business-directory/create-result.json',
+    'artifacts/qa/shell-business-directory/create-result.json',
     JSON.stringify(
       {
         api: 'isolated retained development database on port 3191',

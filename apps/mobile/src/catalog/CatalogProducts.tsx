@@ -1,3 +1,7 @@
+import { OnlineCollectionFeedback } from '../storefront/OnlineCollectionFeedback';
+import { Checkbox } from '../ui/Checkbox';
+import { useOnlineCollection } from '../storefront/useOnlineCollection';
+import { useNavigation } from '../shell/Navigation';
 import { EmptyState } from '../ui/AsyncState';
 import { posPriceLabel } from '@inventory/api-client';
 import { useState } from 'react';
@@ -25,13 +29,31 @@ export function CatalogProducts({
   onEdit: (product: Product) => void;
   onPricing: (id: string) => void;
 }) {
+  const { navigate } = useNavigation();
   const theme = useTheme(),
     { width, fontScale } = useWindowDimensions();
   const columns = grid && width >= 600 && fontScale <= 1.3;
+  const channels = useOnlineCollection(products.map((p) => p.id));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selected = products.find((p) => p.id === selectedId);
   return (
     <>
+      <OnlineCollectionFeedback channels={channels} />
+      {channels.manage && channels.selected.length > 0 && (
+        <>
+          <Text>{channels.selected.length} selected</Text>
+          <Action
+            disabled={channels.busy}
+            label="Add to online store"
+            onPress={() => void channels.add(channels.selected)}
+          />
+          <Action
+            variant="ghost"
+            label="Clear selection"
+            onPress={() => channels.setSelected([])}
+          />
+        </>
+      )}
       {!products.length && (
         <EmptyState
           message={filtered ? 'No matching products' : 'No products yet'}
@@ -70,6 +92,23 @@ export function CatalogProducts({
               backgroundColor: grid || index % 2 === 0 ? theme.colors.card : theme.tokens.muted,
             }}
           >
+            {channels.manage && (
+              <>
+                <Checkbox
+                  label={`Select ${p.name} for online store`}
+                  value={channels.selected.includes(p.id)}
+                  onChange={() => channels.toggle(p.id)}
+                />
+                <Action
+                  disabled={channels.busy}
+                  label="Add to online store"
+                  onPress={() => void channels.add([p.id])}
+                />
+              </>
+            )}
+            {channels.items.some((l) => l.productId === p.id && l.status === 'active') && (
+              <StatusBadge label="Online" tone="success" />
+            )}
             {grid && (
               <View
                 style={{
@@ -114,6 +153,15 @@ export function CatalogProducts({
         ))}
       </View>
       <SidePanel title="Product details" open={!!selected} onClose={() => setSelectedId(null)}>
+        {selected && (
+          <Action
+            label="Open full product details"
+            onPress={() => {
+              setSelectedId(null);
+              navigate(`/catalog/${selected.id}`);
+            }}
+          />
+        )}
         {selected && (
           <>
             <Text accessibilityRole="header">{selected.name}</Text>

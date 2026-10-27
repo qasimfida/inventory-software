@@ -88,7 +88,7 @@ try {
   await expect(page.getByRole('dialog', { name: 'Transfer details', exact: true })).toContainText(
     'completed',
   );
-  await page.screenshot({ path: 'docs/qa/management-ux/transfer-complete.png' });
+  await page.screenshot({ path: 'artifacts/qa/management-ux/transfer-complete.png' });
   result.checks.push('Real transfer draft → approve → dispatch → receive using detail drawer');
   await page.getByRole('button', { name: 'Close Transfer details', exact: true }).click();
   for (const id of [ids.warehouse, destination.id])
@@ -113,10 +113,10 @@ try {
   await expect(
     page.getByRole('button', { name: 'Print / reprint receipt', exact: true }),
   ).toBeVisible();
-  await page.screenshot({ path: 'docs/qa/management-ux/receipt-details.png' });
+  await page.screenshot({ path: 'artifacts/qa/management-ux/receipt-details.png' });
   result.checks.push('Real sale history → receipt detail with print and authorized corrections');
   expect(result.errors).toEqual([]);
 } finally {
   await browser.close();
-  await writeFile('docs/qa/management-ux/records.json', JSON.stringify(result, null, 2));
+  await writeFile('artifacts/qa/management-ux/records.json', JSON.stringify(result, null, 2));
 }

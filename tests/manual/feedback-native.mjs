@@ -32,7 +32,7 @@ try {
     [
       '-c',
       `exec(open('tests/manual/android-ui.py').read())
-OUT='docs/qa/feedback-sync'
+OUT='artifacts/qa/feedback-sync'
 run('shell','input','keyevent','3')
 run('shell','am','start','-a','android.intent.action.VIEW','-d','exp://127.0.0.1:8090')
 time.sleep(4)
@@ -53,7 +53,7 @@ print('Android enhanced empty search title and description verified')
     ],
     { encoding: 'utf8' },
   );
-  await writeFile('docs/qa/feedback-sync/android.txt', output);
+  await writeFile('artifacts/qa/feedback-sync/android.txt', output);
 } finally {
   const latest = (await api('/settings')).preferences;
   await api('/settings', 'PUT', {

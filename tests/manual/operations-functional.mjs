@@ -8,7 +8,7 @@ page.setDefaultTimeout(15000);
 page.setDefaultNavigationTimeout(15000);
 page.on('pageerror', (e) => errors.push(e.message));
 const sku = `QA-OPS-${Date.now()}`,
-  out = 'docs/qa/operations-expansion';
+  out = 'artifacts/qa/operations-expansion';
 try {
   await page.goto('http://127.0.0.1:5173');
   await page.getByLabel('Account email', { exact: true }).fill('owner@inv.com');
