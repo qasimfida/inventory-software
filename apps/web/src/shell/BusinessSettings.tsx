@@ -1,3 +1,4 @@
+import { CustomerRetention } from '../features/customers/CustomerRetention';
 import { WorkspaceSwitcher } from './WorkspaceSwitcher';
 import { AddBusiness } from '@/features/organization/AddBusiness';
 import { useNavigate } from 'react-router-dom';
@@ -72,6 +73,7 @@ export function BusinessSettings({ onboarding = false }: { onboarding?: boolean 
             busy={state.busy}
           />
           <BusinessPolicy business={business} />
+          <CustomerRetention business={business} />
         </>
       )}
     </section>

@@ -1,67 +1,6 @@
 @layer components {
-  .data-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    text-align: left;
-    font-size: calc(var(--font-label) * var(--text-scale));
-    line-height: var(--line-body);
-  }
-  .data-table caption {
-    padding: var(--table-cell-padding);
-    text-align: left;
-    color: var(--muted-foreground);
-  }
-  .data-table th,
-  .data-table td {
-    height: var(--table-row-height);
-    padding: var(--space-small) var(--table-cell-padding);
-    vertical-align: middle;
-    border-bottom: 0;
-    overflow-wrap: anywhere;
-  }
-  .data-table th {
-    font-weight: var(--weight-medium);
-  }
   [data-density='compact'] .data-table :is(th, td) {
     padding-block: calc(var(--space-small) / 2);
-  }
-  .data-table thead th {
-    overflow-wrap: normal;
-    white-space: nowrap;
-    height: var(--table-header-height);
-    background: transparent;
-    color: var(--muted-foreground);
-    font-weight: var(--weight-strong);
-  }
-  .data-table tbody tr:nth-child(odd) {
-    background: var(--card);
-  }
-  .data-table tbody tr:nth-child(even) {
-    background: var(--muted);
-  }
-  .data-table tbody tr:last-child > * {
-    border-bottom: 0;
-  }
-  .data-table tbody tr:hover {
-    background: var(--table-hover);
-  }
-  .data-table tbody tr[data-selected='true'],
-  .data-table tbody tr[aria-selected='true'] {
-    background: var(--table-selected);
-    color: var(--table-selected-foreground);
-  }
-  .data-table [data-numeric] {
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-    overflow-wrap: normal;
-  }
-  .data-table th[aria-sort='ascending']::after {
-    content: ' ↑';
-  }
-  .data-table th[aria-sort='descending']::after {
-    content: ' ↓';
   }
 }
 

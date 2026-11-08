@@ -1,8 +1,11 @@
+import { AccountingSummary, AccountingPending } from './AccountingSummary';
+import { JournalDetails } from './JournalDetails';
+import { RecordCollection } from '@/components/common/RecordCollection';
+import { FormSheet } from '@/components/common/FormSheet';
 import { Pagination } from '@/components/common/Pagination';
 import { usePageCollection } from '@/components/common/usePageCollection';
 import { RefreshCw } from 'lucide-react';
-import { LoadingState, EmptyState } from '@/components/common/AsyncState';
-import { RecordDetails } from '@/components/common/RecordDetails';
+import { LoadingState, ErrorState } from '@/components/common/AsyncState';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import {
@@ -13,9 +16,10 @@ import {
 } from '@inventory/api-client';
 import type { Business } from '@inventory/contracts';
 import { authClient } from '@/platform/auth-client';
-import { Button } from '@/components/ui/Button';
+import { IconButton } from '@/components/common/IconButton';
 import { CommandForm } from '@/components/common/CommandForm';
 export function AccountingPanel({ business }: { business: Business }) {
+  const [selectedRecord, setSelectedRecord] = useState('');
   const [offset, setOffset] = useState(0);
   const client = useMemo(
     () =>
@@ -64,55 +68,49 @@ export function AccountingPanel({ business }: { business: Business }) {
         </p>
       )}
       {state.busy && <LoadingState message="Loading…" />}
-      {state.error && <p role="alert">{state.error}</p>}
-      <Button
+      {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
+      <IconButton
+        label="Refresh accounting"
+        icon={RefreshCw}
         onClick={() => void model.run()}
         disabled={state.busy || !allowed}
-        variant="ghost"
-        size="icon"
-        aria-label="Refresh accounting"
-        title="Refresh"
-      >
-        <RefreshCw aria-hidden="true" />
-      </Button>
+      />
       {state.data && (
         <>
-          {!state.data.journals.length && <EmptyState message="No posted journals on this page." />}
           <p>Trial balance — all posted entries, all dates; currencies remain separate.</p>
-          {state.data.balances.map((b) => (
-            <RecordDetails
-              key={`${b.currency}:${b.account}`}
-              label="Trial balance account"
-              items={[
-                { label: 'Account', value: b.account },
-                { label: 'Currency', value: b.currency },
-                { label: 'Debit (minor units)', value: b.debit },
-                { label: 'Credit (minor units)', value: b.credit },
-              ]}
-            />
-          ))}
-          {state.data.periods.map((p) => (
-            <p key={p.id}>
-              Period {p.from} — {p.to} · {p.state}
-            </p>
-          ))}
-          {state.data.journals.map((j) => (
-            <div key={j.id}>
-              <p>
-                {j.date} · {j.id} · {j.sourceKind} {j.sourceId} · {j.currency} · {j.reason}{' '}
-                {j.reversalId && `reverses ${j.reversalId}`}
-              </p>
-              {j.lines.map((l, i) => (
-                <p key={i}>
-                  {l.account}: debit {l.debit}, credit {l.credit}
-                </p>
+          <AccountingSummary data={state.data} />
+          <h3>Posted journals</h3>
+          <RecordCollection
+            label="journals"
+            onOpen={setSelectedRecord}
+            items={state.data.journals.map((j) => ({
+              id: j.id,
+              title: j.reason,
+              subtitle: j.date,
+              detail: `${j.currency} · ${j.sourceKind}`,
+              status: j.reversalId ? 'Reversal' : 'Posted',
+              tone: 'neutral',
+            }))}
+          />
+          <FormSheet
+            title="Journal details"
+            description="Posted journal evidence. A reversal does not undo the original transaction."
+            open={!!selectedRecord}
+            onOpenChange={(open) => {
+              if (!open) setSelectedRecord('');
+            }}
+          >
+            {state.data.journals
+              .filter((item) => item.id === selectedRecord)
+              .map((j) => (
+                <JournalDetails key={j.id} journal={j} timeZone={business.timeZone} />
               ))}
-            </div>
-          ))}
+          </FormSheet>
           <p>
             Unposted source records on this page: {state.data.pending.length}. A zero count on a
             later page does not prove reconciliation.
           </p>
+          <AccountingPending pending={state.data.pending} />
           <fieldset disabled={state.busy} className="min-w-0 space-y-3">
             {accountingForms(client, state.data, business).map((f) => (
               <CommandForm

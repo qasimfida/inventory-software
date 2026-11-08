@@ -1,6 +1,11 @@
 import { expect, it } from 'vitest';
 import type { Business } from '@inventory/contracts';
-import { canSwitchWorkspace, overviewDestination, availableRoutes } from './workspace-navigation';
+import {
+  workspaceRoutes,
+  canSwitchWorkspace,
+  overviewDestination,
+  availableRoutes,
+} from './workspace-navigation';
 const business = (role: Business['role'], permissions?: Business['permissions']): Business => ({
   id: '00000000-0000-4000-8000-000000000001',
   name: 'Example',
@@ -64,12 +69,68 @@ it('hides management settings without the corresponding write permission', () =>
 
 it('places staff costs and account access outside settings and hides them from cashiers', () => {
   const owner = availableRoutes(business('owner'));
-  expect(owner.find((r) => r.path === '/staff')?.group).toBe('Administration');
-  expect(owner.find((r) => r.path === '/team')?.group).toBe('Administration');
+  expect(owner.find((r) => r.path === '/staff')?.group).toBe('Finance');
+  expect(owner.find((r) => r.path === '/team')?.group).toBe('Team');
   expect(
     owner.filter((r) => r.group === 'Settings').some((r) => /staff|permissions/i.test(r.title)),
   ).toBe(false);
   expect(
     availableRoutes(business('cashier')).some((r) => ['/staff', '/team'].includes(r.path)),
   ).toBe(false);
+});
+
+it('shows category management only to business-wide catalog writers', () => {
+  expect(availableRoutes(business('owner')).some((r) => r.path === '/categories')).toBe(true);
+  expect(availableRoutes(business('cashier')).some((r) => r.path === '/categories')).toBe(false);
+  const manager = business('manager');
+  expect(
+    availableRoutes({ ...manager, scope: { storeId: manager.id, warehouseId: null } }).some(
+      (r) => r.path === '/categories',
+    ),
+  ).toBe(false);
+});
+
+it('combines inventory navigation without requiring both catalog and stock access', () => {
+  const paths = (permissions: Business['permissions']) =>
+    availableRoutes(business('custom', permissions)).map((r) => r.path);
+  expect(paths(['products.read'])).toContain('/inventory');
+  expect(paths(['stock.read'])).toContain('/inventory');
+  expect(paths(['business.read'])).not.toContain('/inventory');
+  expect(availableRoutes(business('owner')).map((r) => r.path)).not.toContain('/catalog');
+});
+
+it('merges storage navigation while preserving the hierarchy route and stock-count workspace', () => {
+  const routes = availableRoutes(business('owner'));
+  expect(
+    routes.filter((route) => route.panel === 'storage' && !route.hidden).map((r) => r.path),
+  ).toEqual(['/storage']);
+  expect(workspaceRoutes.find((route) => route.path === '/warehouse-view')).toMatchObject({
+    panel: 'storage',
+    hidden: true,
+  });
+  expect(routes.find((route) => route.path === '/warehouse')).toMatchObject({ panel: 'warehouse' });
+});
+
+it('separates management and compensation from personal preferences without changing URLs', () => {
+  const routes = availableRoutes(business('owner'));
+  for (const path of [
+    '/settings/business',
+    '/settings/company',
+    '/settings/locations',
+    '/settings/security',
+    '/settings/audit',
+  ]) {
+    expect(routes.find((r) => r.path === path)?.group).not.toBe('Settings');
+  }
+  expect(routes.filter((r) => r.path === '/salaries')).toHaveLength(1);
+  for (const role of ['manager', 'cashier', 'viewer'] as const)
+    expect(availableRoutes(business(role)).some((r) => r.path === '/salaries')).toBe(false);
+  expect(
+    availableRoutes({
+      ...business('owner'),
+      scope: { storeId: '00000000-0000-4000-8000-000000000002', warehouseId: null },
+    }).some((r) => r.path === '/salaries'),
+  ).toBe(false);
+  expect(routes.some((r) => r.path === '/logs')).toBe(false);
+  expect(workspaceRoutes.some((r) => r.path === '/logs')).toBe(true);
 });

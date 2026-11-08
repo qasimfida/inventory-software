@@ -1,3 +1,6 @@
+import { EmptyState } from '../ui/AsyncState';
+import { ChartPresentation } from '../ui/ChartPresentation';
+import { RecordTable } from '../ui/RecordTable';
 import { View } from 'react-native';
 import type { PlatformOverview } from '@inventory/contracts';
 import { dashboardHeights } from '@inventory/api-client';
@@ -11,30 +14,46 @@ export function RegistrationTrend({ rows }: { rows: PlatformOverview['registrati
     <Surface>
       <Text accessibilityRole="header">Business registrations</Text>
       <Text tone="muted">Last 30 days · UTC</Text>
-      <View
-        accessible
-        accessibilityLabel={`Daily registrations. ${rows.map((row) => `${row.date}: ${row.count}`).join('; ')}`}
-        style={{
-          height: theme.spacing.large * 6,
-          flexDirection: 'row',
-          alignItems: 'flex-end',
-          gap: theme.spacing.small / 2,
-        }}
-      >
-        {rows.map((r, i) => (
-          <View
-            key={r.date}
-            style={{
-              height: `${heights[i]}%`,
-              flex: 1,
-              backgroundColor: theme.colors.primary,
-              borderTopLeftRadius: theme.radius,
-              borderTopRightRadius: theme.radius,
-            }}
+      <ChartPresentation
+        label="Trend chart"
+        values={
+          <RecordTable
+            label="Daily registrations"
+            columns={['Date (UTC)', 'Registrations']}
+            rows={rows.map((row) => ({ id: row.date, cells: [row.date, String(row.count)] }))}
           />
-        ))}
-      </View>
-      {!rows.length && <Text>No registration history available.</Text>}
+        }
+      >
+        <View
+          accessible
+          accessibilityLabel={`Daily registrations. ${rows.map((row) => `${row.date}: ${row.count}`).join('; ')}`}
+          style={{
+            height: theme.spacing.large * (theme.preferences.charts === 'charts' ? 9 : 6),
+            flexDirection: 'row',
+            alignItems: 'flex-end',
+            gap: theme.spacing.small / 2,
+          }}
+        >
+          {rows.map((r, i) => (
+            <View
+              key={r.date}
+              style={{
+                height: `${heights[i]}%`,
+                flex: 1,
+                backgroundColor: theme.tokens['chart-1'],
+                borderTopLeftRadius: theme.radius,
+                borderTopRightRadius: theme.radius,
+              }}
+            />
+          ))}
+        </View>
+      </ChartPresentation>
+      {!rows.length && (
+        <EmptyState
+          message="No registration history"
+          description="Daily business registration counts will appear here when available."
+        />
+      )}
     </Surface>
   );
 }

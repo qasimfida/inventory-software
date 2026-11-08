@@ -137,7 +137,7 @@ it('does not publish a stale quote when an invalidation arrives during calculati
   resolve(quote);
   await calculating;
   expect(model.snapshot()).toMatchObject({ quote: null, busy: false });
-  expect(model.snapshot().error).toContain('changed during calculation');
+  expect(model.snapshot().error).toContain('may have changed');
 });
 
 it('increments repeated product additions and requotes the combined quantity', async () => {
@@ -157,4 +157,48 @@ it('increments repeated product additions and requotes the combined quantity', a
   expect(transport.mock.calls.at(-1)?.[2]).toMatchObject({
     lines: [{ variantId: id, quantity: '3' }],
   });
+});
+
+it('keeps cart controls available during repricing and ignores older quantities', async () => {
+  const resolves: ((value: SaleQuote) => void)[] = [];
+  const transport = vi.fn<OrganizationTransport>(
+    () => new Promise<SaleQuote>((resolve) => resolves.push(resolve)),
+  );
+  const model = new PosModel(
+    createSalesClient(transport, () => id, id),
+    id,
+  );
+  model.add(item);
+  const first = model.preview();
+  expect(model.snapshot()).toMatchObject({ busy: false, quoting: true });
+  model.edit(0, { quantity: '2' });
+  const second = model.preview();
+  model.add(item);
+  const third = model.preview();
+  expect(model.snapshot().lines[0]?.quantity).toBe('3');
+  resolves[1]!({ ...quote, totalMinor: '200' });
+  await second;
+  resolves[0]!(quote);
+  await first;
+  expect(model.snapshot().quote).toBeNull();
+  expect(model.snapshot().quoting).toBe(true);
+  resolves[2]!({ ...quote, totalMinor: '300' });
+  await third;
+  expect(model.snapshot()).toMatchObject({
+    busy: false,
+    quoting: false,
+    quote: { totalMinor: '300' },
+  });
+  expect(transport.mock.calls.at(-1)?.[2]).toMatchObject({ lines: [{ quantity: '3' }] });
+});
+it('rejects sold-out additions before changing cart lines or requesting a quote', () => {
+  const request = vi.fn();
+  const model = new PosModel(
+    createSalesClient(request, () => id, id),
+    id,
+  );
+  model.add({ ...item, available: '0' });
+  expect(model.snapshot().lines).toEqual([]);
+  expect(model.snapshot().error).toContain('sold out');
+  expect(request).not.toHaveBeenCalled();
 });

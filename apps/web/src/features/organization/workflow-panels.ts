@@ -1,4 +1,7 @@
 import { lazy } from 'react';
+const CategoryPage = lazy(() =>
+  import('../catalog/CategoryPage').then((m) => ({ default: m.CategoryPage })),
+);
 import type { Permission } from '@inventory/contracts';
 const WarehousePanel = lazy(() =>
   import('../warehouse/WarehousePanel').then((m) => ({ default: m.WarehousePanel })),
@@ -15,11 +18,8 @@ const StoragePanel = lazy(() =>
 const PurchasingPanel = lazy(() =>
   import('../purchasing/PurchasingPanel').then((m) => ({ default: m.PurchasingPanel })),
 );
-const InventoryPanel = lazy(() =>
-  import('../inventory/InventoryPanel').then((m) => ({ default: m.InventoryPanel })),
-);
-const CatalogPanel = lazy(() =>
-  import('../catalog/CatalogPanel').then((m) => ({ default: m.CatalogPanel })),
+const InventoryWorkspace = lazy(() =>
+  import('../inventory/InventoryWorkspace').then((m) => ({ default: m.InventoryWorkspace })),
 );
 const PayablePanel = lazy(() =>
   import('../purchasing/PayablePanel').then((m) => ({ default: m.PayablePanel })),
@@ -30,9 +30,6 @@ const ReportsPanel = lazy(() =>
 );
 const NotificationsPanel = lazy(() =>
   import('../notifications/NotificationsPanel').then((m) => ({ default: m.NotificationsPanel })),
-);
-const WarehouseViewPanel = lazy(() =>
-  import('../visualization/WarehouseViewPanel').then((m) => ({ default: m.WarehouseViewPanel })),
 );
 const TradingPanel = lazy(() =>
   import('../trading/TradingPanel').then((m) => ({ default: m.TradingPanel })),
@@ -47,6 +44,13 @@ const StorefrontPanel = lazy(() =>
   import('../storefront/StorefrontPanel').then((m) => ({ default: m.StorefrontPanel })),
 );
 export const panels = [
+  {
+    name: 'categories',
+    label: 'Categories',
+    description: 'Product category management.',
+    Component: CategoryPage,
+    permissions: ['products.read', 'products.write'],
+  },
   {
     name: 'storefront',
     label: 'Online store',
@@ -90,13 +94,6 @@ export const panels = [
     permissions: ['business.read'],
   },
   {
-    name: 'warehouse-view',
-    label: 'Warehouse hierarchy',
-    description: 'Explore real storage locations and their stock.',
-    Component: WarehouseViewPanel,
-    permissions: ['stock.read'],
-  },
-  {
     name: 'customers',
     label: 'Customers',
     description: 'Customer records, credit limits and outstanding balances.',
@@ -105,9 +102,9 @@ export const panels = [
   },
   {
     name: 'catalog',
-    label: 'Catalog & pricing',
+    label: 'Inventory',
     description: 'Products, categories, barcodes and selling prices.',
-    Component: CatalogPanel,
+    Component: InventoryWorkspace,
     permissions: ['products.read'],
   },
   {
@@ -140,7 +137,7 @@ export const panels = [
   },
   {
     name: 'storage',
-    label: 'Storage locations',
+    label: 'Warehouse & storage',
     description: 'Organize storage and locate stock within warehouses.',
     Component: StoragePanel,
     permissions: ['stock.read'],
@@ -149,13 +146,13 @@ export const panels = [
     name: 'inventory',
     label: 'Inventory',
     description: 'Stock balances, adjustments and movement history.',
-    Component: InventoryPanel,
+    Component: InventoryWorkspace,
     permissions: ['stock.read'],
   },
 ] satisfies {
   name: string;
   label: string;
   description: string;
-  Component: typeof CatalogPanel;
+  Component: typeof InventoryWorkspace;
   permissions: Permission[];
 }[];

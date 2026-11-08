@@ -1,19 +1,15 @@
 import { useNavigation } from '../shell/Navigation';
 import { useEffect, useMemo, useSyncExternalStore } from 'react';
 import { View } from 'react-native';
-import {
-  createSetupClient,
-  cancellableResource,
-  setupSteps,
-  dismissSetup,
-} from '@inventory/api-client';
+import { createSetupClient, cancellableResource, setupSteps } from '@inventory/api-client';
 import { hasPermission } from '@inventory/contracts';
 import type { Business } from '@inventory/contracts';
 import { authClient } from '../auth/client';
 import { Text } from '../ui/Themed';
+import { Surface } from '../ui/Surface';
 import { Action } from '../ui/Controls';
 import { LoadingState } from '../ui/AsyncState';
-import { SetupCard } from '../ui/SetupCard';
+
 export function SetupChecklist({ business }: { business: Business }) {
   if (!hasPermission(business, 'business.write') || business.scope?.storeId) return null;
   return <Checklist business={business} />;
@@ -45,24 +41,23 @@ function Checklist({ business }: { business: Business }) {
       </View>
     );
   if (!state.data) return <LoadingState message="Checking business setup…" />;
-  if (state.data.dismissed) return null;
   return (
-    <SetupCard
-      navigate={navigate}
-      title="Business setup"
-      steps={setupSteps.map((step) => ({
-        id: step.key,
-        title: step.label,
-        path: step.path,
-        done: state.data![step.key],
-        allowed: hasPermission(business, step.permission),
-      }))}
-      onDismiss={() =>
-        void dismissSetup(authClient.organizationRequest, business.id)
-          .then(() => resource.model.run())
-          .catch(() => resource.model.run())
-      }
-      busy={state.busy}
-    />
+    <Surface>
+      <Text accessibilityRole="header">Business setup</Text>
+      <Text>
+        {setupSteps.filter((step) => state.data?.[step.key]).length} of {setupSteps.length} complete
+      </Text>
+      <Text tone="muted">Manage the company, locations and catalog used by this workspace.</Text>
+      {setupSteps
+        .filter((step) => hasPermission(business, step.permission))
+        .map((step) => (
+          <Action
+            key={step.key}
+            variant="link"
+            label={`${step.label} · ${state.data?.[step.key] ? 'Complete' : 'Needs attention'}`}
+            onPress={() => navigate(step.path)}
+          />
+        ))}
+    </Surface>
   );
 }

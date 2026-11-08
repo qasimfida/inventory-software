@@ -1,3 +1,4 @@
+import { PricingConflict } from '../http/pricing-conflict.js';
 import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import type { OrganizationContext } from '../organization/organization.scope.js';
@@ -33,8 +34,7 @@ export class ShiftCore {
         [ctx.business.id, ctx.actor.accountId, warehouseId, currency],
       )
     ).rows[0];
-    if (!row)
-      throw new ConflictException('Open a cash shift for this warehouse and currency first.');
+    if (!row) throw new PricingConflict('CASH_SHIFT_REQUIRED');
     return row.id;
   }
   async entry(

@@ -1,3 +1,4 @@
+import { RecordTable } from '../ui/RecordTable';
 import { onlineError } from '@inventory/api-client';
 import { useEffect, useState } from 'react';
 import type { OnlineClient } from '@inventory/api-client';
@@ -43,14 +44,19 @@ export function OnlineListingHistory({
       ) : !events ? (
         <Text>Loading history…</Text>
       ) : events.length ? (
-        events.map((e) => (
-          <Text key={e.id}>
-            {e.transition.replace('->', ' → ')} · {e.reasonCode.replaceAll('_', ' ')}
-            {' · '}
-            {e.actorId ? `Account ${e.actorId}` : 'System'} ·{' '}
-            {new Date(e.timestamp).toLocaleString()}
-          </Text>
-        ))
+        <RecordTable
+          label="Listing events"
+          columns={['Transition', 'Reason', 'Actor reference', 'Recorded at']}
+          rows={events.map((e) => ({
+            id: e.id,
+            cells: [
+              e.transition.replace('->', ' → '),
+              e.reasonCode.replaceAll('_', ' '),
+              e.actorId ?? 'System',
+              new Date(e.timestamp).toLocaleString(),
+            ],
+          }))}
+        />
       ) : (
         <Text>No listing events yet.</Text>
       )}

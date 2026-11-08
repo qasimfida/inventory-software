@@ -65,7 +65,7 @@
   margin-inline-start: auto;
 }
 .theme-menu-trigger[data-highlighted] {
-  background: var(--accent);
+  background: var(--navigation-hover);
 }
 .theme-options svg {
   width: var(--icon-size);
@@ -93,51 +93,6 @@
 .command-select-panel {
   width: var(--radix-popover-trigger-width);
   min-width: min(16rem, 90vw);
-}
-.command-search {
-  display: flex;
-  align-items: center;
-  gap: var(--space-small);
-  padding: var(--space-small);
-  border-bottom: var(--border-width) solid var(--border);
-}
-.command-search input {
-  background: transparent;
-  min-width: 0;
-  width: 100%;
-  padding: var(--space-small);
-}
-.command-search svg,
-[cmdk-item] svg {
-  width: var(--icon-size);
-  height: var(--icon-size);
-  flex-shrink: 0;
-}
-[cmdk-list] {
-  max-height: calc(var(--control-height) * 7);
-  overflow-y: auto;
-  padding: var(--space-small);
-}
-[cmdk-item] {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-small);
-  min-height: var(--control-height);
-  padding: var(--space-small);
-  border-radius: var(--radius);
-  cursor: pointer;
-}
-[cmdk-item][data-selected='true'] {
-  background: var(--accent);
-  color: var(--accent-foreground);
-}
-[cmdk-item][data-disabled='true'] {
-  color: var(--disabled-foreground);
-  pointer-events: none;
-}
-[cmdk-empty] {
-  padding: var(--space-medium);
 }
 .settings-layout {
   display: flex;
@@ -253,7 +208,7 @@ details[open] > summary::after {
   min-height: var(--control-height);
 }
 .scope-choice:hover {
-  background: var(--accent);
+  background: var(--navigation-hover);
 }
 .scope-choice small {
   display: block;

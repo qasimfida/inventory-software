@@ -1,8 +1,11 @@
-import { overridePreview, onlinePrice } from '@inventory/api-client';
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
+import { RichTextEditor } from '@/components/common/RichTextEditor';
+import { RichDescription } from '@/components/common/RichDescription';
+import { overridePreview } from '@inventory/api-client';
 import type { OnlineClient } from '@inventory/api-client';
 import { allowedImageUrl } from '@inventory/contracts';
 import type { OnlineOverrides, OnlineProductPreview } from '@inventory/contracts';
-import { Input, Textarea } from '@/components/ui/FormControls';
+import { Input } from '@/components/ui/FormControls';
 import { Button } from '@/components/ui/Button';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { Switch } from '@/components/ui/Switch';
@@ -20,6 +23,8 @@ export function OnlineDetailsForm({
   disabled: boolean;
   client: OnlineClient;
 }) {
+  const { onlinePrice } = useDisplayMoney();
+
   let live = preview;
   try {
     live = overridePreview(preview, value);
@@ -38,15 +43,18 @@ export function OnlineDetailsForm({
           onChange={(e) => onChange({ ...value, title: e.target.value })}
         />
       </label>
-      <label>
-        Online description <small>{value.description === null ? 'Inherited' : 'Override'}</small>
-        <Textarea
-          disabled={disabled}
+      <div>
+        <label htmlFor="online-description">
+          Online description <small>{value.description === null ? 'Inherited' : 'Override'}</small>
+        </label>
+        <RichTextEditor
+          id="online-description"
+          label="Online description"
           value={value.description ?? preview.inherited.description}
-          maxLength={2000}
-          onChange={(e) => onChange({ ...value, description: e.target.value })}
+          onChange={(description) => onChange({ ...value, description })}
+          disabled={disabled}
         />
-      </label>
+      </div>
       <fieldset disabled={disabled}>
         <legend>Product images — selected order</legend>
         {preview.images.map((url) => (
@@ -137,7 +145,7 @@ export function OnlineDetailsForm({
         <p className="text-muted-foreground">
           Draft preview. The server recalculates prices and taxes on save and publication.
         </p>
-        <p>{live.source.description}</p>
+        <RichDescription value={live.source.description} />
         <p>{onlinePrice(live)}</p>
         <p>{live.source.soldOut ? 'Sold out' : 'In stock'} · Preview only</p>
       </section>

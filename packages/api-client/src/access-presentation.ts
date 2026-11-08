@@ -1,5 +1,5 @@
 import { permissionSchema, rolePermissions } from '@inventory/contracts';
-import type { Permission, AccessRole } from '@inventory/contracts';
+import type { Permission, AccessRole, Membership, Location } from '@inventory/contracts';
 const areas: Record<string, string> = {
   business: 'Business settings',
   locations: 'Stores and warehouses',
@@ -56,4 +56,32 @@ export const roleGuidance: Record<string, string> = {
 };
 export function roleCapabilities(role: AccessRole) {
   return rolePermissions(role).map(permissionLabel);
+}
+
+/** Loaded scope labels only; unresolved locations must never imply broader access. */
+export function memberScopeLabel(member: Pick<Membership, 'scope'>, locations: Location[]): string {
+  const name = (id: string, kind: string) =>
+    locations.find((location) => location.id === id)?.name ?? `${kind} reference: ${id}`;
+  const store = member.scope?.storeId;
+  const warehouse = member.scope?.warehouseId;
+  return (
+    [store && name(store, 'Store'), warehouse && name(warehouse, 'Warehouse')]
+      .filter(Boolean)
+      .join(' / ') || 'Business-wide'
+  );
+}
+export function memberDetails(member: Membership, locations: Location[]) {
+  return [
+    { label: 'Account', value: member.email },
+    { label: 'Role', value: member.role },
+    { label: 'Status', value: member.state },
+    { label: 'Access scope', value: memberScopeLabel(member, locations) },
+    {
+      label: 'Permissions',
+      value:
+        member.role === 'custom'
+          ? member.permissions?.map(permissionLabel).join('; ') || 'No permissions assigned'
+          : roleCapabilities(member.role).join('; ') || 'No permissions assigned',
+    },
+  ];
 }

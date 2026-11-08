@@ -1,0 +1,17 @@
+[
+  "apps/mobile/src/accounting/AccountingPanel.test.tsx",
+  "apps/mobile/src/accounting/AccountingPanel.tsx",
+  "apps/mobile/src/accounting/AccountingSummary.test.tsx",
+  "apps/mobile/src/accounting/AccountingSummary.tsx",
+  "apps/mobile/src/accounting/AccountingTable.tsx",
+  "apps/mobile/src/accounting/JournalDetails.tsx",
+  "apps/web/src/features/accounting/AccountingPanel.test.tsx",
+  "apps/web/src/features/accounting/AccountingPanel.tsx",
+  "apps/web/src/features/accounting/AccountingSummary.test.tsx",
+  "apps/web/src/features/accounting/AccountingSummary.tsx",
+  "apps/web/src/features/accounting/AccountingTable.tsx",
+  "apps/web/src/features/accounting/JournalDetails.tsx",
+  "docs/design-system.md",
+  "packages/api-client/src/accounting-characterization.test.ts",
+  "scripts/redesign-accounting-browser.mjs"
+]

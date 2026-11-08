@@ -1,3 +1,6 @@
+import { IconButton } from '@/components/common/IconButton';
+import { ReceiptFinance } from './ReceiptFinance';
+import { ErrorState, LoadingState } from '@/components/common/AsyncState';
 import { RecordCollection } from '@/components/common/RecordCollection';
 import { FormSheet } from '@/components/common/FormSheet';
 import { usePageCollection } from '@/components/common/usePageCollection';
@@ -83,30 +86,28 @@ export function ReceiptPanel({
           }}
         />
       </div>
-      <Button
+      <IconButton
+        label="Refresh sale history"
+        icon={RefreshCw}
         onClick={() => void model.run()}
         disabled={state.busy}
-        variant="ghost"
-        size="icon"
-        aria-label="Refresh sale history"
-        title="Refresh"
-      >
-        <RefreshCw aria-hidden="true" />
-      </Button>
+      />
     </>
   );
   return (
     <section aria-label="Sale history and receipts" className="screen-section">
-      <ScreenHeader title="Sale history and receipts" />
+      <ScreenHeader title="Sales & receipts" />
       <p>
         Sale history, receipts and corrections. Exchange: complete an exchange return, then enter
         its ID on a replacement checkout in the same warehouse for the same customer. Refund and
         replacement charge are separate confirmed transactions.
       </p>
 
-      {state.error && <p role="alert">{state.error}</p>}
+      {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
 
+      {warehouseId && !state.data && !state.error && <LoadingState message="Loading sales…" />}
       <RecordCollection
+        allowGrid={false}
         toolbar={toolbar}
         label="receipts"
         onOpen={(value) => {
@@ -138,15 +139,28 @@ export function ReceiptPanel({
       />
       <FormSheet
         title="Sale receipt"
+        description="Review the recorded sale, settlement and authorized corrections."
         open={!!id}
         onOpenChange={(open) => {
           if (!open) setId('');
         }}
       >
-        {state.error && <p role="alert">{state.error}</p>}
+        {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
         {state.data?.receipt && (
-          <>
-            <pre className="whitespace-pre-wrap break-words">{receiptText(state.data.receipt)}</pre>
+          <div className="min-w-0 shrink-0 space-y-3">
+            <section className="pos-receipt" aria-label="Confirmed receipt">
+              <h3>
+                Receipt ·{' '}
+                {formatMinorUnits(
+                  state.data.receipt.sale.totalMinor,
+                  state.data.receipt.sale.currency,
+                )}
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Recorded sale details. Printing does not create another payment.
+              </p>
+              <pre>{receiptText(state.data.receipt)}</pre>
+            </section>
             <Button
               onClick={() => {
                 setPrintError('');
@@ -161,10 +175,14 @@ export function ReceiptPanel({
               Print / reprint receipt
             </Button>
             {printError && <p role="alert">{printError}</p>}
+            <ReceiptFinance receipt={state.data.receipt} timeZone={business.timeZone} />
+            {returnForms(client, business, state.data.receipt).length > 0 && (
+              <h3>Sale corrections · changes stock and settlement</h3>
+            )}
             {returnForms(client, business, state.data.receipt).map((f) => (
               <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
             ))}
-          </>
+          </div>
         )}
       </FormSheet>
     </section>

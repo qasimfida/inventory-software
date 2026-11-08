@@ -132,3 +132,54 @@ export function rendersPanels(tree) {
   });
   return found;
 }
+
+/** Canonical path aliases count only when their destination has an actual renderer. */
+export function pathAliases(tree) {
+  const aliases = [];
+  walk(tree, (node) => {
+    if (!ts.isVariableDeclaration(node) || node.name.getText() !== 'path' || !node.initializer)
+      return;
+    walk(node.initializer, (branch) => {
+      if (!ts.isConditionalExpression(branch) || !ts.isStringLiteral(branch.whenTrue)) return;
+      const condition = branch.condition;
+      if (
+        !ts.isBinaryExpression(condition) ||
+        condition.operatorToken.kind !== ts.SyntaxKind.EqualsEqualsEqualsToken
+      )
+        return;
+      if (
+        !['rawPath', 'location.pathname'].includes(condition.left.getText()) ||
+        !ts.isStringLiteral(condition.right)
+      )
+        return;
+      if (condition.right.text.startsWith('/') && branch.whenTrue.text.startsWith('/'))
+        aliases.push([condition.right.text, branch.whenTrue.text]);
+    });
+  });
+  return aliases;
+}
+
+/** Standalone lazy routes live outside the authenticated workspace dispatcher. */
+export function standaloneRoutes(tree) {
+  const paths = new Set();
+  walk(tree, (node) => {
+    if (!ts.isCallExpression(node) || node.expression.getText() !== 'createHashRouter') return;
+    const array = node.arguments[0];
+    if (!array || !ts.isArrayLiteralExpression(array)) return;
+    for (const route of array.elements) {
+      if (!ts.isObjectLiteralExpression(route)) continue;
+      const props = route.properties.filter(ts.isPropertyAssignment);
+      const path = props.find((p) => p.name.getText() === 'path')?.initializer;
+      const lazy = props.find((p) => p.name.getText() === 'lazy')?.initializer;
+      if (
+        path &&
+        ts.isStringLiteral(path) &&
+        path.text.startsWith('/') &&
+        lazy &&
+        lazy.getText().includes('Component:')
+      )
+        paths.add(path.text);
+    }
+  });
+  return paths;
+}

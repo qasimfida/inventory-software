@@ -33,6 +33,8 @@ export function SettingsTabs() {
   const { path, navigate } = useNavigation(),
     { business } = useWorkspace(),
     theme = useTheme();
+  if (!availableRoutes(business).some((r) => r.path === path && r.group === 'Settings'))
+    return null;
   return (
     <View style={{ gap: theme.spacing.medium }}>
       <ScrollableTabs>

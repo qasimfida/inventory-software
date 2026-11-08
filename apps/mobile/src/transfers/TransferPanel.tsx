@@ -1,3 +1,6 @@
+import { ExportRecords } from '../ui/ExportRecords';
+import { Choice } from '../ui/Controls';
+import { EmptyState, ErrorState, LoadingState } from '../ui/AsyncState';
 import { View } from 'react-native';
 import { RecordCollection } from '../ui/RecordCollection';
 import { SidePanel } from '../ui/SidePanel';
@@ -8,7 +11,6 @@ import { SearchControl } from '../ui/SearchControl';
 import { IconAction } from '../ui/IconAction';
 import { TransferDetails } from './TransferDetails';
 import { ScreenBody, ScreenHeader } from '../ui/ScreenHeader';
-import { Text } from '../ui/Themed';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import {
   createTransferClient,
@@ -31,6 +33,9 @@ export function TransferPanel({
   locations: Location[];
 }) {
   const warehouses = locations.filter((l) => l.kind === 'warehouses' && l.state === 'active');
+  const [storeId, setStoreId] = useState(warehouses[0]?.storeId ?? '');
+  const stores = locations.filter((l) => l.kind === 'stores');
+  const scopedWarehouses = warehouses.filter((w) => (w.storeId ?? '') === storeId);
   const [warehouseId, setWarehouseId] = useState(warehouses[0]?.id ?? ''),
     [search, setSearch] = useState(''),
     [offset, setOffset] = useState(0),
@@ -115,7 +120,58 @@ export function TransferPanel({
   return (
     <ScreenBody>
       <ScreenHeader
-        title="Stock transfers"
+        title="Transfers"
+        actions={
+          <>
+            <Choice
+              label="Transfer store"
+              value={storeId}
+              options={[
+                ...stores.map((s) => ({ value: s.id, label: s.name })),
+                ...(warehouses.some((w) => !w.storeId)
+                  ? [{ value: '', label: 'Business warehouses' }]
+                  : []),
+              ]}
+              onChange={(value) => {
+                setStoreId(value);
+                setWarehouseId(warehouses.find((w) => (w.storeId ?? '') === value)?.id ?? '');
+                setTransferId('');
+                setOffset(0);
+              }}
+            />{' '}
+            <WarehouseSelect
+              label="Transfer warehouse"
+              value={warehouseId}
+              options={scopedWarehouses.map((w) => ({ value: w.id, label: w.name }))}
+              onChange={(v) => {
+                setWarehouseId(v);
+                setTransferId('');
+                setOffset(0);
+              }}
+            />
+            <ExportRecords
+              name="transfers"
+              headers={[
+                'Reference',
+                'Source warehouse',
+                'Destination warehouse',
+                'Created',
+                'Status',
+              ]}
+              rows={(state.data?.workspace.transfers ?? []).map((t) => [
+                t.reference,
+                locations.find((l) => l.id === t.sourceWarehouseId)?.name ?? t.sourceWarehouseId,
+                locations.find((l) => l.id === t.destinationWarehouseId)?.name ??
+                  t.destinationWarehouseId,
+                t.createdAt,
+                t.state,
+              ])}
+            />
+            {forms.slice(0, 1).map((f) => (
+              <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
+            ))}
+          </>
+        }
         description={
           <>
             Approval reserves stock. Dispatch moves it into transit. Receipt records good, damaged
@@ -124,24 +180,23 @@ export function TransferPanel({
           </>
         }
       />
-      <WarehouseSelect
-        label="Transfer warehouse"
-        value={warehouseId}
-        options={warehouses.map((w) => ({ value: w.id, label: w.name }))}
-        onChange={(v) => {
-          setWarehouseId(v);
-          setTransferId('');
-          setOffset(0);
-        }}
-      />
 
-      {Boolean(state.error) && <Text accessibilityRole="alert">{state.error}</Text>}
+      {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
 
+      {!warehouseId && (
+        <EmptyState
+          message="No active warehouse"
+          description="Request access to an active warehouse to view and manage transfers."
+        />
+      )}
+      {warehouseId && !state.data && !state.error && <LoadingState message="Loading transfers…" />}
       {!state.data && <View>{toolbar}</View>}
       {state.data && (
         <>
           <RecordCollection
+            showExport={false}
             toolbar={toolbar}
+
             label="transfers"
             onOpen={setTransferId}
             items={state.data.workspace.transfers.map((t) => ({
@@ -166,13 +221,14 @@ export function TransferPanel({
             busy={state.busy || (!state.data && !state.error)}
             onChange={setOffset}
           />
-          {forms.slice(0, 1).map((f) => (
-            <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
-          ))}
           <SidePanel title="Transfer details" open={!!transferId} onClose={() => setTransferId('')}>
-            {state.error && <Text accessibilityRole="alert">{state.error}</Text>}
+            {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
             {state.data.detail && (
-              <TransferDetails detail={state.data.detail} timeZone={business.timeZone} />
+              <TransferDetails
+                detail={state.data.detail}
+                timeZone={business.timeZone}
+                locations={locations}
+              />
             )}
             {forms.slice(1).map((f) => (
               <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />

@@ -1,0 +1,146 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Invite trading partner",
+      "Confirm relationship decision",
+      "Submit shared order terms",
+      "Confirm shared order status"
+    ]
+  }
+]

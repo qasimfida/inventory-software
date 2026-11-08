@@ -1,0 +1,417 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: held-carts.spec.ts >> named POS carts resume with fresh totals and expose cash/credit allocation
+- Location: tests/shell/held-carts.spec.ts:2:1
+
+# Error details
+
+```
+Test timeout of 90000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary "Demonstration controls" [ref=e3]:
+    - strong [ref=e4]: Demo · local data
+    - generic [ref=e5]:
+      - text: Role
+      - combobox [aria-hidden] [ref=e6] [cursor=pointer]
+      - combobox "Role" [ref=e7] [cursor=pointer]:
+        - generic: owner
+    - generic [ref=e11]:
+      - text: Scenario
+      - combobox [aria-hidden] [ref=e12] [cursor=pointer]
+      - combobox "Scenario" [ref=e13] [cursor=pointer]:
+        - generic [ref=e14]: normal
+    - generic [ref=e18]: No live requests. Transaction actions require a live test API.
+  - generic [ref=e19]:
+    - link "Skip to page content" [ref=e20] [cursor=pointer]:
+      - /url: "#page-content"
+    - generic [ref=e21]:
+      - complementary "Application sidebar" [ref=e22]:
+        - button "Switch workspace" [ref=e24] [cursor=pointer]:
+          - generic [ref=e26]:
+            - generic [aria-hidden] [ref=e27]: HA
+            - generic [ref=e28]:
+              - generic [ref=e29]: Harbor & Pine Home
+              - generic [ref=e30]: owner · All authorized locations
+        - navigation "Main navigation" [ref=e31]:
+          - link "Online store" [ref=e33] [cursor=pointer]:
+            - /url: "#/online-store"
+          - link "Overview" [ref=e46] [cursor=pointer]:
+            - /url: "#/dashboard"
+          - generic [ref=e52]:
+            - heading [level=3] [ref=e53]:
+              - button "Sales" [expanded] [ref=e54] [cursor=pointer]
+            - region "Sales" [ref=e58]:
+              - link "Point of sale" [ref=e59] [cursor=pointer]:
+                - /url: "#/pos"
+              - link "Sales & receipts" [ref=e66] [cursor=pointer]:
+                - /url: "#/sales"
+              - link "Cash shifts" [ref=e71] [cursor=pointer]:
+                - /url: "#/cash"
+          - generic [ref=e77]:
+            - heading [level=3] [ref=e78]:
+              - button "Inventory" [expanded] [ref=e79] [cursor=pointer]
+            - region "Inventory" [ref=e83]:
+              - link "Categories" [ref=e84] [cursor=pointer]:
+                - /url: "#/categories"
+              - link "Inventory" [ref=e96] [cursor=pointer]:
+                - /url: "#/inventory"
+              - link "Stock counts & scanning" [ref=e108] [cursor=pointer]:
+                - /url: "#/warehouse"
+              - link "Transfers" [ref=e115] [cursor=pointer]:
+                - /url: "#/transfers"
+              - link "Warehouse & storage" [ref=e120] [cursor=pointer]:
+                - /url: "#/storage"
+          - link "Purchasing & suppliers" [ref=e126] [cursor=pointer]:
+            - /url: "#/purchasing"
+          - link "Customers" [ref=e134] [cursor=pointer]:
+            - /url: "#/customers"
+          - generic [ref=e142]:
+            - heading [level=3] [ref=e143]:
+              - button "Finance" [expanded] [ref=e144] [cursor=pointer]
+            - region "Finance" [ref=e148]:
+              - link "Supplier balances" [ref=e149] [cursor=pointer]:
+                - /url: "#/payables"
+              - link "Accounting" [ref=e154] [cursor=pointer]:
+                - /url: "#/accounting"
+          - link "Reports" [ref=e159] [cursor=pointer]:
+            - /url: "#/reports"
+          - generic [ref=e164]:
+            - heading [level=3] [ref=e165]:
+              - button "Administration" [expanded] [ref=e166] [cursor=pointer]
+            - region "Administration" [ref=e170]:
+              - link "Logs" [ref=e171] [cursor=pointer]:
+                - /url: "#/logs"
+              - link "Notifications & approvals" [ref=e176] [cursor=pointer]:
+                - /url: "#/notifications"
+              - link "Business trading" [ref=e181] [cursor=pointer]:
+                - /url: "#/trading"
+              - link "Integrations & help" [ref=e188] [cursor=pointer]:
+                - /url: "#/integrations"
+              - link "Expenses" [ref=e192] [cursor=pointer]:
+                - /url: "#/staff"
+              - link "Team & permissions" [ref=e199] [cursor=pointer]:
+                - /url: "#/team"
+          - generic [ref=e205]:
+            - heading [level=3] [ref=e206]:
+              - button "Settings" [expanded] [ref=e207] [cursor=pointer]
+            - region "Settings" [ref=e211]:
+              - link "Profile" [ref=e212] [cursor=pointer]:
+                - /url: "#/settings/profile"
+              - link "Company profile" [ref=e217] [cursor=pointer]:
+                - /url: "#/settings/company"
+              - link "Business" [ref=e223] [cursor=pointer]:
+                - /url: "#/settings/business"
+              - link "Preferences" [ref=e229] [cursor=pointer]:
+                - /url: "#/settings/preferences"
+              - link "Security" [ref=e237] [cursor=pointer]:
+                - /url: "#/settings/security"
+              - link "Device & Offline" [ref=e241] [cursor=pointer]:
+                - /url: "#/settings/device"
+              - link "Security notifications" [ref=e245] [cursor=pointer]:
+                - /url: "#/settings/notifications"
+              - link "Stores & terminals" [ref=e250] [cursor=pointer]:
+                - /url: "#/settings/locations"
+              - link "Audit history" [ref=e255] [cursor=pointer]:
+                - /url: "#/settings/audit"
+        - button "Open profile menu" [ref=e262] [cursor=pointer]:
+          - generic [ref=e264]:
+            - generic [aria-hidden] [ref=e265]: OW
+            - generic [ref=e266]:
+              - generic [ref=e267]: owner
+              - generic [ref=e268]: owner
+      - separator "Resize sidebar" [ref=e269]
+    - button "Collapse sidebar" [expanded] [ref=e270] [cursor=pointer]
+    - generic [ref=e272]:
+      - banner [ref=e273]:
+        - generic [ref=e274]:
+          - heading "Point of sale" [level=1] [ref=e275]
+          - button "Checkout warehouse Main warehouse" [disabled]:
+            - generic:
+              - generic: Checkout warehouse
+              - generic: Main warehouse
+        - generic [ref=e276]:
+          - combobox "Search routes and records" [ref=e280]
+          - link "Online · server reachable" [ref=e282] [cursor=pointer]:
+            - /url: "#/settings/device"
+          - button "Theme and colors" [ref=e289] [cursor=pointer]
+          - button "Notifications, 3 unread in recent page" [ref=e292] [cursor=pointer]:
+            - generic [ref=e293]: "3"
+      - main [ref=e294]:
+        - generic [ref=e296]:
+          - generic [ref=e297]:
+            - paragraph [ref=e299]: Find products, review your cart and confirm payment.
+            - button "Payment guidance" [ref=e301] [cursor=pointer]
+          - region "Point of sale" [ref=e303]:
+            - generic [ref=e304]:
+              - generic [ref=e305]:
+                - generic [ref=e306]:
+                  - combobox "POS product search" [ref=e309]
+                  - button "Look up barcode in product search" [disabled]
+                  - button "Filters" [ref=e310] [cursor=pointer]
+                - list [ref=e312]:
+                  - listitem [ref=e313]:
+                    - generic [ref=e320]: HP-001
+                    - generic [ref=e321]:
+                      - button "Oak dining chair · Natural 1" [ref=e322] [cursor=pointer]
+                      - button "Actions for Oak dining chair · Natural 1" [ref=e325] [cursor=pointer]
+                      - paragraph [ref=e327]: HP-001 · EA
+                    - button "Sold HP-001 · Oak dining chair · Natural 1" [disabled]:
+                      - generic: Sold
+                  - listitem [ref=e328]:
+                    - generic [ref=e335]: HP-002
+                    - generic [ref=e336]:
+                      - button "Linen lounge cushion · Natural 2" [ref=e337] [cursor=pointer]
+                      - button "Actions for Linen lounge cushion · Natural 2" [ref=e340] [cursor=pointer]
+                      - paragraph [ref=e342]: HP-002 · EA
+                    - button "Add HP-002 · Linen lounge cushion · Natural 2" [active] [ref=e343] [cursor=pointer]:
+                      - generic [ref=e344]: $30.00
+                  - listitem [ref=e345]:
+                    - generic [ref=e352]: HP-003
+                    - generic [ref=e353]:
+                      - button "Ceramic serving bowl · Natural 3" [ref=e354] [cursor=pointer]
+                      - button "Actions for Ceramic serving bowl · Natural 3" [ref=e357] [cursor=pointer]
+                      - paragraph [ref=e359]: HP-003 · EA
+                    - button "Add HP-003 · Ceramic serving bowl · Natural 3" [ref=e360] [cursor=pointer]:
+                      - generic [ref=e361]: $35.00
+                  - listitem [ref=e362]:
+                    - generic [ref=e369]: HP-004
+                    - generic [ref=e370]:
+                      - button "Adjustable desk lamp · Natural 4" [ref=e371] [cursor=pointer]
+                      - button "Actions for Adjustable desk lamp · Natural 4" [ref=e374] [cursor=pointer]
+                      - paragraph [ref=e376]: HP-004 · EA
+                    - button "Add HP-004 · Adjustable desk lamp · Natural 4" [ref=e377] [cursor=pointer]:
+                      - generic [ref=e378]: $40.00
+                  - listitem [ref=e379]:
+                    - generic [ref=e386]: HP-005
+                    - generic [ref=e387]:
+                      - button "Walnut side table · Natural 5" [ref=e388] [cursor=pointer]
+                      - button "Actions for Walnut side table · Natural 5" [ref=e391] [cursor=pointer]
+                      - paragraph [ref=e393]: HP-005 · EA
+                    - button "Add HP-005 · Walnut side table · Natural 5" [ref=e394] [cursor=pointer]:
+                      - generic [ref=e395]: $45.00
+                  - listitem [ref=e396]:
+                    - generic [ref=e403]: HP-006
+                    - generic [ref=e404]:
+                      - button "Woven storage basket · Natural 6" [ref=e405] [cursor=pointer]
+                      - button "Actions for Woven storage basket · Natural 6" [ref=e408] [cursor=pointer]
+                      - paragraph [ref=e410]: HP-006 · EA
+                    - button "Add HP-006 · Woven storage basket · Natural 6" [ref=e411] [cursor=pointer]:
+                      - generic [ref=e412]: $50.00
+                  - listitem [ref=e413]:
+                    - generic [ref=e420]: HP-007
+                    - generic [ref=e421]:
+                      - button "Natural cotton throw · Natural 7" [ref=e422] [cursor=pointer]
+                      - button "Actions for Natural cotton throw · Natural 7" [ref=e425] [cursor=pointer]
+                      - paragraph [ref=e427]: HP-007 · EA
+                    - button "Add HP-007 · Natural cotton throw · Natural 7" [ref=e428] [cursor=pointer]:
+                      - generic [ref=e429]: $55.00
+                  - listitem [ref=e430]:
+                    - generic [ref=e437]: HP-008
+                    - generic [ref=e438]:
+                      - button "Modular shelving with adjustable compartments and protective backing · Natural 8" [ref=e439] [cursor=pointer]
+                      - button "Actions for Modular shelving with adjustable compartments and protective backing · Natural 8" [ref=e442] [cursor=pointer]
+                      - paragraph [ref=e444]: HP-008 · EA
+                    - button "Add HP-008 · Modular shelving with adjustable compartments and protective backing · Natural 8" [ref=e445] [cursor=pointer]:
+                      - generic [ref=e446]: $60.00
+                  - listitem [ref=e447]:
+                    - generic [ref=e454]: HP-009
+                    - generic [ref=e455]:
+                      - button "Oak dining chair · Slate 9" [ref=e456] [cursor=pointer]
+                      - button "Actions for Oak dining chair · Slate 9" [ref=e459] [cursor=pointer]
+                      - paragraph [ref=e461]: HP-009 · EA
+                    - button "Add HP-009 · Oak dining chair · Slate 9" [ref=e462] [cursor=pointer]:
+                      - generic [ref=e463]: $65.00
+                  - listitem [ref=e464]:
+                    - generic [ref=e471]: HP-010
+                    - generic [ref=e472]:
+                      - button "Linen lounge cushion · Slate 10" [ref=e473] [cursor=pointer]
+                      - button "Actions for Linen lounge cushion · Slate 10" [ref=e476] [cursor=pointer]
+                      - paragraph [ref=e478]: HP-010 · EA
+                    - button "Sold HP-010 · Linen lounge cushion · Slate 10" [disabled]:
+                      - generic: Sold
+                  - listitem [ref=e479]:
+                    - generic [ref=e486]: HP-011
+                    - generic [ref=e487]:
+                      - button "Ceramic serving bowl · Slate 11" [ref=e488] [cursor=pointer]
+                      - button "Actions for Ceramic serving bowl · Slate 11" [ref=e491] [cursor=pointer]
+                      - paragraph [ref=e493]: HP-011 · EA
+                    - button "Add HP-011 · Ceramic serving bowl · Slate 11" [ref=e494] [cursor=pointer]:
+                      - generic [ref=e495]: $75.00
+                  - listitem [ref=e496]:
+                    - generic [ref=e503]: HP-012
+                    - generic [ref=e504]:
+                      - button "Adjustable desk lamp · Slate 12" [ref=e505] [cursor=pointer]
+                      - button "Actions for Adjustable desk lamp · Slate 12" [ref=e508] [cursor=pointer]
+                      - paragraph [ref=e510]: HP-012 · EA
+                    - button "Add HP-012 · Adjustable desk lamp · Slate 12" [ref=e511] [cursor=pointer]:
+                      - generic [ref=e512]: $80.00
+                  - listitem [ref=e513]:
+                    - generic [ref=e520]: HP-013
+                    - generic [ref=e521]:
+                      - button "Walnut side table · Slate 13" [ref=e522] [cursor=pointer]
+                      - button "Actions for Walnut side table · Slate 13" [ref=e525] [cursor=pointer]
+                      - paragraph [ref=e527]: HP-013 · EA
+                    - button "Add HP-013 · Walnut side table · Slate 13" [ref=e528] [cursor=pointer]:
+                      - generic [ref=e529]: $85.00
+                  - listitem [ref=e530]:
+                    - generic [ref=e537]: HP-014
+                    - generic [ref=e538]:
+                      - button "Woven storage basket · Slate 14" [ref=e539] [cursor=pointer]
+                      - button "Actions for Woven storage basket · Slate 14" [ref=e542] [cursor=pointer]
+                      - paragraph [ref=e544]: HP-014 · EA
+                    - button "Add HP-014 · Woven storage basket · Slate 14" [ref=e545] [cursor=pointer]:
+                      - generic [ref=e546]: $90.00
+                  - listitem [ref=e547]:
+                    - generic [ref=e554]: HP-015
+                    - generic [ref=e555]:
+                      - button "Natural cotton throw · Slate 15" [ref=e556] [cursor=pointer]
+                      - button "Actions for Natural cotton throw · Slate 15" [ref=e559] [cursor=pointer]
+                      - paragraph [ref=e561]: HP-015 · EA
+                    - button "Add HP-015 · Natural cotton throw · Slate 15" [ref=e562] [cursor=pointer]:
+                      - generic [ref=e563]: $95.00
+                  - listitem [ref=e564]:
+                    - generic [ref=e571]: HP-016
+                    - generic [ref=e572]:
+                      - button "Modular shelving with adjustable compartments and protective backing · Slate 16" [ref=e573] [cursor=pointer]
+                      - button "Actions for Modular shelving with adjustable compartments and protective backing · Slate 16" [ref=e576] [cursor=pointer]
+                      - paragraph [ref=e578]: HP-016 · EA
+                    - button "Add HP-016 · Modular shelving with adjustable compartments and protective backing · Slate 16" [ref=e579] [cursor=pointer]:
+                      - generic [ref=e580]: $100.00
+                  - listitem [ref=e581]:
+                    - generic [ref=e588]: HP-017
+                    - generic [ref=e589]:
+                      - button "Oak dining chair · Sand 17" [ref=e590] [cursor=pointer]
+                      - button "Actions for Oak dining chair · Sand 17" [ref=e593] [cursor=pointer]
+                      - paragraph [ref=e595]: HP-017 · EA
+                    - button "Add HP-017 · Oak dining chair · Sand 17" [ref=e596] [cursor=pointer]:
+                      - generic [ref=e597]: $105.00
+                  - listitem [ref=e598]:
+                    - generic [ref=e605]: HP-018
+                    - generic [ref=e606]:
+                      - button "Linen lounge cushion · Sand 18" [ref=e607] [cursor=pointer]
+                      - button "Actions for Linen lounge cushion · Sand 18" [ref=e610] [cursor=pointer]
+                      - paragraph [ref=e612]: HP-018 · EA
+                    - button "Add HP-018 · Linen lounge cushion · Sand 18" [ref=e613] [cursor=pointer]:
+                      - generic [ref=e614]: $110.00
+                  - listitem [ref=e615]:
+                    - generic [ref=e622]: HP-019
+                    - generic [ref=e623]:
+                      - button "Ceramic serving bowl · Sand 19" [ref=e624] [cursor=pointer]
+                      - button "Actions for Ceramic serving bowl · Sand 19" [ref=e627] [cursor=pointer]
+                      - paragraph [ref=e629]: HP-019 · EA
+                    - button "Sold HP-019 · Ceramic serving bowl · Sand 19" [disabled]:
+                      - generic: Sold
+                  - listitem [ref=e630]:
+                    - generic [ref=e637]: HP-020
+                    - generic [ref=e638]:
+                      - button "Adjustable desk lamp · Sand 20" [ref=e639] [cursor=pointer]
+                      - button "Actions for Adjustable desk lamp · Sand 20" [ref=e642] [cursor=pointer]
+                      - paragraph [ref=e644]: HP-020 · EA
+                    - button "Add HP-020 · Adjustable desk lamp · Sand 20" [ref=e645] [cursor=pointer]:
+                      - generic [ref=e646]: $120.00
+                  - listitem [ref=e647]:
+                    - generic [ref=e654]: HP-021
+                    - generic [ref=e655]:
+                      - button "Walnut side table · Sand 21" [ref=e656] [cursor=pointer]
+                      - button "Actions for Walnut side table · Sand 21" [ref=e659] [cursor=pointer]
+                      - paragraph [ref=e661]: HP-021 · EA
+                    - button "Add HP-021 · Walnut side table · Sand 21" [ref=e662] [cursor=pointer]:
+                      - generic [ref=e663]: $125.00
+                  - listitem [ref=e664]:
+                    - generic [ref=e671]: HP-022
+                    - generic [ref=e672]:
+                      - button "Woven storage basket · Sand 22" [ref=e673] [cursor=pointer]
+                      - button "Actions for Woven storage basket · Sand 22" [ref=e676] [cursor=pointer]
+                      - paragraph [ref=e678]: HP-022 · EA
+                    - button "Add HP-022 · Woven storage basket · Sand 22" [ref=e679] [cursor=pointer]:
+                      - generic [ref=e680]: $130.00
+                  - listitem [ref=e681]:
+                    - generic [ref=e688]: HP-023
+                    - generic [ref=e689]:
+                      - button "Natural cotton throw · Sand 23" [ref=e690] [cursor=pointer]
+                      - button "Actions for Natural cotton throw · Sand 23" [ref=e693] [cursor=pointer]
+                      - paragraph [ref=e695]: HP-023 · EA
+                    - button "Add HP-023 · Natural cotton throw · Sand 23" [ref=e696] [cursor=pointer]:
+                      - generic [ref=e697]: $135.00
+                  - listitem [ref=e698]:
+                    - generic [ref=e705]: HP-024
+                    - generic [ref=e706]:
+                      - button "Modular shelving with adjustable compartments and protective backing · Sand 24" [ref=e707] [cursor=pointer]
+                      - button "Actions for Modular shelving with adjustable compartments and protective backing · Sand 24" [ref=e710] [cursor=pointer]
+                      - paragraph [ref=e712]: HP-024 · EA
+                    - button "Add HP-024 · Modular shelving with adjustable compartments and protective backing · Sand 24" [ref=e713] [cursor=pointer]:
+                      - generic [ref=e714]: $140.00
+                  - listitem [ref=e715]:
+                    - generic [ref=e722]: HP-025
+                    - generic [ref=e723]:
+                      - button "Oak dining chair · Forest 25" [ref=e724] [cursor=pointer]
+                      - button "Actions for Oak dining chair · Forest 25" [ref=e727] [cursor=pointer]
+                      - paragraph [ref=e729]: HP-025 · EA
+                    - button "Add HP-025 · Oak dining chair · Forest 25" [ref=e730] [cursor=pointer]:
+                      - generic [ref=e731]: $145.00
+                - paragraph [ref=e732]: Scan or type in the same search field. Prices shown are per base unit before tax and discounts; the cart verifies final pricing.
+                - navigation "products pagination" [ref=e733]:
+                  - button "Previous products" [disabled]
+                  - button "Page 1" [ref=e734] [cursor=pointer]:
+                    - generic [ref=e735]: "1"
+                  - button "Page 2" [ref=e736] [cursor=pointer]:
+                    - generic [ref=e737]: "2"
+                  - generic "More pages may be available" [ref=e738]: …
+                  - button "Next products" [ref=e739] [cursor=pointer]
+              - complementary "Cart details" [ref=e741]:
+                - generic [ref=e742]:
+                  - heading [level=3] [ref=e745]:
+                    - button "Held carts (0/10)" [ref=e746] [cursor=pointer]
+                  - generic [ref=e750]:
+                    - heading "Cart details (1 line)" [level=3] [ref=e751]:
+                      - text: Cart details
+                      - generic [ref=e752]: (1 line)
+                    - status [ref=e753]:
+                      - generic [ref=e754]: Review quoted totals before payment
+                  - combobox "Find checkout customer" [ref=e757]
+                  - generic [ref=e758]: Checkout customer
+                  - combobox [aria-hidden] [ref=e759] [cursor=pointer]
+                  - combobox "Checkout customer" [ref=e760] [cursor=pointer]:
+                    - generic [ref=e761]: Walk-in customer
+                  - list [ref=e765]:
+                    - listitem [ref=e766]:
+                      - img "No image for Linen lounge cushion · Natural 2" [ref=e768]
+                      - generic [ref=e772]:
+                        - button "View details for Linen lounge cushion · Natural 2" [ref=e773] [cursor=pointer]:
+                          - generic [ref=e774]: Linen lounge cushion · Natural 2
+                        - generic [ref=e775]: HP-002
+                      - button "Remove line 1" [ref=e777] [cursor=pointer]
+                      - generic [ref=e779]:
+                        - generic [ref=e780]:
+                          - generic [ref=e781]: Quantity 1
+                          - generic [ref=e782]:
+                            - button "Decrease Quantity 1" [disabled]
+                            - textbox "Quantity 1" [ref=e783]: "1"
+                            - button "Increase Quantity 1" [ref=e784] [cursor=pointer]
+                        - generic [ref=e786]:
+                          - button "Discount for line 1" [ref=e788] [cursor=pointer]
+                          - generic [ref=e790]: $30.00
+                          - generic [ref=e791]: EA
+                  - generic [ref=e792]:
+                    - generic [ref=e793]:
+                      - term [ref=e794]: Net after discounts
+                      - definition [ref=e795]: $30.00
+                    - generic [ref=e796]:
+                      - term [ref=e797]: Tax
+                      - definition [ref=e798]: $0.00
+                    - generic [ref=e799]:
+                      - term [ref=e800]: Total payment
+                      - definition [ref=e801]: $30.00
+                - button "Checkout" [ref=e803] [cursor=pointer]
+```

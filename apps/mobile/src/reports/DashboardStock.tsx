@@ -1,6 +1,7 @@
+import { useDisplayMoney } from '../ui/useDisplayMoney';
 import { View } from 'react-native';
 import type { DashboardSnapshot } from '@inventory/contracts';
-import { formatMinorUnits } from '@inventory/domain';
+
 import { dashboardGrowth } from '@inventory/api-client';
 import { useTheme } from '../theme';
 import { useNavigation } from '../shell/Navigation';
@@ -11,6 +12,8 @@ import { StatusBadge } from '../ui/StatusBadge';
 import { Action } from '../ui/Controls';
 import { EmptyState } from '../ui/AsyncState';
 export function DashboardMetrics({ data }: { data: DashboardSnapshot }) {
+  const { formatMinorUnits } = useDisplayMoney();
+
   const theme = useTheme(),
     { navigate } = useNavigation(),
     sales = data.sales;

@@ -19,6 +19,43 @@ export class ImportsController {
     @Inject(ProductService) private readonly products: ProductService,
     @Inject(LedgerCore) private readonly ledger: LedgerCore,
   ) {}
+  @Post('products/validate') validate(
+    @Req() r: AuthRequest,
+    @Param('businessId', new ParseUUIDPipe()) b: string,
+    @Body(new SchemaPipe(importInputSchema)) input: ImportInput,
+  ) {
+    return this.scope.run(requestActor(r), b, 'products.write', async (ctx) => {
+      requireBusinessScope(ctx);
+      if (input.rows.some((row) => decimal(row.quantity) > 0n))
+        requirePermission(ctx.business, 'stock.write');
+      if (input.warehouseId) await this.ledger.warehouse(ctx, input.warehouseId);
+      const identifiers = await ctx.tx.query<{ code: string }>(
+        'SELECT code FROM catalog_identifiers WHERE business_id=$1 AND code=ANY($2::text[])',
+        [b, input.rows.map((r) => r.sku)],
+      );
+      const used = new Set(identifiers.rows.map((r) => r.code));
+      const errors = input.rows.flatMap((row, index) => {
+        const issues: { row: number; field: string; message: string }[] = [];
+        if (used.has(row.sku))
+          issues.push({
+            row: index + 2,
+            field: 'sku',
+            message:
+              'This SKU already exists as a SKU or product code. Existing products will not be overwritten.',
+          });
+        const parsed = createProductSchema.safeParse({
+          name: row.name,
+          sku: row.sku,
+          description: row.description,
+        });
+        if (!parsed.success)
+          for (const issue of parsed.error.issues)
+            issues.push({ row: index + 2, field: issue.path.join('.'), message: issue.message });
+        return issues;
+      });
+      return { errors };
+    });
+  }
   @Post('products') create(
     @Req() r: AuthRequest,
     @Param('businessId', new ParseUUIDPipe()) b: string,

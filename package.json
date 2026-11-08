@@ -12,8 +12,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check:foundation": "node scripts/check-foundation.mjs",
-    "validate": "npm run format:check && npm run check:foundation && npm run check:parity && npm run audit:ui && npm run lint && npm run typecheck && npm test && npm run build",
-    "build:shared": "npm run build -w @inventory/design-tokens && npm run build -w @inventory/api-client",
+    "validate": "npm run format:check && npm run check:foundation && npm run check:parity && npm run check:redesign && npm run audit:ui && npm run lint && npm run typecheck && npm test && npm run build",
+    "build:shared": "npm run build -w @inventory/design-tokens && npm run build -w @inventory/api-client && node scripts/build-quill-assets.mjs",
     "dev:web": "npm run dev -w @inventory/web",
     "dev:api": "npm run dev -w @inventory/api",
     "dev:mobile": "npm run dev -w @inventory/mobile",
@@ -52,7 +52,12 @@
     "package:desktop:local": "node scripts/desktop-profile.mjs local-network",
     "db:seed:transactions": "node scripts/seed-transactions.mjs",
     "check:parity": "node scripts/check-parity.mjs",
-    "audit:ui": "node scripts/audit-ui.mjs"
+    "audit:ui": "node scripts/audit-ui.mjs",
+    "redesign:inventory": "node scripts/route-coverage.mjs && node scripts/redesign-components.mjs",
+    "redesign:baseline": "node scripts/redesign-baseline.mjs && node scripts/redesign-supplement.mjs && node scripts/redesign-performance.mjs",
+    "check:docs": "node scripts/check-docs.mjs",
+    "check:redesign-budget": "node scripts/redesign-budget.mjs",
+    "check:redesign": "node scripts/route-coverage.mjs --check && npm run check:docs"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

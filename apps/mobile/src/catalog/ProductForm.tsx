@@ -1,8 +1,13 @@
+import { ProductImages } from './ProductImages';
+import { ProductCategory } from './ProductCategory';
+import { RichTextEditor } from '../ui/RichTextEditor';
+import { SkuStatus } from './SkuStatus';
 import { FormSection } from '../ui/FormSection';
 import { Text } from '../ui/Themed';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View } from 'react-native';
-import { createProductSchema, editProductSchema } from '@inventory/contracts';
+import { saveProductDetails, watchProductSku, duplicateSkuMessage } from '@inventory/api-client';
+import type { ProductFieldErrors, SkuFeedback } from '@inventory/api-client';
 import type { Product, Category } from '@inventory/contracts';
 import type { createCatalogClient } from '@inventory/api-client';
 import { Action, Choice, choices, Field, styles } from '../organization/Controls';
@@ -15,26 +20,62 @@ export function ProductForm({
   cancel,
   onSaved,
   busy = false,
+  canCreateCategory = false,
 }: {
   product: Product | null;
   focusField?: string;
   busy?: boolean;
+  canCreateCategory?: boolean;
   categories: Category[];
   client: ReturnType<typeof createCatalogClient>;
   run: (work: () => Promise<unknown>) => void;
   cancel: () => void;
   onSaved?: (product: Product) => void;
 }) {
+  const [imageBusy, setImageBusy] = useState(false);
+  const [categoryBusy, setCategoryBusy] = useState(false);
   const [name, setName] = useState(product?.name ?? '');
   const [sku, setSku] = useState(product?.sku ?? '');
+  const [errors, setErrors] = useState<ProductFieldErrors>({});
+  const [feedback, setFeedback] = useState<SkuFeedback | null>(null);
+  useEffect(
+    () =>
+      watchProductSku(client, sku, product?.id, setFeedback, {
+        controller: new AbortController(),
+        schedule(work) {
+          const timer = setTimeout(work, 350);
+          return () => clearTimeout(timer);
+        },
+      }),
+    [client, sku, product?.id],
+  );
+  const skuError =
+    feedback?.value === sku && feedback.state === 'duplicate' ? duplicateSkuMessage : errors.sku;
   const [description, setDescription] = useState(product?.description ?? '');
-  const [images, setImages] = useState(product?.images.join('\n') ?? '');
+  const [images, setImages] = useState(product?.images ?? []);
   const [barcodes, setBarcodes] = useState(product?.barcodes.join('\n') ?? '');
   const [codes, setCodes] = useState(product?.alternativeCodes.join('\n') ?? '');
   const [categoryId, setCategoryId] = useState(product?.categoryId ?? '');
   const [state, setState] = useState<string>(product?.state ?? 'active');
   const [type, setType] = useState<string>(product?.type ?? 'physical');
   const [track, setTrack] = useState(product?.trackInventory === false ? 'no' : 'yes');
+  const [basicsOpen, setBasicsOpen] = useState(true);
+  const [codesOpen, setCodesOpen] = useState(!!focusField);
+  const [settingsOpen, setSettingsOpen] = useState(!!focusField);
+  const showErrors = (next: ProductFieldErrors) => {
+    setErrors(next);
+    if (next.name || next.sku || next.description) setBasicsOpen(true);
+    if (next.images || next.barcodes || next.alternativeCodes) setCodesOpen(true);
+    if (next.categoryId || next.type || next.trackInventory || next.state) setSettingsOpen(true);
+  };
+  const update = (field: string, set: (value: string) => void) => (value: string) => {
+    set(value);
+    setErrors((previous) => {
+      const next = { ...previous };
+      delete next[field];
+      return next;
+    });
+  };
   return (
     <View style={styles.group}>
       {focusField && (
@@ -43,89 +84,142 @@ export function ProductForm({
         </Text>
       )}
       <Text accessibilityRole="header">{product ? 'Edit product' : 'Create product'}</Text>
-      <FormSection defaultOpen title="Product basics">
+      <FormSection
+        open={basicsOpen || !!skuError}
+        onOpenChange={setBasicsOpen}
+        title="Product basics"
+      >
         <Field
           autoFocus={focusField === 'title'}
+          error={errors.name ?? ''}
           label="Product name"
           value={name}
-          onChange={setName}
+          onChange={update('name', setName)}
         />
-        <Field autoFocus={focusField === 'sku'} label="SKU" value={sku} onChange={setSku} />
         <Field
-          autoFocus={focusField === 'description'}
+          error={skuError ?? ''}
+          trailing={<SkuStatus key={sku} feedback={feedback?.value === sku ? feedback : null} />}
+          errorAccessory={
+            <SkuStatus key={sku} preview feedback={feedback?.value === sku ? feedback : null} />
+          }
+          autoFocus={focusField === 'sku'}
+          label="SKU"
+          value={sku}
+          onChange={(value) => {
+            setSku(value);
+            setErrors((previous) => ({ ...previous, sku: '' }));
+          }}
+        />
+        {!skuError &&
+          feedback?.value === sku &&
+          feedback.state !== 'duplicate' &&
+          feedback.state !== 'available' && (
+            <Text accessibilityLiveRegion="polite" tone="muted">
+              {feedback.state === 'checking'
+                ? 'Checking SKU…'
+                : 'SKU check unavailable. It will be checked when saving.'}
+            </Text>
+          )}
+        <RichTextEditor
           label="Description"
           value={description}
-          onChange={setDescription}
-          maxLength={2000}
-          multiline
+          onChange={update('description', setDescription)}
+          error={errors.description ?? ''}
         />
       </FormSection>
-      <FormSection defaultOpen={!!focusField} title="Images and product codes">
-        <Field
-          autoFocus={focusField?.startsWith('images') ?? false}
-          label="Image HTTPS URLs (one per line)"
+      <FormSection open={codesOpen} onOpenChange={setCodesOpen} title="Images and product codes">
+        <ProductImages
+          upload={client.uploadImage}
+          onBusyChange={setImageBusy}
           value={images}
-          onChange={setImages}
-          maxLength={2504}
-          multiline
+          disabled={busy}
+          onChange={(value) => {
+            setImages(value);
+            setErrors((old) => ({ ...old, images: '' }));
+          }}
         />
+        {!!errors.images && <Text accessibilityRole="alert">{errors.images}</Text>}
         <Field
+          error={errors.barcodes ?? ''}
           label="Barcodes (one per line)"
           value={barcodes}
-          onChange={setBarcodes}
+          onChange={update('barcodes', setBarcodes)}
           maxLength={1299}
           multiline
         />
         <Field
+          error={errors.alternativeCodes ?? ''}
           label="Alternative codes (one per line)"
           value={codes}
-          onChange={setCodes}
+          onChange={update('alternativeCodes', setCodes)}
           maxLength={1299}
           multiline
         />
       </FormSection>
-      <FormSection defaultOpen={!!focusField} title="Category and inventory settings">
-        <Choice
-          label="Category"
+      <FormSection
+        open={settingsOpen}
+        onOpenChange={setSettingsOpen}
+        title="Category and inventory settings"
+      >
+        <ProductCategory
+          onBusyChange={setCategoryBusy}
+          categories={categories}
+          client={client}
           value={categoryId}
-          onChange={setCategoryId}
-          options={[
-            { value: '', label: 'Uncategorized' },
-            ...categories
-              .filter((c) => c.state === 'active' || c.id === categoryId)
-              .map((c) => ({ value: c.id, label: c.name })),
-          ]}
+          onChange={update('categoryId', setCategoryId)}
+          canCreate={canCreateCategory}
+          disabled={busy}
         />
+        {!!errors.categoryId && (
+          <Text accessibilityRole="alert" tone="error">
+            {errors.categoryId}
+          </Text>
+        )}
         <Choice
           label="Product type"
           value={type}
-          onChange={setType}
+          onChange={update('type', setType)}
           options={choices(['physical', 'service'])}
         />
+        {!!errors.type && (
+          <Text accessibilityRole="alert" tone="error">
+            {errors.type}
+          </Text>
+        )}
         <Choice
           label="Track inventory"
           value={track}
-          onChange={setTrack}
+          onChange={update('trackInventory', setTrack)}
           options={choices(['yes', 'no'])}
         />
+        {!!errors.trackInventory && (
+          <Text accessibilityRole="alert" tone="error">
+            {errors.trackInventory}
+          </Text>
+        )}
         <Choice
           label="Product status"
           value={state}
-          onChange={setState}
+          onChange={update('state', setState)}
           options={choices(['active', 'inactive', 'archived'])}
         />
+        {!!errors.state && (
+          <Text accessibilityRole="alert" tone="error">
+            {errors.state}
+          </Text>
+        )}
         <Text>
-          Services must not track inventory. Archiving is permanent. Stock quantities use inventory
-          movements.
+          Services must not track inventory. Archiving is permanent. Use the Quantity step to record
+          stock changes.
         </Text>
       </FormSection>
       <Text tone="muted">
-        Save details first, then set the selling price. Existing receipts keep their original
-        prices.
+        Save details, then continue to Price & units and Quantity. Each step confirms its own
+        changes.
       </Text>
       <Action
-        label={product || !onSaved ? 'Save product' : 'Save and set price'}
-        disabled={busy}
+        label={product || !onSaved ? 'Save product' : 'Save details & continue'}
+        disabled={busy || categoryBusy || imageBusy || !!skuError}
         onPress={() =>
           run(async () => {
             const split = (v: string) =>
@@ -137,7 +231,7 @@ export function ProductForm({
               name,
               sku,
               description,
-              images: split(images),
+              images,
               barcodes: split(barcodes),
               alternativeCodes: split(codes),
               categoryId: categoryId || null,
@@ -145,12 +239,7 @@ export function ProductForm({
               type,
               trackInventory: track === 'yes',
             };
-            const result = product
-              ? await client.edit(
-                  product.id,
-                  editProductSchema.parse({ ...input, version: product.version }),
-                )
-              : await client.create(createProductSchema.parse(input));
+            const result = await saveProductDetails(client, product, input, showErrors);
             if (onSaved) onSaved(result);
             else cancel();
             return result;

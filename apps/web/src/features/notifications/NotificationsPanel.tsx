@@ -1,3 +1,4 @@
+import { IconButton } from '@/components/common/IconButton';
 import { FilterButton } from '@/components/common/FilterButton';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/Popover';
 import { SearchControl } from '@/components/common/SearchControl';
@@ -111,15 +112,12 @@ export function NotificationsPanel({ business }: { business: Business }) {
             </Select>
           </PopoverContent>
         </Popover>
-        <Button
+        <IconButton
+          label="Refresh notifications"
+          icon={RefreshCw}
           disabled={state.busy}
           onClick={() => void model.run()}
-          variant="ghost"
-          size="icon"
-          aria-label="Refresh notifications"
-        >
-          <RefreshCw />
-        </Button>
+        />
       </div>
       {state.busy && <LoadingState message="Loading notifications…" />}
       {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
@@ -142,6 +140,8 @@ export function NotificationsPanel({ business }: { business: Business }) {
             items={state.data.inbox.notifications}
             busy={state.busy}
             timeZone={business.timeZone ?? 'UTC'}
+            onUnread={(id) => void model.run(() => client.unread(id))}
+            onDismiss={(id) => void model.run(() => client.dismiss(id))}
             onRead={(id) => void model.run(() => client.read(id))}
           />
           <div className="flex flex-wrap gap-2">

@@ -40,7 +40,6 @@ function ProfileForm({ policy, editable }: { policy: PolicyRecord; editable: boo
             values: {
               ...policy.values,
               company: parsed.data,
-              defaults: { ...policy.values.defaults, accent: parsed.data.palette[0]! },
             },
           },
           false,
@@ -50,8 +49,7 @@ function ProfileForm({ policy, editable }: { policy: PolicyRecord; editable: boo
       <div>
         <h2>Company profile</h2>
         <p className="text-muted-foreground">
-          Business contact and branding details. The first palette color is the business default;
-          personal preferences remain respected.
+          Business contact details and logo. Manage your personal appearance in Preferences.
         </p>
       </div>
       {(error || state.message) && <p role="alert">{error || state.message}</p>}
@@ -120,31 +118,6 @@ function ProfileForm({ policy, editable }: { policy: PolicyRecord; editable: boo
             </label>
           ))}
         </div>
-        <fieldset>
-          <legend>Business palette</legend>
-          <div className="compact-palette">
-            {(['default', 'teal', 'violet', 'rose', 'amber'] as const).map((color) => (
-              <button
-                type="button"
-                key={color}
-                data-palette={color}
-                aria-label={`Brand ${color}`}
-                title={color}
-                aria-pressed={profile.palette.includes(color)}
-                onClick={() =>
-                  setProfile({
-                    ...profile,
-                    palette: profile.palette.includes(color)
-                      ? profile.palette.filter((c) => c !== color)
-                      : [...profile.palette, color],
-                  })
-                }
-              >
-                {profile.palette.includes(color) ? '✓' : ''}
-              </button>
-            ))}
-          </div>
-        </fieldset>
         {editable && (
           <Button type="submit" disabled={state.busy}>
             Save company profile

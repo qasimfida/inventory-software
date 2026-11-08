@@ -94,6 +94,8 @@ test('system appearance follows OS changes and explicit choices stay view-local'
 }) => {
   await page.emulateMedia({ colorScheme: 'dark' });
   await page.goto('/#/design-system');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await chooseSelect(page, 'Appearance', 'system');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await chooseSelect(page, 'Appearance', 'light');
   await page.emulateMedia({ colorScheme: 'light' });

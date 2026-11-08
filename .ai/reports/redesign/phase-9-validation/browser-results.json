@@ -1,0 +1,5657 @@
+{
+  "results": [
+    {
+      "path": "/auth/forgot",
+      "width": 320,
+      "theme": "light",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/forgot",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-auth-forgot.png"
+    },
+    {
+      "path": "/auth/invitation",
+      "width": 320,
+      "theme": "light",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/invitation",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-auth-invitation.png"
+    },
+    {
+      "path": "/auth/link",
+      "width": 320,
+      "theme": "light",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/link",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-auth-link.png"
+    },
+    {
+      "path": "/auth/login",
+      "width": 320,
+      "theme": "light",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/login",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-auth-login.png"
+    },
+    {
+      "path": "/auth/reset",
+      "width": 320,
+      "theme": "light",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/reset",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-auth-reset.png"
+    },
+    {
+      "path": "/",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/dashboard",
+      "headings": [
+        "Overview",
+        "Welcome back"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-root.png",
+      "status": "captured"
+    },
+    {
+      "path": "/accounting",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/accounting",
+      "headings": [
+        "Accounting"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-accounting.png",
+      "status": "captured"
+    },
+    {
+      "path": "/admin",
+      "width": 320,
+      "theme": "light",
+      "role": "superadmin",
+      "scenario": "normal",
+      "finalHash": "#/admin",
+      "headings": [
+        "Platform overview",
+        "Platform overview",
+        "Business registrations"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-admin.png",
+      "status": "captured"
+    },
+    {
+      "path": "/admin/businesses",
+      "width": 320,
+      "theme": "light",
+      "role": "superadmin",
+      "scenario": "normal",
+      "finalHash": "#/admin/businesses",
+      "headings": [
+        "Registered businesses",
+        "Registered businesses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-admin-businesses.png",
+      "status": "captured"
+    },
+    {
+      "path": "/cash",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/cash",
+      "headings": [
+        "Cash shifts"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-cash.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-catalog.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog/:id",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Product details",
+        "Oak dining chair · Natural 1"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-catalog-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/categories",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/categories",
+      "headings": [
+        "Categories"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-categories.png",
+      "status": "captured"
+    },
+    {
+      "path": "/customers",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/customers",
+      "headings": [
+        "Customers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-customers.png",
+      "status": "captured"
+    },
+    {
+      "path": "/dashboard",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/dashboard",
+      "headings": [
+        "Overview",
+        "Welcome back"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-dashboard.png",
+      "status": "captured"
+    },
+    {
+      "path": "/design-system",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/design-system",
+      "headings": [
+        "Design system",
+        "Component library",
+        "Tokens and appearance",
+        "Actions, status and common components",
+        "Preference controls",
+        "Inventory controls",
+        "Navigation, drawers and record views",
+        "Data presentation",
+        "Warehouse and offline helpers",
+        "Form controls",
+        "Application feedback",
+        "Semantic styles"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-design-system.png",
+      "status": "captured"
+    },
+    {
+      "path": "/integrations",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/integrations",
+      "headings": [
+        "Integrations & help",
+        "Provider status",
+        "Available workspace sections"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-integrations.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/inventory",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-inventory.png",
+      "status": "captured"
+    },
+    {
+      "path": "/logs",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/logs",
+      "headings": [
+        "Logs",
+        "Business activity"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-logs.png",
+      "status": "captured"
+    },
+    {
+      "path": "/more",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "status": "not-applicable",
+      "reason": "Native-only route; mobile web width is not native qualification"
+    },
+    {
+      "path": "/notifications",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/notifications",
+      "headings": [
+        "Notifications & approvals",
+        "Notifications and approvals"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-notifications.png",
+      "status": "captured"
+    },
+    {
+      "path": "/offline",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/offline",
+      "headings": [
+        "Prepared offline register"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-offline.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store",
+      "headings": [
+        "Online store",
+        "Online store overview"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-overview"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-overview\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products",
+      "headings": [
+        "Products",
+        "Online products"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-products"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-products\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-products.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products/:id",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Workspace",
+        "Online products",
+        "Online product details"
+      ],
+      "alerts": [
+        "You no longer have access to this online store. Ask an administrator to review your permissions."
+      ],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-products-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products/add",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products/add",
+      "headings": [
+        "Add products",
+        "Online products",
+        "Add online products"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-products-add.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings",
+      "headings": [
+        "Settings",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-settings.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/fulfillment",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/fulfillment",
+      "headings": [
+        "Fulfillment & payments",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-settings-fulfillment.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/general",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/general",
+      "headings": [
+        "General",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-settings-general.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/images",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/images",
+      "headings": [
+        "Image sources",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-settings-images.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/policies",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/policies",
+      "headings": [
+        "Policies",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-settings-policies.png",
+      "status": "captured"
+    },
+    {
+      "path": "/payables",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/payables",
+      "headings": [
+        "Supplier balances"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-payables.png",
+      "status": "captured"
+    },
+    {
+      "path": "/pos",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/pos",
+      "headings": [
+        "Point of sale"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-pos.png",
+      "status": "captured"
+    },
+    {
+      "path": "/purchasing",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/purchasing",
+      "headings": [
+        "Purchasing & suppliers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-purchasing.png",
+      "status": "captured"
+    },
+    {
+      "path": "/reports",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/reports",
+      "headings": [
+        "Reports",
+        "Sales"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-reports.png",
+      "status": "captured"
+    },
+    {
+      "path": "/sales",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/sales",
+      "headings": [
+        "Sales & receipts"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-sales.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/profile",
+      "headings": [
+        "Profile",
+        "Profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/audit",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/audit",
+      "headings": [
+        "Audit history",
+        "Audit history"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings-audit.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/business",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/business",
+      "headings": [
+        "Business",
+        "Business settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings-business.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/company",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/company",
+      "headings": [
+        "Company profile",
+        "Company profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings-company.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/device",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/device",
+      "headings": [
+        "Device & Offline",
+        "Device & Offline"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings-device.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/locations",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/locations",
+      "headings": [
+        "Stores & terminals"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings-locations.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/notifications",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/notifications",
+      "headings": [
+        "Security notifications"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings-notifications.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/preferences",
+      "headings": [
+        "Preferences"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings-preferences.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/profile",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/profile",
+      "headings": [
+        "Profile",
+        "Profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings-profile.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/security",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/security",
+      "headings": [
+        "Security",
+        "Sessions & security"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings-security.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/staff",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/staff",
+      "headings": [
+        "Expenses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings-staff.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/users",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/team",
+      "headings": [
+        "Team & permissions",
+        "Staff and salaries"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-settings-users.png",
+      "status": "captured"
+    },
+    {
+      "path": "/staff",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/staff",
+      "headings": [
+        "Expenses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-staff.png",
+      "status": "captured"
+    },
+    {
+      "path": "/storage",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storage",
+      "headings": [
+        "Warehouse & storage"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-storage.png",
+      "status": "captured"
+    },
+    {
+      "path": "/storefront",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storefront",
+      "headings": [
+        "Online store"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-storefront.png",
+      "status": "captured"
+    },
+    {
+      "path": "/team",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/team",
+      "headings": [
+        "Team & permissions",
+        "Staff and salaries"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-team.png",
+      "status": "captured"
+    },
+    {
+      "path": "/trading",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/trading",
+      "headings": [
+        "Business trading"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-trading.png",
+      "status": "captured"
+    },
+    {
+      "path": "/transfers",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/transfers",
+      "headings": [
+        "Transfers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-transfers.png",
+      "status": "captured"
+    },
+    {
+      "path": "/warehouse",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/warehouse",
+      "headings": [
+        "Stock counts & scanning"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-warehouse.png",
+      "status": "captured"
+    },
+    {
+      "path": "/warehouse-view",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storage",
+      "headings": [
+        "Warehouse & storage"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-warehouse-view.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "light",
+      "scenario": "empty",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-inventory-empty.png",
+      "alerts": []
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "light",
+      "scenario": "error",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-inventory-error.png",
+      "alerts": [
+        "Unable to complete the request. Check your connection and review transaction status before retrying."
+      ]
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "light",
+      "scenario": "denied",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-inventory-denied.png",
+      "alerts": []
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "light",
+      "scenario": "offline",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-inventory-offline.png",
+      "alerts": [
+        "Unable to load data. Reconnect and retry."
+      ]
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "light",
+      "scenario": "slow",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-inventory-slow.png",
+      "alerts": []
+    },
+    {
+      "path": "/auth/forgot",
+      "width": 320,
+      "theme": "dark",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/forgot",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-auth-forgot.png"
+    },
+    {
+      "path": "/auth/invitation",
+      "width": 320,
+      "theme": "dark",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/invitation",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-auth-invitation.png"
+    },
+    {
+      "path": "/auth/link",
+      "width": 320,
+      "theme": "dark",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/link",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-auth-link.png"
+    },
+    {
+      "path": "/auth/login",
+      "width": 320,
+      "theme": "dark",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/login",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-auth-login.png"
+    },
+    {
+      "path": "/auth/reset",
+      "width": 320,
+      "theme": "dark",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/reset",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-auth-reset.png"
+    },
+    {
+      "path": "/",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/dashboard",
+      "headings": [
+        "Overview",
+        "Welcome back"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-root.png",
+      "status": "captured"
+    },
+    {
+      "path": "/accounting",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/accounting",
+      "headings": [
+        "Accounting"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-accounting.png",
+      "status": "captured"
+    },
+    {
+      "path": "/admin",
+      "width": 320,
+      "theme": "dark",
+      "role": "superadmin",
+      "scenario": "normal",
+      "finalHash": "#/admin",
+      "headings": [
+        "Platform overview",
+        "Platform overview",
+        "Business registrations"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-admin.png",
+      "status": "captured"
+    },
+    {
+      "path": "/admin/businesses",
+      "width": 320,
+      "theme": "dark",
+      "role": "superadmin",
+      "scenario": "normal",
+      "finalHash": "#/admin/businesses",
+      "headings": [
+        "Registered businesses",
+        "Registered businesses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-admin-businesses.png",
+      "status": "captured"
+    },
+    {
+      "path": "/cash",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/cash",
+      "headings": [
+        "Cash shifts"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-cash.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_cv_-trigger-grid"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"_r_cl_\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-catalog.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog/:id",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Product details",
+        "Oak dining chair · Natural 1"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-catalog-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/categories",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/categories",
+      "headings": [
+        "Categories"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-categories.png",
+      "status": "captured"
+    },
+    {
+      "path": "/customers",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/customers",
+      "headings": [
+        "Customers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-customers.png",
+      "status": "captured"
+    },
+    {
+      "path": "/dashboard",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/dashboard",
+      "headings": [
+        "Overview",
+        "Welcome back"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-dashboard.png",
+      "status": "captured"
+    },
+    {
+      "path": "/design-system",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/design-system",
+      "headings": [
+        "Design system",
+        "Component library",
+        "Tokens and appearance",
+        "Actions, status and common components",
+        "Preference controls",
+        "Inventory controls",
+        "Navigation, drawers and record views",
+        "Data presentation",
+        "Warehouse and offline helpers",
+        "Form controls",
+        "Application feedback",
+        "Semantic styles"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-design-system.png",
+      "status": "captured"
+    },
+    {
+      "path": "/integrations",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/integrations",
+      "headings": [
+        "Integrations & help",
+        "Provider status",
+        "Available workspace sections"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-integrations.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/inventory",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-inventory.png",
+      "status": "captured"
+    },
+    {
+      "path": "/logs",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/logs",
+      "headings": [
+        "Logs",
+        "Business activity"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-logs.png",
+      "status": "captured"
+    },
+    {
+      "path": "/more",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "status": "not-applicable",
+      "reason": "Native-only route; mobile web width is not native qualification"
+    },
+    {
+      "path": "/notifications",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/notifications",
+      "headings": [
+        "Notifications & approvals",
+        "Notifications and approvals"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-notifications.png",
+      "status": "captured"
+    },
+    {
+      "path": "/offline",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/offline",
+      "headings": [
+        "Prepared offline register"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-offline.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store",
+      "headings": [
+        "Online store",
+        "Online store overview"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-overview"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-overview\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products",
+      "headings": [
+        "Products",
+        "Online products"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-products"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-products\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-products.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products/:id",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Workspace",
+        "Online products",
+        "Online product details"
+      ],
+      "alerts": [
+        "You no longer have access to this online store. Ask an administrator to review your permissions."
+      ],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-products-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products/add",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products/add",
+      "headings": [
+        "Add products",
+        "Online products",
+        "Add online products"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-products-add.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings",
+      "headings": [
+        "Settings",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-settings.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/fulfillment",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/fulfillment",
+      "headings": [
+        "Fulfillment & payments",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-settings-fulfillment.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/general",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/general",
+      "headings": [
+        "General",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-settings-general.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/images",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/images",
+      "headings": [
+        "Image sources",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-settings-images.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/policies",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/policies",
+      "headings": [
+        "Policies",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-settings-policies.png",
+      "status": "captured"
+    },
+    {
+      "path": "/payables",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/payables",
+      "headings": [
+        "Supplier balances"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-payables.png",
+      "status": "captured"
+    },
+    {
+      "path": "/pos",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/pos",
+      "headings": [
+        "Point of sale"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-pos.png",
+      "status": "captured"
+    },
+    {
+      "path": "/purchasing",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/purchasing",
+      "headings": [
+        "Purchasing & suppliers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-purchasing.png",
+      "status": "captured"
+    },
+    {
+      "path": "/reports",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/reports",
+      "headings": [
+        "Reports",
+        "Sales"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-reports.png",
+      "status": "captured"
+    },
+    {
+      "path": "/sales",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/sales",
+      "headings": [
+        "Sales & receipts"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-sales.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/profile",
+      "headings": [
+        "Profile",
+        "Profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/audit",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/audit",
+      "headings": [
+        "Audit history",
+        "Audit history"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings-audit.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/business",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/business",
+      "headings": [
+        "Business",
+        "Business settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings-business.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/company",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/company",
+      "headings": [
+        "Company profile",
+        "Company profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings-company.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/device",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/device",
+      "headings": [
+        "Device & Offline",
+        "Device & Offline"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings-device.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/locations",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/locations",
+      "headings": [
+        "Stores & terminals"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings-locations.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/notifications",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/notifications",
+      "headings": [
+        "Security notifications"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings-notifications.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/preferences",
+      "headings": [
+        "Preferences"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings-preferences.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/profile",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/profile",
+      "headings": [
+        "Profile",
+        "Profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings-profile.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/security",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/security",
+      "headings": [
+        "Security",
+        "Sessions & security"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings-security.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/staff",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/staff",
+      "headings": [
+        "Expenses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings-staff.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/users",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/team",
+      "headings": [
+        "Team & permissions",
+        "Staff and salaries"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-settings-users.png",
+      "status": "captured"
+    },
+    {
+      "path": "/staff",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/staff",
+      "headings": [
+        "Expenses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-staff.png",
+      "status": "captured"
+    },
+    {
+      "path": "/storage",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storage",
+      "headings": [
+        "Warehouse & storage"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-storage.png",
+      "status": "captured"
+    },
+    {
+      "path": "/storefront",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storefront",
+      "headings": [
+        "Online store"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-storefront.png",
+      "status": "captured"
+    },
+    {
+      "path": "/team",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/team",
+      "headings": [
+        "Team & permissions",
+        "Staff and salaries"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-team.png",
+      "status": "captured"
+    },
+    {
+      "path": "/trading",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/trading",
+      "headings": [
+        "Business trading"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-trading.png",
+      "status": "captured"
+    },
+    {
+      "path": "/transfers",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/transfers",
+      "headings": [
+        "Transfers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-transfers.png",
+      "status": "captured"
+    },
+    {
+      "path": "/warehouse",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/warehouse",
+      "headings": [
+        "Stock counts & scanning"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-warehouse.png",
+      "status": "captured"
+    },
+    {
+      "path": "/warehouse-view",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storage",
+      "headings": [
+        "Warehouse & storage"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-warehouse-view.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "empty",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-inventory-empty.png",
+      "alerts": []
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "error",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-inventory-error.png",
+      "alerts": [
+        "Unable to complete the request. Check your connection and review transaction status before retrying."
+      ]
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "denied",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-inventory-denied.png",
+      "alerts": []
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "offline",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-inventory-offline.png",
+      "alerts": [
+        "Unable to load data. Reconnect and retry."
+      ]
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "slow",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-inventory-slow.png",
+      "alerts": []
+    },
+    {
+      "path": "/auth/forgot",
+      "width": 1440,
+      "theme": "light",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/forgot",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-auth-forgot.png"
+    },
+    {
+      "path": "/auth/invitation",
+      "width": 1440,
+      "theme": "light",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/invitation",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-auth-invitation.png"
+    },
+    {
+      "path": "/auth/link",
+      "width": 1440,
+      "theme": "light",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/link",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-auth-link.png"
+    },
+    {
+      "path": "/auth/login",
+      "width": 1440,
+      "theme": "light",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/login",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-auth-login.png"
+    },
+    {
+      "path": "/auth/reset",
+      "width": 1440,
+      "theme": "light",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/reset",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-auth-reset.png"
+    },
+    {
+      "path": "/",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/dashboard",
+      "headings": [
+        "Overview",
+        "Welcome back"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-root.png",
+      "status": "captured"
+    },
+    {
+      "path": "/accounting",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/accounting",
+      "headings": [
+        "Accounting"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-accounting.png",
+      "status": "captured"
+    },
+    {
+      "path": "/admin",
+      "width": 1440,
+      "theme": "light",
+      "role": "superadmin",
+      "scenario": "normal",
+      "finalHash": "#/admin",
+      "headings": [
+        "Platform overview",
+        "Platform overview",
+        "Business registrations"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-admin.png",
+      "status": "captured"
+    },
+    {
+      "path": "/admin/businesses",
+      "width": 1440,
+      "theme": "light",
+      "role": "superadmin",
+      "scenario": "normal",
+      "finalHash": "#/admin/businesses",
+      "headings": [
+        "Registered businesses",
+        "Registered businesses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-admin-businesses.png",
+      "status": "captured"
+    },
+    {
+      "path": "/cash",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/cash",
+      "headings": [
+        "Cash shifts"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-cash.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_cv_-trigger-grid"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"_r_cl_\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-catalog.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog/:id",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Product details",
+        "Oak dining chair · Natural 1"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-catalog-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/categories",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/categories",
+      "headings": [
+        "Categories"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-categories.png",
+      "status": "captured"
+    },
+    {
+      "path": "/customers",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/customers",
+      "headings": [
+        "Customers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-customers.png",
+      "status": "captured"
+    },
+    {
+      "path": "/dashboard",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/dashboard",
+      "headings": [
+        "Overview",
+        "Welcome back"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-dashboard.png",
+      "status": "captured"
+    },
+    {
+      "path": "/design-system",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/design-system",
+      "headings": [
+        "Design system",
+        "Component library",
+        "Tokens and appearance",
+        "Actions, status and common components",
+        "Preference controls",
+        "Inventory controls",
+        "Navigation, drawers and record views",
+        "Data presentation",
+        "Warehouse and offline helpers",
+        "Form controls",
+        "Application feedback",
+        "Semantic styles"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-design-system.png",
+      "status": "captured"
+    },
+    {
+      "path": "/integrations",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/integrations",
+      "headings": [
+        "Integrations & help",
+        "Provider status",
+        "Available workspace sections"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-integrations.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/inventory",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-inventory.png",
+      "status": "captured"
+    },
+    {
+      "path": "/logs",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/logs",
+      "headings": [
+        "Logs",
+        "Business activity"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-logs.png",
+      "status": "captured"
+    },
+    {
+      "path": "/more",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "status": "not-applicable",
+      "reason": "Native-only route; mobile web width is not native qualification"
+    },
+    {
+      "path": "/notifications",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/notifications",
+      "headings": [
+        "Notifications & approvals",
+        "Notifications and approvals"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-notifications.png",
+      "status": "captured"
+    },
+    {
+      "path": "/offline",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/offline",
+      "headings": [
+        "Prepared offline register"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-offline.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store",
+      "headings": [
+        "Online store",
+        "Online store overview"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-online-store.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products",
+      "headings": [
+        "Products",
+        "Online products"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-online-store-products.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products/:id",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Workspace",
+        "Online products",
+        "Online product details"
+      ],
+      "alerts": [
+        "You no longer have access to this online store. Ask an administrator to review your permissions."
+      ],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-online-store-products-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products/add",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products/add",
+      "headings": [
+        "Add products",
+        "Online products",
+        "Add online products"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-online-store-products-add.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings",
+      "headings": [
+        "Settings",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-online-store-settings.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/fulfillment",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/fulfillment",
+      "headings": [
+        "Fulfillment & payments",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-online-store-settings-fulfillment.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/general",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/general",
+      "headings": [
+        "General",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-online-store-settings-general.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/images",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/images",
+      "headings": [
+        "Image sources",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-online-store-settings-images.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/policies",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/policies",
+      "headings": [
+        "Policies",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-online-store-settings-policies.png",
+      "status": "captured"
+    },
+    {
+      "path": "/payables",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/payables",
+      "headings": [
+        "Supplier balances"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-payables.png",
+      "status": "captured"
+    },
+    {
+      "path": "/pos",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/pos",
+      "headings": [
+        "Point of sale"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-pos.png",
+      "status": "captured"
+    },
+    {
+      "path": "/purchasing",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/purchasing",
+      "headings": [
+        "Purchasing & suppliers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-purchasing.png",
+      "status": "captured"
+    },
+    {
+      "path": "/reports",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/reports",
+      "headings": [
+        "Reports",
+        "Sales"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-reports.png",
+      "status": "captured"
+    },
+    {
+      "path": "/sales",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/sales",
+      "headings": [
+        "Sales & receipts"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-sales.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/profile",
+      "headings": [
+        "Profile",
+        "Profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/audit",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/audit",
+      "headings": [
+        "Audit history",
+        "Audit history"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings-audit.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/business",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/business",
+      "headings": [
+        "Business",
+        "Business settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings-business.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/company",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/company",
+      "headings": [
+        "Company profile",
+        "Company profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings-company.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/device",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/device",
+      "headings": [
+        "Device & Offline",
+        "Device & Offline"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings-device.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/locations",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/locations",
+      "headings": [
+        "Stores & terminals"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings-locations.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/notifications",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/notifications",
+      "headings": [
+        "Security notifications"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings-notifications.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/preferences",
+      "headings": [
+        "Preferences"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings-preferences.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/profile",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/profile",
+      "headings": [
+        "Profile",
+        "Profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings-profile.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/security",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/security",
+      "headings": [
+        "Security",
+        "Sessions & security"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings-security.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/staff",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/staff",
+      "headings": [
+        "Expenses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings-staff.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/users",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/team",
+      "headings": [
+        "Team & permissions",
+        "Staff and salaries"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-settings-users.png",
+      "status": "captured"
+    },
+    {
+      "path": "/staff",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/staff",
+      "headings": [
+        "Expenses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-staff.png",
+      "status": "captured"
+    },
+    {
+      "path": "/storage",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storage",
+      "headings": [
+        "Warehouse & storage"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-storage.png",
+      "status": "captured"
+    },
+    {
+      "path": "/storefront",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storefront",
+      "headings": [
+        "Online store"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-storefront.png",
+      "status": "captured"
+    },
+    {
+      "path": "/team",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/team",
+      "headings": [
+        "Team & permissions",
+        "Staff and salaries"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-team.png",
+      "status": "captured"
+    },
+    {
+      "path": "/trading",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/trading",
+      "headings": [
+        "Business trading"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-trading.png",
+      "status": "captured"
+    },
+    {
+      "path": "/transfers",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/transfers",
+      "headings": [
+        "Transfers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-transfers.png",
+      "status": "captured"
+    },
+    {
+      "path": "/warehouse",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/warehouse",
+      "headings": [
+        "Stock counts & scanning"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-warehouse.png",
+      "status": "captured"
+    },
+    {
+      "path": "/warehouse-view",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storage",
+      "headings": [
+        "Warehouse & storage"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-warehouse-view.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "empty",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-inventory-empty.png",
+      "alerts": []
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "error",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-inventory-error.png",
+      "alerts": [
+        "Unable to complete the request. Check your connection and review transaction status before retrying."
+      ]
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "denied",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-inventory-denied.png",
+      "alerts": []
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "offline",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-inventory-offline.png",
+      "alerts": [
+        "Unable to load data. Reconnect and retry."
+      ]
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "slow",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-inventory-slow.png",
+      "alerts": []
+    },
+    {
+      "path": "/auth/forgot",
+      "width": 1440,
+      "theme": "dark",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/forgot",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-auth-forgot.png"
+    },
+    {
+      "path": "/auth/invitation",
+      "width": 1440,
+      "theme": "dark",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/invitation",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-auth-invitation.png"
+    },
+    {
+      "path": "/auth/link",
+      "width": 1440,
+      "theme": "dark",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/link",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-auth-link.png"
+    },
+    {
+      "path": "/auth/login",
+      "width": 1440,
+      "theme": "dark",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/login",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-auth-login.png"
+    },
+    {
+      "path": "/auth/reset",
+      "width": 1440,
+      "theme": "dark",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/reset",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-auth-reset.png"
+    },
+    {
+      "path": "/",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/dashboard",
+      "headings": [
+        "Overview",
+        "Welcome back"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-root.png",
+      "status": "captured"
+    },
+    {
+      "path": "/accounting",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/accounting",
+      "headings": [
+        "Accounting"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-accounting.png",
+      "status": "captured"
+    },
+    {
+      "path": "/admin",
+      "width": 1440,
+      "theme": "dark",
+      "role": "superadmin",
+      "scenario": "normal",
+      "finalHash": "#/admin",
+      "headings": [
+        "Platform overview",
+        "Platform overview",
+        "Business registrations"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-admin.png",
+      "status": "captured"
+    },
+    {
+      "path": "/admin/businesses",
+      "width": 1440,
+      "theme": "dark",
+      "role": "superadmin",
+      "scenario": "normal",
+      "finalHash": "#/admin/businesses",
+      "headings": [
+        "Registered businesses",
+        "Registered businesses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-admin-businesses.png",
+      "status": "captured"
+    },
+    {
+      "path": "/cash",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/cash",
+      "headings": [
+        "Cash shifts"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-cash.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_cv_-trigger-grid"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"_r_cl_\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-catalog.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog/:id",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Product details",
+        "Oak dining chair · Natural 1"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-catalog-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/categories",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/categories",
+      "headings": [
+        "Categories"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-categories.png",
+      "status": "captured"
+    },
+    {
+      "path": "/customers",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/customers",
+      "headings": [
+        "Customers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-customers.png",
+      "status": "captured"
+    },
+    {
+      "path": "/dashboard",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/dashboard",
+      "headings": [
+        "Overview",
+        "Welcome back"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-dashboard.png",
+      "status": "captured"
+    },
+    {
+      "path": "/design-system",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/design-system",
+      "headings": [
+        "Design system",
+        "Component library",
+        "Tokens and appearance",
+        "Actions, status and common components",
+        "Preference controls",
+        "Inventory controls",
+        "Navigation, drawers and record views",
+        "Data presentation",
+        "Warehouse and offline helpers",
+        "Form controls",
+        "Application feedback",
+        "Semantic styles"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-design-system.png",
+      "status": "captured"
+    },
+    {
+      "path": "/integrations",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/integrations",
+      "headings": [
+        "Integrations & help",
+        "Provider status",
+        "Available workspace sections"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-integrations.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/inventory",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-inventory.png",
+      "status": "captured"
+    },
+    {
+      "path": "/logs",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/logs",
+      "headings": [
+        "Logs",
+        "Business activity"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-logs.png",
+      "status": "captured"
+    },
+    {
+      "path": "/more",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "status": "not-applicable",
+      "reason": "Native-only route; mobile web width is not native qualification"
+    },
+    {
+      "path": "/notifications",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/notifications",
+      "headings": [
+        "Notifications & approvals",
+        "Notifications and approvals"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-notifications.png",
+      "status": "captured"
+    },
+    {
+      "path": "/offline",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/offline",
+      "headings": [
+        "Prepared offline register"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-offline.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store",
+      "headings": [
+        "Online store",
+        "Online store overview"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-online-store.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products",
+      "headings": [
+        "Products",
+        "Online products"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-online-store-products.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products/:id",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Workspace",
+        "Online products",
+        "Online product details"
+      ],
+      "alerts": [
+        "You no longer have access to this online store. Ask an administrator to review your permissions."
+      ],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-online-store-products-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products/add",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products/add",
+      "headings": [
+        "Add products",
+        "Online products",
+        "Add online products"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-online-store-products-add.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings",
+      "headings": [
+        "Settings",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-online-store-settings.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/fulfillment",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/fulfillment",
+      "headings": [
+        "Fulfillment & payments",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-online-store-settings-fulfillment.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/general",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/general",
+      "headings": [
+        "General",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-online-store-settings-general.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/images",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/images",
+      "headings": [
+        "Image sources",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-online-store-settings-images.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/policies",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/policies",
+      "headings": [
+        "Policies",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-online-store-settings-policies.png",
+      "status": "captured"
+    },
+    {
+      "path": "/payables",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/payables",
+      "headings": [
+        "Supplier balances"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-payables.png",
+      "status": "captured"
+    },
+    {
+      "path": "/pos",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/pos",
+      "headings": [
+        "Point of sale"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-pos.png",
+      "status": "captured"
+    },
+    {
+      "path": "/purchasing",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/purchasing",
+      "headings": [
+        "Purchasing & suppliers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-purchasing.png",
+      "status": "captured"
+    },
+    {
+      "path": "/reports",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/reports",
+      "headings": [
+        "Reports",
+        "Sales"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-reports.png",
+      "status": "captured"
+    },
+    {
+      "path": "/sales",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/sales",
+      "headings": [
+        "Sales & receipts"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-sales.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/profile",
+      "headings": [
+        "Profile",
+        "Profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/audit",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/audit",
+      "headings": [
+        "Audit history",
+        "Audit history"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings-audit.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/business",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/business",
+      "headings": [
+        "Business",
+        "Business settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings-business.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/company",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/company",
+      "headings": [
+        "Company profile",
+        "Company profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings-company.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/device",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/device",
+      "headings": [
+        "Device & Offline",
+        "Device & Offline"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings-device.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/locations",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/locations",
+      "headings": [
+        "Stores & terminals"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings-locations.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/notifications",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/notifications",
+      "headings": [
+        "Security notifications"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings-notifications.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/preferences",
+      "headings": [
+        "Preferences"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings-preferences.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/profile",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/profile",
+      "headings": [
+        "Profile",
+        "Profile"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings-profile.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/security",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/settings/security",
+      "headings": [
+        "Security",
+        "Sessions & security"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings-security.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/staff",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/staff",
+      "headings": [
+        "Expenses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings-staff.png",
+      "status": "captured"
+    },
+    {
+      "path": "/settings/users",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/team",
+      "headings": [
+        "Team & permissions",
+        "Staff and salaries"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-settings-users.png",
+      "status": "captured"
+    },
+    {
+      "path": "/staff",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/staff",
+      "headings": [
+        "Expenses"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-staff.png",
+      "status": "captured"
+    },
+    {
+      "path": "/storage",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storage",
+      "headings": [
+        "Warehouse & storage"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-storage.png",
+      "status": "captured"
+    },
+    {
+      "path": "/storefront",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storefront",
+      "headings": [
+        "Online store"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-storefront.png",
+      "status": "captured"
+    },
+    {
+      "path": "/team",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/team",
+      "headings": [
+        "Team & permissions",
+        "Staff and salaries"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-team.png",
+      "status": "captured"
+    },
+    {
+      "path": "/trading",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/trading",
+      "headings": [
+        "Business trading"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-trading.png",
+      "status": "captured"
+    },
+    {
+      "path": "/transfers",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/transfers",
+      "headings": [
+        "Transfers"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-transfers.png",
+      "status": "captured"
+    },
+    {
+      "path": "/warehouse",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/warehouse",
+      "headings": [
+        "Stock counts & scanning"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-warehouse.png",
+      "status": "captured"
+    },
+    {
+      "path": "/warehouse-view",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/storage",
+      "headings": [
+        "Warehouse & storage"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-warehouse-view.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "empty",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-inventory-empty.png",
+      "alerts": []
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "error",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-inventory-error.png",
+      "alerts": [
+        "Unable to complete the request. Check your connection and review transaction status before retrying."
+      ]
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "denied",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-inventory-denied.png",
+      "alerts": []
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "offline",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-inventory-offline.png",
+      "alerts": [
+        "Unable to load data. Reconnect and retry."
+      ]
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "slow",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-inventory-slow.png",
+      "alerts": []
+    },
+    {
+      "path": "/pos",
+      "width": 844,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/844-light-pos.png",
+      "overflow": false
+    },
+    {
+      "path": "/inventory",
+      "width": 844,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/844-light-inventory.png",
+      "overflow": false
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 844,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/844-light-settings-preferences.png",
+      "overflow": false
+    },
+    {
+      "path": "/pos",
+      "width": 844,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/844-dark-pos.png",
+      "overflow": false
+    },
+    {
+      "path": "/inventory",
+      "width": 844,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/844-dark-inventory.png",
+      "overflow": false
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 844,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/844-dark-settings-preferences.png",
+      "overflow": false
+    },
+    {
+      "path": "/pos",
+      "width": 1024,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1024-light-pos.png",
+      "overflow": false
+    },
+    {
+      "path": "/inventory",
+      "width": 1024,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1024-light-inventory.png",
+      "overflow": false
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 1024,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1024-light-settings-preferences.png",
+      "overflow": false
+    },
+    {
+      "path": "/pos",
+      "width": 1024,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1024-dark-pos.png",
+      "overflow": false
+    },
+    {
+      "path": "/inventory",
+      "width": 1024,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1024-dark-inventory.png",
+      "overflow": false
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 1024,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1024-dark-settings-preferences.png",
+      "overflow": false
+    },
+    {
+      "path": "/pos",
+      "width": 1280,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1280-light-pos.png",
+      "overflow": false
+    },
+    {
+      "path": "/inventory",
+      "width": 1280,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1280-light-inventory.png",
+      "overflow": false
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 1280,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1280-light-settings-preferences.png",
+      "overflow": false
+    },
+    {
+      "path": "/pos",
+      "width": 1280,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1280-dark-pos.png",
+      "overflow": false
+    },
+    {
+      "path": "/inventory",
+      "width": 1280,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1280-dark-inventory.png",
+      "overflow": false
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 1280,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1280-dark-settings-preferences.png",
+      "overflow": false
+    },
+    {
+      "path": "/pos",
+      "width": 1920,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1920-light-pos.png",
+      "overflow": false
+    },
+    {
+      "path": "/inventory",
+      "width": 1920,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1920-light-inventory.png",
+      "overflow": false
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 1920,
+      "theme": "light",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1920-light-settings-preferences.png",
+      "overflow": false
+    },
+    {
+      "path": "/pos",
+      "width": 1920,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1920-dark-pos.png",
+      "overflow": false
+    },
+    {
+      "path": "/inventory",
+      "width": 1920,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1920-dark-inventory.png",
+      "overflow": false
+    },
+    {
+      "path": "/settings/preferences",
+      "width": 1920,
+      "theme": "dark",
+      "status": "captured",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1920-dark-settings-preferences.png",
+      "overflow": false
+    }
+  ],
+  "issues": [
+    {
+      "path": "/catalog",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-catalog.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog/:id",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Product details",
+        "Oak dining chair · Natural 1"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-catalog-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/inventory",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-inventory.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store",
+      "headings": [
+        "Online store",
+        "Online store overview"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-overview"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-overview\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products",
+      "headings": [
+        "Products",
+        "Online products"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-products"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-products\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-products.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings",
+      "headings": [
+        "Settings",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-settings.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/fulfillment",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/fulfillment",
+      "headings": [
+        "Fulfillment & payments",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-settings-fulfillment.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/general",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/general",
+      "headings": [
+        "General",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-settings-general.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/images",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/images",
+      "headings": [
+        "Image sources",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-settings-images.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/policies",
+      "width": 320,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/policies",
+      "headings": [
+        "Policies",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_up_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_up_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-light-online-store-settings-policies.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_cv_-trigger-grid"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"_r_cl_\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-catalog.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog/:id",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Product details",
+        "Oak dining chair · Natural 1"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-catalog-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/inventory",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-inventory.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store",
+      "headings": [
+        "Online store",
+        "Online store overview"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-overview"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-overview\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/products",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/products",
+      "headings": [
+        "Products",
+        "Online products"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-products"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-products\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-products.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings",
+      "headings": [
+        "Settings",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-settings.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/fulfillment",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/fulfillment",
+      "headings": [
+        "Fulfillment & payments",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-settings-fulfillment.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/general",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/general",
+      "headings": [
+        "General",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-settings-general.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/images",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/images",
+      "headings": [
+        "Image sources",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-settings-images.png",
+      "status": "captured"
+    },
+    {
+      "path": "/online-store/settings/policies",
+      "width": 320,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/online-store/settings/policies",
+      "headings": [
+        "Policies",
+        "Online store settings"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_vc_-trigger-settings"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"radix-_r_vc_-content-settings\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/320-dark-online-store-settings-policies.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_cv_-trigger-grid"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"_r_cl_\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-catalog.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog/:id",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Product details",
+        "Oak dining chair · Natural 1"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-catalog-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "light",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/inventory",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "light",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-light-inventory.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "help": "ARIA attributes must conform to valid values",
+          "nodes": [
+            {
+              "target": [
+                "#radix-_r_cv_-trigger-grid"
+              ],
+              "summary": "Fix all of the following:\n  Invalid ARIA attribute value: aria-controls=\"_r_cl_\""
+            }
+          ]
+        }
+      ],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-catalog.png",
+      "status": "captured"
+    },
+    {
+      "path": "/catalog/:id",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/catalog/d0000000-0000-4000-8000-000000000100",
+      "headings": [
+        "Product details",
+        "Oak dining chair · Natural 1"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-catalog-id.png",
+      "status": "captured"
+    },
+    {
+      "path": "/inventory",
+      "width": 1440,
+      "theme": "dark",
+      "role": "owner",
+      "scenario": "normal",
+      "finalHash": "#/inventory",
+      "headings": [
+        "Inventory",
+        "Products & pricing"
+      ],
+      "alerts": [],
+      "overflow": false,
+      "accessibility": [],
+      "actualTheme": "dark",
+      "runtimeErrors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED",
+        "Failed to load resource: net::ERR_FAILED"
+      ],
+      "screenshot": ".ai/reports/redesign/phase-9-validation/screens/1440-dark-inventory.png",
+      "status": "captured"
+    }
+  ],
+  "methodology": "Fixed Date 2026-11-06T12:00:00Z; mocks only; no business mutation. Captures are not assertions that each workflow works. Browser mobile width does not qualify native."
+}

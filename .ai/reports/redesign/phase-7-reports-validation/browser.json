@@ -1,0 +1,170 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": false
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": false
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": false
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": false
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": false
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": false
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": false
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": false
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": true
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": true
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": false
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "categories": [
+      "Sales",
+      "Purchases",
+      "Cash payments",
+      "Receivables",
+      "Payables",
+      "Inventory / low stock",
+      "Stock movements"
+    ],
+    "exportPrintAndFailures": false
+  }
+]

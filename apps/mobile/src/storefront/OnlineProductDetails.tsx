@@ -1,8 +1,10 @@
+import { RecordDetails } from '../ui/RecordDetails';
+import { onlineListingDetails } from '@inventory/api-client';
 import { ManageProduct } from '../catalog/ManageProduct';
 import { SidePanel } from '../ui/SidePanel';
 import { OnlineListingHistory } from './OnlineListingHistory';
 import { OnlineProductImage } from './OnlineProductImage';
-import { onlineStatus, onlinePrice, onlineFieldLabel } from '@inventory/api-client';
+import { onlineFieldLabel } from '@inventory/api-client';
 import { onlineError } from '@inventory/api-client';
 import { useWorkspace } from '../shell/WorkspaceContext';
 import { useOnlineAvailability } from './useOnlineAvailability';
@@ -194,8 +196,12 @@ export function OnlineProductDetails({
             {...(detail.preview.source.images[0] ? { url: detail.preview.source.images[0] } : {})}
           />
           <Text accessibilityRole="header">{detail.listing.title}</Text>
+          <RecordDetails
+            label="Listing context"
+            items={onlineListingDetails(detail.listing, detail.preview)}
+          />
           <Text>
-            {onlineStatus(detail.listing, detail.preview)} · {onlinePrice(detail.preview)}
+            Ready to publish is not published. Availability and visibility are shown separately.
           </Text>
           {(['error', 'warning'] as const).map((severity) => (
             <Text key={severity}>

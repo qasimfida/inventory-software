@@ -1,0 +1,32 @@
+/* Location records reuse the collection controls and app surface tokens. */
+.location-collection .inventory-product-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+}
+.location-collection .inventory-product-card {
+  padding: var(--space-medium);
+  gap: var(--space-small);
+  border: var(--border-width) solid var(--border);
+  background: var(--card);
+  border-radius: var(--surface-radius);
+  box-shadow: var(--elevation-low);
+}
+.location-collection .inventory-product-card:hover {
+  background: var(--table-hover);
+}
+.location-collection .inventory-product-card .product-card-title {
+  justify-content: flex-start;
+  text-align: left;
+  height: auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  padding: 0;
+  font-weight: 600;
+}
+.location-collection .inventory-product-card p {
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+.location-collection .inventory-product-card > :last-child {
+  align-self: flex-start;
+  margin-top: var(--space-small);
+}

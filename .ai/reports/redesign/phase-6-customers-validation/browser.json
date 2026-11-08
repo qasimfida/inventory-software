@@ -1,0 +1,98 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "list": "passed",
+    "details": "passed",
+    "credit": "passed",
+    "create": "passed"
+  }
+]

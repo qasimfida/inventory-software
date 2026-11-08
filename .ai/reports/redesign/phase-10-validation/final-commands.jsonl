@@ -1,0 +1,5 @@
+{"name": "typecheck-final", "command": "npm run typecheck", "exit": 0, "seconds": 34.49}
+{"name": "build-final", "command": "npm run build", "exit": 0, "seconds": 15.44}
+{"name": "mobile-final", "command": "npm run build:mobile", "exit": 0, "seconds": 21.29}
+{"name": "desktop-app-final", "command": "npm run build -w @inventory/desktop -- --bundles app", "exit": 0, "seconds": 33.73}
+{"name": "budget-final", "command": "REDESIGN_OUT=.ai/reports/redesign/phase-10-validation npm run check:redesign-budget", "exit": 0, "seconds": 0.19}

@@ -11,6 +11,6 @@ it('keeps real registration counts accessible without a daily figures accordion'
 });
 it('shows an honest empty state when no registration history exists', () => {
   render(<RegistrationTrend rows={[]} />);
-  expect(screen.getByText('No registration history available.')).toBeTruthy();
+  expect(screen.getByText('No registration history')).toBeTruthy();
   expect(screen.queryByRole('img')).toBeNull();
 });

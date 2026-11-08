@@ -1,3 +1,4 @@
+import { Surface } from '../ui/Surface';
 import { WarehouseSelect } from '../ui/WarehouseSelect';
 import { Text as Txt } from '../ui/Themed';
 import { LiveNotice } from './LiveNotice';
@@ -135,32 +136,42 @@ export function WarehousePanel({
               setForms([]);
             }}
           />
-          <F label="Product barcode, SKU or variant ID" value={code} onChange={setCode} />
-          <Act label="Resolve product scan" onPress={() => void resolve(code)} />
-          <Camera
-            onCode={(raw) => {
-              setCode(raw);
-              void resolve(raw);
-            }}
-          />
-          <Txt>{product ? `${product.name} · ${product.id}` : 'No product selected'}</Txt>
-          <Pick
-            label="Scanned product unit"
-            value={unitId}
-            options={product?.units.map((u) => ({ value: u.id, label: u.code })) ?? []}
-            onChange={(v) => {
-              setUnit(v);
-              setForms([]);
-            }}
-          />
-          <F label="Location barcode / code / ID" value={locationCode} onChange={setLocationCode} />
-          <Camera onCode={setLocationCode} />
-          <Act label="Resolve source / count location" onPress={() => void location(false)} />
-          <Act label="Resolve destination location" onPress={() => void location(true)} />
-          <Txt>
-            Source/count location: {sourceId || 'warehouse root for count only'}; destination:{' '}
-            {destinationId || 'scan required'}
-          </Txt>
+          <Surface>
+            <Txt accessibilityRole="header">Product scan</Txt>
+            <F label="Product barcode, SKU or variant ID" value={code} onChange={setCode} />
+            <Act label="Resolve product scan" onPress={() => void resolve(code)} />
+            <Camera
+              onCode={(raw) => {
+                setCode(raw);
+                void resolve(raw);
+              }}
+            />
+            <Txt>{product ? `${product.name} · ${product.id}` : 'No product selected'}</Txt>
+            <Pick
+              label="Scanned product unit"
+              value={unitId}
+              options={product?.units.map((u) => ({ value: u.id, label: u.code })) ?? []}
+              onChange={(v) => {
+                setUnit(v);
+                setForms([]);
+              }}
+            />
+          </Surface>
+          <Surface>
+            <Txt accessibilityRole="header">Location scan</Txt>
+            <F
+              label="Location barcode / code / ID"
+              value={locationCode}
+              onChange={setLocationCode}
+            />
+            <Camera onCode={setLocationCode} />
+            <Act label="Resolve source / count location" onPress={() => void location(false)} />
+            <Act label="Resolve destination location" onPress={() => void location(true)} />
+            <Txt>
+              Source/count location: {sourceId || 'warehouse root for count only'}; destination:{' '}
+              {destinationId || 'scan required'}
+            </Txt>
+          </Surface>
           {mode === 'count' ? (
             <CountWorkflow
               key={warehouseId}

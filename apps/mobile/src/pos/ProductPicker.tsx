@@ -1,3 +1,7 @@
+import { useDisplayMoney } from '../ui/useDisplayMoney';
+import { Pressable } from 'react-native';
+import { CartThumbnail } from './CartThumbnail';
+import { IconAction } from '../ui/IconAction';
 import { FilterButton } from '../ui/FilterButton';
 import { SidePanel } from '../ui/SidePanel';
 import { usePageCollection } from '../ui/usePageCollection';
@@ -7,7 +11,7 @@ import { LoadingState, EmptyState, ErrorState } from '../ui/AsyncState';
 import { useTheme } from '../theme';
 import { Text } from '../ui/Themed';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
-import { cancellableResource, posPriceLabel } from '@inventory/api-client';
+import { cancellableResource, isPosSoldOut } from '@inventory/api-client';
 import type { createSalesClient, PosItem } from '@inventory/api-client';
 import { View, useWindowDimensions } from 'react-native';
 import { Action, Choice } from '../organization/Controls';
@@ -18,15 +22,21 @@ export function ProductPicker({
   add,
   disabled,
   revision = 0,
+  onManage,
 }: {
   client: ReturnType<typeof createSalesClient>;
   warehouseId: string;
   add: (item: PosItem) => void;
   disabled: boolean;
   revision?: number;
+  onManage?: ((productId: string) => void) | undefined;
 }) {
+  const { posPriceLabel } = useDisplayMoney();
+
   const [filtersOpen, setFiltersOpen] = useState(false);
   const theme = useTheme();
+  const [detail, setDetail] = useState<PosItem | null>(null);
+  const [actions, setActions] = useState<PosItem | null>(null);
   const { width, fontScale } = useWindowDimensions();
   const columns = width >= 600 && fontScale <= 1.3;
   const [categoryId, setCategoryId] = useState(''),
@@ -58,7 +68,6 @@ export function ProductPicker({
             {
               warehouseId,
               ...query,
-              currency: theme.preferences.currency,
               ...(categoryId ? { categoryId } : {}),
               availability,
             },
@@ -66,13 +75,13 @@ export function ProductPicker({
           ),
         () => new AbortController(),
       ),
-    [client, warehouseId, query, theme.preferences.currency, categoryId, availability],
+    [client, warehouseId, query, categoryId, availability],
   );
   const { model } = request;
   const rawPageState = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
   const state = usePageCollection(
     rawPageState,
-    [warehouseId, query.search, query.code, theme.preferences.currency, categoryId, availability],
+    [warehouseId, query.search, query.code, categoryId, availability],
     query.offset,
     ['items'],
     () => {
@@ -105,14 +114,14 @@ export function ProductPicker({
             onChange={setSearch}
             onSelect={(id) => {
               const item = state.data?.items.find((i) => i.id === id);
-              if (item) add(item);
+              if (item && !isPosSoldOut(item)) add(item);
             }}
             disabled={disabled}
             busy={state.busy || (!state.data && !state.error)}
             suggestions={
               state.data?.items.map((item) => ({
                 value: item.id,
-                label: `${item.name} · ${item.sku} · ${posPriceLabel(item)}`,
+                label: `${item.name} · ${item.sku} · ${isPosSoldOut(item) ? 'Sold' : posPriceLabel(item)}`,
               })) ?? []
             }
           />
@@ -163,13 +172,13 @@ export function ProductPicker({
         />
       </SidePanel>
       <Text tone="muted">
-        Scan or type a barcode in product search. Search prices: {theme.preferences.currency}.
+        Scan or type a barcode in product search. Products use their configured currency.
       </Text>
 
       {Boolean(state.error) && (
         <ErrorState message={state.error} onRetry={() => void model.run()} />
       )}
-      {state.busy && <LoadingState message="Loading products…" />}
+      {state.busy && !state.data && <LoadingState message="Loading products…" />}
       {state.data?.items.length === 0 && (
         <EmptyState
           message="No products match this search."
@@ -191,35 +200,86 @@ export function ProductPicker({
               backgroundColor: theme.colors.card,
             }}
           >
-            <View
-              style={{
-                minHeight: theme.spacing.large * 4,
-                padding: theme.spacing.small,
-                borderRadius: theme.radius,
-                backgroundColor: theme.tokens.muted,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`View details for ${item.name}`}
+              onPress={() => setDetail(item)}
             >
-              <Text accessible={false} tone="info" style={{ fontSize: theme.iconSize }}>
-                ▧
-              </Text>
-              <Text tone="muted">{item.sku}</Text>
-            </View>
-            <Text style={{ fontWeight: '600' }}>{item.name}</Text>
-            <Text tone="muted">{item.units.find((unit) => unit.id === item.unitId)?.code}</Text>
+              <View
+                style={{
+                  minHeight: theme.spacing.large * 4,
+                  padding: theme.spacing.small,
+                  borderRadius: theme.radius,
+                  backgroundColor: theme.tokens.muted,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <CartThumbnail
+                  key={item.images?.[0] ?? 'missing'}
+                  expanded
+                  uri={item.images?.[0]}
+                  name={item.name}
+                />
+                <Text tone="muted">{item.sku}</Text>
+              </View>
+              <Text>{item.name}</Text>
+              <Text tone="muted">{item.units.find((unit) => unit.id === item.unitId)?.code}</Text>
+            </Pressable>
+            <IconAction
+              label={`Actions for ${item.name}`}
+              icon="⋮"
+              onPress={() => setActions(item)}
+            />
             <Action
               variant="outline"
               icon="cart"
-              label={`${item.price ? posPriceLabel(item).replace(/ \/ .*$/, '') : 'Check pricing'}`}
-              accessibilityLabel={`Add ${item.sku} · ${item.name}`}
-              disabled={disabled}
+              label={`${isPosSoldOut(item) ? 'Sold' : item.price ? posPriceLabel(item).replace(/ \/ .*$/, '') : 'Check pricing'}`}
+              accessibilityLabel={`${isPosSoldOut(item) ? 'Sold' : 'Add'} ${item.sku} · ${item.name}`}
+              disabled={disabled || isPosSoldOut(item)}
               onPress={() => add(item)}
             />
           </View>
         ))}
       </View>
       <Text tone="muted">Price and availability are verified automatically in your cart.</Text>
+      <SidePanel title="Product actions" open={!!actions} onClose={() => setActions(null)}>
+        <Action
+          label="View details"
+          onPress={() => {
+            setDetail(actions);
+            setActions(null);
+          }}
+        />
+        <Action
+          label="Edit product / manage listing"
+          disabled={disabled || !onManage || !actions?.productId}
+          onPress={() => {
+            if (actions?.productId) onManage?.(actions.productId);
+            setActions(null);
+          }}
+        />
+      </SidePanel>
+      <SidePanel title="Product details" open={!!detail} onClose={() => setDetail(null)}>
+        {detail && (
+          <>
+            <Text accessibilityRole="header">{detail.name}</Text>
+            <Text>SKU: {detail.sku}</Text>
+            <Text>Price: {posPriceLabel(detail)}</Text>
+            <Text>
+              Selected unit: {detail.units.find((unit) => unit.id === detail.unitId)?.code}
+            </Text>
+            <Action
+              label={isPosSoldOut(detail) ? 'Sold' : 'Add to cart'}
+              disabled={disabled || isPosSoldOut(detail)}
+              onPress={() => {
+                add(detail);
+                setDetail(null);
+              }}
+            />
+          </>
+        )}
+      </SidePanel>
       <Pagination
         label="products"
         offset={query.offset}

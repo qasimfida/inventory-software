@@ -51,9 +51,10 @@ export async function ensureDefaultVariant(ctx: OrganizationContext, productId: 
     );
   }
   if (unit.dimension !== 'count') throw new ConflictException();
+  // Parent state gates selling; keep the default SKU independently active so later product activation works.
   await ctx.tx.query(
     `INSERT INTO catalog_variants(id,business_id,product_id,name,sku,base_unit_id,purchase_unit_id,sale_unit_id,count_unit_id,state,is_default)
- SELECT id,business_id,id,name,sku,$3,$3,$3,$3,state,true FROM catalog_products WHERE business_id=$1 AND id=$2`,
+ SELECT id,business_id,id,name,sku,$3,$3,$3,$3,'active',true FROM catalog_products WHERE business_id=$1 AND id=$2`,
     [ctx.business.id, productId, unit.id],
   );
   await ctx.tx.query(

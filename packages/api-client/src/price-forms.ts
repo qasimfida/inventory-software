@@ -1,8 +1,15 @@
+import { z } from 'zod';
 import { percentageBasisPoints } from '@inventory/domain';
 import { priceInputSchema, promotionInputSchema, quoteInputSchema } from '@inventory/contracts';
 import type { Location, Business, CompanyProfile } from '@inventory/contracts';
 import type { createPricingClient } from './pricing.js';
 import type { CommandForm, CommandField } from './forms.js';
+const percentage = z
+  .string()
+  .trim()
+  .regex(/^\d+(?:\.\d{1,2})?$/, 'Enter a percentage with at most two decimals')
+  .refine((v) => Number(v) <= 100, 'Percentage must be between 0 and 100');
+const toBasisPoints = (value: unknown) => percentageBasisPoints(percentage.parse(String(value)));
 type Client = ReturnType<typeof createPricingClient>;
 type Data = Awaited<ReturnType<Client['load']>>;
 export function priceForms(
@@ -52,7 +59,7 @@ export function priceForms(
           label: 'Promotion to withdraw',
           kind: 'select',
           options: data.promotions
-            .filter((p) => !p.withdrawn)
+            .filter((p) => p.variantId === selectedId && !p.withdrawn)
             .map((p) => ({ value: p.id, label: p.name })),
         },
       ],
@@ -75,9 +82,10 @@ export function priceForms(
         },
         {
           name: 'taxBasisPoints',
-          label: 'Tax rate (%)',
+          required: false,
+          label: 'Tax rate (%) — optional; blank uses business default, or 0% if unset',
           kind: 'text',
-          value: String((defaults?.taxBasisPoints ?? 0) / 100),
+          value: '',
         },
         {
           name: 'taxInclusive',
@@ -91,7 +99,10 @@ export function priceForms(
         client.price(
           priceInputSchema.parse({
             ...v,
-            taxBasisPoints: percentageBasisPoints(String(v.taxBasisPoints)),
+            taxBasisPoints:
+              String(v.taxBasisPoints ?? '').trim() === ''
+                ? (defaults?.taxBasisPoints ?? 0)
+                : toBasisPoints(v.taxBasisPoints),
             storeId: v.storeId || null,
             endsAt: v.endsAt || null,
           }),
@@ -116,7 +127,7 @@ export function priceForms(
         client.promotion(
           promotionInputSchema.parse({
             ...v,
-            discountBasisPoints: percentageBasisPoints(String(v.discountBasisPoints)),
+            discountBasisPoints: toBasisPoints(v.discountBasisPoints),
             storeId: v.storeId || null,
             endsAt: v.endsAt || null,
           }),
@@ -139,7 +150,7 @@ export function quoteForm(
         label: 'Quote variant',
         kind: 'select',
         options: data.variants
-          .filter((v) => v.state === 'active')
+          .filter((v) => v.id === selectedId && v.state === 'active')
           .map((v) => ({ value: v.id, label: v.sku })),
         value: selectedId,
       },
@@ -155,7 +166,17 @@ export function quoteForm(
         name: 'unitId',
         label: 'Quote unit',
         kind: 'select',
-        options: data.units.map((u) => ({ value: u.id, label: u.name })),
+        options: data.units
+          .filter(
+            (u) =>
+              u.id === data.variants.find((v) => v.id === selectedId)?.baseUnitId ||
+              data.conversions.some((c) => c.variantId === selectedId && c.unitId === u.id),
+          )
+          .map((u) => ({ value: u.id, label: u.name })),
+        value:
+          data.variants.find((v) => v.id === selectedId)?.saleUnitId ??
+          data.variants.find((v) => v.id === selectedId)?.baseUnitId ??
+          '',
       },
       { name: 'quantity', label: 'Quote quantity', value: '1' },
       {
@@ -169,7 +190,7 @@ export function quoteForm(
       const quote = await client.quote(
         quoteInputSchema.parse({
           ...v,
-          manualDiscountBasisPoints: percentageBasisPoints(String(v.manualDiscountBasisPoints)),
+          manualDiscountBasisPoints: toBasisPoints(v.manualDiscountBasisPoints),
         }),
       );
       onQuote(quote);

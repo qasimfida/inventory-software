@@ -1,8 +1,9 @@
-import { Platform } from 'react-native';
+import type { PreferencePatch } from '@inventory/contracts';
+import { AppState, Platform } from 'react-native';
 import { useReducedMotion } from './settings/useReducedMotion';
 import { settingsModel } from './settings/model';
 import { defaultPreferences, resolveSettings } from '@inventory/contracts';
-import { createContext, useContext, useState, useSyncExternalStore } from 'react';
+import { createContext, useContext, useEffect, useState, useSyncExternalStore } from 'react';
 import type { ReactNode } from 'react';
 import { useColorScheme } from 'react-native';
 import { palettes } from '@inventory/design-tokens';
@@ -16,18 +17,20 @@ const Context = createContext<{
 }>({
   preferences: defaultPreferences,
   locked: false,
-  appearance: 'system',
+  appearance: 'light',
   setAppearance: () => {},
 });
 /** preview is local presentation for the showcase, never a business-policy override. */
 export function ThemeProvider({
   children,
   preview = false,
+  previewPreferences,
 }: {
   children: ReactNode;
   preview?: boolean;
+  previewPreferences?: PreferencePatch;
 }) {
-  const [guest, setGuest] = useState<Appearance>('system');
+  const [guest, setGuest] = useState<Appearance>('light');
   const reducedMotion = useReducedMotion();
   const state = useSyncExternalStore(
     settingsModel.subscribe,
@@ -35,16 +38,26 @@ export function ThemeProvider({
     settingsModel.snapshot,
   );
   const preferences = resolveSettings(
-    !preview && state.accountId ? state.snapshot?.preferences.values : { appearance: guest },
+    !preview && state.accountId
+      ? state.snapshot?.preferences.values
+      : { appearance: guest, ...previewPreferences },
     preview ? {} : state.snapshot?.platform.values,
     preview ? {} : state.business?.values,
-    { reducedMotion },
+    { reducedMotion, touch: true },
   );
-  const locked =
-    !preview &&
-    (state.busy ||
-      !!state.snapshot?.platform.values.enforced.appearance ||
-      !!state.business?.values.enforced.appearance);
+  useEffect(() => {
+    if (preview || !state.accountId) return;
+    void settingsModel.refreshRates();
+    const timer = setInterval(() => void settingsModel.refreshRates(), 60000);
+    const subscription = AppState.addEventListener('change', (value) => {
+      if (value === 'active') void settingsModel.refreshRates();
+    });
+    return () => {
+      clearInterval(timer);
+      subscription.remove();
+    };
+  }, [preview, state.accountId]);
+  const locked = !preview && state.busy;
   function setAppearance(value: Appearance) {
     if (locked) return;
     if (!preview && state.accountId) void settingsModel.save({ appearance: value });
@@ -65,42 +78,29 @@ export function useTheme() {
     context.appearance === 'system' ? (system === 'dark' ? 'dark' : 'light') : context.appearance;
   const base = palettes[mode];
   const accents = {
-    default: base.primary,
+    default: base.accent,
     teal: base['primary-teal'],
     violet: base['primary-violet'],
     rose: base['primary-rose'],
     amber: base['primary-amber'],
   };
   const accent = accents[context.preferences.accent];
-  const tint = (percent: number, surface: string = base.card) =>
-    '#' +
-    [1, 3, 5]
-      .map((offset) =>
-        Math.round(
-          parseInt(accent.slice(offset, offset + 2), 16) * percent +
-            parseInt(surface.slice(offset, offset + 2), 16) * (1 - percent),
-        )
-          .toString(16)
-          .padStart(2, '0'),
-      )
-      .join('');
+  const density = context.preferences.density;
+  const controlSize = context.preferences.controlSize ?? 'medium';
   const tokens = {
     ...base,
+    accent,
     primary: accent,
+    'navigation-selected': accent,
+    'navigation-selected-foreground': base['accent-foreground'],
     ring: accent,
-    selected: tint(0.15),
-    secondary: tint(0.08),
-    'secondary-foreground': accent,
+    link: accent,
     'chart-1': accent,
-    'selected-foreground': tint(0.8, base.foreground),
-    'navigation-selected': tint(0.15),
-    'navigation-selected-foreground': tint(0.8, base.foreground),
-    'navigation-hover': tint(0.08),
-    'table-selected': tint(0.15),
-    'table-hover': tint(0.08),
-    sidebar: tint(0.03),
+    'control-height': base[`${controlSize}-control-height`],
+    'control-padding': base[`${controlSize}-control-padding`],
+    'selection-size': base[`${controlSize}-selection-size`],
+    'quantity-size': base[`${controlSize}-quantity-size`],
   };
-  const density = context.preferences.density === 'compact' ? 0.75 : 1;
   return {
     ...context,
     mode,
@@ -131,11 +131,15 @@ export function useTheme() {
       border: tokens.input,
     },
     spacing: {
-      small: parseFloat(tokens['space-small']) * density,
-      medium: parseFloat(tokens['space-medium']) * density,
-      large: parseFloat(tokens['space-large']) * density,
+      small: parseFloat(base[`${density}-space-small`]),
+      medium: parseFloat(base[`${density}-space-medium`]),
+      large: parseFloat(base[`${density}-space-large`]),
     },
-    radius: parseFloat(tokens.radius) * (context.preferences.radius === 'circle' ? 2 : 1),
+    radius: parseFloat(
+      context.preferences.radius === 'circle'
+        ? tokens['surface-radius-circle']
+        : tokens['surface-radius'],
+    ),
     controlRadius: parseFloat(
       context.preferences.radius === 'circle' ? tokens['radius-circle'] : tokens.radius,
     ),

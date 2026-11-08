@@ -1,6 +1,15 @@
 module.exports = {
   forbidden: [
     {
+      name: 'html-parser-only-in-description-contract',
+      severity: 'error',
+      from: {
+        path: '^packages/',
+        pathNot: '^packages/contracts/src/rich-description\\.ts$|\\.test\\.ts$',
+      },
+      to: { path: 'node_modules/htmlparser2(/|$)' },
+    },
+    {
       name: 'spreadsheet-parsers-only-in-import-adapter',
       severity: 'error',
       from: {
@@ -36,7 +45,7 @@ module.exports = {
       to: {
         path: 'node_modules/',
         pathNot:
-          'node_modules/(zod|fflate|fast-xml-parser|@noble/(ciphers|hashes)|@inventory/(contracts|api-client|domain|design-tokens))(/|$)',
+          'node_modules/(zod|htmlparser2|fflate|fast-xml-parser|@noble/(ciphers|hashes)|@inventory/(contracts|api-client|domain|design-tokens))(/|$)',
       },
     },
     {

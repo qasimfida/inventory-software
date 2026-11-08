@@ -7,16 +7,28 @@ export function FormSection({
   title,
   children,
   defaultOpen = false,
+  open: controlledOpen,
+  onOpenChange,
 }: {
   title: string;
   children: ReactNode;
   defaultOpen?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) {
-  const [open, setOpen] = useState(defaultOpen);
+  const [expanded, setOpen] = useState(defaultOpen);
+  const open = controlledOpen ?? expanded;
   const theme = useTheme();
   return (
     <View>
-      <DisclosureTrigger label={title} expanded={open} onPress={() => setOpen(!open)} />
+      <DisclosureTrigger
+        label={title}
+        expanded={open}
+        onPress={() => {
+          if (controlledOpen === undefined) setOpen(!open);
+          onOpenChange?.(!open);
+        }}
+      />
       <View
         style={{ display: open ? 'flex' : 'none', gap: theme.spacing.small }}
         accessibilityElementsHidden={!open}

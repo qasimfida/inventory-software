@@ -1,4 +1,11 @@
+import { RecordDetails } from '@/components/common/RecordDetails';
 import { useState } from 'react';
+import {
+  securityEventPresentation,
+  securityEventDetails,
+  securityTime,
+  securityActor,
+} from '@inventory/api-client';
 import type { SecurityState } from '@inventory/api-client';
 import { Table, TableScroll } from '@/components/ui/Table';
 import { Button } from '@/components/ui/Button';
@@ -22,12 +29,20 @@ export function SecurityEvents({ events }: { events: SecurityState['events'] }) 
           <tbody>
             {events.map((event) => (
               <tr key={event.id}>
-                <th scope="row">{event.event}</th>
-                <td>{new Date(event.occurredAt).toLocaleString()}</td>
-                <td>{event.actorId ?? 'Unauthenticated request'}</td>
+                <th scope="row">{securityEventPresentation(event.event).title}</th>
+                <td>{securityTime(event.occurredAt)}</td>
+                <td>{securityActor(event)}</td>
                 <td>
-                  <StatusBadge tone={event.outcome === 'success' ? 'success' : 'warning'}>
-                    {event.outcome}
+                  <StatusBadge
+                    tone={
+                      event.outcome === 'success'
+                        ? 'success'
+                        : event.outcome === 'failure'
+                          ? 'error'
+                          : 'warning'
+                    }
+                  >
+                    {{ success: 'Successful', denied: 'Denied', failure: 'Failed' }[event.outcome]}
                   </StatusBadge>
                 </td>
                 <td data-actions>
@@ -42,15 +57,20 @@ export function SecurityEvents({ events }: { events: SecurityState['events'] }) 
       </TableScroll>
       <FormSheet
         title="Security event details"
+        description="Recorded outcome, actor and security context."
         open={!!selected}
         onOpenChange={(open) => {
           if (!open) setSelected(null);
         }}
       >
         {selected && (
-          <pre className="whitespace-pre-wrap break-all text-sm">
-            {JSON.stringify(selected, null, 2)}
-          </pre>
+          <>
+            <p>{securityEventPresentation(selected.event).description}</p>
+            <RecordDetails
+              label="Security event context"
+              items={securityEventDetails(selected).map(([label, value]) => ({ label, value }))}
+            />
+          </>
         )}
       </FormSheet>
     </>

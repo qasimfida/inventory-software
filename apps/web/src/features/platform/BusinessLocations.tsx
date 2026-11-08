@@ -1,3 +1,4 @@
+import { registrationTone } from '@inventory/api-client';
 import { BusinessLocationCards } from './BusinessLocationCards';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { createPlatformBusinessesClient, cancellableResource } from '@inventory/api-client';
@@ -77,7 +78,7 @@ export function BusinessLocations({
                     </td>
                     <td>{location.code}</td>
                     <td>
-                      <StatusBadge tone={location.state === 'active' ? 'success' : 'warning'}>
+                      <StatusBadge tone={registrationTone(location.state)}>
                         {location.state}
                       </StatusBadge>
                     </td>

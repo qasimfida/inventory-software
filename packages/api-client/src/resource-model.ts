@@ -37,8 +37,10 @@ export class ResourceModel<T> {
     const previous = retainData ? this.state.data : null;
     const generation = ++this.generation;
     this.publish({ data: previous, busy: true, error: '' });
+    let commandCompleted = false;
     try {
       await work?.();
+      commandCompleted = Boolean(work);
       const data = await this.loader();
       if (generation === this.generation) this.publish({ data, busy: false, error: '' });
     } catch (error) {
@@ -46,12 +48,15 @@ export class ResourceModel<T> {
         this.publish({
           data: previous,
           busy: false,
-          error:
-            error instanceof Error && 'status' in error
+          error: commandCompleted
+            ? 'The action completed, but updated data could not be loaded. Refresh to see the latest data; do not submit again.'
+            : error instanceof Error && 'status' in error
               ? error.message
               : error instanceof Error && error.name === 'ZodError'
                 ? 'Check the required fields, formats and selections.'
-                : 'Unable to load data. Reconnect and retry.',
+                : work
+                  ? 'The change could not be confirmed. Check the entered values and review the record before trying again.'
+                  : 'Unable to load data. Reconnect and retry.',
         });
     } finally {
       if (generation === this.generation && this.refreshPending) {

@@ -1,5 +1,5 @@
 import { costDetailSchema, staffSchema } from '@inventory/contracts';
-import { demoDate } from './identity.js';
+import { demoDate, demoId } from './identity.js';
 
 export function staffSeed(id: (n: number) => string, currency: string) {
   const staff = [...Array.from({ length: 26 }).keys()].map((i) =>
@@ -19,6 +19,8 @@ export function staffSeed(id: (n: number) => string, currency: string) {
     costDetailSchema.parse({
       cost: {
         id: id(7100 + i),
+        actorId: demoId(900),
+        actorName: 'owner@demo.example.test',
         kind: i % 2 ? 'salary' : 'expense',
         staffId: i % 2 ? staff[i]!.id : null,
         storeId: id(2),

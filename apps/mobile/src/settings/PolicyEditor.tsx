@@ -3,7 +3,7 @@ import { IndustryFields } from './IndustryFields';
 import { useState, useSyncExternalStore } from 'react';
 import { View } from 'react-native';
 import { preferenceFields, notificationFields } from '@inventory/api-client';
-import { settingsPolicySchema } from '@inventory/contracts';
+import { settingsPolicySchema, isCosmeticPreference } from '@inventory/contracts';
 import type { PolicyRecord, SettingsPolicy } from '@inventory/contracts';
 import { settingsModel } from './model';
 import { Action, Choice, choices, styles } from '../ui/Controls';
@@ -38,29 +38,36 @@ export function PolicyEditor({
       {open && (
         <>
           <Text>
-            Defaults apply without a personal preference. Enforced values override preferences.
-            Platform enforcement wins. Authentication limits cannot be edited here.
+            Appearance follows the account. Platform defaults fill unset choices. Old cosmetic
+            enforcement is retained but no longer applied; currency and list-loading enforcement
+            remain active.
           </Text>
           {(['defaults', 'enforced'] as const).map((layer) => (
             <View key={layer} style={styles.group}>
               <Text accessibilityRole="header">{layer}</Text>
-              {preferenceFields.map((field) => (
+              {preferenceFields
+                .filter(
+                  (field) => !isCosmeticPreference(field.key) || (platform && layer === 'defaults'),
+                )
+                .map((field) => (
+                  <Choice
+                    key={field.key}
+                    label={`${layer}: ${field.label}`}
+                    value={values[layer][field.key] ?? 'inherit'}
+                    options={choices(['inherit', ...field.options])}
+                    disabled={state.busy}
+                    onChange={(value) => update(layer, field.key, value)}
+                  />
+                ))}
+              {platform && layer === 'defaults' && (
                 <Choice
-                  key={field.key}
-                  label={`${layer}: ${field.label}`}
-                  value={values[layer][field.key] ?? 'inherit'}
-                  options={choices(['inherit', ...field.options])}
+                  label={`${layer}: Visual effects`}
+                  value={String(values[layer].effects ?? 'inherit')}
+                  options={choices(['inherit', 'true', 'false'])}
                   disabled={state.busy}
-                  onChange={(value) => update(layer, field.key, value)}
+                  onChange={(value) => update(layer, 'effects', value)}
                 />
-              ))}
-              <Choice
-                label={`${layer}: Visual effects`}
-                value={String(values[layer].effects ?? 'inherit')}
-                options={choices(['inherit', 'true', 'false'])}
-                disabled={state.busy}
-                onChange={(value) => update(layer, 'effects', value)}
-              />
+              )}
             </View>
           ))}
           {notificationFields

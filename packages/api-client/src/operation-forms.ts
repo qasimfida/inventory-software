@@ -33,6 +33,14 @@ export function staffForm(
         ],
       },
       {
+        name: 'state',
+        label: 'Employment status',
+        kind: 'select',
+        value: staff?.state ?? 'active',
+        options: ['active', 'inactive'].map((value) => ({ value, label: value })),
+      },
+      {
+        section: 'Salary',
         name: 'currency',
         label: 'Salary currency',
         kind: 'select',
@@ -44,13 +52,6 @@ export function staffForm(
         label: 'Base salary per pay period (minor units)',
         value: staff?.salaryMinor ?? '0',
         required: true,
-      },
-      {
-        name: 'state',
-        label: 'Employment status',
-        kind: 'select',
-        value: staff?.state ?? 'active',
-        options: ['active', 'inactive'].map((value) => ({ value, label: value })),
       },
     ],
     submit: (v) =>

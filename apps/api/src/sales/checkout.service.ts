@@ -1,3 +1,4 @@
+import { PricingConflict } from '../http/pricing-conflict.js';
 import { readPolicy } from '../settings/settings-store.js';
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
@@ -35,7 +36,8 @@ export class CheckoutService {
   }
   async complete(ctx: OrganizationContext, input: Checkout, verifiedOfflineQuote?: SaleQuote) {
     const quote = verifiedOfflineQuote ?? (await this.pricing.quote(ctx, input));
-    if (input.quoteFingerprint !== quote.quoteFingerprint) throw new ConflictException();
+    if (input.quoteFingerprint !== quote.quoteFingerprint)
+      throw new PricingConflict('QUOTE_CHANGED');
     const total = BigInt(quote.totalMinor),
       paid = BigInt(input.cashAppliedMinor),
       received = BigInt(input.cashReceivedMinor),
@@ -46,7 +48,7 @@ export class CheckoutService {
       (paid === 0n && received !== 0n) ||
       (remaining > 0n && !input.customerId)
     )
-      throw new ConflictException();
+      throw new PricingConflict('PAYMENT_ALLOCATION_INVALID');
     const id = randomUUID(),
       b = ctx.business.id;
     await ctx.tx.query(

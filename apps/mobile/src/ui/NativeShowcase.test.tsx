@@ -1,3 +1,5 @@
+// jsdom cannot execute the native WebView host; editor behavior has separate tests.
+vi.mock('react-native-webview', () => ({ WebView: () => null }));
 // @vitest-environment jsdom
 vi.mock('react-native-safe-area-context', () => import('./safe-area-test-adapter'));
 import { afterEach, expect, it, vi } from 'vitest';

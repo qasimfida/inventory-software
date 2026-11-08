@@ -1,8 +1,11 @@
+import { AccountingSummary, AccountingPending } from './AccountingSummary';
+import { JournalDetails } from './JournalDetails';
+import { RecordCollection } from '../ui/RecordCollection';
+import { SidePanel } from '../ui/SidePanel';
 import { Pagination } from '../ui/Pagination';
 import { usePageCollection } from '../ui/usePageCollection';
 import { IconAction } from '../ui/IconAction';
-import { LoadingState, EmptyState } from '../ui/AsyncState';
-import { RecordDetails } from '../ui/RecordDetails';
+import { LoadingState, ErrorState } from '../ui/AsyncState';
 import { ScreenBody } from '../ui/ScreenHeader';
 import { DisclosureTrigger } from '../ui/DisclosureTrigger';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
@@ -26,6 +29,7 @@ export function AccountingPanel({
   business: Business;
   page?: boolean;
 }) {
+  const [selectedRecord, setSelectedRecord] = useState('');
   const [offset, setOffset] = useState(0);
   const [open, setOpen] = useState(page);
   const client = useMemo(
@@ -73,7 +77,7 @@ export function AccountingPanel({
             </Text>
           )}
           {state.busy && <LoadingState message="Loading…" />}
-          {Boolean(state.error) && <Text accessibilityRole="alert">{state.error}</Text>}
+          {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
           <IconAction
             label="Refresh accounting"
             onPress={() => void model.run()}
@@ -82,46 +86,39 @@ export function AccountingPanel({
           />
           {state.data && (
             <>
-              {!state.data.journals.length && (
-                <EmptyState message="No posted journals on this page." />
-              )}
               <Text>
                 Trial balance — all posted entries, all dates; currencies remain separate.
               </Text>
-              {state.data.balances.map((b) => (
-                <RecordDetails
-                  key={`${b.currency}:${b.account}`}
-                  label="Trial balance account"
-                  items={[
-                    { label: 'Account', value: b.account },
-                    { label: 'Currency', value: b.currency },
-                    { label: 'Debit (minor units)', value: b.debit },
-                    { label: 'Credit (minor units)', value: b.credit },
-                  ]}
-                />
-              ))}
-              {state.data.periods.map((p) => (
-                <Text key={p.id}>
-                  Period {p.from} — {p.to} · {p.state}
-                </Text>
-              ))}
-              {state.data.journals.map((j) => (
-                <View key={j.id}>
-                  <Text>
-                    {j.date} · {j.id} · {j.sourceKind} {j.sourceId} · {j.currency} · {j.reason}{' '}
-                    {j.reversalId && `reverses ${j.reversalId}`}
-                  </Text>
-                  {j.lines.map((l, i) => (
-                    <Text key={i}>
-                      {l.account}: debit {l.debit}, credit {l.credit}
-                    </Text>
+              <AccountingSummary data={state.data} />
+              <Text accessibilityRole="header">Posted journals</Text>
+              <RecordCollection
+                label="journals"
+                onOpen={setSelectedRecord}
+                items={state.data.journals.map((j) => ({
+                  id: j.id,
+                  title: j.reason,
+                  subtitle: j.date,
+                  detail: `${j.currency} · ${j.sourceKind}`,
+                  status: j.reversalId ? 'Reversal' : 'Posted',
+                  tone: 'neutral',
+                }))}
+              />
+              <SidePanel
+                title="Journal details"
+                open={!!selectedRecord}
+                onClose={() => setSelectedRecord('')}
+              >
+                {state.data.journals
+                  .filter((item) => item.id === selectedRecord)
+                  .map((j) => (
+                    <JournalDetails key={j.id} journal={j} timeZone={business.timeZone} />
                   ))}
-                </View>
-              ))}
+              </SidePanel>
               <Text>
                 Unposted source records on this page: {state.data.pending.length}. A zero count on a
                 later page does not prove reconciliation.
               </Text>
+              <AccountingPending pending={state.data.pending} />
               <View style={styles.group}>
                 {accountingForms(client, state.data, business).map((f) => (
                   <CommandForm

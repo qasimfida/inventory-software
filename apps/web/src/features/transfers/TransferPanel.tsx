@@ -1,3 +1,6 @@
+import { ExportRecords } from '@/components/common/ExportRecords';
+import { Select } from '@/components/ui/FormControls';
+import { EmptyState, ErrorState, LoadingState } from '@/components/common/AsyncState';
 import { RecordCollection } from '@/components/common/RecordCollection';
 import { FormSheet } from '@/components/common/FormSheet';
 import { WarehouseSelect } from '@/components/common/WarehouseSelect';
@@ -6,7 +9,6 @@ import { Pagination } from '@/components/common/Pagination';
 import { SearchControl } from '@/components/common/SearchControl';
 import { RefreshCw } from 'lucide-react';
 import { TransferDetails } from './TransferDetails';
-import { Grid } from '@/components/common/Layout';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import {
@@ -20,7 +22,7 @@ import {
 import { hasPermission } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
 import { CommandForm } from '@/components/common/CommandForm';
-import { Button } from '@/components/ui/Button';
+import { IconButton } from '@/components/common/IconButton';
 import { authClient } from '@/platform/auth-client';
 const operationKey = () => crypto.randomUUID();
 export function TransferPanel({
@@ -31,6 +33,9 @@ export function TransferPanel({
   locations: Location[];
 }) {
   const warehouses = locations.filter((l) => l.kind === 'warehouses' && l.state === 'active');
+  const [storeId, setStoreId] = useState(warehouses[0]?.storeId ?? '');
+  const stores = locations.filter((l) => l.kind === 'stores');
+  const scopedWarehouses = warehouses.filter((w) => (w.storeId ?? '') === storeId);
   const [warehouseId, setWarehouseId] = useState(warehouses[0]?.id ?? ''),
     [search, setSearch] = useState(''),
     [offset, setOffset] = useState(0),
@@ -105,22 +110,82 @@ export function TransferPanel({
           }}
         />
       </div>
-      <Button
+      <IconButton
+        label="Refresh transfers"
+        icon={RefreshCw}
         onClick={() => void model.run()}
         disabled={state.busy || !warehouseId}
-        variant="ghost"
-        size="icon"
-        aria-label="Refresh transfers"
-        title="Refresh"
-      >
-        <RefreshCw aria-hidden="true" />
-      </Button>
+      />
     </>
   );
   return (
     <section aria-label="Stock transfers" className="screen-section">
       <ScreenHeader
-        title="Stock transfers"
+        title="Transfers"
+        actions={
+          <>
+            <Select
+              aria-label="Transfer store"
+              value={storeId}
+              onChange={(e) => {
+                const value = e.target.value;
+                setStoreId(value);
+                setWarehouseId(warehouses.find((w) => (w.storeId ?? '') === value)?.id ?? '');
+                setTransferId('');
+                setOffset(0);
+              }}
+            >
+              {stores.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
+              ))}
+              {warehouses.some((w) => !w.storeId) && <option value="">Business warehouses</option>}
+            </Select>
+            <WarehouseSelect
+              label="Transfer warehouse"
+              id="transfer-warehouse"
+              value={warehouseId}
+              onChange={(e) => {
+                setWarehouseId(e.target.value);
+                setTransferId('');
+                setOffset(0);
+              }}
+            >
+              {scopedWarehouses.map((w) => (
+                <option key={w.id} value={w.id}>
+                  {w.name}
+                </option>
+              ))}
+            </WarehouseSelect>
+            <ExportRecords
+              name="transfers"
+              headers={[
+                'Reference',
+                'Source warehouse',
+                'Destination warehouse',
+                'Created',
+                'Status',
+              ]}
+              rows={(state.data?.workspace.transfers ?? []).map((t) => [
+                t.reference,
+                locations.find((l) => l.id === t.sourceWarehouseId)?.name ?? t.sourceWarehouseId,
+                locations.find((l) => l.id === t.destinationWarehouseId)?.name ??
+                  t.destinationWarehouseId,
+                t.createdAt,
+                t.state,
+              ])}
+            />
+            {forms.slice(0, 1).map((f) => (
+              <CommandForm
+                primary
+                key={f.title}
+                definition={f}
+                run={(work) => void model.run(work)}
+              />
+            ))}
+          </>
+        }
         description={
           <>
             Approval reserves stock. Dispatch moves it into transit. Receipt records good, damaged
@@ -129,33 +194,23 @@ export function TransferPanel({
           </>
         }
       />
-      <Grid className="screen-filters">
-        <div>
-          <WarehouseSelect
-            label="Transfer warehouse"
-            id="transfer-warehouse"
-            value={warehouseId}
-            onChange={(e) => {
-              setWarehouseId(e.target.value);
-              setTransferId('');
-              setOffset(0);
-            }}
-          >
-            {warehouses.map((w) => (
-              <option key={w.id} value={w.id}>
-                {w.name}
-              </option>
-            ))}
-          </WarehouseSelect>
-        </div>
-      </Grid>
-      {state.error && <p role="alert">{state.error}</p>}
 
+      {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
+
+      {!warehouseId && (
+        <EmptyState
+          message="No active warehouse"
+          description="Request access to an active warehouse to view and manage transfers."
+        />
+      )}
+      {warehouseId && !state.data && !state.error && <LoadingState message="Loading transfers…" />}
       {!state.data && <div className="collection-toolbar">{toolbar}</div>}
       {state.data && (
         <>
           <RecordCollection
+            showExport={false}
             toolbar={toolbar}
+
             label="transfers"
             onOpen={setTransferId}
             items={state.data.workspace.transfers.map((t) => ({
@@ -181,23 +236,27 @@ export function TransferPanel({
             busy={state.busy || (!state.data && !state.error)}
             onChange={setOffset}
           />
-          {forms.slice(0, 1).map((f) => (
-            <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
-          ))}
           <FormSheet
             title="Transfer details"
+            description="Review the route, quantities and recorded history. Authorized actions are available below."
             open={!!transferId}
             onOpenChange={(open) => {
               if (!open) setTransferId('');
             }}
           >
-            {state.error && <p role="alert">{state.error}</p>}
-            {state.data.detail && (
-              <TransferDetails detail={state.data.detail} timeZone={business.timeZone} />
-            )}
-            {forms.slice(1).map((f) => (
-              <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
-            ))}
+            <div className="min-w-0 shrink-0 space-y-3">
+              {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
+              {state.data.detail && (
+                <TransferDetails
+                  detail={state.data.detail}
+                  timeZone={business.timeZone}
+                  locations={locations}
+                />
+              )}
+              {forms.slice(1).map((f) => (
+                <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
+              ))}
+            </div>
           </FormSheet>
         </>
       )}

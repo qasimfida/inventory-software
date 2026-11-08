@@ -1,7 +1,8 @@
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import type { Business, ChannelListing, OnlineProductPreview } from '@inventory/contracts';
 import { hasPermission } from '@inventory/contracts';
-import { onlinePrice, onlineStatus } from '@inventory/api-client';
+import { onlineStatus } from '@inventory/api-client';
 import type { OnlineClient } from '@inventory/api-client';
 import { Eye, History, Send, Pause, Play, Trash2, RefreshCw } from 'lucide-react';
 import { Table, TableScroll } from '@/components/ui/Table';
@@ -42,6 +43,8 @@ export function OnlineProductsTable({
   history: (id: string) => void;
   fix: (l: ChannelListing, field: string) => void;
 }) {
+  const { onlinePrice } = useDisplayMoney();
+
   const manage = hasPermission(business, 'onlineStore.manage'),
     all = items.length > 0 && items.every((l) => selected.has(l.id));
   const selection = (l: ChannelListing) => (

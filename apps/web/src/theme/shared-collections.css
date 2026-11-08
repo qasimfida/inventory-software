@@ -1,0 +1,145 @@
+/* Shared component ownership; conditions and source order retained during consolidation. */
+@layer components {
+  .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+    font-size: calc(var(--font-label) * var(--text-scale));
+    line-height: var(--line-body);
+  }
+}
+@layer components {
+  .data-table caption {
+    padding: var(--table-cell-padding);
+    text-align: left;
+    color: var(--muted-foreground);
+  }
+}
+@layer components {
+  .data-table th,
+  .data-table td {
+    height: var(--table-row-height);
+    padding: var(--space-small) var(--table-cell-padding);
+    vertical-align: middle;
+    border-bottom: 0;
+    overflow-wrap: anywhere;
+  }
+}
+@layer components {
+  .data-table th {
+    font-weight: var(--weight-medium);
+  }
+}
+@layer components {
+  .data-table thead th {
+    overflow-wrap: normal;
+    white-space: nowrap;
+    height: var(--table-header-height);
+    background: transparent;
+    color: var(--muted-foreground);
+    font-weight: var(--weight-strong);
+  }
+}
+@layer components {
+  .data-table tbody tr:nth-child(odd) {
+    background: var(--card);
+  }
+}
+@layer components {
+  .data-table tbody tr:nth-child(even) {
+    background: var(--table-stripe);
+  }
+}
+@layer components {
+  .data-table tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+}
+@layer components {
+  .data-table tbody tr:hover {
+    background: var(--table-hover);
+  }
+}
+@layer components {
+  .data-table tbody tr[data-selected='true'],
+  .data-table tbody tr[aria-selected='true'] {
+    background: var(--table-selected);
+    color: var(--table-selected-foreground);
+  }
+}
+@layer components {
+  .data-table [data-numeric] {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+}
+@layer components {
+  .data-table th[aria-sort='ascending']::after {
+    content: ' ↑';
+  }
+}
+@layer components {
+  .data-table th[aria-sort='descending']::after {
+    content: ' ↓';
+  }
+}
+.data-table tbody tr > :first-child {
+  border-radius: 0;
+}
+.data-table tbody tr > :last-child {
+  border-radius: 0;
+}
+.data-table tbody tr:nth-child(odd) {
+  background: var(--table-stripe);
+}
+.data-table tbody tr:nth-child(even) {
+  background: var(--card);
+}
+.data-table tbody tr:hover {
+  background: var(--table-hover);
+}
+.data-table tbody tr[data-selected='true'] {
+  background: var(--table-selected);
+}
+.data-table thead th {
+  border-top: var(--border-width) solid var(--border);
+  border-bottom: var(--border-width) solid var(--border);
+}
+.data-table [data-actions],
+.data-table td:has([data-row-actions]) {
+  text-align: right;
+}
+.data-table a:hover,
+.data-table .product-card-title:not(:disabled):hover,
+.data-table th[scope='row'] button:not(:disabled):hover,
+.data-table th[scope='row'] button:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+table th:has(> .ui-checkbox),
+table td:has(> .ui-checkbox) {
+  width: calc(var(--selection-size) + var(--space-medium));
+  padding-inline: var(--space-small);
+}
+table th:has(> .ui-checkbox) + th,
+table td:has(> .ui-checkbox) + th,
+table td:has(> .ui-checkbox) + td {
+  text-align: left;
+  padding-left: var(--space-unit);
+}
+.data-table :is(th, td):has(> .ui-checkbox) {
+  min-width: calc(var(--selection-size) + var(--space-medium));
+  width: calc(var(--selection-size) + var(--space-medium));
+}
+.data-table :is(th, td):has(> .ui-checkbox) + :is(th, td) {
+  padding-inline-start: var(--space-small);
+  text-align: start;
+}
+.data-table :is(th, td) > .product-card-title {
+  padding-inline: 0;
+  justify-content: flex-start;
+  text-align: start;
+}

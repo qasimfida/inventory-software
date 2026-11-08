@@ -1,22 +1,23 @@
 import type { Preferences } from '@inventory/contracts';
 import { currencySchema } from '@inventory/contracts';
 export const preferenceFields = [
-  { key: 'currency', label: 'Currency', options: currencySchema.options },
+  { key: 'currency', label: 'Display currency', options: currencySchema.options },
   { key: 'appearance', label: 'Appearance', options: ['system', 'light', 'dark'] },
   { key: 'accent', label: 'Theme color', options: ['default', 'teal', 'violet', 'rose', 'amber'] },
-  { key: 'motion', label: 'Animation', options: ['enabled', 'reduced', 'disabled'] },
-  { key: 'density', label: 'Spacing', options: ['comfortable', 'compact'] },
+  { key: 'animation', label: 'Animation', options: ['off', 'minimal', 'full'] },
+  { key: 'controlSize', label: 'Control size', options: ['small', 'medium', 'large'] },
+  { key: 'density', label: 'Density', options: ['compact', 'default', 'comfortable'] },
   { key: 'pagination', label: 'List loading', options: ['pages', 'scroll'] },
   { key: 'radius', label: 'Control shape', options: ['rounded', 'circle'] },
   { key: 'iconSize', label: 'Icon size', options: ['small', 'medium', 'large'] },
   { key: 'textSize', label: 'Text size', options: ['small', 'medium', 'large'] },
-  { key: 'font', label: 'Font', options: ['system', 'Karla', 'Lora', 'serif', 'monospace'] },
+  { key: 'font', label: 'Font', options: ['Geist', 'GeistMono', 'Karla', 'Lora'] },
   {
     key: 'states',
     label: 'Loading and empty states / contextual actions',
     options: ['simple', 'enhanced'],
   },
-  { key: 'visualizations', label: 'Visualization detail', options: ['simple', 'enhanced'] },
+  { key: 'charts', label: 'Charts', options: ['numbers', 'balanced', 'charts'] },
 ] as const satisfies readonly {
   key: keyof Preferences;
   label: string;

@@ -1,10 +1,12 @@
+import { ProviderOverview } from './ProviderOverview';
 import { RefreshCw } from 'lucide-react';
-import { LoadingState } from '@/components/common/AsyncState';
+import { LoadingState, ErrorState } from '@/components/common/AsyncState';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { createIntegrationsClient, ResourceModel } from '@inventory/api-client';
 import type { Business } from '@inventory/contracts';
 import { Button } from '@/components/ui/Button';
+import { IconButton } from '@/components/common/IconButton';
 import { Input } from '@/components/ui/FormControls';
 import { authClient } from '@/platform/auth-client';
 export function IntegrationsPanel({ business }: { business: Business }) {
@@ -23,7 +25,7 @@ export function IntegrationsPanel({ business }: { business: Business }) {
   return (
     <section aria-label="Integrations and navigation help" className="screen-section">
       <ScreenHeader
-        title="Integrations and navigation help"
+        title="Integrations & help"
         description={
           <>
             Core workflows remain available without external providers. Configuration is managed by
@@ -32,28 +34,16 @@ export function IntegrationsPanel({ business }: { business: Business }) {
         }
       />
       {state.busy && <LoadingState message="Loading…" />}
-      {state.error && <p role="alert">{state.error}</p>}
-      <Button
+      {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
+      <IconButton
+        label="Refresh integration status"
+        icon={RefreshCw}
         onClick={() => void model.run()}
         disabled={state.busy}
-        variant="ghost"
-        size="icon"
-        aria-label="Refresh integration status"
-        title="Refresh"
-      >
-        <RefreshCw aria-hidden="true" />
-      </Button>
+      />
       {state.data && (
         <>
-          {state.data.services.map((service) => (
-            <p key={service.id}>
-              {service.id}: {service.state} — {service.detail}
-            </p>
-          ))}
-          <p>Available sections for your permissions:</p>
-          {state.data.navigation.map((label) => (
-            <p key={label}>{label}</p>
-          ))}
+          <ProviderOverview data={state.data} />
           {state.data.services.some((s) => s.id === 'ai' && s.state === 'enabled') && (
             <>
               <p>
@@ -85,7 +75,12 @@ export function IntegrationsPanel({ business }: { business: Business }) {
           )}
         </>
       )}
-      {!!answer && <p>{answer}</p>}
+      {!!answer && (
+        <section aria-label="Navigation answer" className="space-y-2" role="status">
+          <h3>Navigation guidance</h3>
+          <p>{answer}</p>
+        </section>
+      )}
     </section>
   );
 }

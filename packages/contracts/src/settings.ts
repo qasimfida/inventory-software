@@ -8,11 +8,14 @@ export const preferenceSchema = z
     appearance: z.enum(['light', 'dark', 'system']),
     accent: z.enum(['default', 'teal', 'violet', 'rose', 'amber']),
     motion: z.enum(['enabled', 'reduced', 'disabled']),
-    density: z.enum(['compact', 'comfortable']),
+    density: z.enum(['compact', 'default', 'comfortable']),
+    controlSize: z.enum(['small', 'medium', 'large']).optional(),
+    animation: z.enum(['off', 'minimal', 'full']).optional(),
+    charts: z.enum(['numbers', 'balanced', 'charts']).optional(),
     textSize: z.enum(['small', 'medium', 'large']),
     iconSize: z.enum(['small', 'medium', 'large']),
     font: z.union([
-      z.enum(['system', 'Karla', 'Lora', 'serif', 'monospace']),
+      z.enum(['Geist', 'GeistMono', 'system', 'Karla', 'Lora', 'serif', 'monospace']),
       z
         .string()
         .max(128)
@@ -30,13 +33,16 @@ export type Preferences = z.infer<typeof preferenceSchema>;
 export const preferencePatchSchema = preferenceSchema.partial();
 export type PreferencePatch = z.infer<typeof preferencePatchSchema>;
 export const defaultPreferences: Preferences = {
-  appearance: 'system',
+  appearance: 'light',
   accent: 'default',
   motion: 'enabled',
-  density: 'comfortable',
+  density: 'compact',
+  controlSize: 'medium',
+  animation: 'minimal',
+  charts: 'balanced',
   textSize: 'medium',
   iconSize: 'medium',
-  font: 'Karla',
+  font: 'Geist',
   states: 'simple',
   effects: false,
   visualizations: 'simple',
@@ -92,6 +98,7 @@ export type PolicyRecord = z.infer<typeof policyRecordSchema>;
 export interface DevicePreferences {
   reducedMotion?: boolean;
   lowPower?: boolean;
+  touch?: boolean;
 }
 
 // Inputs from stored JSON may be stale/corrupt. Invalid fields revert individually.
@@ -100,7 +107,7 @@ export function safePreferences(input: unknown): z.infer<typeof preferencePatchS
   const result: Record<string, unknown> = {};
   for (const [key, schema] of Object.entries(preferenceSchema.shape)) {
     const parsed = schema.safeParse((input as Record<string, unknown>)[key]);
-    if (parsed.success) result[key] = parsed.data;
+    if (parsed.success && parsed.data !== undefined) result[key] = parsed.data;
   }
   return preferencePatchSchema.parse(result);
 }
@@ -124,18 +131,49 @@ export function resolveSettings(
 ): Preferences {
   const platform = safePolicy(platformInput),
     business = safePolicy(businessInput);
+  const user = safePreferences(preferences);
+  // Cosmetic policy migration: retained policy JSON is historical, not an account override.
   const resolved = {
     ...defaultPreferences,
+    ...(device.touch ? { density: 'default' as const } : {}),
     ...platform.defaults,
-    ...business.defaults,
-    ...safePreferences(preferences),
-    ...business.enforced,
-    ...platform.enforced,
+    ...Object.fromEntries(
+      Object.entries(business.defaults).filter(([key]) => !isCosmeticPreference(key)),
+    ),
+    ...user,
+    ...Object.fromEntries(
+      Object.entries(business.enforced).filter(([key]) => !isCosmeticPreference(key)),
+    ),
+    ...Object.fromEntries(
+      Object.entries(platform.enforced).filter(([key]) => !isCosmeticPreference(key)),
+    ),
   };
-  if (device.reducedMotion && resolved.motion === 'enabled') resolved.motion = 'reduced';
+  // Legacy choices remain exact until a user explicitly selects the corresponding new axis.
+  const source = { ...platform.defaults, ...user };
+  if (
+    (user.animation === undefined && user.motion !== undefined) ||
+    (source.animation === undefined && source.motion !== undefined)
+  ) {
+    resolved.animation = source.motion === 'enabled' ? 'full' : 'off';
+    resolved.motion = source.motion;
+  } else {
+    resolved.motion = resolved.animation === 'off' ? 'disabled' : 'enabled';
+  }
+  if (
+    (user.charts === undefined && user.visualizations !== undefined) ||
+    (source.charts === undefined && source.visualizations !== undefined)
+  ) {
+    resolved.charts = 'balanced';
+    resolved.visualizations = source.visualizations;
+  } else resolved.visualizations = resolved.charts === 'charts' ? 'enhanced' : 'simple';
+  if (device.reducedMotion) {
+    resolved.animation = 'off';
+    if (resolved.motion !== 'disabled') resolved.motion = 'reduced';
+  }
   if (device.lowPower) {
     resolved.effects = false;
     resolved.visualizations = 'simple';
+    resolved.charts = 'numbers';
   }
   return preferenceSchema.parse(resolved);
 }
@@ -147,4 +185,9 @@ export function notificationPolicy(platformInput: unknown, businessInput: unknow
     notifyBusinessAdmins: upper.notifyBusinessAdmins ?? lower.notifyBusinessAdmins ?? true,
     notifyPlatformAdmins: upper.notifyPlatformAdmins ?? true,
   };
+}
+
+/** Account appearance is independent of business and enforced cosmetic policies. */
+export function isCosmeticPreference(key: string): boolean {
+  return !['currency', 'pagination'].includes(key) && key in preferenceSchema.shape;
 }

@@ -1,0 +1,202 @@
+[
+  {
+    "path": "apps/web/dist/index.html",
+    "bytes": 778,
+    "gzip": 370
+  },
+  {
+    "path": "apps/web/dist/sw.js",
+    "bytes": 1965,
+    "gzip": 954
+  },
+  {
+    "path": "apps/web/dist/assets/quill-zL3mIzDS.js",
+    "bytes": 199709,
+    "gzip": 58072
+  },
+  {
+    "path": "apps/web/dist/assets/InventoryWorkspace-BPZhk9LB.js",
+    "bytes": 32190,
+    "gzip": 9286
+  },
+  {
+    "path": "apps/web/dist/assets/TransferPanel-CQJF_LVk.js",
+    "bytes": 4711,
+    "gzip": 1962
+  },
+  {
+    "path": "apps/web/dist/assets/dist-js-BzKGOnbP.js",
+    "bytes": 1485,
+    "gzip": 670
+  },
+  {
+    "path": "apps/web/dist/assets/StoragePanel-BTbWC7Cv.js",
+    "bytes": 12553,
+    "gzip": 4142
+  },
+  {
+    "path": "apps/web/dist/assets/import-xlsx-k_0B6rwc.js",
+    "bytes": 63485,
+    "gzip": 21261
+  },
+  {
+    "path": "apps/web/dist/assets/PurchasingPanel-CEcYeWnm.js",
+    "bytes": 8340,
+    "gzip": 3015
+  },
+  {
+    "path": "apps/web/dist/assets/Geist-Cz_WRCMl.ttf",
+    "bytes": 169056,
+    "gzip": 86506
+  },
+  {
+    "path": "apps/web/dist/assets/CategoryPage-CpYRIQPM.js",
+    "bytes": 3529,
+    "gzip": 1499
+  },
+  {
+    "path": "apps/web/dist/assets/rolldown-runtime-XKyaHtl9.js",
+    "bytes": 726,
+    "gzip": 431
+  },
+  {
+    "path": "apps/web/dist/assets/desktop-storage-BQzhZksZ.js",
+    "bytes": 205,
+    "gzip": 175
+  },
+  {
+    "path": "apps/web/dist/assets/index-Bda0DJE5.css",
+    "bytes": 108971,
+    "gzip": 19632
+  },
+  {
+    "path": "apps/web/dist/assets/WarehousePanel-BM14huhm.js",
+    "bytes": 8587,
+    "gzip": 3186
+  },
+  {
+    "path": "apps/web/dist/assets/FoundationPage-BH8AP9c_.js",
+    "bytes": 102783,
+    "gzip": 18341
+  },
+  {
+    "path": "apps/web/dist/assets/CustomerPanel-D-D775Cc.js",
+    "bytes": 6816,
+    "gzip": 2703
+  },
+  {
+    "path": "apps/web/dist/assets/StorefrontPanel-DBflb7-H.js",
+    "bytes": 4432,
+    "gzip": 1988
+  },
+  {
+    "path": "apps/web/dist/assets/auth-client-BUaw4_PM.js",
+    "bytes": 1264,
+    "gzip": 730
+  },
+  {
+    "path": "apps/web/dist/assets/IconButton-C5MHLoyO.css",
+    "bytes": 25727,
+    "gzip": 3938
+  },
+  {
+    "path": "apps/web/dist/assets/ReportsPanel-KIzhgV-s.js",
+    "bytes": 4520,
+    "gzip": 1810
+  },
+  {
+    "path": "apps/web/dist/assets/PayablePanel-wOqr0Yqg.js",
+    "bytes": 6022,
+    "gzip": 2243
+  },
+  {
+    "path": "apps/web/dist/assets/Application-CAmvlRaq.js",
+    "bytes": 267759,
+    "gzip": 73245
+  },
+  {
+    "path": "apps/web/dist/assets/TradingPanel-Cz2xdvPJ.js",
+    "bytes": 4016,
+    "gzip": 1701
+  },
+  {
+    "path": "apps/web/dist/assets/Karla-Cc-z3u01.ttf",
+    "bytes": 94016,
+    "gzip": 57683
+  },
+  {
+    "path": "apps/web/dist/assets/Button-DXaM3rJg.js",
+    "bytes": 121291,
+    "gzip": 40381
+  },
+  {
+    "path": "apps/web/dist/assets/NotificationsPanel-C7RtcaIS.js",
+    "bytes": 9369,
+    "gzip": 3354
+  },
+  {
+    "path": "apps/web/dist/assets/resource-model-rPcZXhw8.js",
+    "bytes": 1263,
+    "gzip": 588
+  },
+  {
+    "path": "apps/web/dist/assets/index-BVzytRuV.js",
+    "bytes": 364489,
+    "gzip": 114622
+  },
+  {
+    "path": "apps/web/dist/assets/IntegrationsPanel-DRkzX_fy.js",
+    "bytes": 2188,
+    "gzip": 1078
+  },
+  {
+    "path": "apps/web/dist/assets/GeistMono-aobeVSSS.ttf",
+    "bytes": 171968,
+    "gzip": 89566
+  },
+  {
+    "path": "apps/web/dist/assets/browser-C0zvGkjE.js",
+    "bytes": 5401,
+    "gzip": 2704
+  },
+  {
+    "path": "apps/web/dist/assets/IconButton-BQ6mExRZ.js",
+    "bytes": 103441,
+    "gzip": 31032
+  },
+  {
+    "path": "apps/web/dist/assets/AccountingPanel-jMbPWvvS.js",
+    "bytes": 3684,
+    "gzip": 1733
+  },
+  {
+    "path": "apps/web/dist/assets/core-IUlRufS4.js",
+    "bytes": 168,
+    "gzip": 140
+  },
+  {
+    "path": "apps/web/dist/assets/dist-Y_foZ1Nq.js",
+    "bytes": 346143,
+    "gzip": 109971
+  },
+  {
+    "path": "apps/web/dist/assets/ProductPage-B2OEUKvA.js",
+    "bytes": 5249,
+    "gzip": 2058
+  },
+  {
+    "path": "apps/web/dist/assets/MovementHistory-BYy8sWiy.js",
+    "bytes": 4016,
+    "gzip": 1519
+  },
+  {
+    "path": "apps/web/dist/assets/Application-PQpIsXLt.css",
+    "bytes": 1632,
+    "gzip": 553
+  },
+  {
+    "path": "apps/web/dist/assets/Lora-C1B0tkav.ttf",
+    "bytes": 212196,
+    "gzip": 107014
+  }
+]

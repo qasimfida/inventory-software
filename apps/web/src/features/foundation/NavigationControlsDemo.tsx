@@ -1,3 +1,6 @@
+import { LoadingState as CollectionLoadingState } from '@/components/common/AsyncState';
+import { RichTextEditor } from '@/components/common/RichTextEditor';
+import { RichDescription } from '@/components/common/RichDescription';
 import { ProfileIdentity } from '@/shell/ProfileIdentity';
 import { SearchControl } from '@/components/common/SearchControl';
 import { OverflowTabs } from '@/components/common/OverflowTabs';
@@ -11,6 +14,7 @@ import { Button } from '@/components/ui/Button';
 import { FormSheet } from '@/components/common/FormSheet';
 import { RecordCollection } from '@/components/common/RecordCollection';
 export function NavigationControlsDemo() {
+  const [description, setDescription] = useState('Example product description');
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
   return (
@@ -40,7 +44,12 @@ export function NavigationControlsDemo() {
         </PopoverContent>
       </Popover>
       <Button onClick={() => setOpen(true)}>Open example form drawer</Button>
-      <FormSheet title="Example form drawer" open={open} onOpenChange={setOpen}>
+      <FormSheet
+        title="Example form drawer"
+        description="Drag the left edge to resize, or focus it and use arrow keys. Double-click the edge to reset. On phones the drawer fills the viewport."
+        open={open}
+        onOpenChange={setOpen}
+      >
         <p>This is local demonstration state.</p>
         <Button onClick={() => setOpen(false)}>Done</Button>
       </FormSheet>
@@ -84,7 +93,41 @@ export function NavigationControlsDemo() {
       </Tabs.Root>
       <Progress value={50} label="Example measured progress" />
       <Progress label="Example unknown progress" />
+      <label htmlFor="demo-description">Description editor</label>
+      <RichTextEditor
+        id="demo-description"
+        label="Description editor"
+        value={description}
+        onChange={setDescription}
+      />
+      <RichDescription value={description} />
       <RecordCollection
+        label="loading example"
+        allowGrid={false}
+        showExport={false}
+        items={[]}
+        emptyState={<CollectionLoadingState message="Example loading records…" />}
+        onOpen={() => {}}
+      />
+      <RecordCollection
+        allowGrid={false}
+        label="example receipts"
+        items={[
+          {
+            id: 'receipt',
+            title: 'Example receipt',
+            subtitle: 'LOCAL-RECEIPT',
+            detail: '$12.00 · illustrative display detail',
+            exportDetail: '$12.00',
+            status: 'completed',
+            tone: 'success',
+          },
+        ]}
+        onOpen={() => setOpen(true)}
+      />
+      <RecordCollection
+        showExport={false}
+        actions={<Button onClick={() => setOpen(true)}>Add example record</Button>}
         toolbar={
           <div className="collection-search">
             <SearchControl label="Search example records" value={search} onChange={setSearch} />

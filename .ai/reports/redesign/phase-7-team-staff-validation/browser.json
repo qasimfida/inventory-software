@@ -1,0 +1,86 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "collection": "passed",
+    "assignmentDrawer": "passed",
+    "overflow": "passed"
+  }
+]

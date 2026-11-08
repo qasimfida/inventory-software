@@ -1,0 +1,98 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "list": "passed",
+    "create": "passed",
+    "details": "passed",
+    "partialReceipt": "passed"
+  }
+]

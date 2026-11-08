@@ -1,0 +1,14 @@
+{
+  "paths": {
+    "/Users/dev/Library/Android/sdk/platform-tools/adb": false,
+    "/Applications/Xcode.app": false
+  },
+  "simulators": {
+    "exitCode": 72,
+    "output": "xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH\n"
+  },
+  "macApp": {
+    "exitCode": 0,
+    "output": "Inventory Foundation.app\nrw.17222.Inventory Foundation_0.0.0_aarch64.dmg\nrw.48418.Inventory Foundation_0.0.0_aarch64.dmg\nrw.66258.Inventory Foundation_0.0.0_aarch64.dmg\nrw.69773.Inventory Foundation_0.0.0_aarch64.dmg\nrw.71456.Inventory Foundation_0.0.0_aarch64.dmg\nrw.71676.Inventory Foundation_0.0.0_aarch64.dmg\n"
+  }
+}

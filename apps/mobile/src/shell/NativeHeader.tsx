@@ -39,7 +39,9 @@ export function NativeHeader() {
                 ? 'More'
                 : path === '/admin/businesses'
                   ? 'Registered businesses'
-                  : 'Platform overview')}
+                  : path === '/admin'
+                    ? 'Platform overview'
+                    : 'Workspace')}
         </Text>
       </View>
       {business && hasPermission(business, 'locations.read') && (

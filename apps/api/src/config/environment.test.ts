@@ -70,3 +70,24 @@ it('requires operator-owned canonical HTTPS media origins and fails closed by de
       /STOREFRONT_MEDIA_ORIGINS/,
     );
 });
+
+it('requires paired durable storage and an HTTPS media endpoint without credentials', () => {
+  const base = {
+    ...development,
+    PRODUCT_MEDIA_DIRECTORY: '/srv/inventory/photos',
+    PRODUCT_MEDIA_PUBLIC_BASE_URL: 'https://media.example.test/api/v1/product-media',
+  };
+  expect(parseEnvironment(base).PRODUCT_MEDIA_DIRECTORY).toBe('/srv/inventory/photos');
+  for (const patch of [
+    { PRODUCT_MEDIA_DIRECTORY: '' },
+    { PRODUCT_MEDIA_DIRECTORY: 'relative/photos' },
+    { PRODUCT_MEDIA_PUBLIC_BASE_URL: 'http://media.example.test/api/v1/product-media' },
+    {
+      PRODUCT_MEDIA_PUBLIC_BASE_URL: 'https://user:secret@media.example.test/api/v1/product-media',
+    },
+    {
+      PRODUCT_MEDIA_PUBLIC_BASE_URL: 'https://media.example.test/api/v1/product-media?token=secret',
+    },
+  ])
+    expect(() => parseEnvironment({ ...base, ...patch })).toThrow();
+});

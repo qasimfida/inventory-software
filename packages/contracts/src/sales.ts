@@ -125,6 +125,7 @@ export const posItemsSchema = z.object({
   items: z.array(
     z.object({
       id: z.uuid(),
+      productId: z.uuid().optional(),
       name: z.string(),
       sku: z.string(),
       unitId: z.uuid(),
@@ -134,6 +135,12 @@ export const posItemsSchema = z.object({
           currency: currencySchema,
           unit: z.string().min(1).max(64),
         })
+        .nullable()
+        .optional(),
+      /** Null/absent means untracked or unknown; never infer sold out from missing data. */
+      available: z
+        .string()
+        .regex(/^-?(?:0|[1-9][0-9]*)(?:\.[0-9]{1,6})?$/)
         .nullable()
         .optional(),
       images: productSchema.shape.images.optional(),

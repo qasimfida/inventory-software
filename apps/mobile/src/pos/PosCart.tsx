@@ -49,7 +49,7 @@ export function PosCart({
   return (
     <Surface>
       <Text accessibilityRole="header" style={{ fontSize: metrics.heading }}>
-        Cart details
+        Cart details ({state.lines.length} {state.lines.length === 1 ? 'line' : 'lines'})
       </Text>
       <Text
         accessibilityLiveRegion="polite"
@@ -139,31 +139,36 @@ export function PosCart({
           }
         />
       )}
-      {state.quote && (
+      {!state.quote && state.lines.length > 0 && (
+        <Text accessibilityLiveRegion="polite">
+          {state.error ? 'Totals unavailable' : 'Updating totals…'}
+        </Text>
+      )}
+      {state.lines.length > 0 && (
         <>
           <RecordDetails
             label="Checkout totals"
             items={[
               {
                 label: 'Net after discounts',
-                value: formatMinorUnits(state.quote.netMinor, state.quote.currency),
+                value: state.quote
+                  ? formatMinorUnits(state.quote.netMinor, state.quote.currency)
+                  : '—',
               },
               {
                 label: 'Tax',
-                value: formatMinorUnits(state.quote.taxMinor, state.quote.currency),
+                value: state.quote
+                  ? formatMinorUnits(state.quote.taxMinor, state.quote.currency)
+                  : '—',
               },
               {
                 label: 'Total payment',
-                value: formatMinorUnits(state.quote.totalMinor, state.quote.currency),
+                value: state.quote
+                  ? formatMinorUnits(state.quote.totalMinor, state.quote.currency)
+                  : '—',
               },
             ]}
           />
-          {state.quote.lines.map((l, i) => (
-            <Text key={i}>
-              {l.sku} · base quantity {l.baseQuantity} · available {l.available} ·{' '}
-              {formatMinorUnits(l.totalMinor, l.currency)}
-            </Text>
-          ))}
         </>
       )}
       {((state.quote && reviewedQuote === state.quote.quoteFingerprint) || state.uncertain) &&

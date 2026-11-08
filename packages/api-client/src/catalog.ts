@@ -1,16 +1,21 @@
 import type { CancellationSignal } from './cancellation.js';
 import {
+  productImageUploadSchema,
+  productImageUploadResultSchema,
   productPageSchema,
+  skuAvailabilitySchema,
   productSchema,
   categoriesSchema,
   categorySchema,
 } from '@inventory/contracts';
 import type {
+  ProductImageUpload,
   ProductInput,
   ProductEdit,
   CategoryInput,
   CategoryEdit,
   CatalogQuery,
+  SkuAvailabilityQuery,
 } from '@inventory/contracts';
 import type { OrganizationTransport } from './organization.js';
 export function queryString(query: object) {
@@ -22,6 +27,19 @@ export function queryString(query: object) {
 export function createCatalogClient(request: OrganizationTransport, businessId: string) {
   const path = `/${encodeURIComponent(businessId)}`;
   return {
+    uploadImage: async (input: ProductImageUpload) =>
+      productImageUploadResultSchema.parse(
+        await request(`${path}/product-images`, 'POST', productImageUploadSchema.parse(input)),
+      ),
+    skuAvailability: async (query: SkuAvailabilityQuery, signal?: CancellationSignal) =>
+      skuAvailabilitySchema.parse(
+        await request(
+          `${path}/products/sku-availability?${queryString(query)}`,
+          'GET',
+          undefined,
+          signal,
+        ),
+      ),
     list: async (query: CatalogQuery, signal?: CancellationSignal) =>
       productPageSchema.parse(
         await request(`${path}/products?${queryString(query)}`, 'GET', undefined, signal),

@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { createApiClient } from '@inventory/api-client';
 import { Text } from '../ui/Themed';
 import { Action } from '../ui/Controls';
-import { NativeShowcase } from '../ui/NativeShowcase';
 export function ConnectionTools() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
   const checkConnection = useCallback(async () => {
@@ -48,7 +47,6 @@ export function ConnectionTools() {
         disabled={status === 'loading'}
         onPress={() => void checkConnection()}
       />
-      {typeof __DEV__ !== 'undefined' && __DEV__ && <NativeShowcase />}
     </View>
   );
 }

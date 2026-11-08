@@ -6,6 +6,7 @@ test('online collection uses compact controls, select-all, issue help, grid and 
   await page.getByLabel('Account email').fill('owner@demo.example.test');
   await page.getByLabel('Password', { exact: true }).fill('local-demo');
   await page.getByRole('button', { name: 'Log in', exact: true }).click();
+  await page.waitForURL(/dashboard/);
   await page.evaluate(() => {
     location.hash = '/online-store/products?tab=changes-required';
   });

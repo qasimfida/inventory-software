@@ -7,8 +7,10 @@ import globals from 'globals';
 export default tseslint.config(
   {
     ignores: [
+      'apps/mobile/src/generated/quill-assets.ts',
       '.local/**',
       'artifacts/**',
+      '.ai/reports/redesign/*-validation/**',
       'test-results/**',
       'playwright-report/**',
       '**/node_modules/**',

@@ -127,7 +127,16 @@ export function RegisteredBusinesses() {
               grid={view === 'grid'}
             />
           ) : (
-            <EmptyState message="No matching businesses." />
+            <EmptyState
+              message={
+                search || filter !== 'all' ? 'No matching businesses' : 'No registered businesses'
+              }
+              description={
+                search || filter !== 'all'
+                  ? 'Try another business name or clear the status filter.'
+                  : 'Use Add business to register a business and become its initial owner.'
+              }
+            />
           ))}
       </div>
       {manageError && <p role="alert">{manageError}</p>}

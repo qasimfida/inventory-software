@@ -1,0 +1,254 @@
+ M .dependency-cruiser.cjs
+ M .gitignore
+ M .prettierignore
+ M AGENTS.md
+ M apps/api/src/catalog/catalog-search.integration.test.ts
+ M apps/api/src/catalog/catalog-search.ts
+ M apps/api/src/catalog/catalog.controller.ts
+ M apps/api/src/catalog/catalog.integration.test.ts
+ M apps/api/src/catalog/pricing.integration.test.ts
+ M apps/api/src/catalog/product.service.ts
+ M apps/api/src/catalog/variant.repository.ts
+ M apps/api/src/http/pricing-conflict.ts
+ M apps/api/src/inventory/ledger-core.ts
+ M apps/api/src/notifications/notifications.controller.ts
+ M apps/api/src/notifications/notifications.integration.test.ts
+ M apps/api/src/notifications/notifications.service.ts
+ M apps/api/src/operations/operations.controller.ts
+ M apps/api/src/operations/operations.integration.test.ts
+ M apps/api/src/operations/operations.service.ts
+ M apps/api/src/organization/business.service.ts
+ M apps/api/src/payments/shift-core.ts
+ M apps/api/src/sales/checkout.service.ts
+ M apps/api/src/security/security-queries.ts
+ M apps/api/src/security/session-audit.integration.test.ts
+ M apps/mobile/package.json
+ M apps/mobile/src/accounting/AccountingPanel.tsx
+ M apps/mobile/src/catalog/CatalogPanel.tsx
+ M apps/mobile/src/catalog/CatalogProducts.tsx
+ M apps/mobile/src/catalog/CategoryEditor.tsx
+ M apps/mobile/src/catalog/ManageProduct.tsx
+ M apps/mobile/src/catalog/ProductEditor.tsx
+ M apps/mobile/src/catalog/ProductForm.test.tsx
+ M apps/mobile/src/catalog/ProductForm.tsx
+ M apps/mobile/src/catalog/ProductPage.tsx
+ M apps/mobile/src/customers/CustomerPanel.tsx
+ M apps/mobile/src/inventory/InventoryProducts.tsx
+ M apps/mobile/src/notifications/NotificationTable.tsx
+ M apps/mobile/src/notifications/NotificationsPanel.tsx
+ M apps/mobile/src/offline/OfflineCart.tsx
+ M apps/mobile/src/offline/OfflineProductOptions.tsx
+ M apps/mobile/src/operations/OperationsPanel.tsx
+ M apps/mobile/src/operations/StaffDetails.tsx
+ M apps/mobile/src/organization/LocationEditor.tsx
+ M apps/mobile/src/organization/ManagementWorkflows.tsx
+ M apps/mobile/src/organization/MemberEditor.tsx
+ M apps/mobile/src/pos/HeldCarts.tsx
+ M apps/mobile/src/pos/PosCart.tsx
+ M apps/mobile/src/pos/PosCheckout.test.tsx
+ M apps/mobile/src/pos/PosCheckout.tsx
+ M apps/mobile/src/pos/PosPanel.tsx
+ M apps/mobile/src/pos/ProductPicker.tsx
+ M apps/mobile/src/pricing/PricingPanel.tsx
+ M apps/mobile/src/purchasing/PurchasingPanel.tsx
+ M apps/mobile/src/reports/Dashboard.test.tsx
+ M apps/mobile/src/reports/DashboardTrend.tsx
+ M apps/mobile/src/reports/ReportsPanel.tsx
+ M apps/mobile/src/reports/SetupChecklist.tsx
+ M apps/mobile/src/settings/SecurityPanel.tsx
+ M apps/mobile/src/shell/BusinessSettings.tsx
+ M apps/mobile/src/shell/NativeScreens.tsx
+ M apps/mobile/src/storage/StoragePanel.tsx
+ M apps/mobile/src/storefront/OnlineDetailsForm.test.tsx
+ M apps/mobile/src/storefront/OnlineDetailsForm.tsx
+ M apps/mobile/src/storefront/OnlineOverview.tsx
+ M apps/mobile/src/storefront/OnlineProducts.tsx
+ M apps/mobile/src/trading/TradingPanel.tsx
+ M apps/mobile/src/ui/Controls.tsx
+ M apps/mobile/src/ui/FormSection.tsx
+ M apps/mobile/src/ui/NativeShowcase.tsx
+ M apps/mobile/src/ui/Preferences.test.tsx
+ M apps/mobile/src/ui/RecordCollection.tsx
+ M apps/mobile/src/ui/SidePanel.tsx
+ M apps/mobile/src/visualization/WarehouseViewPanel.tsx
+ M apps/web/package.json
+ M apps/web/src/components/common/RecordCollection.tsx
+ M apps/web/src/components/ui/Drawer.tsx
+ M apps/web/src/features/accounting/AccountingPanel.tsx
+ M apps/web/src/features/auth/useSession.offline.test.tsx
+ M apps/web/src/features/auth/useSession.ts
+ M apps/web/src/features/catalog/CatalogDetails.tsx
+ M apps/web/src/features/catalog/CatalogPanel.tsx
+ M apps/web/src/features/catalog/CatalogProducts.test.tsx
+ M apps/web/src/features/catalog/CatalogProducts.tsx
+ M apps/web/src/features/catalog/CategoryEditor.tsx
+ M apps/web/src/features/catalog/ManageProduct.tsx
+ M apps/web/src/features/catalog/ProductEditor.test.tsx
+ M apps/web/src/features/catalog/ProductEditor.tsx
+ M apps/web/src/features/catalog/ProductForm.tsx
+ M apps/web/src/features/catalog/ProductPage.tsx
+ M apps/web/src/features/customers/CustomerPanel.tsx
+ M apps/web/src/features/foundation/NavigationControlsDemo.tsx
+ M apps/web/src/features/inventory/InventoryProducts.tsx
+ M apps/web/src/features/notifications/NotificationTable.tsx
+ M apps/web/src/features/notifications/NotificationsPanel.tsx
+ M apps/web/src/features/offline/OfflineCart.tsx
+ M apps/web/src/features/offline/OfflineProductOptions.tsx
+ M apps/web/src/features/operations/OperationsPanel.tsx
+ M apps/web/src/features/operations/StaffDetails.tsx
+ M apps/web/src/features/organization/LocationEditor.tsx
+ M apps/web/src/features/organization/ManagementWorkflows.tsx
+ M apps/web/src/features/organization/MemberEditor.test.tsx
+ M apps/web/src/features/organization/MemberEditor.tsx
+ M apps/web/src/features/organization/workflow-panels.ts
+ M apps/web/src/features/pos/HeldCarts.tsx
+ M apps/web/src/features/pos/PosCheckout.tsx
+ M apps/web/src/features/pos/PosPanel.tsx
+ M apps/web/src/features/pos/ProductPicker.tsx
+ M apps/web/src/features/pricing/PricingPanel.tsx
+ M apps/web/src/features/purchasing/PurchasingPanel.tsx
+ M apps/web/src/features/reports/Dashboard.test.tsx
+ M apps/web/src/features/reports/DashboardTrend.tsx
+ M apps/web/src/features/reports/ReportsPanel.tsx
+ M apps/web/src/features/reports/SetupChecklist.tsx
+ M apps/web/src/features/settings/SecurityEvents.tsx
+ M apps/web/src/features/settings/SecurityPanel.tsx
+ M apps/web/src/features/storage/StoragePanel.tsx
+ M apps/web/src/features/storefront/OnlineDetailsForm.tsx
+ M apps/web/src/features/storefront/OnlineOverview.tsx
+ M apps/web/src/features/storefront/OnlineProducts.tsx
+ M apps/web/src/features/trading/TradingPanel.tsx
+ M apps/web/src/features/visualization/WarehouseViewPanel.tsx
+ M apps/web/src/shell/BusinessSettings.tsx
+ M apps/web/src/shell/WorkspaceScreens.tsx
+ M apps/web/src/theme/catalog-cart.css
+ M apps/web/src/theme/preferences.css
+ M apps/web/src/theme/shell-controls.css
+ M docs/design-system.md
+ M docs/development.md
+ M docs/security-and-data.md
+ M eslint.config.mjs
+ M package-lock.json
+ M package.json
+ M packages/api-client/src/auth.ts
+ M packages/api-client/src/business-notifications.ts
+ M packages/api-client/src/catalog-export.ts
+ M packages/api-client/src/catalog.ts
+ M packages/api-client/src/held-carts.ts
+ M packages/api-client/src/index.ts
+ M packages/api-client/src/mock/account.ts
+ M packages/api-client/src/mock/index.ts
+ M packages/api-client/src/mock/read-inventory.ts
+ M packages/api-client/src/mock/read-staff.ts
+ M packages/api-client/src/mock/staff-seed.ts
+ M packages/api-client/src/operations.ts
+ M packages/api-client/src/pos-model.test.ts
+ M packages/api-client/src/pos-model.ts
+ M packages/api-client/src/pos-types.ts
+ M packages/api-client/src/price-forms.ts
+ M packages/api-client/src/resource-model.ts
+ M packages/api-client/src/setup-checklist.ts
+ M packages/api-client/src/workspace-navigation.test.ts
+ M packages/api-client/src/workspace-navigation.ts
+ M packages/api-client/src/workspace-search.ts
+ M packages/contracts/package.json
+ M packages/contracts/src/business-notifications.ts
+ M packages/contracts/src/catalog.ts
+ M packages/contracts/src/index.ts
+ M packages/contracts/src/operations.ts
+ M packages/contracts/src/sales.ts
+ M packages/contracts/src/security.ts
+ M packages/contracts/src/storefront-management.ts
+ M packages/contracts/src/storefront-readiness.test.ts
+ M packages/contracts/src/storefront-readiness.ts
+ M packages/contracts/src/storefront.ts
+ M packages/design-tokens/tokens.css
+ M packages/domain/src/index.ts
+ M scripts/parity.test.mjs
+ M scripts/source-size-exceptions.json
+ M tests/shell/held-carts.spec.ts
+ M tests/shell/online-followup.spec.ts
+ M tests/shell/online-products.spec.ts
+ M tests/shell/online-store-setup.spec.ts
+ M tests/shell/product-details.spec.ts
+ M tests/shell/setup.spec.ts
+ M tests/shell/stock-planning.spec.ts
+ M tests/shell/storefront.spec.ts
+?? .agent/workflows/redesign.md
+?? .ai/
+?? .claude/commands/redesign.md
+?? apps/api/migrations/1795400000000_notification_dismissal.sql
+?? apps/api/src/sales/checkout-errors.integration.test.ts
+?? apps/mobile/src/catalog/CategoryPage.tsx
+?? apps/mobile/src/catalog/ProductListings.tsx
+?? apps/mobile/src/catalog/ProductQuantity.tsx
+?? apps/mobile/src/catalog/SkuStatus.test.tsx
+?? apps/mobile/src/catalog/SkuStatus.tsx
+?? apps/mobile/src/customers/CustomerRetention.tsx
+?? apps/mobile/src/inventory/InventoryWorkspace.tsx
+?? apps/mobile/src/operations/OperationsFilters.tsx
+?? apps/mobile/src/organization/LocationDetails.test.tsx
+?? apps/mobile/src/organization/LocationDetails.tsx
+?? apps/mobile/src/organization/MemberCollection.tsx
+?? apps/mobile/src/settings/SecurityNotifications.tsx
+?? apps/mobile/src/storage/StorageDetails.tsx
+?? apps/mobile/src/storage/StorageManagementPanel.tsx
+?? apps/mobile/src/storage/WarehouseBalances.tsx
+?? apps/mobile/src/ui/ExportRecords.tsx
+?? apps/mobile/src/ui/PanelResizeHandle.tsx
+?? apps/mobile/src/ui/RichDescription.tsx
+?? apps/mobile/src/ui/RichTextEditor.tsx
+?? apps/mobile/src/ui/RichTextEditor.web.tsx
+?? apps/mobile/src/ui/quill-document.ts
+?? apps/web/src/components/common/ExportRecords.tsx
+?? apps/web/src/components/common/RichDescription.tsx
+?? apps/web/src/components/common/RichTextEditor.tsx
+?? apps/web/src/components/common/rich-text.css
+?? apps/web/src/components/ui/DrawerResizeHandle.tsx
+?? apps/web/src/features/catalog/CategoryPage.tsx
+?? apps/web/src/features/catalog/ProductListings.test.tsx
+?? apps/web/src/features/catalog/ProductListings.tsx
+?? apps/web/src/features/catalog/ProductQuantity.tsx
+?? apps/web/src/features/catalog/SkuStatus.test.tsx
+?? apps/web/src/features/catalog/SkuStatus.tsx
+?? apps/web/src/features/catalog/useProductFormFeedback.tsx
+?? apps/web/src/features/customers/CustomerRetention.tsx
+?? apps/web/src/features/inventory/InventoryWorkspace.tsx
+?? apps/web/src/features/notifications/NotificationTable.test.tsx
+?? apps/web/src/features/operations/OperationsFilters.tsx
+?? apps/web/src/features/organization/LocationDetails.tsx
+?? apps/web/src/features/organization/LocationEditor.test.tsx
+?? apps/web/src/features/organization/MemberCollection.tsx
+?? apps/web/src/features/organization/locations.css
+?? apps/web/src/features/settings/SecurityEvents.test.tsx
+?? apps/web/src/features/settings/SecurityNotifications.tsx
+?? apps/web/src/features/storage/StorageDetails.tsx
+?? apps/web/src/features/storage/StorageManagementPanel.tsx
+?? apps/web/src/features/storage/WarehouseBalances.tsx
+?? packages/api-client/src/mock/product-setup.ts
+?? packages/api-client/src/notification-details.ts
+?? packages/api-client/src/notification-time.test.ts
+?? packages/api-client/src/notification-time.ts
+?? packages/api-client/src/pos-availability.test.ts
+?? packages/api-client/src/product-form-feedback.test.ts
+?? packages/api-client/src/product-form-feedback.ts
+?? packages/api-client/src/product-setup-forms.test.ts
+?? packages/api-client/src/product-setup-forms.ts
+?? packages/api-client/src/resource-model.test.ts
+?? packages/api-client/src/security-presentation.test.ts
+?? packages/api-client/src/security-presentation.ts
+?? packages/contracts/src/rich-description.test.ts
+?? packages/contracts/src/rich-description.ts
+?? scripts/build-quill-assets.mjs
+?? tests/shell/browser-focus.spec.ts
+?? tests/shell/compact-workflows.spec.ts
+?? tests/shell/drawer-resize.spec.ts
+?? tests/shell/inventory-workspace.spec.ts
+?? tests/shell/location-details.spec.ts
+?? tests/shell/pos-availability.spec.ts
+?? tests/shell/product-setup.spec.ts
+?? tests/shell/product-validation.spec.ts
+?? tests/shell/rich-description.spec.ts
+?? tests/shell/sales-trend.spec.ts
+?? tests/shell/storage-workspace.spec.ts
+?? tests/shell/workflow-refinement.spec.ts

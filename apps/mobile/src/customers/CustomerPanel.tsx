@@ -1,3 +1,9 @@
+import { Action } from '../ui/Controls';
+import { ExportRecords } from '../ui/ExportRecords';
+import { EmptyState, ErrorState, LoadingState } from '../ui/AsyncState';
+import { CustomerProfile } from './CustomerProfile';
+import { CustomerEvidence } from './CustomerEvidence';
+import { ConfirmAction } from '../ui/ConfirmAction';
 import { FilterButton } from '../ui/FilterButton';
 import { SidePanel } from '../ui/SidePanel';
 import { View } from 'react-native';
@@ -7,7 +13,6 @@ import { Pagination } from '../ui/Pagination';
 import { SearchControl } from '../ui/SearchControl';
 import { IconAction } from '../ui/IconAction';
 import { ScreenBody, ScreenHeader } from '../ui/ScreenHeader';
-import { Text } from '../ui/Themed';
 import { CustomerStatement } from './CustomerStatement';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import {
@@ -16,7 +21,6 @@ import {
   cancellableResource,
   customerProfileForm,
   customerDetailForms,
-  customerRetentionForms,
 } from '@inventory/api-client';
 import { hasPermission, businessTime, currencySchema } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
@@ -72,7 +76,6 @@ export function CustomerPanel({
             },
             signal,
           ),
-          retention: hasPermission(business, 'business.write') ? await client.retention() : null,
           prices:
             customerId && hasPermission(business, 'products.read')
               ? await client.prices(customerId)
@@ -113,10 +116,6 @@ export function CustomerPanel({
   const customer = state.data?.page.customers.find((c) => c.id === customerId);
   const forms = state.data
     ? [
-        ...(state.data.retention ? customerRetentionForms(client, state.data.retention) : []),
-        ...(hasPermission(business, 'customers.write')
-          ? [customerProfileForm(client, storeId)]
-          : []),
         ...(customer && state.data.statement
           ? customerDetailForms(client, pricing, customer, business, state.data.statement)
           : []),
@@ -189,6 +188,20 @@ export function CustomerPanel({
           }}
         />
       </SidePanel>
+      {(status || currency || search) && (
+        <Action
+          label="Clear filters"
+          variant="ghost"
+          onPress={() => {
+            setStatus('');
+            setCurrency('');
+            setSearch('');
+            setCustomerId('');
+            setOffset(0);
+            setStatementOffset(0);
+          }}
+        />
+      )}
       <IconAction
         label="Refresh customers"
         onPress={() => void model.run()}
@@ -200,20 +213,49 @@ export function CustomerPanel({
   return (
     <ScreenBody>
       <ScreenHeader
-        title="Customers and credit"
+        title="Customers"
+        actions={
+          <>
+            <ExportRecords
+              name="customers"
+              headers={['Name', 'Code', 'Contact', 'Currency', 'Status']}
+              rows={(state.data?.page.customers ?? []).map((c) => [
+                c.name,
+                c.code,
+                c.email || c.phone || '',
+                c.currency,
+                c.state,
+              ])}
+            />
+            {storeId && hasPermission(business, 'customers.write') && (
+              <CommandForm
+                definition={{ ...customerProfileForm(client, storeId), title: 'Add customer' }}
+                run={(work) => void model.run(work)}
+              />
+            )}
+          </>
+        }
         description={
           <>
-            Duplicate email or phone in this store is rejected. Statements are scoped to your
-            access. Cash overpayments are rejected; credit overrides require explicit authority.
+            Manage customer profiles, review credit and track recorded payments for the selected
+            store.
           </>
         }
       />
-      {Boolean(state.error) && <Text accessibilityRole="alert">{state.error}</Text>}
+      {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
 
+      {!storeId && (
+        <EmptyState
+          message="No active store available"
+          description="Customer records require an active store within your access."
+        />
+      )}
+      {storeId && !state.data && !state.error && <LoadingState message="Loading customers…" />}
       {!state.data && <View>{toolbar}</View>}
       {state.data && (
         <>
           <RecordCollection
+            showExport={false}
             toolbar={toolbar}
             items={state.data.page.customers.map((c) => ({
               id: c.id,
@@ -241,24 +283,73 @@ export function CustomerPanel({
             busy={state.busy || (!state.data && !state.error)}
             onChange={setOffset}
           />
-          {state.data.statement && (
-            <CustomerStatement
-              busy={state.busy || Boolean(state.error)}
-              statement={state.data.statement}
-              business={business}
-              statementOffset={statementOffset}
-              setStatementOffset={setStatementOffset}
-            />
-          )}
-          {state.data.prices?.prices.map((p) => (
-            <Text key={p.id}>
-              Customer price (latest 100 periods) · {p.variantId} · {p.currency} {p.unitPrice} per
-              base unit · from {businessTime(p.startsAt, business.timeZone)}
-            </Text>
-          ))}
-          {forms.map((f) => (
-            <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
-          ))}
+          <SidePanel title="Customer details" open={!!customerId} onClose={() => setCustomerId('')}>
+            {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
+            {customer && (
+              <CustomerProfile
+                customer={customer}
+                store={stores.find((s) => s.id === customer.storeId)?.name ?? customer.storeId}
+              />
+            )}
+            {state.data.statement && (
+              <CustomerStatement
+                busy={state.busy || Boolean(state.error)}
+                statement={state.data.statement}
+                business={business}
+                statementOffset={statementOffset}
+                setStatementOffset={setStatementOffset}
+              />
+            )}
+            {state.data.prices && (
+              <CustomerEvidence
+                title="Customer prices · latest 100 periods"
+                columns={['Variant reference', 'Price per base unit', 'Effective from']}
+                rows={state.data.prices.prices.map((p) => ({
+                  id: p.id,
+                  cells: [
+                    p.variantId,
+                    `${p.currency} ${p.unitPrice}`,
+                    businessTime(p.startsAt, business.timeZone),
+                  ],
+                }))}
+              />
+            )}
+            {customer &&
+              !customer.anonymized &&
+              customer.state !== 'archived' &&
+              hasPermission(business, 'customers.write') && (
+                <ConfirmAction
+                  label="Archive customer"
+                  disabled={state.busy}
+                  description="Remove this customer from active use. Their transaction history is retained. Customers with an outstanding balance cannot be archived."
+                  confirmLabel="Archive customer"
+                  onConfirm={() => {
+                    if (!customer || state.busy) return;
+                    void model.run(async () => {
+                      await client.save(
+                        {
+                          code: customer.code,
+                          name: customer.name,
+                          email: customer.email,
+                          phone: customer.phone,
+                          address: customer.address,
+                          notes: customer.notes,
+                          currency: customer.currency,
+                          state: 'archived',
+                          storeId: customer.storeId,
+                        },
+                        customer.id,
+                        customer.version,
+                      );
+                      setCustomerId('');
+                    });
+                  }}
+                />
+              )}
+            {forms.map((f) => (
+              <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
+            ))}
+          </SidePanel>
         </>
       )}
     </ScreenBody>

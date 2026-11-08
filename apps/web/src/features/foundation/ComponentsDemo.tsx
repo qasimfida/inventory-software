@@ -1,3 +1,4 @@
+import { CurrencyNotice } from '@/components/common/CurrencyNotice';
 import { ControlStatesDemo } from './ControlStatesDemo';
 import { SectionNavigation } from '@/components/layout/SectionNavigation';
 import { useState } from 'react';
@@ -75,15 +76,26 @@ export function ComponentsDemo() {
         onChange={setOffset}
       />
       <p>
-        Exact money: <MoneyValue amount="123456789012345" currency="USD" />
+        Display money (sample original; no transactions):{' '}
+        <MoneyValue amount="123456789012345" currency="USD" />
       </p>
+      <CurrencyNotice />
       <p>
         Business time: <BusinessDate value="2026-10-20T12:00:00Z" timeZone="Asia/Karachi" />
       </p>
       <CommandForm
+        error="Example only: the change was not confirmed. Review the record before retrying."
+        primary
         definition={{
           title: 'Preview command form',
-          fields: [{ name: 'quantity', label: 'Example decimal quantity', value: '1.250000' }],
+          fields: [
+            {
+              name: 'quantity',
+              section: 'Example section',
+              label: 'Example decimal quantity',
+              value: '1.250000',
+            },
+          ],
           submit: (values) => {
             setMessage(`Local preview: ${String(values.quantity)}`);
             return Promise.resolve();

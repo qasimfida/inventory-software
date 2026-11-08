@@ -7,7 +7,8 @@ export class CatalogSearch {
     const rows = (
       await ctx.tx.query(
         `
-      SELECT v.id,v.name,v.sku,p.images,v.sale_unit_id AS "unitId",
+      SELECT v.id,v.product_id AS "productId",v.name,v.sku,p.images,v.sale_unit_id AS "unitId",
+        CASE WHEN p.track_inventory THEN stock.available::text ELSE NULL END AS available,
         CASE WHEN price.id IS NULL THEN NULL ELSE json_build_object('unitPrice',price.unit_price::text,'currency',price.currency,'unit',base.code) END price,
         (SELECT json_agg(json_build_object('id',u.id,'code',u.code) ORDER BY u.code) FROM catalog_units u
          WHERE u.business_id=v.business_id AND (u.id=v.base_unit_id OR EXISTS(SELECT 1 FROM catalog_conversions c WHERE c.business_id=v.business_id AND c.variant_id=v.id AND c.unit_id=u.id))) AS units

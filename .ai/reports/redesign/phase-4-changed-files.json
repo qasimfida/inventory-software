@@ -1,0 +1,22 @@
+[
+  "apps/mobile/src/reports/SetupChecklist.tsx",
+  "apps/mobile/src/settings/PreferenceFields.tsx",
+  "apps/mobile/src/settings/SettingsPanel.test.tsx",
+  "apps/mobile/src/settings/SettingsPanel.tsx",
+  "apps/mobile/src/shell/MoreScreen.tsx",
+  "apps/mobile/src/shell/NativeHeader.tsx",
+  "apps/web/src/features/reports/SetupChecklist.test.tsx",
+  "apps/web/src/features/reports/SetupChecklist.tsx",
+  "apps/web/src/features/settings/EffectiveAppearance.tsx",
+  "apps/web/src/features/settings/PreferenceFields.tsx",
+  "apps/web/src/features/settings/SettingsPanel.test.tsx",
+  "apps/web/src/features/settings/SettingsPanel.tsx",
+  "apps/web/src/shell/AppShell.tsx",
+  "apps/web/src/shell/Sidebar.test.tsx",
+  "apps/web/src/shell/Sidebar.tsx",
+  "apps/web/src/shell/sidebar-state.test.ts",
+  "apps/web/src/shell/sidebar-state.ts",
+  "apps/web/src/theme/sidebar-refinement.css",
+  "apps/web/src/theme/workspace.css",
+  "docs/design-system.md"
+]

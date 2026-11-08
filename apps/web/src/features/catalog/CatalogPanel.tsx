@@ -1,9 +1,9 @@
+import { IconButton } from '@/components/common/IconButton';
 import { catalogCsv } from '@inventory/api-client';
 import { saveLocalText } from '@/platform/files';
 import { useCatalogLive } from '@/platform/useCatalogLive';
 import { BulkImport } from './BulkImport';
 import { ViewTabs } from '@/components/common/ViewTabs';
-import { AccordionSection } from '@/components/ui/Accordion';
 import { FormSheet } from '@/components/common/FormSheet';
 import { usePageCollection } from '@/components/common/usePageCollection';
 import { Pagination } from '@/components/common/Pagination';
@@ -19,7 +19,6 @@ import { CatalogFilters } from './CatalogFilters';
 import { CatalogProducts } from './CatalogProducts';
 import { Button } from '@/components/ui/Button';
 import { ProductEditor } from './ProductEditor';
-import { CategoryEditor } from './CategoryEditor';
 export function CatalogPanel({
   business,
   locations,
@@ -35,7 +34,6 @@ export function CatalogPanel({
   const [query, setQuery] = useState(catalogQuerySchema.parse({ search: initialSearch ?? '' }));
   const [editing, setEditing] = useState<Product | null>(null);
   const [creating, setCreating] = useState(false);
-  const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [pricingProduct, setPricingProduct] = useState<string | null>(null);
   const [previousSearch, setPreviousSearch] = useState(initialSearch);
   if (previousSearch !== initialSearch) {
@@ -85,7 +83,7 @@ export function CatalogPanel({
     },
   );
   useEffect(() => {
-    const timer = setTimeout(() => void model.run(), 250);
+    const timer = setTimeout(() => void model.refresh(), 250);
     return () => {
       clearTimeout(timer);
       request.cancel();
@@ -104,8 +102,8 @@ export function CatalogPanel({
     <section aria-label="Product catalog" className="screen-section">
       <header className="screen-header">
         <div>
-          <h2 className="text-2xl">Product catalog</h2>
-          <p className="mt-2 text-muted-foreground">
+          <h2>Products &amp; pricing</h2>
+          <p className="text-sm text-muted-foreground">
             Manage products, categories and pricing across your business.
           </p>
         </div>
@@ -124,7 +122,7 @@ export function CatalogPanel({
             <BulkImport
               businessId={business.id}
               locations={locations}
-              onDone={() => void model.run()}
+              onDone={() => void model.refresh()}
             />
           )}
           <Button
@@ -171,62 +169,61 @@ export function CatalogPanel({
               } else setQueryError('Check search and barcode formats.');
             }}
           />
-          <Button
+          <IconButton
+            label="Refresh catalog"
+            icon={RefreshCw}
             disabled={state.busy}
-            onClick={() => void model.run()}
-            variant="ghost"
-            size="icon"
-            aria-label="Refresh catalog"
-            title="Refresh"
-          >
-            <RefreshCw aria-hidden="true" />
-          </Button>
+            onClick={() => void model.refresh()}
+          />
           <ViewTabs panelId={panelId} label="Catalog" value={view} onChange={setView} />
         </div>
         <div className="min-w-0 space-y-4">
           {queryError && <p role="alert">{queryError}</p>}
-          {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
-          {state.busy && <LoadingState message="Loading catalog…" />}
+          <div id={panelId} role="tabpanel" aria-label={`Catalog ${view} view`} tabIndex={0}>
+            {state.error && (
+              <ErrorState message={state.error} onRetry={() => void model.refresh()} />
+            )}
+            {state.busy && !state.data && <LoadingState message="Loading catalog…" />}
 
-          {state.data && writable && (creating || editing) && (
-            <ProductEditor
-              key={editing?.id ?? 'new'}
-              product={editing}
-              categories={state.data.categories}
-              client={client}
-              onClose={cancel}
-              onSaved={(product) => {
-                cancel();
-                setPricingProduct(product.id);
-                void model.run();
-              }}
-              onPricing={(id) => {
-                setPricingProduct(id);
-                cancel();
-              }}
-            />
-          )}
-
-          {pricingProduct && (
-            <FormSheet
-              title="Variants and pricing"
-              open
-              onOpenChange={(open) => {
-                if (!open) setPricingProduct(null);
-              }}
-            >
-              <PricingPanel
-                key={pricingProduct}
-                productId={pricingProduct}
-                business={business}
-                locations={locations}
+            {state.data && writable && (creating || editing) && (
+              <ProductEditor
+                listingContext={{ business, locations }}
+                key={editing?.id ?? 'new'}
+                product={editing}
+                categories={state.data.categories}
+                client={client}
+                onClose={cancel}
+                onSaved={() => {
+                  cancel();
+                  void model.refresh();
+                }}
+                onPricing={(id) => {
+                  setPricingProduct(id);
+                  cancel();
+                }}
               />
-            </FormSheet>
-          )}
-          {state.data && (
-            <>
-              <p>{state.data.page.total} products</p>
-              <div id={panelId} role="tabpanel" aria-label={`Catalog ${view} view`} tabIndex={0}>
+            )}
+
+            {pricingProduct && (
+              <FormSheet
+                title="Variants and pricing"
+                open
+                onOpenChange={(open) => {
+                  if (!open) setPricingProduct(null);
+                }}
+              >
+                <PricingPanel
+                  key={pricingProduct}
+                  productId={pricingProduct}
+                  business={business}
+                  locations={locations}
+                />
+              </FormSheet>
+            )}
+            {state.data && (
+              <>
+                <p>{state.data.page.total} products</p>
+
                 <CatalogProducts
                   filtered={Boolean(query.search || query.code || query.state || query.categoryId)}
                   onCreate={() => setCreating(true)}
@@ -239,37 +236,21 @@ export function CatalogPanel({
                     setCreating(false);
                   }}
                 />
-              </div>
-              <Pagination
-                label="products"
-                offset={query.offset}
-                pageSize={query.limit}
-                total={state.data.page.total}
-                hasMore={state.data.page.hasMore}
-                busy={state.busy || Boolean(state.error)}
-                onChange={(offset) => {
-                  cancel();
-                  setQuery({ ...query, offset });
-                }}
-              />
-              {writable && (
-                <>
-                  <AccordionSection
-                    className="rounded-lg border p-4"
-                    open={categoriesOpen}
-                    onOpenChange={setCategoriesOpen}
-                    title={<>Manage categories</>}
-                  >
-                    <CategoryEditor
-                      items={state.data.categories}
-                      client={client}
-                      run={(work) => void model.run(work)}
-                    />
-                  </AccordionSection>
-                </>
-              )}
-            </>
-          )}
+                <Pagination
+                  label="products"
+                  offset={query.offset}
+                  pageSize={query.limit}
+                  total={state.data.page.total}
+                  hasMore={state.data.page.hasMore}
+                  busy={state.busy || Boolean(state.error)}
+                  onChange={(offset) => {
+                    cancel();
+                    setQuery({ ...query, offset });
+                  }}
+                />
+              </>
+            )}
+          </div>
         </div>
       </div>
     </section>

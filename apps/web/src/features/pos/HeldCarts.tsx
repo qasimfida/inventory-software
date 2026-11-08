@@ -1,3 +1,4 @@
+import { AccordionSection } from '@/components/ui/Accordion';
 import { useState } from 'react';
 import type { PosModel, PosState } from '@inventory/api-client';
 import { Button } from '@/components/ui/Button';
@@ -5,10 +6,12 @@ import { Input } from '@/components/ui/FormControls';
 import { ConfirmDialog } from '@/components/common/ConfirmDialog';
 export function HeldCarts({ model, state }: { model: PosModel; state: PosState }) {
   const [name, setName] = useState('');
-  const locked = state.busy || state.uncertain;
+  const locked = state.busy || !!state.quoting || state.uncertain;
   return (
-    <section aria-label="Held carts" className="space-y-2">
-      <h4>Held carts ({state.heldCarts.length}/10)</h4>
+    <AccordionSection
+      title={`Held carts (${state.heldCarts.length}/10)`}
+      className="pos-held-carts space-y-2"
+    >
       <p className="text-sm text-muted-foreground">
         Session only. Leaving POS, reload or sign-out clears drafts. No stock is reserved; prices
         are checked again on resume.
@@ -54,6 +57,6 @@ export function HeldCarts({ model, state }: { model: PosModel; state: PosState }
           />
         </div>
       ))}
-    </section>
+    </AccordionSection>
   );
 }

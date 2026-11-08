@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "path": "/auth/forgot",
+      "width": 320,
+      "theme": "light",
+      "role": "guest",
+      "scenario": "no token",
+      "status": "captured",
+      "finalHash": "#/auth/forgot",
+      "screenshot": ".ai/reports/redesign/phase-9-validation/final/screens/320-light-auth-forgot.png"
+    }
+  ],
+  "issues": [
+    {
+      "fatal": "page.evaluate: Execution context was destroyed, most likely because of a navigation."
+    }
+  ],
+  "methodology": "Fixed Date 2026-11-06T12:00:00Z; mocks only; no business mutation. Captures are not assertions that each workflow works. Browser mobile width does not qualify native."
+}

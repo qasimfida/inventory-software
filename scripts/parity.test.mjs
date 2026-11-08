@@ -15,7 +15,7 @@ test('current registry, dispatchers and settings have parity', () => {
   const result = checkParity(read);
   assert.deepEqual(result.mismatches, []);
   assert.deepEqual(result.errors, []);
-  assert.equal(result.registryCount, 40);
+  assert.equal(result.registryCount, 42);
   assert.equal(result.coverage.web.settingsRoutes.size, 9);
 });
 test('missing native direct screen fails despite route strings elsewhere', () => {
@@ -35,7 +35,11 @@ test('missing web workflow panel fails', () => {
   );
   assert.ok(result.mismatches.some((line) => line.startsWith('/inventory: missing web')));
   const empty = checkParity(
-    replaced(sourcePaths.web.panels, 'Component: InventoryPanel', 'Component: null'),
+    replaced(
+      sourcePaths.web.panels,
+      "name: 'inventory',\n    label: 'Inventory',\n    description: 'Stock balances, adjustments and movement history.',\n    Component: InventoryWorkspace",
+      "name: 'inventory',\n    label: 'Inventory',\n    description: 'Stock balances, adjustments and movement history.',\n    Component: null",
+    ),
   );
   assert.ok(empty.mismatches.some((line) => line.startsWith('/inventory: missing web')));
 });
@@ -81,8 +85,8 @@ test('disconnected settings renderer fails settings routes', () => {
 test('documented exact exceptions accepted; stale and invalid exceptions fail', () => {
   const fixture = replaced(
     sourcePaths.mobile.panels,
-    'Component: InventoryPanel',
-    'Other: InventoryPanel',
+    "name: 'inventory', Component: InventoryWorkspace,",
+    "name: 'inventory', Other: InventoryWorkspace,",
   );
   const exception = {
     path: '/inventory',
@@ -107,4 +111,11 @@ test('unknown registry syntax and invalid source fail closed', () => {
       ),
     ),
   );
+});
+
+test('counts the standalone web showcase only while its lazy route exists', () => {
+  const result = checkParity(
+    replaced(sourcePaths.web.router, "path: '/design-system'", "path: '/removed-showcase'"),
+  );
+  assert.ok(result.mismatches.some((message) => message.includes('/design-system: missing web')));
 });

@@ -1,3 +1,5 @@
+import { IconButton } from '@/components/common/IconButton';
+import { SecurityNotifications } from './SecurityNotifications';
 import { SecurityEvents } from './SecurityEvents';
 import { SearchControl } from '@/components/common/SearchControl';
 import { FilterButton } from '@/components/common/FilterButton';
@@ -64,7 +66,8 @@ export function SecurityPanel({
           )
           .map((view) => (
             <Button
-              variant="outline"
+              variant={state.view === view.key ? 'secondary' : 'outline'}
+              aria-pressed={state.view === view.key}
               key={view.key}
               disabled={state.busy}
               onClick={() => void model.load(view.key)}
@@ -100,15 +103,12 @@ export function SecurityPanel({
             </PopoverContent>
           </Popover>
         )}
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Refresh security records"
+        <IconButton
+          label="Refresh security records"
+          icon={RefreshCw}
           disabled={state.busy}
           onClick={() => void model.load(state.view)}
-        >
-          <RefreshCw />
-        </Button>
+        />
       </div>
       {state.message && (
         <ErrorState message={state.message} onRetry={() => void model.load(state.view)} />
@@ -119,37 +119,11 @@ export function SecurityPanel({
         installation, not a trusted person. Review and revoke sessions in Settings → Security.
       </p>
       {state.view === 'inbox' && (
-        <TableScroll label="Security notifications">
-          <Table>
-            <thead>
-              <tr>
-                <th>Security notifications</th>
-              </tr>
-            </thead>
-            <tbody>
-              {state.notifications.map((item) => (
-                <tr key={item.id}>
-                  <td>
-                    New device · {new Date(item.occurredAt).toLocaleString()} · {item.audience} ·
-                    Account {item.actorId} · Device {item.deviceId}
-                    {item.businessId && <span> · Business {item.businessId}</span>}
-                    {item.readAt ? (
-                      <p>Read</p>
-                    ) : (
-                      <Button
-                        variant="outline"
-                        disabled={state.busy}
-                        onClick={() => void model.action(item.id)}
-                      >
-                        Mark notification read
-                      </Button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </TableScroll>
+        <SecurityNotifications
+          items={state.notifications}
+          busy={state.busy}
+          onRead={(id) => void model.action(id)}
+        />
       )}
       {(state.view === 'events' || state.view === 'platform') && (
         <SecurityEvents events={state.events} />
@@ -159,15 +133,21 @@ export function SecurityPanel({
           <Table>
             <thead>
               <tr>
-                <th>Delivery attempts</th>
+                <th>Status</th>
+                <th>Attempts</th>
+                <th>Failure code</th>
+                <th>Delivery reference</th>
+                <th data-actions>Action</th>
               </tr>
             </thead>
             <tbody>
               {state.deliveries.map((item) => (
                 <tr key={item.id}>
-                  <td>
-                    {item.state} · Attempts {item.attempts} · {item.failureCode ?? 'Queued'} ·{' '}
-                    {item.id}
+                  <td>{item.state}</td>
+                  <td className="tabular-nums">{item.attempts}</td>
+                  <td>{item.failureCode ?? 'Not recorded'}</td>
+                  <td>{item.id}</td>
+                  <td data-actions>
                     {item.state === 'failed' && (
                       <Button
                         disabled={state.busy}
@@ -188,16 +168,31 @@ export function SecurityPanel({
           <Table>
             <thead>
               <tr>
-                <th>Diagnostics</th>
+                <th>Code / operation</th>
+                <th>Environment / version</th>
+                <th>Reason / recovery</th>
+                <th>Support reference</th>
               </tr>
             </thead>
             <tbody>
               {state.diagnostics.map((item) => (
                 <tr key={item.id}>
                   <td>
-                    {item.code} · {item.operation} · {item.environment}/{item.applicationVersion} ·{' '}
-                    {item.reason} · {item.recovery} · Reference {item.requestId}
+                    {item.code}
+                    <br />
+                    {item.operation}
                   </td>
+                  <td>
+                    {item.environment}
+                    <br />
+                    {item.applicationVersion}
+                  </td>
+                  <td>
+                    {item.reason}
+                    <br />
+                    {item.recovery}
+                  </td>
+                  <td>{item.requestId}</td>
                 </tr>
               ))}
             </tbody>

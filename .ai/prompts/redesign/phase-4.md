@@ -1,0 +1,11 @@
+Redesign the global experience on web, desktop and mobile.
+
+1. Shell: app background, sidebar, top navigation, workspace header, page title area, breadcrumbs where useful, user menu, notifications and search entries, content area, responsive navigation, mobile navigation and More screen. Consistent grid and predictable widths; avoid nested cards. The business switcher stays in the sidebar. Contextual actions stay with their page, not the header.
+2. Sidebar: expanded and collapsed (per-device state), active, hover, focus, nested items, role-based visibility, tooltips, mobile equivalent. Height equals the viewport, nav scrolls, the profile menu stays pinned. Preserve every registered destination and compatibility path.
+3. Tauri specifics: window chrome and drag regions, keyboard shortcuts, high-DPI, resize behavior, trusted image hosts under the CSP (don't broaden img-src to arbitrary hosts).
+4. Dashboard as a business overview: KPI hierarchy, sales, inventory indicators, trends, recent activity, alerts, setup state (business setup card), date and location filters. No invented metrics; keep real aggregation and permissions.
+5. Settings architecture: Profile, Company, Business, Preferences, Security, Device, Notifications, Locations, Audit, with staff/users compatibility destinations. Separate account, business, platform-policy and device settings.
+6. Appearance UI: Basic (theme, density, control size) and Advanced (animation, charts, plus the existing accent, font, radius, text size, icon size and related). Live preview where it helps; show the effective value when a device constraint or policy overrides a choice.
+7. Shell states: no active business, switching, session expiry, offline, connection failure, permission restriction, platform admin, unknown route, loading shell, empty workspace.
+
+Acceptance: all destinations accessible per permissions; navigation works on desktop, tablet and mobile; switching business doesn't change appearance; consistent shell; no auth or routing regressions.

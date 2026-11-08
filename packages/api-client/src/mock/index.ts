@@ -1,8 +1,14 @@
+import { createDemoProduct, changeDemoProductQuantity } from './product-setup.js';
 import { editOnlineDemoPrice } from './edit-online-price.js';
 import { editOnlineDemoProduct } from './edit-online-catalog.js';
 import { mockStorefrontManagement } from './storefront-management.js';
 import { demoId } from './identity.js';
-import { apiErrorSchema, hasPermission, policyRecordSchema } from '@inventory/contracts';
+import {
+  skuAvailabilityQuerySchema,
+  apiErrorSchema,
+  hasPermission,
+  policyRecordSchema,
+} from '@inventory/contracts';
 import type { Permission } from '@inventory/contracts';
 import type { AuthTransport } from '../auth.js';
 import { demoState } from './state.js';
@@ -90,6 +96,50 @@ export const demoTransport: AuthTransport = async (url, options) => {
           const empty = demoState.scenario === 'empty';
           if (resource.includes('/online-store/'))
             result = await mockStorefrontManagement(seed, resource, options.method, body, q);
+          else if (resource === 'products/sku-availability') {
+            if (!hasPermission(seed.business, 'products.write') || seed.business.scope?.storeId)
+              throw new DemoFailure(403, 'Catalog edit permission required.');
+            const { sku, excludeProductId } = skuAvailabilityQuerySchema.parse({
+              sku: q.get('sku'),
+              excludeProductId: q.get('excludeProductId') ?? undefined,
+            });
+            if (excludeProductId && !seed.products.some((p) => p.id === excludeProductId))
+              throw new DemoFailure(404, 'Product not found.');
+            result = {
+              available:
+                !seed.products.some(
+                  (p) =>
+                    p.id !== excludeProductId &&
+                    [p.sku, ...p.barcodes, ...p.alternativeCodes].includes(sku),
+                ) &&
+                !seed.variants.some((v) => !v.isDefault && [v.sku, ...v.barcodes].includes(sku)),
+            };
+            const match =
+              seed.products.find(
+                (p) =>
+                  p.id !== excludeProductId &&
+                  [p.sku, ...p.barcodes, ...p.alternativeCodes].includes(sku),
+              ) ??
+              seed.products.find((p) =>
+                seed.variants.some(
+                  (v) =>
+                    !v.isDefault && v.productId === p.id && [v.sku, ...v.barcodes].includes(sku),
+                ),
+              );
+            if (match && hasPermission(seed.business, 'products.read'))
+              result = {
+                ...(result as object),
+                product: {
+                  id: match.id,
+                  name: match.name,
+                  sku: match.sku,
+                  image: match.images[0] ?? null,
+                },
+              };
+          } else if (resource === 'products' && options.method === 'POST')
+            result = createDemoProduct(seed, body);
+          else if (resource === 'stock/movements' && options.method === 'POST')
+            result = changeDemoProductQuantity(seed, body);
           else if (resource === 'prices' && options.method === 'POST')
             result = editOnlineDemoPrice(seed, body);
           else if (options.method === 'PATCH' && /^products\/[^/]+$/.test(resource))
@@ -124,9 +174,13 @@ export const demoTransport: AuthTransport = async (url, options) => {
             result = seed.policy;
           } else if (resource === 'pos/quotes')
             result = demoQuote(body, seed.id, seed, seed.currency);
-          else if (/^notifications\/[^/]+\/read$/.test(resource)) {
+          else if (/^notifications\/[^/]+\/(read|unread|dismiss)$/.test(resource)) {
             const item = seed.inbox.notifications.find((n) => n.id === segments[1]);
-            if (item) item.readAt = new Date().toISOString();
+            if (item) {
+              if (segments[2] === 'dismiss')
+                seed.inbox.notifications = seed.inbox.notifications.filter((n) => n.id !== item.id);
+              else item.readAt = segments[2] === 'unread' ? null : new Date().toISOString();
+            }
             result = { ok: true };
           } else
             throw new DemoFailure(
@@ -169,3 +223,5 @@ export const demoTransport: AuthTransport = async (url, options) => {
 };
 
 export { demoVaultStore } from './vault.js';
+
+export { createImportDemo } from './import-demo.js';

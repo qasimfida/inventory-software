@@ -13,7 +13,7 @@ export const importHeaders = [
 export const productImportTemplate =
   importHeaders.join(',') + '\r\nSAMPLE-001,Sample product,Replace this row,12.50,USD,0\r\n';
 /** Strict RFC-style CSV parser; quoted commas/newlines and escaped quotes are supported. */
-export function parseCsv(text: string): string[][] {
+export function parseCsv(text: string, retainEmpty = false): string[][] {
   const rows: string[][] = [],
     row: string[] = [];
   let value = '',
@@ -44,7 +44,7 @@ export function parseCsv(text: string): string[][] {
       closed = false;
       if (c !== ',') {
         if (c === '\r' && text[i + 1] === '\n') i++;
-        if (row.some((v) => v !== '')) rows.push([...row]);
+        if (retainEmpty || row.some((v) => v !== '')) rows.push([...row]);
         row.length = 0;
       }
     } else {
@@ -76,6 +76,7 @@ export function validateImportRows(rows: string[][]): ImportRow[] {
 }
 export async function readImportFile(bytes: Uint8Array, name: string): Promise<ImportRow[]> {
   if (bytes.length > 1024 * 1024) throw new Error('Import file must be no larger than 1 MiB.');
+  if (!/\.(csv|xlsx)$/i.test(name)) throw new Error('Choose a CSV or XLSX file.');
   const rows = name.toLowerCase().endsWith('.csv')
     ? parseCsv(strFromU8(bytes))
     : await (await import('./import-xlsx.js')).xlsxRows(bytes);

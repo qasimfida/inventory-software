@@ -1,3 +1,4 @@
+import { ManageProduct } from '../catalog/ManageProduct';
 import { HeldCarts } from './HeldCarts';
 import { useCatalogLive } from '@/platform/useCatalogLive';
 import { useCartHeight } from './useCartHeight';
@@ -28,12 +29,17 @@ const operationKey = () => crypto.randomUUID();
 export function PosCheckout({
   business,
   warehouse,
+  locations = [warehouse],
   onLockChange,
+  active = true,
 }: {
+  active?: boolean;
   business: Business;
   warehouse: Location;
+  locations?: Location[];
   onLockChange: (locked: boolean) => void;
 }) {
+  const [editingProduct, setEditingProduct] = useState<string | null>(null);
   const client = useMemo(
       () => createSalesClient(authClient.organizationRequest, operationKey, business.id),
       [business.id],
@@ -84,7 +90,11 @@ export function PosCheckout({
     };
   }, [customerModel, customerRequest, business]);
   useEffect(() => model.reset, [model]);
+  // Retain drafts and recovery. Only an idle, hidden checkout stops polling.
+  const shouldPoll =
+    active || state.lines.length > 0 || state.heldCarts.length > 0 || state.busy || state.uncertain;
   useEffect(() => {
+    if (!shouldPoll) return;
     const feed = new Invalidations(
       createSyncClient(authClient.organizationRequest, business.id),
       warehouse.id,
@@ -97,7 +107,7 @@ export function PosCheckout({
       feed.stop();
       clearInterval(timer);
     };
-  }, [model, business.id, warehouse.id]);
+  }, [model, business.id, warehouse.id, shouldPoll]);
   useEffect(() => {
     onLockChange(
       state.busy || state.uncertain || state.lines.length > 0 || state.heldCarts.length > 0,
@@ -113,18 +123,52 @@ export function PosCheckout({
   return (
     <section aria-label="Point of sale" className="screen-section">
       <div className="pos-workspace">
+        <Button
+          className="pos-cart-access"
+          variant="outline"
+          onClick={() => {
+            cartRef.current?.scrollIntoView({ block: 'start' });
+            cartRef.current?.focus({ preventScroll: true });
+          }}
+        >
+          View cart ({state.lines.length} {state.lines.length === 1 ? 'line' : 'lines'})
+        </Button>
+        {editingProduct && (
+          <ManageProduct
+            business={business}
+            locations={locations}
+            productId={editingProduct}
+            onClose={() => {
+              setEditingProduct(null);
+              model.invalidate();
+              setPriceRevision((old) => old + 1);
+            }}
+          />
+        )}
         <ProductPicker
           revision={priceRevision}
+          onManage={
+            hasPermission(business, 'products.write') &&
+            hasPermission(business, 'products.read') &&
+            !business.scope?.storeId
+              ? setEditingProduct
+              : undefined
+          }
           client={client}
           warehouseId={warehouse.id}
           add={(item) => model.add(item)}
           disabled={locked}
         />
-        <aside ref={cartRef} className="pos-cart space-y-4" aria-label="Cart details">
+        <aside ref={cartRef} tabIndex={-1} className="pos-cart space-y-4" aria-label="Cart details">
           <div className="pos-cart-scroll">
             <HeldCarts model={model} state={state} />
             <div className="product-card-summary">
-              <h3>Cart details</h3>{' '}
+              <h3>
+                Cart details{' '}
+                <span className="text-sm text-muted-foreground">
+                  ({state.lines.length} {state.lines.length === 1 ? 'line' : 'lines'})
+                </span>
+              </h3>{' '}
               <div role="status">
                 <StatusBadge tone={state.uncertain ? 'warning' : state.busy ? 'info' : 'neutral'}>
                   {state.uncertain
@@ -215,33 +259,44 @@ export function PosCheckout({
                 <RefreshCw />
               </Button>
             )}
-            {state.quote && (
-              <>
-                <dl className="checkout-totals" aria-live="polite">
-                  <div>
-                    <dt>Net after discounts</dt>
-                    <dd>{formatMinorUnits(state.quote.netMinor, state.quote.currency)}</dd>
-                  </div>
-                  <div>
-                    <dt>Tax</dt>
-                    <dd>{formatMinorUnits(state.quote.taxMinor, state.quote.currency)}</dd>
-                  </div>
-                  <div className="checkout-total">
-                    <dt>Total payment</dt>
-                    <dd>
-                      <MoneyValue amount={state.quote.totalMinor} currency={state.quote.currency} />
-                    </dd>
-                  </div>
-                </dl>
-                <ul>
-                  {state.quote.lines.map((l, i) => (
-                    <li key={i}>
-                      {l.sku} · base quantity {l.baseQuantity} · available {l.available} ·{' '}
-                      {formatMinorUnits(l.totalMinor, l.currency)}
-                    </li>
-                  ))}
-                </ul>
-              </>
+            {state.lines.length > 0 && (
+              <dl className="checkout-totals" aria-live="polite" aria-busy={!!state.quoting}>
+                <div>
+                  <dt>Net after discounts</dt>
+                  <dd>
+                    {state.quote
+                      ? formatMinorUnits(state.quote.netMinor, state.quote.currency)
+                      : '—'}
+                  </dd>
+                </div>
+                <div>
+                  <dt>Tax</dt>
+                  <dd>
+                    {state.quote
+                      ? formatMinorUnits(state.quote.taxMinor, state.quote.currency)
+                      : '—'}
+                  </dd>
+                </div>
+                <div className="checkout-total">
+                  <dt>Total payment</dt>
+                  <dd>
+                    {state.quote ? (
+                      <MoneyValue
+                        original
+                        amount={state.quote.totalMinor}
+                        currency={state.quote.currency}
+                      />
+                    ) : (
+                      '—'
+                    )}
+                  </dd>
+                </div>
+                {!state.quote && (
+                  <span className="text-sm text-muted-foreground">
+                    {state.error ? 'Totals unavailable' : 'Updating totals…'}
+                  </span>
+                )}
+              </dl>
             )}
             {((state.quote && reviewedQuote === state.quote.quoteFingerprint) || state.uncertain) &&
               !state.busy && (

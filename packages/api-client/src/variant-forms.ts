@@ -14,9 +14,30 @@ export function variantForms(
   data: Data,
   selectedId: string,
   editing = false,
+  dimension?: 'count' | 'mass' | 'volume' | 'length',
 ): CommandForm[] {
   const variant = editing ? data.variants.find((v) => v.id === selectedId) : undefined;
-  const units = data.units.map((u) => ({ value: u.id, label: `${u.name} (${u.code})` }));
+  const selected = data.variants.find((v) => v.id === selectedId);
+  const base = data.units.find((u) => u.id === selected?.baseUnitId);
+  const units = data.units.map((u) => ({
+    value: u.id,
+    label: `${u.name} (${u.code}) · ${u.dimension}`,
+  }));
+  const available = new Set([
+    selected?.baseUnitId,
+    ...data.conversions.filter((c) => c.variantId === selectedId).map((c) => c.unitId),
+  ]);
+  const defaultUnit = (name: string, label: string, value?: string | null): CommandField => ({
+    name,
+    label,
+    kind: 'select',
+    required: false,
+    value: value ?? '',
+    options: [
+      { value: '', label: 'Use base stock unit' },
+      ...units.filter((u) => available.has(u.value)),
+    ],
+  });
   const unitField = (name: string, label: string, value?: string | null): CommandField => ({
     name,
     label,
@@ -27,7 +48,7 @@ export function variantForms(
   const fields: CommandField[] = [
     { name: 'name', label: 'Variant name', value: variant?.name ?? '' },
     { name: 'sku', label: 'Variant SKU', value: variant?.sku ?? '' },
-    ...['size', 'color', 'model'].map((key) => ({
+    ...['size', 'color', 'model', 'packaging', 'weight', 'volume'].map((key) => ({
       name: key,
       label: `Attribute: ${key}`,
       value: variant?.attributes[key] ?? '',
@@ -42,7 +63,22 @@ export function variantForms(
       value: variant?.barcodes.join('\n') ?? '',
       required: false,
     },
-    unitField('baseUnitId', 'Base stock unit', variant?.baseUnitId),
+    {
+      ...unitField(
+        'baseUnitId',
+        variant ? 'Base stock unit (fixed after creation)' : 'Base stock unit',
+        variant?.baseUnitId,
+      ),
+      options: units.filter((u) =>
+        variant
+          ? u.value === variant.baseUnitId
+          : !dimension || data.units.find((item) => item.id === u.value)?.dimension === dimension,
+      ),
+      value:
+        variant?.baseUnitId ??
+        data.units.find((u) => !dimension || u.dimension === dimension)?.id ??
+        '',
+    },
     { name: 'cost', label: 'Unit cost (optional)', value: variant?.cost ?? '', required: false },
     {
       name: 'costCurrency',
@@ -57,9 +93,9 @@ export function variantForms(
   ];
   if (variant)
     fields.push(
-      unitField('purchaseUnitId', 'Purchase unit', variant.purchaseUnitId),
-      unitField('saleUnitId', 'Sale unit', variant.saleUnitId),
-      unitField('countUnitId', 'Stock-count unit', variant.countUnitId),
+      defaultUnit('purchaseUnitId', 'Default purchase unit', variant.purchaseUnitId),
+      defaultUnit('saleUnitId', 'Default selling unit', variant.saleUnitId),
+      defaultUnit('countUnitId', 'Default stock-count unit', variant.countUnitId),
       {
         name: 'state',
         label: 'Variant status',
@@ -79,17 +115,19 @@ export function variantForms(
           label: 'Unit dimension',
           kind: 'select',
           options: ['count', 'mass', 'volume', 'length'].map((d) => ({ value: d, label: d })),
-          value: 'count',
+          value: dimension ?? base?.dimension ?? 'count',
         },
       ],
       submit: (v) => client.unit(unitInputSchema.parse(v)),
     },
     {
       title: variant ? 'Save variant' : 'Create variant',
-      fields,
+      fields: variant?.isDefault
+        ? fields.filter((f) => f.name !== 'sku' && f.name !== 'barcodes')
+        : fields,
       submit: (v) => {
         const attributes = { ...variant?.attributes };
-        for (const key of ['size', 'color', 'model']) {
+        for (const key of ['size', 'color', 'model', 'packaging', 'weight', 'volume']) {
           const value = formText(v, key);
           if (value) attributes[key] = value;
           else delete attributes[key];
@@ -98,19 +136,21 @@ export function variantForms(
           attributes[formText(v, 'attributeName')] = formText(v, 'attributeValue');
         const input = {
           name: v.name,
-          sku: v.sku,
+          sku: variant?.isDefault ? variant.sku : v.sku,
           attributes,
-          barcodes: formText(v, 'barcodes')
-            .split('\n')
-            .map((s) => s.trim())
-            .filter(Boolean),
+          barcodes: variant?.isDefault
+            ? variant.barcodes
+            : formText(v, 'barcodes')
+                .split('\n')
+                .map((s) => s.trim())
+                .filter(Boolean),
           baseUnitId: v.baseUnitId,
           cost: v.cost || null,
           costCurrency: v.costCurrency,
           state: variant ? v.state : 'active',
-          purchaseUnitId: variant ? v.purchaseUnitId : null,
-          saleUnitId: variant ? v.saleUnitId : null,
-          countUnitId: variant ? v.countUnitId : null,
+          purchaseUnitId: variant ? v.purchaseUnitId || null : null,
+          saleUnitId: variant ? v.saleUnitId || null : null,
+          countUnitId: variant ? v.countUnitId || null : null,
         };
         return variant
           ? client.editVariant(
@@ -127,12 +167,28 @@ export function variantForms(
           name: 'variantId',
           label: 'Conversion variant',
           kind: 'select',
-          options: data.variants.map((v) => ({ value: v.id, label: v.sku })),
+          options: data.variants
+            .filter((v) => v.id === selectedId)
+            .map((v) => ({ value: v.id, label: v.sku })),
           value: selectedId,
         },
-        unitField('unitId', 'Convert from unit'),
-        { name: 'numerator', label: 'Base units numerator', value: '1' },
-        { name: 'denominator', label: 'Base units denominator', value: '1' },
+        {
+          ...unitField('unitId', 'Package / selling unit to add'),
+          options: units.filter(
+            (u) =>
+              !available.has(u.value) &&
+              data.units.find((item) => item.id === u.value)?.dimension === base?.dimension,
+          ),
+          value:
+            data.units.find((u) => !available.has(u.id) && u.dimension === base?.dimension)?.id ??
+            '',
+        },
+        {
+          name: 'numerator',
+          label: `1 selected unit = numerator / denominator ${base?.code ?? 'base units'} — numerator`,
+          value: '1',
+        },
+        { name: 'denominator', label: 'Conversion denominator (positive; never zero)', value: '1' },
       ],
       submit: (v) =>
         client.conversion(

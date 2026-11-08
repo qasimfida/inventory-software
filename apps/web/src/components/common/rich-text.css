@@ -1,0 +1,77 @@
+.rich-text-field {
+  min-width: 0;
+}
+.rich-text-field .ql-toolbar.ql-snow,
+.rich-text-field .ql-container.ql-snow {
+  border-color: var(--border);
+  color: var(--foreground);
+  background: var(--card);
+  font: inherit;
+}
+.rich-text-field .ql-toolbar.ql-snow {
+  border-radius: var(--radius) var(--radius) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.rich-text-field .ql-container.ql-snow {
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+.rich-text-field .ql-editor {
+  min-height: 9rem;
+  max-height: 20rem;
+  font: inherit;
+}
+.rich-text-field .ql-editor:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+.rich-text-field .ql-editor[aria-invalid='true'] {
+  outline: 2px solid var(--destructive);
+  outline-offset: -2px;
+}
+.rich-text-field .ql-snow .ql-stroke {
+  stroke: var(--foreground);
+}
+.rich-text-field .ql-snow .ql-fill {
+  fill: var(--foreground);
+}
+.rich-text-field .ql-snow button.ql-active .ql-stroke {
+  stroke: var(--primary);
+}
+.rich-text-field .ql-toolbar button {
+  min-width: var(--control-small);
+  min-height: var(--control-small);
+}
+.rich-text-field .ql-tooltip {
+  background: var(--card);
+  color: var(--foreground);
+  border-color: var(--border);
+  z-index: 5;
+  white-space: normal;
+  max-width: 100%;
+  left: 0 !important;
+}
+.rich-text-field .ql-tooltip input {
+  color: var(--foreground);
+  background: var(--background);
+  max-width: 100%;
+}
+.rich-description {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.rich-description p {
+  margin-block: var(--space-small);
+}
+.rich-description ul {
+  list-style: disc;
+  padding-left: 1.5em;
+}
+.rich-description ol {
+  list-style: decimal;
+  padding-left: 1.5em;
+}
+.rich-description a {
+  color: var(--primary);
+  text-decoration: underline;
+}

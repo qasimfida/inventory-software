@@ -1,3 +1,4 @@
+import { FormSection } from '../ui/FormSection';
 import { useState } from 'react';
 import { Alert, View } from 'react-native';
 import type { PosModel, PosState } from '@inventory/api-client';
@@ -7,10 +8,9 @@ import { useTheme } from '../theme';
 export function HeldCarts({ model, state }: { model: PosModel; state: PosState }) {
   const [name, setName] = useState(''),
     theme = useTheme(),
-    locked = state.busy || state.uncertain;
+    locked = state.busy || !!state.quoting || state.uncertain;
   return (
-    <View style={{ gap: theme.spacing.small }}>
-      <Text accessibilityRole="header">Held carts ({state.heldCarts.length}/10)</Text>
+    <FormSection title={`Held carts (${state.heldCarts.length}/10)`}>
       <Text>
         Session only. Leaving POS, reload or sign-out clears drafts. No stock is reserved; prices
         are checked again on resume.
@@ -58,6 +58,6 @@ export function HeldCarts({ model, state }: { model: PosModel; state: PosState }
           />
         </View>
       ))}
-    </View>
+    </FormSection>
   );
 }

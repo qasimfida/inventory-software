@@ -6,10 +6,18 @@ import type { ReactNode } from 'react';
 import { Text } from './Themed';
 import { useTheme } from '../theme';
 
-export function ScreenHeader({ title, description }: { title: string; description?: ReactNode }) {
+export function ScreenHeader({
+  title,
+  description,
+  actions,
+}: {
+  title: string;
+  description?: ReactNode;
+  actions?: ReactNode;
+}) {
   const theme = useTheme();
   const duplicate = useContext(PageTitleContext) === title;
-  if (duplicate && !description) return null;
+  if (duplicate && !description && !actions) return null;
   return (
     <View
       style={{
@@ -20,12 +28,35 @@ export function ScreenHeader({ title, description }: { title: string; descriptio
         borderColor: theme.tokens.border,
       }}
     >
-      {!duplicate && (
-        <Text accessibilityRole="header" style={{ fontSize: metrics.title, fontWeight: '600' }}>
-          {title}
-        </Text>
-      )}
-      {Boolean(description) && <Text tone="muted">{description}</Text>}
+      <View
+        style={{
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: theme.spacing.small,
+        }}
+      >
+        <View style={{ flexGrow: 1, flexBasis: 180 }}>
+          {!duplicate && (
+            <Text accessibilityRole="header" style={{ fontSize: metrics.title, fontWeight: '600' }}>
+              {title}
+            </Text>
+          )}
+          {Boolean(description) && <Text tone="muted">{description}</Text>}
+        </View>
+        {actions && (
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              gap: theme.spacing.small,
+            }}
+          >
+            {actions}
+          </View>
+        )}
+      </View>
     </View>
   );
 }

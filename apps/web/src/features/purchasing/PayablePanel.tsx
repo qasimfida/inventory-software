@@ -1,9 +1,14 @@
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
+import { Select } from '@/components/ui/FormControls';
+import { PayableDetails } from './PayableDetails';
+import { PayableEvidence } from './PayableEvidence';
+import { FormSheet } from '@/components/common/FormSheet';
+import { Table, TableScroll } from '@/components/ui/Table';
+import { IconButton } from '@/components/common/IconButton';
 import { WarehouseSelect } from '@/components/common/WarehouseSelect';
 import { usePageCollection } from '@/components/common/usePageCollection';
-import { RefreshCw } from 'lucide-react';
-import { EmptyState } from '@/components/common/AsyncState';
-import { RecordDetails } from '@/components/common/RecordDetails';
-import { Grid } from '@/components/common/Layout';
+import { RefreshCw, Filter } from 'lucide-react';
+import { EmptyState, ErrorState, LoadingState } from '@/components/common/AsyncState';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { Pagination } from '@/components/common/Pagination';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
@@ -19,7 +24,12 @@ export function PayablePanel({
   business: Business;
   locations: Location[];
 }) {
+  const { formatMinorUnits } = useDisplayMoney();
+
   const warehouses = locations.filter((l) => l.kind === 'warehouses');
+  const [storeId, setStoreId] = useState(warehouses[0]?.storeId ?? '');
+  const stores = locations.filter((l) => l.kind === 'stores');
+  const scopedWarehouses = warehouses.filter((w) => (w.storeId ?? '') === storeId);
   const [warehouseId, setWarehouseId] = useState(warehouses[0]?.id ?? '');
   const [supplierId, setSupplierId] = useState('');
   const [invoiceId, setInvoiceId] = useState('');
@@ -62,6 +72,44 @@ export function PayablePanel({
     <section aria-label="Supplier balances" className="screen-section">
       <ScreenHeader
         title="Supplier balances"
+        actions={
+          <>
+            <Select
+              aria-label="Supplier balances store"
+              value={storeId}
+              onChange={(e) => {
+                const value = e.target.value;
+                setStoreId(value);
+                setWarehouseId(warehouses.find((w) => (w.storeId ?? '') === value)?.id ?? '');
+                setSupplierId('');
+                resetSelection();
+              }}
+            >
+              {stores.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
+              ))}
+              {warehouses.some((w) => !w.storeId) && <option value="">Business warehouses</option>}
+            </Select>
+            <WarehouseSelect
+              label="Supplier balances warehouse"
+              id="payable-warehouse"
+              value={warehouseId}
+              onChange={(e) => {
+                setWarehouseId(e.target.value);
+                setSupplierId('');
+                resetSelection();
+              }}
+            >
+              {scopedWarehouses.map((w) => (
+                <option key={w.id} value={w.id}>
+                  {w.name}
+                </option>
+              ))}
+            </WarehouseSelect>
+          </>
+        }
         description={
           <>
             Online cash only. Confirm actual cash paid or received before recording. Open your cash
@@ -70,46 +118,34 @@ export function PayablePanel({
           </>
         }
       />
-      <Grid className="screen-filters">
-        <div>
-          <WarehouseSelect
-            label="Supplier balances warehouse"
-            id="payable-warehouse"
-            value={warehouseId}
-            onChange={(e) => {
-              setWarehouseId(e.target.value);
+      <div className="collection-toolbar">
+        <IconButton
+          label="Refresh supplier balances"
+          icon={RefreshCw}
+          onClick={() => void model.run()}
+          disabled={!warehouseId || state.busy}
+        />
+        {supplierId && (
+          <Button
+            variant="ghost"
+            onClick={() => {
               setSupplierId('');
               resetSelection();
             }}
           >
-            {warehouses.map((w) => (
-              <option key={w.id} value={w.id}>
-                {w.name}
-              </option>
-            ))}
-          </WarehouseSelect>
-        </div>
-        <Button
-          onClick={() => void model.run()}
-          disabled={!warehouseId || state.busy}
-          variant="ghost"
-          size="icon"
-          aria-label="Refresh supplier balances"
-          title="Refresh"
-        >
-          <RefreshCw aria-hidden="true" />
-        </Button>
-      </Grid>
-      {state.error && <p role="alert">{state.error}</p>}
-      {supplierId && (
-        <Button
-          onClick={() => {
-            setSupplierId('');
-            resetSelection();
-          }}
-        >
-          Show all suppliers
-        </Button>
+            Show all suppliers
+          </Button>
+        )}
+      </div>
+      {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
+      {!warehouseId && (
+        <EmptyState
+          message="No accessible warehouse"
+          description="Select or request warehouse access to view supplier balances."
+        />
+      )}
+      {warehouseId && !state.data && !state.error && (
+        <LoadingState message="Loading supplier balances…" />
       )}
       {state.data && (
         <>
@@ -117,44 +153,77 @@ export function PayablePanel({
             Totals cover {supplierId ? 'the selected supplier' : 'all suppliers'} in this warehouse,
             across all pages. Currencies are separate.
           </p>
-          {state.data.page.totals.map((t) => (
-            <RecordDetails
-              key={t.currency}
-              label="Supplier totals"
-              items={[
-                { label: 'Currency', value: t.currency },
-                { label: 'Payable (minor units)', value: t.payableMinor },
-                { label: 'Supplier owes (minor units)', value: t.supplierOwesMinor },
-              ]}
-            />
-          ))}
+          <PayableEvidence
+            title="Supplier totals"
+            columns={['Currency', 'Payable', 'Supplier owes']}
+            numeric={[1, 2]}
+            empty="No supplier balances in this selection"
+            rows={state.data.page.totals.map((t) => ({
+              id: t.currency,
+              cells: [
+                t.currency,
+                formatMinorUnits(t.payableMinor, t.currency),
+                formatMinorUnits(t.supplierOwesMinor, t.currency),
+              ],
+            }))}
+          />
           {!state.data.page.invoices.length && (
             <EmptyState message="No supplier invoices in this selection." />
           )}
-          {state.data.page.invoices.map((i) => (
-            <div key={i.id} className="border p-2">
-              <p>
-                {i.supplierName} · {i.reference} · due {i.dueDate} · outstanding{' '}
-                {i.outstandingMinor} {i.currency} minor units
-              </p>
-              <Button
-                onClick={() => {
-                  setInvoiceId(i.id);
-                  setHistoryOffset(0);
-                }}
-              >
-                View invoice {i.reference}
-              </Button>
-              <Button
-                onClick={() => {
-                  setSupplierId(i.supplierId);
-                  resetSelection();
-                }}
-              >
-                Filter supplier {i.supplierName}
-              </Button>
-            </div>
-          ))}
+          {state.data.page.invoices.length > 0 && (
+            <TableScroll label="Supplier invoices">
+              <Table>
+                <thead>
+                  <tr>
+                    {['Invoice', 'Supplier', 'Due date', 'Outstanding', 'Currency', 'Actions'].map(
+                      (label) => (
+                        <th
+                          key={label}
+                          scope="col"
+                          data-numeric={label.startsWith('Outstanding') || undefined}
+                          data-actions={label === 'Actions' || undefined}
+                        >
+                          {label}
+                        </th>
+                      ),
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {state.data.page.invoices.map((i) => (
+                    <tr key={i.id}>
+                      <th scope="row">
+                        <Button
+                          variant="link"
+                          aria-label={`View invoice ${i.reference}`}
+                          onClick={() => {
+                            setInvoiceId(i.id);
+                            setHistoryOffset(0);
+                          }}
+                        >
+                          {i.reference}
+                        </Button>
+                      </th>
+                      <td>{i.supplierName}</td>
+                      <td className="whitespace-nowrap">{i.dueDate}</td>
+                      <td data-numeric>{formatMinorUnits(i.outstandingMinor, i.currency)}</td>
+                      <td>{i.currency}</td>
+                      <td data-actions>
+                        <IconButton
+                          icon={Filter}
+                          label={`Filter supplier ${i.supplierName}`}
+                          onClick={() => {
+                            setSupplierId(i.supplierId);
+                            resetSelection();
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </TableScroll>
+          )}
           <Pagination
             label="invoices"
             offset={offset}
@@ -163,49 +232,42 @@ export function PayablePanel({
             onChange={setOffset}
           />
           {state.data.detail && (
-            <>
-              <h3>Supplier invoice {state.data.detail.invoice.reference}</h3>
-              <RecordDetails
-                label="Invoice balances"
-                items={[
-                  { label: 'Currency', value: `${state.data.detail.invoice.currency} minor units` },
-                  { label: 'Original', value: state.data.detail.invoice.amountMinor },
-                  { label: 'Credits', value: state.data.detail.invoice.creditMinor },
-                  { label: 'Cash paid', value: state.data.detail.invoice.paidMinor },
-                  { label: 'Cash refunded', value: state.data.detail.invoice.refundedMinor },
-                  { label: 'Outstanding', value: state.data.detail.invoice.outstandingMinor },
-                ]}
-              />
-              <p>
-                Negative outstanding means the supplier owes cash back. Latest 100 uncredited
-                returns are listed; older return IDs are available in purchase history.
-              </p>
-              {state.data.detail.returns.map((r) => (
-                <p key={r.id}>
-                  Return {r.id} · quantity {r.quantity} · {r.creditReference}
-                </p>
-              ))}
-              {state.data.detail.events.map((e) => (
-                <p key={e.id}>
-                  {e.kind} · {e.amountMinor} · {e.reference} · {e.reason} · actor {e.actorId} ·{' '}
-                  {e.createdAt} · {e.returnId ? `return ${e.returnId}` : `shift ${e.shiftId}`}
-                </p>
-              ))}
-              <Pagination
-                label="supplier events"
-                offset={historyOffset}
-                hasMore={state.data.detail.hasMore}
-                busy={state.busy || Boolean(state.error)}
-                onChange={setHistoryOffset}
-              />
-              {payableForms(client, business, state.data.detail).map((form) => (
-                <CommandForm
-                  key={`${invoiceId}-${form.title}`}
-                  definition={form}
-                  run={(work) => void model.run(work)}
+            <FormSheet
+              title={`Supplier invoice ${state.data.detail.invoice.reference}`}
+              description="Review recorded balances and history before recording cash or credit."
+              open
+              onOpenChange={(open) => {
+                if (!open && !state.busy) setInvoiceId('');
+              }}
+            >
+              <div className="space-y-3 shrink-0 min-w-0">
+                {state.error && (
+                  <ErrorState message={state.error} onRetry={() => void model.run()} />
+                )}
+                <PayableDetails
+                  detail={state.data.detail}
+                  timeZone={business.timeZone}
+                  warehouse={
+                    warehouses.find((w) => w.id === state.data?.detail?.invoice.warehouseId)
+                      ?.name ?? state.data.detail.invoice.warehouseId
+                  }
                 />
-              ))}
-            </>
+                <Pagination
+                  label="supplier events"
+                  offset={historyOffset}
+                  hasMore={state.data.detail.hasMore}
+                  busy={state.busy || Boolean(state.error)}
+                  onChange={setHistoryOffset}
+                />
+                {payableForms(client, business, state.data.detail).map((form) => (
+                  <CommandForm
+                    key={`${invoiceId}-${form.title}`}
+                    definition={form}
+                    run={(work) => void model.run(work)}
+                  />
+                ))}
+              </div>
+            </FormSheet>
           )}
         </>
       )}

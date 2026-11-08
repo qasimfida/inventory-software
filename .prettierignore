@@ -17,3 +17,16 @@ artifacts/
 
 test-results/
 playwright-report/
+
+apps/mobile/src/generated/quill-assets.ts
+
+# Generated redesign baseline evidence (regenerate using scripts)
+.ai/reports/redesign/before/
+.ai/reports/redesign/routes.md
+.ai/reports/redesign/routes.json
+.ai/reports/redesign/components.md
+.ai/reports/redesign/components.json
+
+# Generated run evidence; runnable maintained checks stay under scripts/tests.
+.ai/reports/redesign/*-validation/
+.ai/reports/redesign/*-start.json

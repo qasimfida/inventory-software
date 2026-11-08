@@ -68,6 +68,7 @@ export function accountRequest(
         },
       ],
     };
+  if (path === 'exchange-rates') return { snapshot: null, reason: 'not-configured' };
   if (path === 'settings' && method === 'PUT') {
     const input = preferenceRecordSchema.parse(body),
       previous = demoPreferences();
@@ -107,6 +108,7 @@ export function accountRequest(
               id: '1',
               occurredAt: demoDate(),
               actorId: demoSession().user.id,
+              actorName: demoSession().user.email,
               businessId: null,
               deviceId: demoId(991),
               sessionId: demoId(990),
@@ -128,6 +130,7 @@ export function accountRequest(
               eventId: '1',
               occurredAt: demoDate(),
               actorId: demoSession().user.id,
+              actorName: demoSession().user.email,
               deviceId: demoId(991),
               businessId: null,
               audience: 'self',

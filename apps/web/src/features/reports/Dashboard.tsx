@@ -1,10 +1,9 @@
-import { Hint } from '@/components/ui/Tooltip';
-import { RefreshCw, Settings2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { RefreshCw } from 'lucide-react';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { createDashboardClient, cancellableResource } from '@inventory/api-client';
 import type { Business } from '@inventory/contracts';
-import { useAppearance } from '@/theme/Appearance';
+import { settingsModel } from '@/platform/settings';
+import { currencySchema } from '@inventory/contracts';
 import { authClient } from '@/platform/auth-client';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { EmptyState, ErrorState, LoadingState } from '@/components/common/AsyncState';
@@ -21,8 +20,16 @@ export function Dashboard({
   storeId?: string | undefined;
   warehouseIds?: string[] | undefined;
 }) {
-  const { preferences } = useAppearance(),
-    [days, setDays] = useState<7 | 30>(30);
+  useSyncExternalStore(settingsModel.subscribe, settingsModel.snapshot);
+  const transactionCurrency = settingsModel.transactionCurrency();
+  const [selection, setSelection] = useState<{
+    businessId: string;
+    currency: ReturnType<typeof currencySchema.parse>;
+  } | null>(null);
+  const currency = selection?.businessId === business.id ? selection.currency : transactionCurrency;
+  const setCurrency = (value: ReturnType<typeof currencySchema.parse>) =>
+    setSelection({ businessId: business.id, currency: value });
+  const [days, setDays] = useState<7 | 30>(30);
   const warehouseKey = warehouseIds?.join(',');
   const request = useMemo(() => {
     const client = createDashboardClient(authClient.organizationRequest, business.id);
@@ -30,7 +37,7 @@ export function Dashboard({
       (signal) =>
         client.load(
           {
-            currency: preferences.currency,
+            currency: currency,
             days,
             storeId,
             warehouseIds:
@@ -40,7 +47,7 @@ export function Dashboard({
         ),
       () => new AbortController(),
     );
-  }, [business.id, preferences.currency, days, storeId, warehouseKey]);
+  }, [business.id, currency, days, storeId, warehouseKey]);
   const state = useSyncExternalStore(request.model.subscribe, request.model.snapshot);
   useEffect(() => {
     void request.model.run();
@@ -65,13 +72,20 @@ export function Dashboard({
                 <option value={30}>Last 30 days</option>
               </Select>
             </label>
-            <Hint label="Change currency in Settings">
-              <Link to="/settings/preferences" className="overview-currency">
-                <Settings2 aria-hidden="true" />
-                {preferences.currency}
-                <span className="sr-only"> · Currency settings</span>
-              </Link>
-            </Hint>
+            <label>
+              Recorded currency
+              <Select
+                aria-label="Overview recorded currency"
+                value={currency}
+                onChange={(e) => setCurrency(currencySchema.parse(e.target.value))}
+              >
+                {currencySchema.options.map((code) => (
+                  <option key={code} value={code}>
+                    {code}
+                  </option>
+                ))}
+              </Select>
+            </label>
             <Button
               variant="ghost"
               size="icon"

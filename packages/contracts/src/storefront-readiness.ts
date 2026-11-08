@@ -1,3 +1,4 @@
+import { descriptionText } from './rich-description.js';
 import { storefrontIssueMessages } from './storefront-messages.js';
 import { z } from 'zod';
 export const STOREFRONT_RULE_VERSION = 2;
@@ -98,9 +99,9 @@ export function evaluateStorefrontReadiness(input: ReadinessInput) {
   if (!input.title.trim()) add('TITLE_MISSING', 'title', storefrontIssueMessages.TITLE_MISSING);
   else if (input.title.trim().length < STOREFRONT_TITLE_MIN)
     add('TITLE_TOO_SHORT', 'title', storefrontIssueMessages.TITLE_TOO_SHORT);
-  if (!input.description.trim())
+  if (!descriptionText(input.description))
     add('DESCRIPTION_MISSING', 'description', storefrontIssueMessages.DESCRIPTION_MISSING);
-  else if (input.description.trim().length < STOREFRONT_DESCRIPTION_MIN)
+  else if (descriptionText(input.description).length < STOREFRONT_DESCRIPTION_MIN)
     add('DESCRIPTION_TOO_SHORT', 'description', storefrontIssueMessages.DESCRIPTION_TOO_SHORT);
   if (!input.images.length) add('NO_IMAGE', 'images', storefrontIssueMessages.NO_IMAGE);
   for (const [index, url] of input.images.entries()) {

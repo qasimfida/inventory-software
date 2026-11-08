@@ -16,6 +16,8 @@ it('follows system changes only in system mode and does not persist a competing 
       <AppearanceControl />
     </AppearanceProvider>,
   );
+  expect(document.documentElement.dataset.theme).toBe('light');
+  await selectOption(screen.getByRole('combobox', { name: 'Appearance' }), 'system');
   expect(document.documentElement.dataset.theme).toBe('dark');
   await selectOption(screen.getByRole('combobox', { name: 'Appearance' }), 'light');
   expect(document.documentElement.dataset.theme).toBe('light');

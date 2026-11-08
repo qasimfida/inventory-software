@@ -7,7 +7,7 @@ test('online setup saves, confirms enablement, guards drafts, and exposes scoped
   await page.getByLabel('Account email').fill('owner@demo.example.test');
   await page.getByLabel('Password', { exact: true }).fill('local-demo');
   await page.getByRole('button', { name: 'Log in', exact: true }).click();
-  await expect(page.getByRole('region', { name: 'Business setup' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Business setup' })).toBeVisible();
   await page.evaluate(() => {
     location.hash = '/online-store/settings/general';
   });
@@ -29,7 +29,7 @@ test('online setup saves, confirms enablement, guards drafts, and exposes scoped
       .getByRole('link', { name: 'Online store', exact: true }),
   ).toBeVisible();
   await page.getByRole('textbox', { name: 'Store name', exact: true }).fill('Edited online name');
-  await page.getByRole('link', { name: 'Catalog & pricing', exact: true }).click();
+  await page.getByRole('link', { name: 'Inventory', exact: true }).click();
   await expect(page.getByRole('dialog')).toContainText('Discard unsaved settings');
   await page.getByRole('button', { name: 'Keep editing', exact: true }).click();
   await page.getByRole('button', { name: 'Save settings', exact: true }).click();

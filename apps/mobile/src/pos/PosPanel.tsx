@@ -1,3 +1,4 @@
+import { settingsModel } from '../settings/model';
 import { PageTitleContext } from '../ui/ScreenHeader';
 import { useReachability } from '../platform/useReachability';
 import { lazy, Suspense } from 'react';
@@ -20,16 +21,18 @@ export function PosPanel({
   close,
   onLockChange,
   showBack = true,
+  active = true,
 }: {
   business: Business;
   locations: Location[];
   close: () => void;
   showBack?: boolean;
+  active?: boolean;
   onLockChange?: (locked: boolean) => void;
 }) {
   const pageTitle = useContext(PageTitleContext);
   const online = useReachability();
-  const preferences = useTheme().preferences;
+  useTheme();
   const [cached, setCached] = useState(false);
   const warehouses = locations.filter((l) => l.kind === 'warehouses'),
     [locked, setLocked] = useState(false),
@@ -65,12 +68,14 @@ export function PosPanel({
           live cart is retained until cleared or connectivity returns.
         </Text>
       )}
-      <Action
-        variant="outline"
-        disabled={locked}
-        label={cached ? 'Use live checkout' : 'Use cached products'}
-        onPress={() => setCached(!cached)}
-      />
+      {cached && online && (
+        <Action
+          variant="outline"
+          disabled={locked}
+          label="Return to live checkout"
+          onPress={() => setCached(false)}
+        />
+      )}
       {warehouse && warehouse.state === 'active' && hasPermission(business, 'sales.write') ? (
         cached ? (
           <Suspense fallback={<Text>Loading cached checkout…</Text>}>
@@ -79,16 +84,18 @@ export function PosPanel({
               setup={{
                 businessId: business.id,
                 warehouseId: warehouse.id,
-                currency: preferences.currency,
+                currency: settingsModel.transactionCurrency(),
               }}
               onLockChange={setLocked}
             />
           </Suspense>
         ) : (
           <PosCheckout
+            active={active}
             key={warehouse.id}
             business={business}
             warehouse={warehouse}
+            locations={locations}
             onLockChange={setLocked}
           />
         )

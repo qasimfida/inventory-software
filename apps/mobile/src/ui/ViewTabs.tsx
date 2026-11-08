@@ -29,6 +29,7 @@ export function ViewTabs({
           accessibilityRole="tab"
           accessibilityLabel={`${label} ${name.toLowerCase()} view`}
           accessibilityState={{ selected: grid === !!index }}
+          aria-selected={grid === !!index}
           onPress={() => onChange(!!index)}
           style={{
             minHeight: metrics.target,

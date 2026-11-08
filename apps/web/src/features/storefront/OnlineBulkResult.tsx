@@ -47,7 +47,7 @@ export function OnlineBulkResult({
                   }
                   aria-hidden="true"
                 />
-                {label} <StatusBadge>{items.length}</StatusBadge>
+                {label} <StatusBadge tone={tone}>{items.length}</StatusBadge>
               </h3>
               {!!items.length && (
                 <ul className="space-y-3">
@@ -71,7 +71,7 @@ export function OnlineBulkResult({
           );
         })}
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="drawer-actions">
         <Button onClick={() => onTab('changes-required')}>Review changes required</Button>
         <Button variant="outline" onClick={() => onTab('ready')}>
           View ready products

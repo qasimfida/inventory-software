@@ -1,3 +1,4 @@
+import { settingsModel } from '@/platform/settings';
 import { useState } from 'react';
 import { customerProfileForm } from '@inventory/api-client';
 import type { createCustomerClient } from '@inventory/api-client';
@@ -22,14 +23,18 @@ export function CreateCustomerSheet({
 }) {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState('');
-  const { preferences } = useAppearance();
+  useAppearance();
   const base = customerProfileForm(client, storeId);
   const definition = {
     ...base,
     fields: base.fields.map((f) => ({
       ...f,
       value:
-        f.name === 'name' ? name : f.name === 'currency' ? preferences.currency : (f.value ?? ''),
+        f.name === 'name'
+          ? name
+          : f.name === 'currency'
+            ? settingsModel.transactionCurrency()
+            : (f.value ?? ''),
     })),
     submit: async (values: Parameters<typeof base.submit>[0]) => {
       const result = z.object({ id: z.uuid() }).parse(await base.submit(values));

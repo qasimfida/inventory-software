@@ -1,9 +1,10 @@
+import { LocationDetails } from './LocationDetails';
 import { SearchControl } from '../ui/SearchControl';
 import { RecordCollection } from '../ui/RecordCollection';
 import { SidePanel } from '../ui/SidePanel';
 import { EmptyState } from '../ui/AsyncState';
 import { Text } from '../ui/Themed';
-import { hasPermission, creatableLocationKinds, locationInScope } from '@inventory/contracts';
+import { hasPermission, creatableLocationKinds } from '@inventory/contracts';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { createLocationSchema, editLocationSchema } from '@inventory/contracts';
@@ -55,15 +56,17 @@ export function LocationEditor({
       <Text accessibilityRole="header" style={styles.heading}>
         Locations and devices
       </Text>
-      <Action
-        label="Add store / warehouse / terminal"
-        disabled={!writable || busy}
-        onPress={() => {
-          edit(null);
-          setViewing(null);
-          setOpen(true);
-        }}
-      />
+      {writable && (
+        <Action
+          label="Add store / warehouse / terminal"
+          disabled={!writable || busy}
+          onPress={() => {
+            edit(null);
+            setViewing(null);
+            setOpen(true);
+          }}
+        />
+      )}
 
       <RecordCollection
         toolbar={toolbar}
@@ -71,17 +74,8 @@ export function LocationEditor({
         onOpen={(id) => {
           const item = workspace.locations.find((l) => l.id === id);
           if (!item) return;
-          if (
-            writable &&
-            locationInScope(workspace.business, item, true) &&
-            item.state !== 'archived'
-          ) {
-            edit(item);
-            setViewing(null);
-          } else {
-            setEditing(null);
-            setViewing(item);
-          }
+          setEditing(null);
+          setViewing(item);
           setOpen(true);
         }}
         items={workspace.locations
@@ -96,7 +90,12 @@ export function LocationEditor({
               workspace.locations.find((parent) => parent.id === item.storeId)?.name ??
               'Business location',
             status: item.state,
-            tone: item.state === 'active' ? 'success' : 'neutral',
+            tone:
+              item.state === 'active'
+                ? 'success'
+                : item.state === 'suspended'
+                  ? 'warning'
+                  : 'neutral',
           }))}
       />
       {!workspace.locations.length && <EmptyState message="No locations or terminals yet." />}
@@ -106,9 +105,32 @@ export function LocationEditor({
         onClose={() => setOpen(false)}
       >
         {viewing && (
-          <Text>
-            {viewing.name} · {viewing.code} · {viewing.type} · {viewing.state}
-          </Text>
+          <LocationDetails
+            item={viewing}
+            workspace={workspace}
+            busy={busy}
+            onEdit={() => {
+              edit(viewing);
+              setViewing(null);
+            }}
+            onState={(state) => {
+              void model.refresh(async () => {
+                await model.client.editLocation(
+                  workspace.business.id,
+                  viewing.kind,
+                  viewing.id,
+                  editLocationSchema.parse({
+                    name: viewing.name,
+                    code: viewing.code,
+                    version: viewing.version,
+                    state,
+                  }),
+                );
+                setOpen(false);
+                setViewing(null);
+              });
+            }}
+          />
         )}
         {writable && !viewing && (
           <>
@@ -190,7 +212,7 @@ export function LocationEditor({
                 <Choice
                   label="Location state"
                   value={state}
-                  options={choices(['active', 'suspended', 'archived'])}
+                  options={choices(['active', 'suspended'])}
                   onChange={setState}
                   disabled={busy}
                 />
@@ -228,7 +250,16 @@ export function LocationEditor({
                 })
               }
             />
-            {editing && <Action label="Cancel edit" disabled={busy} onPress={() => edit(null)} />}
+            {editing && (
+              <Action
+                label="Cancel edit"
+                disabled={busy}
+                onPress={() => {
+                  setViewing(editing);
+                  edit(null);
+                }}
+              />
+            )}
           </>
         )}
       </SidePanel>

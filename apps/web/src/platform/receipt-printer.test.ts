@@ -1,39 +1,28 @@
 // @vitest-environment jsdom
-import { afterEach, expect, it, vi } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { printReceipt } from './receipt-printer';
-afterEach(() => {
-  document.body.replaceChildren();
-  vi.useRealTimers();
-  vi.restoreAllMocks();
-});
-it('prints receipt text without executing embedded markup and removes the transient preview', async () => {
-  vi.useFakeTimers();
-  const create = document.createElement.bind(document),
-    print = vi.fn();
-  let printedText: string | null = null,
-    images = -1;
-  vi.spyOn(document, 'createElement').mockImplementation((tag, options) => {
-    const element = create(tag, options);
-    if (tag === 'iframe') {
-      const append = document.body.append.bind(document.body);
-      vi.spyOn(document.body, 'append').mockImplementation((...nodes) => {
-        append(...nodes);
-        if (element instanceof HTMLIFrameElement) {
-          element.contentWindow!.print = () => {
-            printedText = element.contentDocument!.body.textContent;
-            images = element.contentDocument!.querySelectorAll('img').length;
-            print();
-          };
-          element.contentWindow!.focus = vi.fn();
-        }
-      });
+it('prints literal receipt text with readable print CSS and removes the temporary frame', async () => {
+  const append = document.body.append.bind(document.body);
+  let rendered = '';
+  const print = vi.fn();
+  vi.spyOn(document.body, 'append').mockImplementation((...nodes) => {
+    append(...nodes);
+    const frame = nodes[0] as HTMLIFrameElement;
+    if (frame.tagName === 'IFRAME') {
+      frame.contentWindow!.focus = vi.fn();
+      frame.contentWindow!.print = () => {
+        rendered = frame.contentDocument!.body.innerHTML;
+        expect(frame.contentDocument!.head.textContent).toContain('@page');
+        print();
+      };
     }
-    return element;
   });
-  await printReceipt('<img src=x onerror=alert(1)>\nUSD 12.50');
-  expect(images).toBe(0);
-  expect(printedText).toContain('<img');
-  expect(print).toHaveBeenCalledOnce();
-  vi.runAllTimers();
-  expect(document.querySelector('iframe')).toBeNull();
+  try {
+    await printReceipt('Receipt <script>unsafe</script>\nTotal $12.00');
+    expect(print).toHaveBeenCalledTimes(1);
+    expect(rendered).toContain('&lt;script&gt;unsafe&lt;/script&gt;');
+    expect(document.querySelector('iframe')).toBeNull();
+  } finally {
+    vi.restoreAllMocks();
+  }
 });

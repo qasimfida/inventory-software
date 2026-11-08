@@ -1,6 +1,8 @@
 export interface CommandField {
   name: string;
   label: string;
+  /** Optional presentation heading before a related group of fields. */
+  section?: string;
   kind?: 'text' | 'number' | 'boolean' | 'select' | 'multiline';
   options?: { value: string; label: string }[];
   value?: string | number | boolean;

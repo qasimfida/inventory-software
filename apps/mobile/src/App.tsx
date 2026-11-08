@@ -1,4 +1,6 @@
 import { useFonts } from 'expo-font';
+import Geist from '@inventory/design-tokens/fonts/Geist.ttf';
+import GeistMono from '@inventory/design-tokens/fonts/GeistMono.ttf';
 import Karla from '@inventory/design-tokens/fonts/Karla.ttf';
 import Lora from '@inventory/design-tokens/fonts/Lora.ttf';
 import { lazy, Suspense } from 'react';
@@ -11,7 +13,7 @@ const DemoWorkspace =
     ? lazy(() => import('./shell/DemoWorkspace'))
     : null;
 export function App() {
-  useFonts({ Karla, Lora });
+  useFonts({ Geist, GeistMono, Karla, Lora });
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ThemeProvider>

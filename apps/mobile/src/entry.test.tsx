@@ -1,4 +1,6 @@
 // @vitest-environment jsdom
+// WebView is a native bridge; this suite exercises the surrounding shell, not the editor.
+vi.mock('react-native-webview', () => ({ WebView: () => null }));
 vi.mock('expo-image-picker', () => ({ launchImageLibraryAsync: async () => ({ canceled: true }) }));
 vi.mock('expo-font', () => ({ useFonts: () => [true, null] }));
 vi.hoisted(() => vi.stubGlobal('__DEV__', false));

@@ -1,4 +1,4 @@
-import { palettes } from '@inventory/design-tokens';
+import { palettes, fontLicense } from '@inventory/design-tokens';
 import type { Token } from '@inventory/design-tokens';
 import { Panel } from '@/components/common/Layout';
 const samples: Token[] = [
@@ -52,11 +52,15 @@ export function TokensDemo() {
           </section>
         ))}
       </div>
+      <details>
+        <summary>Bundled Geist font license</summary>
+        <pre className="whitespace-pre-wrap text-xs">{fontLicense}</pre>
+      </details>
       <h3>Typography and spacing</h3>
       <p className="text-sm text-muted-foreground">
-        System fonts · 12 / 13 / 14 / 16 / 20 / 28px · 4px spacing unit · 40px desktop, 44px touch
-        and 48-unit native targets. Text size scales the hierarchy; compact density preserves
-        minimum targets.
+        Bundled Geist · 12 / 13 / 14 / 15 / 18 / 22 / 28px · 4px spacing unit · independent control
+        sizes, 44px touch and 48-unit native targets. Text size scales the hierarchy; compact
+        density preserves minimum targets.
       </p>
       <ul className="flex flex-wrap items-end gap-4" aria-label="Spacing scale">
         {[1, 2, 3, 4, 6, 8].map((step) => (

@@ -7,7 +7,6 @@ import type { Business, CompanyProfile as Profile, PolicyRecord } from '@invento
 import { companyFields } from '@inventory/api-client';
 import { settingsModel } from './model';
 import { Field, Action } from '../ui/Controls';
-import { SettingSwitch } from '../ui/SettingSwitch';
 import { Text } from '../ui/Themed';
 import { useTheme } from '../theme';
 export function CompanyProfile({ business }: { business: Business }) {
@@ -54,8 +53,7 @@ function ProfileForm({ policy, editable }: { policy: PolicyRecord; editable: boo
     <View style={{ gap: theme.spacing.medium }}>
       <Text accessibilityRole="header">Company profile</Text>
       <Text>
-        Contact and branding details. The first palette color is the business default; personal
-        preferences remain respected.
+        Business contact details and logo. Manage your personal appearance in Preferences.
       </Text>
       {!!(error || state.message) && (
         <Text accessibilityRole="alert">{error || state.message}</Text>
@@ -86,23 +84,6 @@ function ProfileForm({ policy, editable }: { policy: PolicyRecord; editable: boo
           onChange={(value) => setProfile({ ...profile, [field.key]: value })}
         />
       ))}
-      <Text accessibilityRole="header">Business palette</Text>
-      {(['default', 'teal', 'violet', 'rose', 'amber'] as const).map((color) => (
-        <SettingSwitch
-          key={color}
-          label={`Brand ${color}`}
-          value={profile.palette.includes(color)}
-          disabled={disabled}
-          onChange={(checked) =>
-            setProfile({
-              ...profile,
-              palette: checked
-                ? [...profile.palette, color]
-                : profile.palette.filter((c) => c !== color),
-            })
-          }
-        />
-      ))}
       {editable && (
         <Action
           label="Save company profile"
@@ -122,7 +103,6 @@ function ProfileForm({ policy, editable }: { policy: PolicyRecord; editable: boo
                 values: {
                   ...policy.values,
                   company: parsed.data,
-                  defaults: { ...policy.values.defaults, accent: parsed.data.palette[0]! },
                 },
               },
               false,

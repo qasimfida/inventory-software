@@ -1,0 +1,268 @@
+--- before/packages/api-client/src/online-products.ts
++++ after/packages/api-client/src/online-products.ts
+@@ -170,3 +170,15 @@
+     return items;
+   }
+ }
++
++/** Display server listing state separately from availability and effective online price. */
++export function onlineListingDetails(l: ChannelListing, p: OnlineProductPreview) {
++  return [
++    { label: 'Publication state', value: l.status.replaceAll('_', ' ') },
++    { label: 'Availability and visibility', value: onlineStatus(l, p) },
++    { label: 'Online price', value: onlinePrice(p) },
++    { label: 'Available quantity', value: p.quantity },
++    { label: 'Product reference', value: p.productId },
++    { label: 'Listing reference', value: l.id },
++  ];
++}
+--- before/apps/web/src/features/storefront/OnlineOverview.tsx
++++ after/apps/web/src/features/storefront/OnlineOverview.tsx
+@@ -1,3 +1,4 @@
++import { Progress } from '@/components/ui/Progress';
+ import { StatusBadge } from '@/components/ui/StatusBadge';
+ import { MetricCard } from '@/components/common/MetricCard';
+ import { IconButton } from '@/components/common/IconButton';
+@@ -111,7 +112,7 @@
+             <MetricCard
+               label={label}
+               value={count}
+-              unit="View products"
++              unit={tab === 'active' ? 'Includes paused listings' : 'View products'}
+               primary={tab === 'active'}
+             />
+           </Link>
+@@ -172,8 +173,15 @@
+           <p>
+             {steps.filter((step) => step.done).length} of {steps.length} steps complete
+           </p>
++          <Progress
++            label="Store setup completion"
++            value={
++              steps.length ? (steps.filter((step) => step.done).length / steps.length) * 100 : 0
++            }
++          />
+           <p className="text-muted-foreground">
+-            Complete these details to prepare your online store:
++            Complete these details to prepare your online store. Saving setup does not publish
++            products.
+           </p>
+           {!settings.settings && (
+             <Link className="underline underline-offset-4" to="/online-store/settings/general">
+--- before/apps/web/src/features/storefront/OnlineListingHistory.tsx
++++ after/apps/web/src/features/storefront/OnlineListingHistory.tsx
+@@ -1,3 +1,4 @@
++import { Table, TableScroll } from '@/components/ui/Table';
+ import { onlineError } from '@inventory/api-client';
+ import { useEffect, useState } from 'react';
+ import type { OnlineClient } from '@inventory/api-client';
+@@ -36,7 +37,12 @@
+     };
+   }, [client, id]);
+   return (
+-    <FormSheet title="Listing history" open onOpenChange={onClose}>
++    <FormSheet
++      title="Listing history"
++      description="Recorded publication transitions; latest 200 events."
++      open
++      onOpenChange={onClose}
++    >
+       {error ? (
+         <ErrorState message={error} onRetry={load} />
+       ) : !events ? (
+@@ -44,18 +50,28 @@
+       ) : !events.length ? (
+         <EmptyState message="No listing events yet" />
+       ) : (
+-        <ol className="space-y-4">
+-          {events.map((e) => (
+-            <li key={e.id} className="border-b pb-3">
+-              <p className="font-medium">{e.transition.replace('->', ' → ')}</p>
+-              <p>{e.reasonCode.replaceAll('_', ' ')}</p>
+-              <p className="text-muted-foreground">
+-                {e.actorId ? `Account ${e.actorId}` : 'System'} ·{' '}
+-                {new Date(e.timestamp).toLocaleString()}
+-              </p>
+-            </li>
+-          ))}
+-        </ol>
++        <TableScroll label="Listing events">
++          <Table>
++            <thead>
++              <tr>
++                <th>Transition</th>
++                <th>Reason</th>
++                <th>Actor reference</th>
++                <th>Recorded at</th>
++              </tr>
++            </thead>
++            <tbody>
++              {events.map((e) => (
++                <tr key={e.id}>
++                  <th scope="row">{e.transition.replace('->', ' → ')}</th>
++                  <td>{e.reasonCode.replaceAll('_', ' ')}</td>
++                  <td>{e.actorId ?? 'System'}</td>
++                  <td>{new Date(e.timestamp).toLocaleString()}</td>
++                </tr>
++              ))}
++            </tbody>
++          </Table>
++        </TableScroll>
+       )}
+       <p className="text-muted-foreground">Latest 200 events.</p>
+     </FormSheet>
+--- before/apps/web/src/features/storefront/OnlineBulkResult.tsx
++++ after/apps/web/src/features/storefront/OnlineBulkResult.tsx
+@@ -47,7 +47,7 @@
+                   }
+                   aria-hidden="true"
+                 />
+-                {label} <StatusBadge>{items.length}</StatusBadge>
++                {label} <StatusBadge tone={tone}>{items.length}</StatusBadge>
+               </h3>
+               {!!items.length && (
+                 <ul className="space-y-3">
+@@ -71,7 +71,7 @@
+           );
+         })}
+       </div>
+-      <div className="flex flex-wrap gap-2">
++      <div className="drawer-actions">
+         <Button onClick={() => onTab('changes-required')}>Review changes required</Button>
+         <Button variant="outline" onClick={() => onTab('ready')}>
+           View ready products
+--- before/apps/web/src/features/storefront/OnlineStoreEditor.tsx
++++ after/apps/web/src/features/storefront/OnlineStoreEditor.tsx
+@@ -176,7 +176,10 @@
+         </>
+       ) : (
+         <>
+-          <nav aria-label="Online store settings sections" className="flex flex-wrap gap-2">
++          <nav
++            aria-label="Online store settings sections"
++            className="view-tabs flex flex-wrap gap-2"
++          >
+             {onlineSettingsSections.map((s) => (
+               <Button
+                 key={s}
+@@ -221,7 +224,7 @@
+               ))}
+             </div>
+           )}
+-          <div className="flex flex-wrap gap-2">
++          <div className="drawer-actions">
+             <Button
+               disabled={disabled || !slug.available || (!state.dirty && !!state.saved)}
+               onClick={() => void model.save()}
+--- before/apps/mobile/src/storefront/OnlineOverview.tsx
++++ after/apps/mobile/src/storefront/OnlineOverview.tsx
+@@ -133,7 +133,8 @@
+       >
+         <Text accessibilityRole="header">Complete your online store</Text>
+         <Text>
+-          {steps.filter((step) => step.done).length} of {steps.length} steps complete
++          {steps.filter((step) => step.done).length} of {steps.length} steps complete · Setup does
++          not publish products.
+         </Text>
+         {!settings.settings && (
+           <Pressable
+--- before/apps/mobile/src/storefront/OnlineListingHistory.tsx
++++ after/apps/mobile/src/storefront/OnlineListingHistory.tsx
+@@ -1,3 +1,4 @@
++import { RecordTable } from '../ui/RecordTable';
+ import { onlineError } from '@inventory/api-client';
+ import { useEffect, useState } from 'react';
+ import type { OnlineClient } from '@inventory/api-client';
+@@ -43,14 +44,19 @@
+       ) : !events ? (
+         <Text>Loading history…</Text>
+       ) : events.length ? (
+-        events.map((e) => (
+-          <Text key={e.id}>
+-            {e.transition.replace('->', ' → ')} · {e.reasonCode.replaceAll('_', ' ')}
+-            {' · '}
+-            {e.actorId ? `Account ${e.actorId}` : 'System'} ·{' '}
+-            {new Date(e.timestamp).toLocaleString()}
+-          </Text>
+-        ))
++        <RecordTable
++          label="Listing events"
++          columns={['Transition', 'Reason', 'Actor reference', 'Recorded at']}
++          rows={events.map((e) => ({
++            id: e.id,
++            cells: [
++              e.transition.replace('->', ' → '),
++              e.reasonCode.replaceAll('_', ' '),
++              e.actorId ?? 'System',
++              new Date(e.timestamp).toLocaleString(),
++            ],
++          }))}
++        />
+       ) : (
+         <Text>No listing events yet.</Text>
+       )}
+--- before/apps/web/src/features/storefront/OnlineListingSummary.tsx
++++ after/apps/web/src/features/storefront/OnlineListingSummary.tsx
+@@ -1,7 +1,8 @@
++import { RecordDetails } from '@/components/common/RecordDetails';
+ import { StatusBadge } from '@/components/ui/StatusBadge';
+ import { hasPermission } from '@inventory/contracts';
+ import type { Business, OnlineProductDetail } from '@inventory/contracts';
+-import { onlineFieldLabel, onlineStatus, onlinePrice } from '@inventory/api-client';
++import { onlineFieldLabel, onlineStatus, onlineListingDetails } from '@inventory/api-client';
+ import type { OnlineClient } from '@inventory/api-client';
+ import { Button } from '@/components/ui/Button';
+ import { OnlineProductImage } from './OnlineProductImage';
+@@ -38,11 +39,12 @@
+         <div>
+           <h3>{l.title}</h3>
+           <StatusBadge>{onlineStatus(l, p)}</StatusBadge>
+-          <p>
+-            {onlinePrice(p)} · {p.quantity} available
+-          </p>
+         </div>
+       </div>
++      <RecordDetails label="Listing context" items={onlineListingDetails(l, p)} />
++      <p className="text-sm text-muted-foreground">
++        Ready to publish is not published. Availability and visibility are shown separately.
++      </p>
+       {(['error', 'warning'] as const).map((severity) => (
+         <section key={severity}>
+           <h4>{severity === 'error' ? 'Needs fixing' : 'Warnings'}</h4>
+@@ -79,7 +81,7 @@
+           Remove this listing and select an active replacement.
+         </p>
+       )}
+-      <div className="flex flex-wrap gap-2">
++      <div className="drawer-actions">
+         <Button variant="outline" disabled={disabled || !catalog} onClick={() => fix('title')}>
+           Edit product
+         </Button>
+--- before/apps/mobile/src/storefront/OnlineProductDetails.tsx
++++ after/apps/mobile/src/storefront/OnlineProductDetails.tsx
+@@ -1,8 +1,10 @@
++import { RecordDetails } from '../ui/RecordDetails';
++import { onlineListingDetails } from '@inventory/api-client';
+ import { ManageProduct } from '../catalog/ManageProduct';
+ import { SidePanel } from '../ui/SidePanel';
+ import { OnlineListingHistory } from './OnlineListingHistory';
+ import { OnlineProductImage } from './OnlineProductImage';
+-import { onlineStatus, onlinePrice, onlineFieldLabel } from '@inventory/api-client';
++import { onlineFieldLabel } from '@inventory/api-client';
+ import { onlineError } from '@inventory/api-client';
+ import { useWorkspace } from '../shell/WorkspaceContext';
+ import { useOnlineAvailability } from './useOnlineAvailability';
+@@ -194,8 +196,12 @@
+             {...(detail.preview.source.images[0] ? { url: detail.preview.source.images[0] } : {})}
+           />
+           <Text accessibilityRole="header">{detail.listing.title}</Text>
++          <RecordDetails
++            label="Listing context"
++            items={onlineListingDetails(detail.listing, detail.preview)}
++          />
+           <Text>
+-            {onlineStatus(detail.listing, detail.preview)} · {onlinePrice(detail.preview)}
++            Ready to publish is not published. Availability and visibility are shown separately.
+           </Text>
+           {(['error', 'warning'] as const).map((severity) => (
+             <Text key={severity}>

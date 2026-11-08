@@ -1,9 +1,21 @@
-import { formatMinorUnits } from '@inventory/domain';
+import { formatMinorUnits as originalAmount } from '@inventory/domain';
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
+
 import { businessTime } from '@inventory/contracts';
-export function MoneyValue({ amount, currency }: { amount: string; currency: string }) {
+export function MoneyValue({
+  amount,
+  currency,
+  original = false,
+}: {
+  amount: string;
+  currency: string;
+  original?: boolean;
+}) {
+  const { formatMinorUnits } = useDisplayMoney();
+
   return (
-    <span className="font-mono tabular-nums [overflow-wrap:anywhere]">
-      {formatMinorUnits(amount, currency)}
+    <span className="tabular-nums [overflow-wrap:anywhere]">
+      {original ? originalAmount(amount, currency) : formatMinorUnits(amount, currency)}
     </span>
   );
 }

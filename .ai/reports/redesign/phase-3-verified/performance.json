@@ -1,0 +1,71 @@
+{
+  "method": "Development mock transport on localhost; Chrome 1440x900, UTC/en-US, fixed Date; automation overhead included; not production INP or device performance.",
+  "samples": [
+    {
+      "metric": "cold POS list readiness",
+      "trial": 0,
+      "milliseconds": 260,
+      "visibleCards": 25
+    },
+    {
+      "metric": "search to matching suggestion and filtered cards (debounce included)",
+      "trial": 0,
+      "query": "Oak",
+      "milliseconds": 373,
+      "visibleCards": 5
+    },
+    {
+      "metric": "warm POS list readiness",
+      "trial": 1,
+      "milliseconds": 68,
+      "visibleCards": 25
+    },
+    {
+      "metric": "search to matching suggestion and filtered cards (debounce included)",
+      "trial": 1,
+      "query": "Linen",
+      "milliseconds": 439,
+      "visibleCards": 5
+    },
+    {
+      "metric": "warm POS list readiness",
+      "trial": 2,
+      "milliseconds": 202,
+      "visibleCards": 25
+    },
+    {
+      "metric": "search to matching suggestion and filtered cards (debounce included)",
+      "trial": 2,
+      "query": "Oak",
+      "milliseconds": 403,
+      "visibleCards": 5
+    },
+    {
+      "metric": "warm POS list readiness",
+      "trial": 3,
+      "milliseconds": 57,
+      "visibleCards": 25
+    },
+    {
+      "metric": "search to matching suggestion and filtered cards (debounce included)",
+      "trial": 3,
+      "query": "Linen",
+      "milliseconds": 426,
+      "visibleCards": 5
+    },
+    {
+      "metric": "warm POS list readiness",
+      "trial": 4,
+      "milliseconds": 192,
+      "visibleCards": 25
+    },
+    {
+      "metric": "search to matching suggestion and filtered cards (debounce included)",
+      "trial": 4,
+      "query": "Oak",
+      "milliseconds": 386,
+      "visibleCards": 5
+    }
+  ],
+  "issues": []
+}

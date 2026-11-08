@@ -27,7 +27,7 @@ export async function searchWorkspace(
     results.push(
       ...page.items.map((p) => ({
         title: `${p.name} · ${p.sku}`,
-        path: '/catalog?search=' + encodeURIComponent(p.sku),
+        path: '/inventory?search=' + encodeURIComponent(p.sku),
       })),
     );
   }

@@ -1,5 +1,5 @@
 import { EmptyState } from '../ui/AsyncState';
-import { metrics } from '../ui/metrics';
+import { useTheme } from '../theme';
 import { View } from 'react-native';
 import type { createInventoryClient } from '@inventory/api-client';
 import { Text } from '../ui/Themed';
@@ -7,8 +7,9 @@ import { Surface } from '../ui/Surface';
 import { MetricCard } from '../ui/MetricCard';
 type Stock = Awaited<ReturnType<ReturnType<typeof createInventoryClient>['load']>>;
 export function StockSnapshot({ stock }: { stock: Stock }) {
+  const theme = useTheme();
   return (
-    <View style={{ gap: 16 }}>
+    <View style={{ gap: theme.spacing.medium }}>
       <MetricCard
         label="Balance records"
         value={String(stock.totals.balances)}
@@ -28,7 +29,7 @@ export function StockSnapshot({ stock }: { stock: Stock }) {
               (unit) => unit.id === stock.items.find((item) => item.id === b.variantId)?.baseUnitId,
             )?.code ?? 'Base unit'}
           </Text>
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.medium }}>
             {[
               ['On hand', b.onHand],
               ['Reserved', b.reserved],
@@ -36,8 +37,11 @@ export function StockSnapshot({ stock }: { stock: Stock }) {
               ['Available', b.available],
               ['In transit', b.inTransit],
             ].map(([label, value]) => (
-              <View key={label} style={{ minWidth: 100, flexGrow: 1, gap: 4 }}>
-                <Text tone="muted" style={{ fontSize: metrics.label }}>
+              <View key={label} style={{ minWidth: 100, flexGrow: 1, gap: theme.spacing.small }}>
+                <Text
+                  tone="muted"
+                  style={{ fontSize: Number.parseFloat(theme.tokens['font-label']) }}
+                >
                   {label}
                 </Text>
                 <Text style={{ fontWeight: '600', fontVariant: ['tabular-nums'] }}>{value}</Text>

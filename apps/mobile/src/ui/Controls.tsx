@@ -1,5 +1,5 @@
 import { SelectChoice } from './SelectChoice';
-import { useId, useState } from 'react';
+import { useId, useState, type ReactNode } from 'react';
 import { metrics } from './metrics';
 import { Text, TextInput } from './Themed';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
@@ -16,6 +16,8 @@ export function Field({
   autoFocus = false,
   description,
   error,
+  trailing,
+  errorAccessory,
 }: {
   label: string;
   value: string;
@@ -28,45 +30,95 @@ export function Field({
   autoFocus?: boolean;
   description?: string;
   error?: string;
+  /** Inline end affordance; the input reserves space so text never overlaps it. */
+  trailing?: ReactNode;
+  /** Optional help beside the error, only rendered when an error is present. */
+  errorAccessory?: ReactNode;
 }) {
   const theme = useTheme();
   const id = useId();
   return (
-    <View style={[styles.group, { gap: theme.spacing.small, marginVertical: theme.spacing.small }]}>
+    <View
+      style={[
+        styles.group,
+        {
+          gap: theme.spacing.small,
+          marginVertical: theme.spacing.small,
+          zIndex: trailing || errorAccessory ? 2 : 0,
+        },
+      ]}
+    >
       <Text>{label}</Text>
-      <TextInput
-        autoFocus={autoFocus}
-        accessibilityLabel={label}
-        accessibilityHint={[description, error].filter(Boolean).join('. ') || undefined}
-        {...(Platform.OS === 'web'
-          ? {
-              'aria-describedby':
-                [description ? `${id}-hint` : '', error ? `${id}-error` : '']
-                  .filter(Boolean)
-                  .join(' ') || undefined,
-              'aria-invalid': Boolean(error),
-            }
-          : {})}
-        readOnly={readOnly || undefined}
-        invalid={Boolean(error)}
-        value={value}
-        onChangeText={onChange}
-        editable={!disabled}
-        autoCapitalize="none"
-        autoCorrect={false}
-        maxLength={maxLength}
-        multiline={multiline}
-        style={[styles.input, { padding: theme.spacing.small + metrics.unit }]}
-      />
+      <View style={{ position: 'relative' }}>
+        <TextInput
+          autoFocus={autoFocus}
+          accessibilityLabel={label}
+          accessibilityHint={[description, error].filter(Boolean).join('. ') || undefined}
+          {...(Platform.OS === 'web'
+            ? {
+                'aria-describedby':
+                  [description ? `${id}-hint` : '', error ? `${id}-error` : '']
+                    .filter(Boolean)
+                    .join(' ') || undefined,
+                'aria-invalid': Boolean(error),
+              }
+            : {})}
+          readOnly={readOnly || undefined}
+          invalid={Boolean(error)}
+          value={value}
+          onChangeText={onChange}
+          editable={!disabled}
+          autoCapitalize="none"
+          autoCorrect={false}
+          maxLength={maxLength}
+          multiline={multiline}
+          style={[
+            styles.input,
+            {
+              padding: parseFloat(theme.tokens['control-padding']),
+              ...(trailing ? { paddingRight: metrics.target + theme.spacing.small } : {}),
+            },
+          ]}
+        />
+        {trailing && (
+          <View
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              bottom: 0,
+              justifyContent: 'center',
+              zIndex: 2,
+            }}
+          >
+            {trailing}
+          </View>
+        )}
+      </View>
       {Boolean(description) && (
         <Text nativeID={`${id}-hint`} tone="muted">
           {description}
         </Text>
       )}
       {Boolean(error) && (
-        <Text nativeID={`${id}-error`} tone="error" accessibilityRole="alert">
-          {error}
-        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: theme.spacing.small,
+          }}
+        >
+          <Text
+            style={{ flexShrink: 1 }}
+            nativeID={`${id}-error`}
+            tone="error"
+            accessibilityRole="alert"
+          >
+            {error}
+          </Text>
+          {errorAccessory}
+        </View>
       )}
     </View>
   );
@@ -128,9 +180,9 @@ export function Choice({
                 borderRadius: theme.controlRadius,
                 outlineWidth: focused === option.value ? metrics.focusWidth : 0,
                 outlineOffset: metrics.focusOffset,
-                outlineColor: theme.colors.primary,
+                outlineColor: theme.tokens.ring,
                 borderColor: pressed ? theme.colors.primary : theme.colors.border,
-                padding: theme.spacing.small + metrics.unit,
+                padding: parseFloat(theme.tokens['control-padding']),
                 backgroundColor:
                   disabled || option.disabled
                     ? theme.tokens.disabled

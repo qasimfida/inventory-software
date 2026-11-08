@@ -10,6 +10,7 @@ export interface WorkspaceRoute {
   hidden?: boolean;
 }
 export const workspaceRoutes: WorkspaceRoute[] = [
+  { path: '/salaries', title: 'Salaries', group: 'Finance', permissions: ['users.write'] },
   {
     path: '/online-store',
     title: 'Online store',
@@ -84,10 +85,18 @@ export const workspaceRoutes: WorkspaceRoute[] = [
   { path: '/cash', title: 'Cash shifts', group: 'Sales', permissions: ['payments.read'] },
   {
     path: '/catalog',
-    title: 'Catalog & pricing',
+    title: 'Inventory',
+    hidden: true,
     group: 'Inventory',
     permissions: ['products.read'],
     panel: 'catalog',
+  },
+  {
+    path: '/categories',
+    title: 'Categories',
+    group: 'Inventory',
+    permissions: ['products.read', 'products.write'],
+    panel: 'categories',
   },
   {
     path: '/inventory',
@@ -99,30 +108,31 @@ export const workspaceRoutes: WorkspaceRoute[] = [
   {
     path: '/warehouse',
     title: 'Stock counts & scanning',
-    group: 'Inventory',
+    group: 'Warehouse & transfers',
     permissions: ['stock.read'],
     panel: 'warehouse',
   },
   {
     path: '/transfers',
     title: 'Transfers',
-    group: 'Inventory',
+    group: 'Warehouse & transfers',
     permissions: ['stock.read'],
     panel: 'transfers',
   },
   {
     path: '/storage',
-    title: 'Storage locations',
-    group: 'Inventory',
+    title: 'Warehouse & storage',
+    group: 'Warehouse & transfers',
     permissions: ['stock.read'],
     panel: 'storage',
   },
   {
     path: '/warehouse-view',
-    title: 'Warehouse hierarchy',
-    group: 'Inventory',
+    title: 'Warehouse & storage',
+    hidden: true,
+    group: 'Warehouse & transfers',
     permissions: ['stock.read'],
-    panel: 'warehouse-view',
+    panel: 'storage',
   },
   {
     path: '/purchasing',
@@ -159,25 +169,31 @@ export const workspaceRoutes: WorkspaceRoute[] = [
     permissions: ['reports.read'],
     panel: 'reports',
   },
-  { path: '/logs', title: 'Logs', group: 'Administration', permissions: ['audit.read'] },
+  {
+    path: '/logs',
+    title: 'Logs',
+    hidden: true,
+    group: 'Security & audit',
+    permissions: ['audit.read'],
+  },
   {
     path: '/notifications',
     title: 'Notifications & approvals',
-    group: 'Administration',
+    group: 'Overview',
     permissions: ['business.read'],
     panel: 'notifications',
   },
   {
     path: '/trading',
     title: 'Business trading',
-    group: 'Administration',
+    group: 'Business management',
     permissions: ['business.write'],
     panel: 'trading',
   },
   {
     path: '/integrations',
     title: 'Integrations & help',
-    group: 'Administration',
+    group: 'Business management',
     permissions: ['business.read'],
     panel: 'integrations',
   },
@@ -185,17 +201,17 @@ export const workspaceRoutes: WorkspaceRoute[] = [
   {
     path: '/settings/company',
     title: 'Company profile',
-    group: 'Settings',
+    group: 'Business management',
     permissions: ['business.write'],
   },
   {
     path: '/settings/business',
     title: 'Business',
-    group: 'Settings',
+    group: 'Business management',
     permissions: ['business.write'],
   },
   { path: '/settings/preferences', title: 'Preferences', group: 'Settings', permissions: [] },
-  { path: '/settings/security', title: 'Security', group: 'Settings', permissions: [] },
+  { path: '/settings/security', title: 'Security', group: 'Security & audit', permissions: [] },
   {
     path: '/settings/device',
     title: 'Device & Offline',
@@ -205,35 +221,43 @@ export const workspaceRoutes: WorkspaceRoute[] = [
   {
     path: '/settings/notifications',
     title: 'Security notifications',
-    group: 'Settings',
+    group: 'Security & audit',
     permissions: [],
   },
   {
     path: '/staff',
-    title: 'Staff & expenses',
-    group: 'Administration',
+    title: 'Expenses',
+    group: 'Finance',
     permissions: ['users.write'],
   },
   {
     path: '/team',
     title: 'Team & permissions',
-    group: 'Administration',
+    group: 'Team',
     permissions: ['users.read'],
   },
   {
     path: '/settings/locations',
     title: 'Stores & terminals',
-    group: 'Settings',
+    group: 'Business management',
     permissions: ['locations.write'],
   },
   {
     path: '/settings/audit',
-    title: 'Audit history',
-    group: 'Settings',
+    title: 'Business audit',
+    group: 'Security & audit',
     permissions: ['audit.read'],
   },
 ];
 export function routeAllowed(route: WorkspaceRoute, business?: Business) {
+  if (['/salaries', '/staff'].includes(route.path) && business?.scope?.storeId) return false;
+  if (route.path === '/inventory')
+    return (
+      !!business &&
+      business.state === 'active' &&
+      (hasPermission(business, 'products.read') || hasPermission(business, 'stock.read'))
+    );
+  if (route.path === '/categories' && business?.scope?.storeId) return false;
   if (route.path === '/dashboard' && business?.role === 'cashier') return false;
   return (
     route.permissions.length === 0 ||
@@ -245,12 +269,29 @@ export function routeAllowed(route: WorkspaceRoute, business?: Business) {
 }
 export function availableRoutes(business?: Business, onlineEnabled = false) {
   void onlineEnabled; // Retained for compatibility; navigation no longer expands after enablement.
-  return workspaceRoutes.filter(
-    (route) =>
-      !route.hidden &&
-      routeAllowed(route, business) &&
-      !['/online-store/products', '/online-store/settings'].includes(route.path),
-  );
+  const groupOrder = [
+    'Overview',
+    'Sales',
+    'Inventory',
+    'Purchasing',
+    'Warehouse & transfers',
+    'Customers',
+    'Finance',
+    'Reports',
+    'Team',
+    'Online store',
+    'Business management',
+    'Security & audit',
+    'Settings',
+  ];
+  return workspaceRoutes
+    .filter(
+      (route) =>
+        !route.hidden &&
+        routeAllowed(route, business) &&
+        !['/online-store/products', '/online-store/settings'].includes(route.path),
+    )
+    .sort((a, b) => groupOrder.indexOf(a.group) - groupOrder.indexOf(b.group));
 }
 
 /** UI capability only; server scope and permissions remain authoritative. */

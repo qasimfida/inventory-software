@@ -1,9 +1,12 @@
 // @vitest-environment jsdom
+// The Expo picker requires a device; these tests exercise forms, not the native picker host.
+vi.mock('expo-image-picker', () => ({ launchImageLibraryAsync: vi.fn() }));
 vi.mock('react-native-safe-area-context', () => import('../ui/safe-area-test-adapter'));
 import { afterEach, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { businessSchema, locationSchema } from '@inventory/contracts';
+vi.mock('react-native-webview', () => ({ WebView: () => null }));
 vi.mock('react-native', () => vi.importActual('react-native-web'));
 vi.mock('../catalog/BarcodeScanner', () => ({ BarcodeScanner: () => null }));
 vi.mock('../platform/operation-key', () => ({
@@ -11,6 +14,7 @@ vi.mock('../platform/operation-key', () => ({
 }));
 const { request } = vi.hoisted(() => ({ request: vi.fn() }));
 vi.mock('../auth/client', () => ({ authClient: { organizationRequest: request } }));
+import { NavigationProvider } from '../shell/Navigation';
 import { PosCheckout } from './PosCheckout';
 const id = '00000000-0000-4000-8000-000000000001';
 afterEach(() => {
@@ -90,7 +94,11 @@ it('uses native labelled controls for search, cart, authoritative quote and conf
     throw new Error('Unexpected request');
   });
   const user = userEvent.setup();
-  render(<PosCheckout business={business} warehouse={warehouse} onLockChange={() => {}} />);
+  render(
+    <NavigationProvider>
+      <PosCheckout business={business} warehouse={warehouse} onLockChange={() => {}} />
+    </NavigationProvider>,
+  );
   await user.click(await screen.findByRole('button', { name: 'Add NATIVE · Native item' }));
   await screen.findAllByText('$1.00', {}, { timeout: 3000 });
   await user.click(screen.getByRole('button', { name: 'Checkout' }));

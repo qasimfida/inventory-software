@@ -35,6 +35,10 @@
     align-items: center;
     gap: calc(var(--space-unit) * 2);
   }
+  .screen-actions {
+    max-width: 100%;
+    justify-content: flex-end;
+  }
   .screen-filters {
     display: grid;
     align-items: end;

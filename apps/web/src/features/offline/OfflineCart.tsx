@@ -90,10 +90,13 @@ export function OfflineCart({ model, data }: { model: OfflineWorkspace; data: Va
               <Button
                 variant="outline"
                 onClick={() => add(item.id)}
-                aria-label={`Add ${item.name}`}
+                disabled={item.trackInventory && Number(item.available) <= 0}
+                aria-label={`${item.trackInventory && Number(item.available) <= 0 ? 'Sold' : 'Add'} ${item.name}`}
               >
                 <ShoppingCart />
-                {price(item.unitPrice)}
+                {item.trackInventory && Number(item.available) <= 0
+                  ? 'Sold'
+                  : price(item.unitPrice)}
               </Button>
             </li>
           ))}

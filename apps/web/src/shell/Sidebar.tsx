@@ -27,6 +27,7 @@ export function Sidebar({ collapsed, close }: { collapsed: boolean; close: () =>
               <Hint key={route.path} label={route.title}>
                 <NavLink
                   to={route.path}
+                  end
                   className="shell-nav-link"
                   aria-label={collapsed ? route.title : undefined}
                   onClick={close}
@@ -37,7 +38,7 @@ export function Sidebar({ collapsed, close }: { collapsed: boolean; close: () =>
               </Hint>
             );
           });
-          if (group === 'Online store')
+          if (collapsed || items.length === 1 || group === 'Online store')
             return (
               <div key={group} className="sidebar-group">
                 {links}

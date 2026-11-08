@@ -26,6 +26,10 @@ export const apiErrorSchema = z
       'RATE_LIMITED',
       'CONFLICT',
       'PRICE_UNAVAILABLE',
+      'CASH_SHIFT_REQUIRED',
+      'QUOTE_CHANGED',
+      'PAYMENT_ALLOCATION_INVALID',
+      'STOCK_UNAVAILABLE',
       'CART_CURRENCY_MISMATCH',
       'CHECKOUT_STORE_REQUIRED',
       'LISTING_CHANGED',
@@ -98,3 +102,8 @@ export * from './storefront-media.js';
 export * from './storefront-products.js';
 
 export * from './storefront-messages.js';
+
+export * from './rich-description.js';
+
+export * from './product-media.js';
+export * from './exchange-rates.js';

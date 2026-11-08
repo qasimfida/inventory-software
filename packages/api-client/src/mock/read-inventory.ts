@@ -95,6 +95,7 @@ export function readInventory(s: DemoSeed, path: string, q: DemoQuery, empty: bo
     };
   if (path === 'pos/items') {
     const candidates = products.filter((p) => {
+      if (p.state !== 'active') return false;
       const price = s.prices.find((e) => e.variantId === p.id);
       const available = s.balances
         .filter((b) => b.variantId === p.id)
@@ -115,6 +116,20 @@ export function readInventory(s: DemoSeed, path: string, q: DemoQuery, empty: bo
         const price = s.prices.find((e) => e.variantId === p.id);
         return {
           id: p.id,
+          productId: p.id,
+          available: p.trackInventory
+            ? String(
+                s.balances
+                  .filter(
+                    (b) =>
+                      b.variantId === p.id &&
+                      s.storage.some(
+                        (l) => l.id === b.locationId && l.warehouseId === q.get('warehouseId'),
+                      ),
+                  )
+                  .reduce((n, b) => n + Number(b.available), 0),
+              )
+            : null,
           name: p.name,
           sku: p.sku,
           unitId: s.id(10),

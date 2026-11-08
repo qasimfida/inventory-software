@@ -1,3 +1,4 @@
+import { normalizeDescription } from './rich-description.js';
 import { z } from 'zod';
 import { currencySchema } from './conventions.js';
 import { listingIssueSchema, validImageHost } from './storefront-readiness.js';
@@ -63,7 +64,13 @@ export const onlineStoreSettingsSchema = z
 export const onlineOverridesSchema = z
   .object({
     title: z.string().trim().max(120).nullable(),
-    description: z.string().trim().max(2000).nullable(),
+    description: z
+      .string()
+      .trim()
+      .max(2000)
+      .transform(normalizeDescription)
+      .pipe(z.string().max(2000))
+      .nullable(),
     images: z.array(z.string().max(500)).max(5).nullable(),
     price: z
       .object({

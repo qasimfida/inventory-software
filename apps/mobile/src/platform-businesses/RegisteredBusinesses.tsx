@@ -1,3 +1,4 @@
+import { EmptyState } from '../ui/AsyncState';
 import { useWorkspace } from '../shell/WorkspaceContext';
 import { useNavigation } from '../shell/Navigation';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
@@ -108,7 +109,16 @@ export function RegisteredBusinesses() {
             grid={grid}
           />
         ) : (
-          <Text>No matching businesses.</Text>
+          <EmptyState
+            message={
+              search || filter !== 'all' ? 'No matching businesses' : 'No registered businesses'
+            }
+            description={
+              search || filter !== 'all'
+                ? 'Try another business name or clear the status filter.'
+                : 'Use Add business to register a business and become its initial owner.'
+            }
+          />
         ))}
       {!!manageError && <Text accessibilityRole="alert">{manageError}</Text>}
       <Pagination

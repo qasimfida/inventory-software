@@ -1,3 +1,4 @@
+import { settingsModel } from '@/platform/settings';
 import { useReachability } from '@/platform/useReachability';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { OfflinePanel } from '../offline/OfflinePanel';
@@ -15,15 +16,17 @@ export function PosPanel({
   close,
   onLockChange,
   showBack = true,
+  active = true,
 }: {
   business: Business;
   locations: Location[];
   close: () => void;
   showBack?: boolean;
+  active?: boolean;
   onLockChange?: (locked: boolean) => void;
 }) {
   const online = useReachability();
-  const preferences = useAppearance().preferences;
+  useAppearance();
   const [cached, setCached] = useState(false);
   const warehouses = locations.filter((l) => l.kind === 'warehouses'),
     [locked, setLocked] = useState(false),
@@ -55,8 +58,8 @@ export function PosPanel({
           live cart is retained until cleared or connectivity returns.
         </p>
       )}
-      <div className="pos-toolbar">
-        {showBack && (
+      {showBack && (
+        <div className="pos-toolbar">
           <Button
             disabled={locked}
             onClick={close}
@@ -67,16 +70,13 @@ export function PosPanel({
           >
             <ArrowLeft aria-hidden="true" />
           </Button>
-        )}
-      </div>
-      <Button
-        variant="outline"
-        aria-pressed={cached}
-        disabled={locked}
-        onClick={() => setCached(!cached)}
-      >
-        {cached ? 'Use live checkout' : 'Use cached products'}
-      </Button>
+        </div>
+      )}
+      {cached && online && (
+        <Button variant="outline" disabled={locked} onClick={() => setCached(false)}>
+          Return to live checkout
+        </Button>
+      )}
       {warehouse && warehouse.state === 'active' && hasPermission(business, 'sales.write') ? (
         cached ? (
           <OfflinePanel
@@ -84,15 +84,17 @@ export function PosPanel({
             setup={{
               businessId: business.id,
               warehouseId: warehouse.id,
-              currency: preferences.currency,
+              currency: settingsModel.transactionCurrency(),
             }}
             onLockChange={setLocked}
           />
         ) : (
           <PosCheckout
+            active={active}
             key={warehouse.id}
             business={business}
             warehouse={warehouse}
+            locations={locations}
             onLockChange={setLocked}
           />
         )

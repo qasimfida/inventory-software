@@ -1,0 +1,17 @@
+{
+  "Geist.ttf": {
+    "url": "https://raw.githubusercontent.com/vercel/geist-font/ef2597cfc42f4797676df105517ccc0a1cfa6569/fonts/Geist/variable/Geist%5Bwght%5D.ttf",
+    "sha256": "73894e0448cae90a92b6c2f8732b7bb9acb7b94c418bff559dad4a18e1de9659",
+    "bytes": 169056
+  },
+  "GeistMono.ttf": {
+    "url": "https://raw.githubusercontent.com/vercel/geist-font/ef2597cfc42f4797676df105517ccc0a1cfa6569/fonts/GeistMono/variable/GeistMono%5Bwght%5D.ttf",
+    "sha256": "87c2aff9723544a9adaea19d92e42a33705c9723624801b6e0224c2206a6af0d",
+    "bytes": 171968
+  },
+  "Geist-OFL.txt": {
+    "url": "https://raw.githubusercontent.com/vercel/geist-font/ef2597cfc42f4797676df105517ccc0a1cfa6569/OFL.txt",
+    "sha256": "021caa749f89fecd7c2e40a50499de29e84d2bc19251659b47d499c2fbfffc17",
+    "bytes": 4384
+  }
+}

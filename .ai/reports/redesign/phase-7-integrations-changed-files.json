@@ -1,0 +1,11 @@
+[
+  "apps/mobile/src/integrations/IntegrationsPanel.test.tsx",
+  "apps/mobile/src/integrations/IntegrationsPanel.tsx",
+  "apps/mobile/src/integrations/ProviderOverview.tsx",
+  "apps/web/src/features/integrations/IntegrationsPanel.test.tsx",
+  "apps/web/src/features/integrations/IntegrationsPanel.tsx",
+  "apps/web/src/features/integrations/ProviderOverview.tsx",
+  "docs/design-system.md",
+  "packages/api-client/src/integrations-characterization.test.ts",
+  "scripts/redesign-integrations-browser.mjs"
+]

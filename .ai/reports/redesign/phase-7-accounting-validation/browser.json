@@ -1,0 +1,146 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "overview": "passed",
+    "journal": "passed",
+    "commands": [
+      "Create accounting period",
+      "Confirm balanced manual journal",
+      "Confirm source posting",
+      "Confirm journal reversal"
+    ]
+  }
+]

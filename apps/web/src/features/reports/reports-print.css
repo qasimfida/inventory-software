@@ -1,0 +1,56 @@
+/* Physical paper uses black/white intentionally; screen tokens and stored preferences stay intact. */
+@media print {
+  body:has(.reports-workspace):not(:has([hidden] .reports-workspace)) {
+    color: black;
+    background: white;
+    .desktop-sidebar,
+    .sidebar-edge-toggle,
+    .app-header,
+    [aria-label='Demonstration controls'],
+    .skip-link {
+      display: none;
+    }
+    .shell-main,
+    .shell-content,
+    .workspace-content,
+    .reports-workspace {
+      margin: 0;
+      padding: 0;
+      width: auto;
+      height: auto;
+      max-height: none;
+      overflow: visible;
+    }
+    .reports-workspace > :not(:has(.report-results)):not(.report-results),
+    .reports-workspace form,
+    .reports-workspace nav,
+    .report-export,
+    .report-metrics {
+      display: none;
+    }
+    .report-results,
+    .report-results * {
+      color: black;
+      background: white;
+      box-shadow: none;
+    }
+    .report-results [role='region'] {
+      overflow: visible;
+    }
+    .report-results table {
+      width: 100%;
+    }
+    .report-results th,
+    .report-results td {
+      white-space: normal;
+      overflow-wrap: anywhere;
+      border-bottom: 1px solid black;
+    }
+    .report-results thead {
+      display: table-header-group;
+    }
+    .report-results tr {
+      break-inside: avoid;
+    }
+  }
+}

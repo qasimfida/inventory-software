@@ -172,6 +172,37 @@ it('queues audit notifications atomically, retries delivery after restart, and r
     (await f.db().query('SELECT state,attempts FROM business_deliveries WHERE id=$1', [own.id]))
       .rows[0],
   ).toEqual({ state: 'delivered', attempts: 1 });
+  await f.api().post(`${path}/notifications/${own.id}/unread`).set(h).expect(201);
+  expect(
+    (await f.api().get(`${path}/notifications?status=unread`).set(h).expect(200)).body
+      .notifications,
+  ).toEqual(expect.arrayContaining([expect.objectContaining({ id: own.id, readAt: null })]));
+  for (const command of ['unread', 'dismiss']) {
+    await f
+      .api()
+      .post(`${path}/notifications/${own.id}/${command}`)
+      .set(native(f.viewerToken))
+      .expect(404);
+    await f.api().post(`${f.root}/${f.b}/notifications/${own.id}/${command}`).set(h).expect(404);
+  }
+  await f.api().post(`${path}/notifications/${own.id}/dismiss`).set(h).expect(201);
+  expect(
+    (await f.api().get(`${path}/notifications`).set(h).expect(200)).body.notifications,
+  ).not.toEqual(expect.arrayContaining([expect.objectContaining({ id: own.id })]));
+  expect(
+    (await f.db().query('SELECT dismissed_at FROM business_deliveries WHERE id=$1', [own.id]))
+      .rows[0].dismissed_at,
+  ).toBeTruthy();
+  expect(
+    (
+      await f
+        .db()
+        .query(
+          'SELECT e.id FROM organization_audit e JOIN business_deliveries d ON d.event_id=e.id WHERE d.id=$1',
+          [own.id],
+        )
+    ).rows,
+  ).toHaveLength(1);
 });
 it('rolls audit and queue back with failed commands and deduplicates low-stock crossings', async () => {
   const f = fixture(),

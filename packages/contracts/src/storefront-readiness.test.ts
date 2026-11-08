@@ -62,6 +62,13 @@ describe('structured readiness', () => {
         }).issues.map((i) => i.code),
       ).toContain(code),
     );
+  it('uses visible description text rather than markup length', () => {
+    const result = evaluateStorefrontReadiness({
+      ...base,
+      description: '<!--inventory-description:v1--><p><strong>x</strong></p>',
+    });
+    expect(result.issues.map((issue) => issue.code)).toContain('DESCRIPTION_TOO_SHORT');
+  });
   it('warnings and sold out do not block readiness', () => {
     const result = evaluateStorefrontReadiness({
       ...base,

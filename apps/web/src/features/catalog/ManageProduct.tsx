@@ -73,6 +73,7 @@ export function ManageProduct({
     );
   return (
     <ProductEditor
+      listingContext={{ business, locations }}
       {...(focusField ? { focusField } : {})}
       product={state.data.product}
       categories={state.data.categories}

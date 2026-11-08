@@ -6,12 +6,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
-import type { StaffInput, CostInput, CostPayment } from '@inventory/contracts';
+import type { StaffInput, CostInput, CostPayment, OperationQuery } from '@inventory/contracts';
 import { OrganizationScope, audit } from '../organization/organization.scope.js';
 import type { Actor, OrganizationContext } from '../organization/organization.scope.js';
 import { idempotent } from '../database/idempotency.js';
 const staffProjection = `id,code,name,title,store_id AS "storeId",salary_minor::text AS "salaryMinor",currency,state,version`;
-const costProjection = `c.id,c.kind,c.staff_id AS "staffId",c.store_id AS "storeId",c.description,c.reference,c.period_start::text AS "periodStart",c.period_end::text AS "periodEnd",c.amount_minor::text AS "amountMinor",c.currency,COALESCE((SELECT sum(p.amount_minor) FROM operational_cost_payments p WHERE p.business_id=c.business_id AND p.cost_id=c.id),0)::text AS "paidMinor"`;
+const costProjection = `c.actor_id AS "actorId",(SELECT email FROM auth_accounts WHERE id=c.actor_id) AS "actorName",c.id,c.kind,c.staff_id AS "staffId",c.store_id AS "storeId",c.description,c.reference,c.period_start::text AS "periodStart",c.period_end::text AS "periodEnd",c.amount_minor::text AS "amountMinor",c.currency,COALESCE((SELECT sum(p.amount_minor) FROM operational_cost_payments p WHERE p.business_id=c.business_id AND p.cost_id=c.id),0)::text AS "paidMinor"`;
 @Injectable()
 export class OperationsService {
   constructor(@Inject(OrganizationScope) private readonly scope: OrganizationScope) {}
@@ -34,18 +34,18 @@ export class OperationsService {
     )
       throw new NotFoundException();
   }
-  list(actor: Actor, b: string, q: { search: string; offset: number }) {
+  list(actor: Actor, b: string, q: OperationQuery) {
     return this.run(actor, b, async (ctx) => {
       const staff = (
         await ctx.tx.query(
-          `SELECT ${staffProjection} FROM staff_records WHERE business_id=$1 AND (name ILIKE $2 OR code ILIKE $2) ORDER BY name,id LIMIT 26 OFFSET $3`,
-          [b, `%${q.search}%`, q.offset],
+          `SELECT ${staffProjection} FROM staff_records WHERE business_id=$1 AND (name ILIKE $2 OR code ILIKE $2) AND ($4::uuid IS NULL OR store_id=$4) AND ($5::text IS NULL OR state=$5) ORDER BY name,id LIMIT 26 OFFSET $3`,
+          [b, `%${q.search}%`, q.offset, q.storeId ?? null, q.staffState ?? null],
         )
       ).rows;
       const costs = (
         await ctx.tx.query(
-          `SELECT ${costProjection} FROM operational_costs c WHERE c.business_id=$1 AND (c.description ILIKE $2 OR c.reference ILIKE $2) ORDER BY c.created_at DESC,c.id LIMIT 26 OFFSET $3`,
-          [b, `%${q.search}%`, q.offset],
+          `SELECT ${costProjection} FROM operational_costs c WHERE c.business_id=$1 AND (c.description ILIKE $2 OR c.reference ILIKE $2) AND ($4::uuid IS NULL OR c.store_id=$4) AND ($5::text IS NULL OR c.kind=$5) ORDER BY c.created_at DESC,c.id LIMIT 26 OFFSET $3`,
+          [b, `%${q.search}%`, q.offset, q.storeId ?? null, q.kind ?? null],
         )
       ).rows;
       return {
@@ -54,6 +54,29 @@ export class OperationsService {
         staffHasMore: staff.length > 25,
         costsHasMore: costs.length > 25,
       };
+    });
+  }
+  directory(actor: Actor, b: string, q: OperationQuery) {
+    return this.run(actor, b, async (ctx) => {
+      const rows = (
+        await ctx.tx.query(
+          `SELECT id,code,name,title,store_id AS "storeId",state,version FROM staff_records WHERE business_id=$1 AND (name ILIKE $2 OR code ILIKE $2) AND ($4::uuid IS NULL OR store_id=$4) AND ($5::text IS NULL OR state=$5) ORDER BY name,id LIMIT 26 OFFSET $3`,
+          [b, `%${q.search}%`, q.offset, q.storeId ?? null, q.staffState ?? null],
+        )
+      ).rows;
+      return { staff: rows.slice(0, 25), hasMore: rows.length > 25 };
+    });
+  }
+  staffDetail(actor: Actor, b: string, id: string) {
+    return this.run(actor, b, async (ctx) => {
+      const row = (
+        await ctx.tx.query(
+          `SELECT ${staffProjection} FROM staff_records WHERE business_id=$1 AND id=$2`,
+          [b, id],
+        )
+      ).rows[0];
+      if (!row) throw new NotFoundException();
+      return row;
     });
   }
   save(actor: Actor, b: string, input: StaffInput, id?: string, version?: number) {

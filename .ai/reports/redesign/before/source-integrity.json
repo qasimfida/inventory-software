@@ -1,0 +1,5 @@
+{
+  "trackedSourceCount": 1156,
+  "changedSinceBaseline": [],
+  "note": "TS/TSX/CSS snapshot across apps/packages; generated build output excluded where dist/target. Existing changes relative to git were already in baseline."
+}

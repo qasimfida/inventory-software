@@ -1,0 +1,16 @@
+Foundation for web, desktop and mobile. Don't redesign pages yet.
+
+1. Audit token ownership: tokens.css, generated outputs, styles.css, Tailwind config (keep Tailwind 4 CSS-first), native token integration, preference consumers. List duplicate, conflicting or hardcoded definitions.
+2. Semantic tokens (light and dark): background, foreground, surface, elevated, muted, primary (neutral), secondary, accent (focus/links/charts only), border, input, ring, destructive, success, warning, info, disabled, overlay, sidebar, table header, table hover, selected. Prefer a neutral gray ramp mapped to semantics so dark mode is a remap. Status never relies on color alone.
+3. Typography hierarchy: display, page title, section, card heading, body, secondary, caption, label, input, table, numeric, mono. Numeric semantics: tabular figures, currency, negative values, percentages, dates and time with timezone rules, and long-name truncation. Bundle fonts per the locked decision; respect font and text-size preferences.
+4. Dimensions by context (not one scale): page padding, section spacing, card padding, form spacing, table row, toolbar and header height, sidebar width, drawer and dialog width, control height, icon size, touch target.
+5. Radii, borders (subtle default), focus rings, elevation, modal shadow. Restrained.
+6. Density changes layout information density (gaps, rows, toolbars), not text size or touch targets. Control size independently changes buttons, inputs, selects, search, checkbox/radio, tabs, dropdown triggers, icon buttons and quantity controls only.
+7. Animation: off disables nonessential motion; minimal gives subtle feedback; full adds purposeful motion. prefers-reduced-motion always wins. CSS transitions only.
+8. Charts preference: numbers, balanced, charts change prominence only. Never remove access to values, records or exports. Define a token chart palette that is color-blind safe, with a table alternative.
+9. Preferences integration: extend the existing schema, resolver and versioned persistence; no new store. Existing explicit values unchanged; new defaults apply only to unset values with per-platform defaults; account-level; business switching never changes appearance; keep version checks and conflict handling; apply theme before first paint to avoid flicker; don't block the app on nonessential preferences; avoid global rerenders.
+10. Native parity: update native token mappings and adapters (safe areas, font loading, text scaling, 44px touch targets). Never import web CSS or DOM components into native.
+11. Document the supported combination matrix (which combinations are tested: corners and defaults) in the design-system doc.
+
+DECISION CHECKPOINT: stop after tokens and preference semantics are drafted and show me the final token table, default values and preference mapping before building on them.
+Acceptance: one semantic token source; light and dark work; five preferences behave as defined; existing preferences survive migration; native and web share semantics; reduced motion works; no business logic changes.

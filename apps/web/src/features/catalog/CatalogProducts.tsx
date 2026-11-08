@@ -1,7 +1,8 @@
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
 import { OnlineCollectionFeedback } from '../storefront/OnlineCollectionFeedback';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { useOnlineCollection } from '../storefront/useOnlineCollection';
-import { posPriceLabel } from '@inventory/api-client';
+
 import { ProductImage } from './ProductImage';
 import { CatalogDetails } from './CatalogDetails';
 import { useState } from 'react';
@@ -28,6 +29,8 @@ export function CatalogProducts({
   onEdit: (product: Product) => void;
   view?: 'list' | 'grid';
 }) {
+  const { posPriceLabel } = useDisplayMoney();
+
   const channels = useOnlineCollection(products.map((p) => p.id));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selected = products.find((p) => p.id === selectedId);
@@ -136,7 +139,7 @@ export function CatalogProducts({
       ) : (
         <ul className="catalog-product-grid">
           {products.map((product) => (
-            <li key={product.id} className="product-card selectable-card">
+            <li key={product.id} className="product-card selectable-card product-card-link">
               {channels.manage && (
                 <Checkbox
                   aria-label={`Select ${product.name} for online store`}
@@ -158,31 +161,7 @@ export function CatalogProducts({
               <p className="tabular-nums">
                 {product.price ? posPriceLabel({ price: product.price }) : 'Not priced'}
               </p>
-              <div className="flex flex-wrap gap-2">
-                {channels.manage && (
-                  <Button disabled={channels.busy} onClick={() => void channels.add([product.id])}>
-                    Add to online store
-                  </Button>
-                )}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => onPricing(product.id)}
-                  aria-label={`Variants and pricing for ${product.name}`}
-                >
-                  Set / view price
-                </Button>
-                {writable && product.state !== 'archived' && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onEdit(product)}
-                    aria-label={`Edit product ${product.name}`}
-                  >
-                    Edit product
-                  </Button>
-                )}
-              </div>
+              <div className="product-card-actions">{actions(product)}</div>
             </li>
           ))}
         </ul>

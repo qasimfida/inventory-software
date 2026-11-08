@@ -1,3 +1,5 @@
+import { Panel, Cluster } from '@/components/common/Layout';
+import { CountEvidence } from './CountEvidence';
 import { useMemo, useState } from 'react';
 import { createCountClient, countExport } from '@inventory/api-client';
 import type { Business, CountDetail } from '@inventory/contracts';
@@ -45,7 +47,8 @@ export function CountWorkflow({
     [reason, setReason] = useState(''),
     [sessions, setSessions] = useState<{ id: string; state: string }[]>([]);
   return (
-    <>
+    <Panel aria-label="Count workflow">
+      <h3>Count scope & sessions</h3>
       <Act
         label="Add selected product to new count scope"
         onPress={() => {
@@ -56,46 +59,37 @@ export function CountWorkflow({
         New count scope: {countIds.join(', ') || 'none'}. Only explicitly selected variants are
         counted; omitted products are unchanged.
       </Txt>
-      <Act
-        label="Create blind count"
-        onPress={() =>
-          void run(async () =>
-            setCount(
-              await counts.create({
-                warehouseId,
-                locationId: sourceId || null,
-                blind: true,
-                variantIds: countIds,
-              }),
-            ),
-          )
-        }
-      />
-      <Act
-        label="List saved count sessions"
-        onPress={() => void run(async () => setSessions((await counts.list(warehouseId)).counts))}
-      />
-      {sessions.map((s) => (
+      <Cluster>
         <Act
-          key={s.id}
-          label={`Resume ${s.id} · ${s.state}`}
-          onPress={() => void run(async () => setCount(await counts.detail(s.id)))}
+          label="Create blind count"
+          onPress={() =>
+            void run(async () =>
+              setCount(
+                await counts.create({
+                  warehouseId,
+                  locationId: sourceId || null,
+                  blind: true,
+                  variantIds: countIds,
+                }),
+              ),
+            )
+          }
         />
-      ))}
+        <Act
+          label="List saved count sessions"
+          onPress={() => void run(async () => setSessions((await counts.list(warehouseId)).counts))}
+        />
+        {sessions.map((s) => (
+          <Act
+            key={s.id}
+            label={`Resume ${s.id} · ${s.state}`}
+            onPress={() => void run(async () => setCount(await counts.detail(s.id)))}
+          />
+        ))}
+      </Cluster>
       {count && (
         <>
-          <Txt>
-            Count {count.count.id} · {count.count.state} · version {count.count.version}. Expected
-            stock is hidden during blind capture. Stock movement since snapshot requires a full
-            recount. Owner approval is required before adjustments.
-          </Txt>
-          {count.lines.map((l) => (
-            <Txt key={l.id}>
-              {l.name} / {l.sku}: counted {l.counted ?? 'not counted'}; expected{' '}
-              {l.expected ?? 'hidden'}; attempt {l.attempt};{' '}
-              {l.stale ? 'MOVEMENT: RECOUNT REQUIRED' : ''}
-            </Txt>
-          ))}
+          <CountEvidence detail={count} />
           <F label="Absolute counted quantity" value={quantity} onChange={setQuantity} />
           <Act
             label="Save / replace selected count line"
@@ -118,31 +112,34 @@ export function CountWorkflow({
             value={reason}
             onChange={setReason}
           />
-          {(['submit', 'recount', 'approve'] as const).map((action) => (
-            <Act
-              key={action}
-              label={
-                action === 'approve'
-                  ? 'Owner: approve reviewed adjustments'
-                  : action === 'submit'
-                    ? 'Submit complete count for review'
-                    : 'Start full recount with new stock snapshot'
-              }
-              onPress={() =>
-                void run(async () =>
-                  setCount(
-                    await counts.transition(count.count.id, action, {
-                      version: count.count.version,
-                      reason,
-                    }),
-                  ),
-                )
-              }
-            />
-          ))}
-          <Export text={countExport(count)} />
+          <h3>Review & approval</h3>
+          <Cluster>
+            {(['submit', 'recount', 'approve'] as const).map((action) => (
+              <Act
+                key={action}
+                label={
+                  action === 'approve'
+                    ? 'Owner: approve reviewed adjustments'
+                    : action === 'submit'
+                      ? 'Submit complete count for review'
+                      : 'Start full recount with new stock snapshot'
+                }
+                onPress={() =>
+                  void run(async () =>
+                    setCount(
+                      await counts.transition(count.count.id, action, {
+                        version: count.count.version,
+                        reason,
+                      }),
+                    ),
+                  )
+                }
+              />
+            ))}
+            <Export text={countExport(count)} />
+          </Cluster>
         </>
       )}
-    </>
+    </Panel>
   );
 }

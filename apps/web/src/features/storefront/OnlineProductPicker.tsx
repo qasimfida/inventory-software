@@ -1,5 +1,6 @@
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
 import { OnlineProductImage } from './OnlineProductImage';
-import { onlinePrice } from '@inventory/api-client';
+
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import { hasPermission } from '@inventory/contracts';
@@ -29,6 +30,8 @@ export function OnlineProductPicker({
   storeId: string;
   onClose: () => void;
 }) {
+  const { onlinePrice } = useDisplayMoney();
+
   const navigate = useNavigate();
   const client = useMemo(
     () => createOnlineStoreClient(authClient.organizationRequest, business.id, storeId),

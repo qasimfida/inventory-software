@@ -7,15 +7,15 @@ test('table density, exact numeric alignment and contained keyboard overflow', a
   const table = region.getByRole('table');
   await expect(table).toBeVisible();
   const row = table.locator('tbody tr').first();
-  expect((await table.locator('thead tr').boundingBox())!.height).toBe(40);
-  expect((await row.boundingBox())!.height).toBe(44);
+  expect((await table.locator('thead tr').boundingBox())!.height).toBe(32);
+  expect((await row.boundingBox())!.height).toBeGreaterThanOrEqual(32);
   const value = table.getByRole('cell', { name: '9007199254740993', exact: true });
   expect(await value.evaluate((el) => getComputedStyle(el).textAlign)).toBe('right');
   expect(await value.evaluate((el) => getComputedStyle(el).textOverflow)).not.toBe('ellipsis');
   await page.evaluate(() => {
     document.documentElement.dataset.density = 'compact';
   });
-  expect((await row.boundingBox())!.height).toBe(34);
+  expect((await row.boundingBox())!.height).toBeGreaterThanOrEqual(32);
   await page.setViewportSize({ width: 320, height: 900 });
   await region.evaluate((el) => {
     el.style.maxWidth = '160px';

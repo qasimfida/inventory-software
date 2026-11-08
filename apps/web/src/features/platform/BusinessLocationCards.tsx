@@ -1,3 +1,4 @@
+import { registrationTone } from '@inventory/api-client';
 import type { Location } from '@inventory/contracts';
 import { Store, Warehouse, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -36,7 +37,7 @@ export function BusinessLocationCards({
                         : 'Warehouse'}{' '}
                     · {location.code}
                   </p>
-                  <StatusBadge tone={location.state === 'active' ? 'success' : 'warning'}>
+                  <StatusBadge tone={registrationTone(location.state)}>
                     {location.state}
                   </StatusBadge>
                 </li>

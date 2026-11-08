@@ -1,8 +1,12 @@
 // @vitest-environment jsdom
+// The Expo picker requires a device; these tests exercise forms, not the native picker host.
+vi.mock('expo-image-picker', () => ({ launchImageLibraryAsync: vi.fn() }));
 vi.mock('react-native-safe-area-context', () => import('../ui/safe-area-test-adapter'));
 import { afterEach, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 vi.mock('react-native', () => vi.importActual('react-native-web'));
+// jsdom cannot load the native WebView host; editor behavior is tested separately.
+vi.mock('react-native-webview', () => ({ WebView: () => null }));
 vi.mock('../auth/client', () => ({
   authClient: {
     organizationRequest: async (path: string) =>

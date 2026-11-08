@@ -1,0 +1,286 @@
+{
+  "host": "macOS-26.5.2-arm64-arm-64bit",
+  "browser": "Google Chrome 156.0.8078.80",
+  "snapshots": [
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-dialog.png",
+      "bytes": 65576,
+      "sha256": "7d3fb011c29c8514d2a5c5c78bbbf6b4f4074a4530a642d62679b9ae5da055da"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-drawer.png",
+      "bytes": 142537,
+      "sha256": "3037a7ce9731a3a5409b1e7bc8e06a62f86594a04d8ce719411663587c58bb3f"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-empty.png",
+      "bytes": 79548,
+      "sha256": "66e89269930cfb19df161cc430666e16589378bbbd427b7e9d0ffe9d708ee2c1"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-inventory.png",
+      "bytes": 102661,
+      "sha256": "8b91c353e2cf31f04fee6de761b3514434de4c9ea61421063b4486f727fc106d"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-loading.png",
+      "bytes": 59178,
+      "sha256": "cb88e4062d9e63fdc66a4582557ab2d79cfc3ac9a874a36d047aedc159a97d2e"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-login.png",
+      "bytes": 27575,
+      "sha256": "35625311b2e6ece103fa288de1f3de0e40edfcfc2732f0a1ddca96a891745647"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-pos.png",
+      "bytes": 113730,
+      "sha256": "b2efbd6909c7474d27a9d531fe4bb45373b36f4ed45d43bf3c0bdb4d018a79db"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-preferences.png",
+      "bytes": 120003,
+      "sha256": "793b6c5d21ab5a2f134181ca434932f6df834627b17b17763589f6af232c4d51"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-product-detail.png",
+      "bytes": 85907,
+      "sha256": "182a2231d85082d89b623b41662b52a7d9bea97052c332fc25dc8acd70273dfd"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-purchasing.png",
+      "bytes": 114600,
+      "sha256": "70bc04a4eead93ba7991287e32b28de2d91557ab2eb3305f5affb9c9f9fb170c"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-reports.png",
+      "bytes": 102286,
+      "sha256": "b7d4f5a17af4da40b1066ed2ce07bf4c1307e0fb20abf27917da443ddacaf795"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-settings.png",
+      "bytes": 118157,
+      "sha256": "25e0e46ff84a89bc799947888ddbc02f8e2c6a8b56e87d2daa1562965eba7ea5"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-shell-dashboard.png",
+      "bytes": 132993,
+      "sha256": "833258c11b277cc79e218fedc43c06ee246117c17bce8ba64ef91f81d8fd9377"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-showcase.png",
+      "bytes": 86358,
+      "sha256": "d71757d129dc1fc538b70601bbb3120f2564b154c85f3f3f91f07742accd232c"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-dialog.png",
+      "bytes": 80322,
+      "sha256": "0901c355878d3d1308583015b95fa99fc05d194df7dd8d61d672783d496fa26a"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-drawer.png",
+      "bytes": 178672,
+      "sha256": "c68223e643f251fad5f7c9308565b0db98c8f9acc14aa558201ae3adb3612426"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-empty.png",
+      "bytes": 83432,
+      "sha256": "e614521f3282f66eeac4a683abdba8c6faecf39e92dd28d9c773577d46cc1ba4"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-inventory.png",
+      "bytes": 128018,
+      "sha256": "e4cb5fe2668c795a24cd8b0c6ddc2f160efeee7f39ccb6a3f9b70b2406d5d267"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-loading.png",
+      "bytes": 63481,
+      "sha256": "f129182babffaea196eede03ebb117e5303a687948a87fee5727fb73f7ff9d72"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-login.png",
+      "bytes": 27422,
+      "sha256": "1891335f5347292514e59909cd5e5a42d9ac80058512cb14203c42f72e4ab3c2"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-pos.png",
+      "bytes": 116402,
+      "sha256": "1b641f0c71dfccbe0df1bb2c63fb00c398749aeefaab247b953df97b98bb18c2"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-preferences.png",
+      "bytes": 131230,
+      "sha256": "7ac5cdbdcc1014991c05d057687deceb9e7febef96cb27591ff731b53fb0bf46"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-product-detail.png",
+      "bytes": 89209,
+      "sha256": "9cba8578d8eba64df61b8eac9b2fc49fe093c142e93b09504e4ab8e534cbb719"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-purchasing.png",
+      "bytes": 136011,
+      "sha256": "e9b08068c4b794ddda1084611cefeb163a1946f3862764898c67df75984d4502"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-reports.png",
+      "bytes": 112810,
+      "sha256": "ad27e464c8eabe0cf9ad9cddde96a366bb9ad21640d95658487caf11493ce957"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-settings.png",
+      "bytes": 122646,
+      "sha256": "35391712b385873571ef9dee684f0979b973c55bf2853bf9718d2196d584a6a4"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-shell-dashboard.png",
+      "bytes": 154434,
+      "sha256": "b5406f0c4fa3eefa086bf64b45e0916a2c18e0f00fc74919a23cc55b0334957c"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-showcase.png",
+      "bytes": 88202,
+      "sha256": "4cb8f4e45fa9f59f416343d73a9dde4bddbe0fde3f7d94fe0fda4aeb385e6082"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-dialog.png",
+      "bytes": 37559,
+      "sha256": "67276b3c0e1ce000296fa9f8612a5175bbb0057453c74f59bd6af892277a6abb"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-drawer.png",
+      "bytes": 55487,
+      "sha256": "afae512b6a7315baf04bb3a1b2d66f285963cdc9ec7be37ed12e72254d5464c2"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-empty.png",
+      "bytes": 43493,
+      "sha256": "2a0cbda723de468260882d6fda6af1e91ae94b5c6c6ed8ef6fbadd39f3eadb2f"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-inventory.png",
+      "bytes": 44962,
+      "sha256": "df6937ffec97673da888518b79ed52ed4d985092174ae2af892fce8b3829cc49"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-loading.png",
+      "bytes": 24449,
+      "sha256": "52fe549b605c0a6b126909e669bd5c6424d02ec0d222b268cd15c547a47409ec"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-login.png",
+      "bytes": 23360,
+      "sha256": "3db6334618b905d71940a3e32cd6ba672bbf9797472d8c421717800f3617f65b"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-pos.png",
+      "bytes": 35153,
+      "sha256": "d2df8750c28a6821a29fea6aac7299060261a9805b517b7a05566f6a66d0314a"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-preferences.png",
+      "bytes": 57236,
+      "sha256": "a29ac4c2eebcffd7f8e7218ff321b705052352a7ec0fbe2a9351293c2707bd03"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-product-detail.png",
+      "bytes": 41992,
+      "sha256": "af0131d78ed56ed83ca290e41892d91d7345a0fee638dd89a94eaa8339170713"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-purchasing.png",
+      "bytes": 57672,
+      "sha256": "5c3cb17c02f889ce39092d9d7284513537920deb679ff5d27d237ef165b94e41"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-reports.png",
+      "bytes": 50527,
+      "sha256": "c4e0a0b0f6c25b411f8aeb0ed13735ac51ba112b32cf6e8571b657626f7235d1"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-settings.png",
+      "bytes": 61433,
+      "sha256": "c1f102cb75706972e1d9de8e9b747f69950fcf31d9456b64199c0b881a8245c6"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-shell-dashboard.png",
+      "bytes": 53883,
+      "sha256": "b5abe114292b446a46cbf1ae5e72de76fd3de765755a2c97185a0592e5714e33"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-showcase.png",
+      "bytes": 56230,
+      "sha256": "6b56c2fe85f11c27ea7b87712b141ff3b9d67a30f45f8e6d15e1b43d3be99885"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-dialog.png",
+      "bytes": 39873,
+      "sha256": "2a2c2d291a52fa734c8e5790d9e419eed8cfc715a5d2151cb9aaf74c74a53f77"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-drawer.png",
+      "bytes": 49276,
+      "sha256": "6d913f0d8cee5877a2eed318b7aa5cf559d72ab70e03de6e54e6571a8a363a35"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-empty.png",
+      "bytes": 43334,
+      "sha256": "e809ae906d6c0cb02e39e2d7bd50064882755228d31c4e7e7fa82bface127623"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-inventory.png",
+      "bytes": 43355,
+      "sha256": "b5fe834379dc470a5154549560e2a347615762c7661554d9c3b858deafb03628"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-loading.png",
+      "bytes": 24218,
+      "sha256": "95fb0a393c7516efacba4d571977b8ecc5ed26412bb74f00774a68a894d613dc"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-login.png",
+      "bytes": 22919,
+      "sha256": "b00b7dc7aa6fecba61685ae677c39b399e34e4ec39d51a86a0f3833b9fc666d3"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-pos.png",
+      "bytes": 34723,
+      "sha256": "f174442e363e73101c7774c1ab2a6494ff7bb5201e6d84977ba54ab700d19891"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-preferences.png",
+      "bytes": 52235,
+      "sha256": "f554fa17c8ff9684bba6a2291c9473aaeb1d7a3515eddbecc6410b8c05b9664a"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-product-detail.png",
+      "bytes": 40630,
+      "sha256": "bf3b29000a4144bd017ac24b3dca6dfc12a4e46f3c479d5200022f74b9260eb5"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-purchasing.png",
+      "bytes": 47820,
+      "sha256": "e13cb33977294f9a2bcd15260e04f5cd2d3a57f64c40b8e1af4ec9ee80aafa60"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-reports.png",
+      "bytes": 48078,
+      "sha256": "8da6ee7f598dd403e17939add80fe7fc94c7d35f70b74bec338f3038bcd9d98e"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-settings.png",
+      "bytes": 57164,
+      "sha256": "78771e52005f6b15a1f153ce32aa1cc66346b93525679d2d05a0346f6dadc00d"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-shell-dashboard.png",
+      "bytes": 46523,
+      "sha256": "0d4e03bf2348e8684bf44dcbb11678b9c70d28544056f56c7c4602eafeb6fe6a"
+    },
+    {
+      "path": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-showcase.png",
+      "bytes": 55404,
+      "sha256": "7c2b9fc35a076b6920d8eb6852f02e2a68a875b870d781301641360bbc9bbfb3"
+    }
+  ]
+}

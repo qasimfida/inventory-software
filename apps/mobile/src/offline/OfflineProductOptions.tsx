@@ -34,7 +34,8 @@ export function OfflineProductOptions({
         description="Subject to this device’s cached permission limits."
       />
       <Action
-        label="Add to cart"
+        label={item.trackInventory && Number(item.available) <= 0 ? 'Sold' : 'Add to cart'}
+        disabled={item.trackInventory && Number(item.available) <= 0}
         onPress={() => {
           void model.add(item.id, unit, quantity, Number(discount)).then(() => {
             if (!model.snapshot().error) close();

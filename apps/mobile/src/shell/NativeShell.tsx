@@ -1,3 +1,4 @@
+import { CurrencyNotice } from '../ui/CurrencyNotice';
 import {
   OnlineSelectionDockProvider,
   useOnlineSelectionDock,
@@ -88,6 +89,7 @@ function ShellContent() {
               flexGrow: 1,
             }}
           >
+            <CurrencyNotice />
             {path === '/more' && <MoreScreen go={go} />}
             <View
               style={{ display: path === '/more' ? 'none' : 'flex' }}
@@ -140,14 +142,18 @@ function ShellContent() {
                 padding: theme.spacing.small,
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: path === p ? theme.tokens.selected : theme.colors.card,
+                backgroundColor:
+                  path === p ? theme.tokens['navigation-selected'] : theme.colors.card,
               }}
             >
               <Text
                 style={{
                   fontSize: metrics.label,
                   textAlign: 'center',
-                  color: path === p ? theme.tokens['selected-foreground'] : theme.colors.foreground,
+                  color:
+                    path === p
+                      ? theme.tokens['navigation-selected-foreground']
+                      : theme.colors.foreground,
                 }}
               >
                 {

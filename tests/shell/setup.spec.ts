@@ -7,9 +7,12 @@ test('owner setup and company defaults work at desktop and narrow viewport; cash
   await page.getByLabel('Account email').fill('owner@demo.example.test');
   await page.getByLabel('Password', { exact: true }).fill('local-demo');
   await page.getByRole('button', { name: 'Log in', exact: true }).click();
-  await expect(page.getByRole('region', { name: 'Business setup' })).toContainText(
-    '6 of 6 steps complete',
-  );
+  await expect(
+    page.getByRole('navigation', { name: 'Business setup' }).getByRole('link'),
+  ).toHaveCount(6);
+  await expect(
+    page.getByRole('navigation', { name: 'Business setup' }).getByRole('button'),
+  ).toHaveCount(0);
   await page.getByRole('link', { name: 'Transaction currency', exact: true }).click();
   await expect(
     page.getByRole('combobox', { name: 'Default transaction currency', exact: true }),
@@ -42,5 +45,5 @@ test('owner setup and company defaults work at desktop and narrow viewport; cash
     location.hash = '/dashboard';
   });
   await expect(page).toHaveURL(/pos/);
-  await expect(page.getByRole('region', { name: 'Business setup' })).toHaveCount(0);
+  await expect(page.getByRole('navigation', { name: 'Business setup' })).toHaveCount(0);
 });

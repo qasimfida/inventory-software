@@ -72,7 +72,7 @@
 }
 .search-leading-icon {
   position: absolute;
-  left: var(--space-medium);
+  left: var(--control-padding);
   width: var(--icon-size);
   height: var(--icon-size);
   pointer-events: none;
@@ -108,18 +108,6 @@
   background: var(--selected);
   color: var(--selected-foreground);
 }
-.quantity-control {
-  display: flex;
-  align-items: center;
-  gap: var(--space-small);
-}
-.quantity-control input {
-  min-width: 0;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-  border: 0;
-  background: transparent;
-}
 .inventory-snapshot table {
   border-collapse: separate;
   border-spacing: 0;
@@ -136,12 +124,6 @@
 }
 .header-actions .profile-trigger {
   width: auto;
-}
-.data-table tbody tr > :first-child {
-  border-radius: 0;
-}
-.data-table tbody tr > :last-child {
-  border-radius: 0;
 }
 .pagination svg,
 .sidebar-brand [data-slot='button'] svg {

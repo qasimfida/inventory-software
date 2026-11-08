@@ -27,6 +27,44 @@ it('isolates salaries, validates stores, prevents duplicate/overlapping periods 
     .send({ ...staff, storeId: f.storeB })
     .expect(404);
   const employee = (await f.api().post(`${base}/staff`).set(headers).send(staff).expect(201)).body;
+  const auditRows = (
+    await f
+      .db()
+      .query(
+        "SELECT after_data FROM organization_audit WHERE business_id=$1 AND resource_id=$2 AND action='staff.saved'",
+        [f.a, employee.id],
+      )
+  ).rows;
+  expect(auditRows).toHaveLength(1);
+  expect(auditRows[0].after_data).not.toHaveProperty('salaryMinor');
+  expect(auditRows[0].after_data).not.toHaveProperty('currency');
+  const directory = (await f.api().get(`${base}/staff`).set(headers).expect(200)).body;
+  expect(directory.staff[0]).toMatchObject({ id: employee.id, name: staff.name });
+  expect(directory.staff[0]).not.toHaveProperty('salaryMinor');
+  expect(directory.staff[0]).not.toHaveProperty('currency');
+  expect(directory).not.toHaveProperty('costs');
+  for (const token of [f.viewerToken, f.managerToken]) {
+    await f.api().get(`${base}/staff`).set(native(token)).expect(403);
+    await f.api().get(`${base}/staff/${employee.id}`).set(native(token)).expect(403);
+  }
+  await f.api().get(`${base}/staff/${employee.id}`).set(native(f.otherToken)).expect(404);
+  await f.api().get(`${base}/staff/${employee.id}`).expect(401);
+  expect(
+    (await f.api().get(`${base}/staff/${employee.id}`).set(headers).expect(200)).body.salaryMinor,
+  ).toBe('50000');
+  await f
+    .api()
+    .patch(`${base}/staff/${employee.id}`)
+    .set(headers)
+    .send({ ...staff, version: employee.version, salaryMinor: '-1' })
+    .expect(400);
+  await f
+    .api()
+    .patch(`${base}/staff/${employee.id}`)
+    .set(headers)
+    .send({ ...staff, version: employee.version, currency: 'INVALID' })
+    .expect(400);
+
   const cost = {
     kind: 'salary',
     staffId: employee.id,
@@ -80,6 +118,21 @@ it('isolates salaries, validates stores, prevents duplicate/overlapping periods 
   const page = (await f.api().get(base).set(headers).expect(200)).body;
   expect(page.costs).toHaveLength(1);
   expect(page.costs[0].paidMinor).toBe('20000');
+  expect(page.costs[0]).toMatchObject({ actorId: f.ownerId, actorName: 'owner@org.test' });
+  expect(
+    (await f.api().get(base).set(headers).query({ storeId: f.storeA, kind: 'salary' }).expect(200))
+      .body.costs,
+  ).toHaveLength(1);
+  expect(
+    (await f.api().get(base).set(headers).query({ kind: 'expense' }).expect(200)).body.costs,
+  ).toEqual([]);
+  expect(
+    (await f.api().get(base).set(headers).query({ storeId: f.storeB }).expect(200)).body.costs,
+  ).toEqual([]);
+  expect(
+    (await f.api().get(base).set(headers).query({ staffState: 'inactive' }).expect(200)).body.staff,
+  ).toEqual([]);
+  await f.api().get(base).set(headers).query({ kind: 'unknown' }).expect(400);
   expect(
     (await f.db().query('SELECT count(*)::int AS n FROM operational_cost_payments')).rows[0].n,
   ).toBe(1);

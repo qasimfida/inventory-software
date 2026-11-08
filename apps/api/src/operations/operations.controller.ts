@@ -17,7 +17,7 @@ import {
   costPaymentSchema,
   operationQuerySchema,
 } from '@inventory/contracts';
-import type { StaffInput, CostInput, CostPayment } from '@inventory/contracts';
+import type { StaffInput, CostInput, CostPayment, OperationQuery } from '@inventory/contracts';
 import type { AuthRequest } from '../auth/auth.http.js';
 import { requestActor } from '../http/actor.js';
 import { SchemaPipe } from '../http/schema.pipe.js';
@@ -28,9 +28,23 @@ export class OperationsController {
   @Get() list(
     @Req() r: AuthRequest,
     @Param('businessId', new ParseUUIDPipe()) b: string,
-    @Query(new SchemaPipe(operationQuerySchema)) q: { search: string; offset: number },
+    @Query(new SchemaPipe(operationQuerySchema)) q: OperationQuery,
   ) {
     return this.service.list(requestActor(r), b, q);
+  }
+  @Get('staff') directory(
+    @Req() r: AuthRequest,
+    @Param('businessId', new ParseUUIDPipe()) b: string,
+    @Query(new SchemaPipe(operationQuerySchema)) q: OperationQuery,
+  ) {
+    return this.service.directory(requestActor(r), b, q);
+  }
+  @Get('staff/:id') staffDetail(
+    @Req() r: AuthRequest,
+    @Param('businessId', new ParseUUIDPipe()) b: string,
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ) {
+    return this.service.staffDetail(requestActor(r), b, id);
   }
   @Post('staff') create(
     @Req() r: AuthRequest,
@@ -58,7 +72,7 @@ export class OperationsController {
     @Req() r: AuthRequest,
     @Param('businessId', new ParseUUIDPipe()) b: string,
     @Param('id', new ParseUUIDPipe()) id: string,
-    @Query(new SchemaPipe(operationQuerySchema)) q: { search: string; offset: number },
+    @Query(new SchemaPipe(operationQuerySchema)) q: OperationQuery,
   ) {
     return this.service.detail(requestActor(r), b, id, q.offset);
   }

@@ -1,0 +1,107 @@
+[
+  {
+    "path": ".prettierignore",
+    "status": "modified",
+    "sha256": "1fb71259bbbfb54ba5ca5b508c5ac878afbc65f00cbf070df785ce66a242da8a"
+  },
+  {
+    "path": "eslint.config.mjs",
+    "status": "modified",
+    "sha256": "e1354492b30ec45673fd7cfb1a07f3c77096c11f3cbd9d42754b14dfb30b3e30"
+  },
+  {
+    "path": "scripts/native-text.test.mjs",
+    "status": "modified",
+    "sha256": "1e8082a2ada6c8a5bdd47db41509c66d74e98215bbc1ad52fcf4a78c7076eb20"
+  },
+  {
+    "path": "apps/mobile/src/catalog/ProductQuantity.tsx",
+    "status": "modified",
+    "sha256": "98d2a7970b272b3aefc5fa23d5f1cfd4e06fe2c4eba7859a0608b7c4f1198e16"
+  },
+  {
+    "path": "docs/architecture.md",
+    "status": "modified",
+    "sha256": "d70966f38969e1b2d52c726f20fb12787170fbdf77763c442cd2b179de6d6654"
+  },
+  {
+    "path": "docs/security-and-data.md",
+    "status": "modified",
+    "sha256": "6da4fbdda350814773a36faaa73d5d6131fa4194894ce7ce9f4417d81f8510db"
+  },
+  {
+    "path": "docs/design-system.md",
+    "status": "modified",
+    "sha256": "dadf0cca5c19d7e01737f50b3bdb86ba9557104b6691e58b54558814c3bea544"
+  },
+  {
+    "path": "docs/development.md",
+    "status": "modified",
+    "sha256": "101ad8504b6c666ae8e9c601b8eb73bc93570a06cad9a894d9893118a34dc185"
+  },
+  {
+    "path": "tsconfig.json",
+    "status": "modified",
+    "sha256": "92c255c281aad7a51ff3e7690327ff306cb47d5cad908e6f4630af582b2ea805"
+  },
+  {
+    "path": "apps/web/src/theme/shared-controls.css",
+    "status": "modified",
+    "sha256": "3519fa827d7ef96878aa555c82272fe42a5b57e212a1fa5aa98c61832d67be7c"
+  },
+  {
+    "path": "tests/browser/appearance-preferences.spec.ts",
+    "status": "modified",
+    "sha256": "13ddc067fa28ef69d446bfcdb1eaae43f1643236d26a18e7e33e2dd914b77bb4"
+  },
+  {
+    "path": "tests/browser/core-components.spec.ts",
+    "status": "modified",
+    "sha256": "5a2b8cb9fb384748edaa916e65680e07dc41421c542c47456fdf34dea1a557f6"
+  },
+  {
+    "path": "tests/browser/data-presentation.spec.ts",
+    "status": "modified",
+    "sha256": "8854ba78a87c4bb61e42bca5a2bb018ff2a38a092f56227f67f59c6e23500b8d"
+  },
+  {
+    "path": "tests/browser/preference-matrix.spec.ts",
+    "status": "modified",
+    "sha256": "1cb98f911d1f095bca67434de7ee77829e06780691123d790cce30d2e79cf4b3"
+  },
+  {
+    "path": "playwright.redesign.config.ts",
+    "status": "created",
+    "sha256": "a314cab5f423cfb4d97179803e53588e922faca9de9f721f69d0f95b07111a45"
+  },
+  {
+    "path": "tests/visual/redesign.spec.ts",
+    "status": "created",
+    "sha256": "f54f543d52af9654372911520ae0998aab246b762fbce4831f8227286253f3e4"
+  },
+  {
+    "path": "scripts/redesign-completion.mjs",
+    "status": "created",
+    "sha256": "f6367d14c683417f52cc481ab61286c5d5eb00fed20ff753049337e2946dc59f"
+  },
+  {
+    "path": ".ai/reports/redesign/ci-proposal.md",
+    "status": "created",
+    "sha256": "5302bc06d9016fa6c121348a64b722e5174a0bb260305a71c1a5fecbd1e23cec"
+  },
+  {
+    "path": ".ai/reports/redesign/phase-10.md",
+    "status": "created",
+    "sha256": "8171eeff2985f0a4aa576245b152d3bebd23c8f39c0aff4c9cdbcb634cbeca40"
+  },
+  {
+    "path": ".ai/reports/redesign/completion.md",
+    "status": "created",
+    "sha256": "4c93fd5765c75a2be23a4d7677407137025bbe42674661969758f1e2989c6dca"
+  },
+  {
+    "path": ".ai/reports/redesign/component-completion.md",
+    "status": "created",
+    "sha256": "c0d2c219000df9e9169babde28dd4dab0a860c6b19cb6eede77742210f498ddc"
+  }
+]

@@ -1,3 +1,4 @@
+import { ExchangeRatesModule } from './exchange-rates/exchange-rates.module.js';
 import { StorefrontModule } from './storefront/storefront.module.js';
 import { CatalogLiveModule } from './live/catalog-live.module.js';
 import { ImportsModule } from './imports/imports.module.js';
@@ -31,6 +32,7 @@ import { OrganizationModule } from './organization/organization.module.js';
 
 @Module({
   imports: [
+    ExchangeRatesModule,
     StorefrontModule,
     CatalogLiveModule,
     OperationsModule,

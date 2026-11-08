@@ -1,13 +1,16 @@
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
 import { ArrowUpRight, ShoppingBag, ShoppingCart, Package, Wallet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { DashboardSnapshot } from '@inventory/contracts';
-import { formatMinorUnits } from '@inventory/domain';
+
 import { dashboardGrowth } from '@inventory/api-client';
 import { MetricCard } from '@/components/common/MetricCard';
 import { Table, TableScroll } from '@/components/ui/Table';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { EmptyState } from '@/components/common/AsyncState';
 export function DashboardMetrics({ data }: { data: DashboardSnapshot }) {
+  const { formatMinorUnits } = useDisplayMoney();
+
   const sales = data.sales,
     stock = data.inventory;
   const money = (value: string) => formatMinorUnits(value, data.currency);

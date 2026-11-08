@@ -1,3 +1,6 @@
+import { ReceiptFinance } from './ReceiptFinance';
+import { ErrorState, LoadingState } from '../ui/AsyncState';
+import { Surface } from '../ui/Surface';
 import { View } from 'react-native';
 import { RecordCollection } from '../ui/RecordCollection';
 import { SidePanel } from '../ui/SidePanel';
@@ -94,16 +97,20 @@ export function ReceiptPanel({
   );
   return (
     <ScreenBody>
-      <ScreenHeader title="Sale history and receipts" />
+      <ScreenHeader title="Sales & receipts" />
       <Text>
         Sale history, receipts and corrections. Exchange: complete an exchange return, then enter
         its ID on a replacement checkout in the same warehouse for the same customer. Refund and
         replacement charge are separate confirmed transactions.
       </Text>
 
-      {Boolean(state.error) && <Text accessibilityRole="alert">{state.error}</Text>}
+      {Boolean(state.error) && (
+        <ErrorState message={state.error} onRetry={() => void model.run()} />
+      )}
 
+      {warehouseId && !state.data && !state.error && <LoadingState message="Loading sales…" />}
       <RecordCollection
+        allowGrid={false}
         toolbar={toolbar}
         label="receipts"
         onOpen={(value) => {
@@ -133,10 +140,24 @@ export function ReceiptPanel({
         onChange={setOffset}
       />
       <SidePanel title="Sale receipt" open={!!id} onClose={() => setId('')}>
-        {state.error && <Text accessibilityRole="alert">{state.error}</Text>}
+        {Boolean(state.error) && (
+          <ErrorState message={state.error} onRetry={() => void model.run()} />
+        )}
         {state.data?.receipt && (
           <>
-            <Text selectable>{receiptText(state.data.receipt)}</Text>
+            <Surface>
+              <Text accessibilityRole="header">
+                Receipt ·{' '}
+                {formatMinorUnits(
+                  state.data.receipt.sale.totalMinor,
+                  state.data.receipt.sale.currency,
+                )}
+              </Text>
+              <Text tone="muted">
+                Recorded sale details. Printing does not create another payment.
+              </Text>
+              <Text selectable>{receiptText(state.data.receipt)}</Text>
+            </Surface>
             <Action
               label="Print / reprint receipt"
               onPress={() => {
@@ -150,6 +171,12 @@ export function ReceiptPanel({
               disabled={false}
             />
             {Boolean(printError) && <Text accessibilityRole="alert">{printError}</Text>}
+            <ReceiptFinance receipt={state.data.receipt} timeZone={business.timeZone} />
+            {returnForms(client, business, state.data.receipt).length > 0 && (
+              <Text accessibilityRole="header">
+                Sale corrections · changes stock and settlement
+              </Text>
+            )}
             {returnForms(client, business, state.data.receipt).map((f) => (
               <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
             ))}

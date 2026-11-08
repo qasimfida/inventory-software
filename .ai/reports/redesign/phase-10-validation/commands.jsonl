@@ -1,0 +1,9 @@
+{"name": "foundation", "command": "npm run check:foundation", "exit": 0, "seconds": 0.56}
+{"name": "parity", "command": "npm run check:parity", "exit": 0, "seconds": 0.54}
+{"name": "design", "command": "npm run audit:ui", "exit": 0, "seconds": 1.01}
+{"name": "lint", "command": "npm run lint", "exit": 1, "seconds": 40.14}
+{"name": "typecheck", "command": "npm run typecheck", "exit": 0, "seconds": 40.41}
+{"name": "test", "command": "npm test -- --maxWorkers=2", "exit": 1, "seconds": 15.38}
+{"name": "build", "command": "npm run build", "exit": 0, "seconds": 18.02}
+{"name": "mobile-build", "command": "npm run build:mobile", "exit": 0, "seconds": 20.61}
+{"name": "desktop-build", "command": "npm run build:desktop", "exit": 1, "seconds": 63.15}

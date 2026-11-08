@@ -1,0 +1,22 @@
+{
+  "method": "All production chunks, not initial transfer; >10% raw growth requires review.",
+  "assets": [
+    {
+      "extension": ".js",
+      "files": 32,
+      "bytes": 1732603,
+      "gzipBytes": 534469,
+      "baselineBytes": 1663917,
+      "growth": 0.0412797032544292
+    },
+    {
+      "extension": ".css",
+      "files": 4,
+      "bytes": 139187,
+      "gzipBytes": 24796,
+      "baselineBytes": 127764,
+      "growth": 0.08940703171472397
+    }
+  ],
+  "violations": []
+}

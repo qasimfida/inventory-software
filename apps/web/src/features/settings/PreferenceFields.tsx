@@ -1,19 +1,18 @@
 import { useId, useSyncExternalStore } from 'react';
 import { preferenceFields } from '@inventory/api-client';
-import { preferencePatchSchema } from '@inventory/contracts';
+import { preferencePatchSchema, isCosmeticPreference } from '@inventory/contracts';
 import { settingsModel } from '@/platform/settings';
 import { Segmented } from '@/components/ui/Segmented';
 import { Select } from '@/components/ui/FormControls';
 import { FontPicker } from './FontPicker';
 const groups = [
-  { title: 'Appearance', keys: ['appearance', 'accent'] },
-  { title: 'Typography', keys: ['font', 'textSize'] },
-  { title: 'Layout & controls', keys: ['density', 'radius', 'iconSize', 'pagination'] },
-  { title: 'Regional', keys: ['currency'] },
+  { title: 'Basic', keys: ['appearance', 'density', 'controlSize'] },
   {
-    title: 'Accessibility & performance',
-    keys: ['motion', 'states', 'visualizations'],
+    title: 'Advanced · Style & typography',
+    keys: ['accent', 'font', 'textSize', 'radius', 'iconSize'],
   },
+  { title: 'Advanced · Accessibility & performance', keys: ['animation', 'charts', 'states'] },
+  { title: 'Regional & list behavior', keys: ['currency', 'pagination'] },
 ];
 export function PreferenceFields() {
   const paletteName = useId();
@@ -29,9 +28,10 @@ export function PreferenceFields() {
               .filter((f) => group.keys.includes(f.key))
               .sort((a, b) => group.keys.indexOf(a.key) - group.keys.indexOf(b.key))
               .map((field) => {
-                const enforced =
-                  state.snapshot?.platform.values.enforced[field.key] ??
-                  state.business?.values.enforced[field.key];
+                const enforced = isCosmeticPreference(field.key)
+                  ? undefined
+                  : (state.snapshot?.platform.values.enforced[field.key] ??
+                    state.business?.values.enforced[field.key]);
                 const disabled = state.busy || !state.snapshot || enforced !== undefined;
                 const label = `${field.label === 'Appearance' ? 'Account appearance' : field.label}${enforced !== undefined ? ' (enforced)' : ''}`;
                 const change = (value: string) =>
@@ -82,7 +82,7 @@ export function PreferenceFields() {
                     <Segmented
                       key={field.key}
                       label={label}
-                      value={effective[field.key]}
+                      value={effective[field.key] ?? ''}
                       options={field.options}
                       disabled={disabled}
                       onChange={change}
@@ -93,7 +93,7 @@ export function PreferenceFields() {
                     {label}
                     <Select
                       aria-label={label}
-                      value={effective[field.key]}
+                      value={effective[field.key] ?? ''}
                       disabled={disabled}
                       onChange={(e) => change(e.target.value)}
                     >

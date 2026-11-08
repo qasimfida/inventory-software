@@ -5,7 +5,7 @@ import {
   shiftCloseSchema,
   cashAdjustmentSchema,
 } from '@inventory/contracts';
-import type { ShiftOpen, ShiftClose, CashAdjustment } from '@inventory/contracts';
+import type { ShiftOpen, ShiftClose, CashAdjustment, ShiftQuery } from '@inventory/contracts';
 import type { OrganizationTransport } from './organization.js';
 import { RetryableCommands } from './retryable-commands.js';
 import { queryString } from './catalog.js';
@@ -18,9 +18,15 @@ export function createCashClient(
   const path = `/${encodeURIComponent(businessId)}/cash-shifts`,
     commands = new RetryableCommands(request, newKey);
   return {
-    list: async (warehouseId: string, offset = 0) =>
+    list: async (
+      warehouseId: string,
+      offset = 0,
+      filters: Omit<ShiftQuery, 'warehouseId' | 'offset'> = {},
+    ) =>
       shiftPageSchema.parse(
-        await request(`${path}?${queryString(shiftQuerySchema.parse({ warehouseId, offset }))}`),
+        await request(
+          `${path}?${queryString(shiftQuerySchema.parse({ ...filters, warehouseId, offset }))}`,
+        ),
       ),
     open: (input: Omit<ShiftOpen, 'idempotencyKey'>) => {
       shiftOpenSchema.parse({ ...input, idempotencyKey: placeholder });

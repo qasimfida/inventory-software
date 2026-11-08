@@ -1,9 +1,9 @@
+import { ReportResults } from './ReportResults';
+import './reports-print.css';
 import { WarehouseSelect } from '@/components/common/WarehouseSelect';
 import { Pagination } from '@/components/common/Pagination';
 import { usePageCollection } from '@/components/common/usePageCollection';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
-import { MetricCard } from '@/components/common/MetricCard';
-import { Table, TableScroll } from '@/components/ui/Table';
 import { useId, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import {
   availableReports,
@@ -54,12 +54,13 @@ export function ReportsPanel({
   if (!sections.length)
     return <EmptyState message="No report categories are available with your permissions." />;
   return (
-    <section aria-label="Reports and dashboard" className="screen-section">
+    <section aria-label="Reports and dashboard" className="screen-section reports-workspace">
       <ScreenHeader
-        title="Reports and dashboard"
+        title="Reports"
         description={
           <>
-            Confirmed server data. Select a report to see exact totals and their measurement units.
+            Confirmed server data. Period flows use inclusive UTC dates, up to 366 days. Inventory
+            and outstanding balances are current, regardless of the date range.
           </>
         }
       />
@@ -145,49 +146,7 @@ export function ReportsPanel({
       {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
       {state.data && (
         <>
-          {query.section !== 'inventory' && query.section !== 'movements' && (
-            <div className="metric-grid">
-              {state.data.rows.slice(0, 4).map((row, index) => (
-                <MetricCard
-                  key={row.key}
-                  label={row.label}
-                  value={row.value}
-                  unit={row.unit}
-                  primary={index === 0}
-                />
-              ))}
-            </div>
-          )}
-          <p className="text-sm">
-            Generated {state.data.asOf} · {state.data.from} through {state.data.to} UTC
-          </p>
-          {!state.data.rows.length ? (
-            <EmptyState message="No matching records for this report." />
-          ) : (
-            <TableScroll label="Report table">
-              <Table>
-                <caption className="sr-only">Report values and units</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Measure</th>
-                    <th scope="col" data-numeric>
-                      Value
-                    </th>
-                    <th scope="col">Unit</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {state.data.rows.map((row) => (
-                    <tr key={row.key}>
-                      <th scope="row">{row.label}</th>
-                      <td data-numeric>{row.value}</td>
-                      <td>{row.unit}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </TableScroll>
-          )}
+          <ReportResults data={state.data} />
           <div className="flex flex-wrap gap-2">
             <Pagination
               label="report rows"
@@ -198,11 +157,6 @@ export function ReportsPanel({
               onChange={(offset) => setQuery({ ...query, offset })}
             />
           </div>
-          {state.data.notes.map((note) => (
-            <p key={note} className="text-sm text-muted-foreground">
-              {note}
-            </p>
-          ))}
         </>
       )}
     </section>

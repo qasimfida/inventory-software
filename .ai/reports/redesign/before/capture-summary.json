@@ -1,0 +1,17 @@
+{
+  "routeSweepCaptures": 264,
+  "supplementCaptures": 43,
+  "routeSweepOverflow": 0,
+  "routeSweepIssues": 12,
+  "fatalIssues": [],
+  "roles": {
+    "superadmin": "#/admin",
+    "owner": "#/dashboard",
+    "manager": "#/dashboard",
+    "cashier": "#/pos",
+    "inventory": "#/dashboard",
+    "accountant": "#/dashboard",
+    "viewer": "#/dashboard"
+  },
+  "notes": "12 recorded resource-error entries correspond to intentionally blocked external mock product images; no transaction testing. Native-only /more skipped in browser."
+}

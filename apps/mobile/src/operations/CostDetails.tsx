@@ -1,7 +1,8 @@
+import { useDisplayMoney } from '../ui/useDisplayMoney';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { ResourceModel, costPaymentForm } from '@inventory/api-client';
 import type { createOperationsClient } from '@inventory/api-client';
-import { formatMinorUnits } from '@inventory/domain';
+
 import { SidePanel } from '../ui/SidePanel';
 import { Text } from '../ui/Themed';
 import { RecordTable } from '../ui/RecordTable';
@@ -18,6 +19,8 @@ export function CostDetails({
   onClose: () => void;
   onChange: () => void;
 }) {
+  const { formatMinorUnits } = useDisplayMoney();
+
   const [offset, setOffset] = useState(0),
     model = useMemo(() => new ResourceModel(() => client.detail(id, offset)), [client, id, offset]),
     state = useSyncExternalStore(model.subscribe, model.snapshot);

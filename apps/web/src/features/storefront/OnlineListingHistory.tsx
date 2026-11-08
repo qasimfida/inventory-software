@@ -1,3 +1,4 @@
+import { Table, TableScroll } from '@/components/ui/Table';
 import { onlineError } from '@inventory/api-client';
 import { useEffect, useState } from 'react';
 import type { OnlineClient } from '@inventory/api-client';
@@ -36,7 +37,12 @@ export function OnlineListingHistory({
     };
   }, [client, id]);
   return (
-    <FormSheet title="Listing history" open onOpenChange={onClose}>
+    <FormSheet
+      title="Listing history"
+      description="Recorded publication transitions; latest 200 events."
+      open
+      onOpenChange={onClose}
+    >
       {error ? (
         <ErrorState message={error} onRetry={load} />
       ) : !events ? (
@@ -44,18 +50,28 @@ export function OnlineListingHistory({
       ) : !events.length ? (
         <EmptyState message="No listing events yet" />
       ) : (
-        <ol className="space-y-4">
-          {events.map((e) => (
-            <li key={e.id} className="border-b pb-3">
-              <p className="font-medium">{e.transition.replace('->', ' → ')}</p>
-              <p>{e.reasonCode.replaceAll('_', ' ')}</p>
-              <p className="text-muted-foreground">
-                {e.actorId ? `Account ${e.actorId}` : 'System'} ·{' '}
-                {new Date(e.timestamp).toLocaleString()}
-              </p>
-            </li>
-          ))}
-        </ol>
+        <TableScroll label="Listing events">
+          <Table>
+            <thead>
+              <tr>
+                <th>Transition</th>
+                <th>Reason</th>
+                <th>Actor reference</th>
+                <th>Recorded at</th>
+              </tr>
+            </thead>
+            <tbody>
+              {events.map((e) => (
+                <tr key={e.id}>
+                  <th scope="row">{e.transition.replace('->', ' → ')}</th>
+                  <td>{e.reasonCode.replaceAll('_', ' ')}</td>
+                  <td>{e.actorId ?? 'System'}</td>
+                  <td>{new Date(e.timestamp).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </TableScroll>
       )}
       <p className="text-muted-foreground">Latest 200 events.</p>
     </FormSheet>

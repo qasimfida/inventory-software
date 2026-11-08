@@ -36,15 +36,14 @@ export function OnlineStorePage({
         description="Create an active store and link a warehouse before configuring an online store."
       />
     );
+  const activeTab = path.startsWith('/online-store/products')
+    ? 'products'
+    : path.startsWith('/online-store/settings')
+      ? 'settings'
+      : 'overview';
   return (
     <Tabs.Root
-      value={
-        path.startsWith('/online-store/products')
-          ? 'products'
-          : path.startsWith('/online-store/settings')
-            ? 'settings'
-            : 'overview'
-      }
+      value={activeTab}
       onValueChange={(tab) =>
         void navigate(
           tab === 'overview'
@@ -90,39 +89,43 @@ export function OnlineStorePage({
           </div>
         )}
       </div>
-      {path === '/online-store' ? (
-        <OnlineOverview
-          key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}
-          business={business}
-          storeId={selected}
-        />
-      ) : path.startsWith('/online-store/products') ? (
-        <div key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}>
-          <OnlineProducts business={business} storeId={selected} locations={locations} />
-          {path.endsWith('/add') ? (
-            <OnlineProductPicker
-              business={business}
-              storeId={selected}
-              onClose={() => void navigate('/online-store/products')}
-            />
-          ) : path !== '/online-store/products' ? (
-            <OnlineProductDetails
-              business={business}
-              storeId={selected}
-              id={path.split('/').pop()!}
-              onClose={() => void navigate('/online-store/products')}
-            />
-          ) : null}
-        </div>
-      ) : (
-        <OnlineStoreEditor
-          key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}
-          business={business}
-          storeId={selected}
-          locations={locations}
-          path={path}
-        />
-      )}
+      <Tabs.Content value={activeTab}>
+        {path === '/online-store' ? (
+          <OnlineOverview
+            key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}
+            business={business}
+            storeId={selected}
+          />
+        ) : path.startsWith('/online-store/products') ? (
+          <div
+            key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}
+          >
+            <OnlineProducts business={business} storeId={selected} locations={locations} />
+            {path.endsWith('/add') ? (
+              <OnlineProductPicker
+                business={business}
+                storeId={selected}
+                onClose={() => void navigate('/online-store/products')}
+              />
+            ) : path !== '/online-store/products' ? (
+              <OnlineProductDetails
+                business={business}
+                storeId={selected}
+                id={path.split('/').pop()!}
+                onClose={() => void navigate('/online-store/products')}
+              />
+            ) : null}
+          </div>
+        ) : (
+          <OnlineStoreEditor
+            key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}
+            business={business}
+            storeId={selected}
+            locations={locations}
+            path={path}
+          />
+        )}
+      </Tabs.Content>
     </Tabs.Root>
   );
 }

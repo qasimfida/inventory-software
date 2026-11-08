@@ -1,8 +1,11 @@
+import { posPriceLabel as originalPriceLabel } from '@inventory/api-client';
+import { useDisplayMoney } from '../ui/useDisplayMoney';
+import { ExportRecords } from '../ui/ExportRecords';
 import { OnlineCollectionFeedback } from '../storefront/OnlineCollectionFeedback';
 import { Checkbox } from '../ui/Checkbox';
 import { useOnlineCollection } from '../storefront/useOnlineCollection';
 import { EmptyState } from '../ui/AsyncState';
-import { posPriceLabel } from '@inventory/api-client';
+
 import { ViewTabs } from '../ui/ViewTabs';
 import type { ReactNode } from 'react';
 import { IconAction } from '../ui/IconAction';
@@ -41,6 +44,8 @@ export function InventoryProducts({
   onEdit?: ((productId: string) => void) | undefined;
   onAdjust?: ((sku: string) => void) | undefined;
 }) {
+  const { posPriceLabel } = useDisplayMoney();
+
   const theme = useTheme(),
     [grid, setGrid] = useState(false),
     [selection, setSelected] = useState<Item | null>(null);
@@ -76,6 +81,18 @@ export function InventoryProducts({
       >
         {controls}
         <ViewTabs grid={grid} onChange={setGrid} label="Inventory" />
+        <ExportRecords
+          name="inventory-shown"
+          headers={['Product', 'SKU', 'Unit', 'Price', 'Available', 'Status']}
+          rows={items.map((item) => [
+            item.name,
+            item.sku,
+            item.unit,
+            item.price ? originalPriceLabel({ price: item.price }) : 'Not priced',
+            item.available,
+            item.status,
+          ])}
+        />
       </View>
       {showEmpty && !items.length && (
         <EmptyState

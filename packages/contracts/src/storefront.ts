@@ -1,3 +1,4 @@
+import { normalizeDescription } from './rich-description.js';
 import {
   evaluateStorefrontReadiness,
   STOREFRONT_RULE_VERSION,
@@ -30,7 +31,13 @@ export const listingInputSchema = z
   .object({
     productId: z.uuid(),
     title: z.string().trim().max(120).default(''),
-    description: z.string().trim().max(2000).default(''),
+    description: z
+      .string()
+      .trim()
+      .max(2000)
+      .transform(normalizeDescription)
+      .pipe(z.string().max(2000))
+      .default(''),
     images: z
       .array(z.url({ protocol: /^https$/ }).max(500))
       .max(5)

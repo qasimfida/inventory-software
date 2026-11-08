@@ -22,6 +22,20 @@ export class NotificationsController {
   ) {
     return this.service.read(requestActor(r), b, id);
   }
+  @Post(':id/unread') unread(
+    @Req() r: AuthRequest,
+    @Param('businessId', new ParseUUIDPipe()) b: string,
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ) {
+    return this.service.updateInbox(requestActor(r), b, id, 'unread');
+  }
+  @Post(':id/dismiss') dismiss(
+    @Req() r: AuthRequest,
+    @Param('businessId', new ParseUUIDPipe()) b: string,
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ) {
+    return this.service.updateInbox(requestActor(r), b, id, 'dismiss');
+  }
   @Get('approvals') approvals(
     @Req() r: AuthRequest,
     @Param('businessId', new ParseUUIDPipe()) b: string,

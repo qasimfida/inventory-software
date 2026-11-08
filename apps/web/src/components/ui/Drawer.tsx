@@ -1,6 +1,7 @@
+import { DrawerResizeHandle } from './DrawerResizeHandle';
 // shadcn/ui Drawer composition built on Vaul; right/left directions suit operational forms.
 import { Drawer as Primitive } from 'vaul';
-import { useRef, useImperativeHandle, type ComponentProps } from 'react';
+import { useRef, useState, useImperativeHandle, type ComponentProps } from 'react';
 import { cn } from '@/lib/utils';
 export function Drawer(props: ComponentProps<typeof Primitive.Root>) {
   // eslint-disable-next-line jsx-a11y/no-autofocus -- Modal focus is moved by Content to its form or labelled container and restored on close.
@@ -12,11 +13,13 @@ export const DrawerTitle = Primitive.Title;
 export const DrawerDescription = Primitive.Description;
 export function DrawerContent({
   className,
+  style,
   children,
   onOpenAutoFocus,
   ref: forwardedRef,
   ...props
 }: ComponentProps<typeof Primitive.Content>) {
+  const [width, setWidth] = useState<number | null>(null);
   const content = useRef<HTMLDivElement>(null);
   useImperativeHandle(forwardedRef, () => content.current!);
   return (
@@ -26,6 +29,10 @@ export function DrawerContent({
         ref={content}
         className={cn('ui-drawer', className)}
         {...props}
+        style={{
+          ...style,
+          ...(width !== null ? { '--resizable-drawer-width': `${width}px` } : {}),
+        }}
         onOpenAutoFocus={(event) => {
           onOpenAutoFocus?.(event);
           if (event.defaultPrevented) return;
@@ -38,6 +45,7 @@ export function DrawerContent({
           (field ?? content.current)?.focus();
         }}
       >
+        <DrawerResizeHandle content={content} onResize={setWidth} />
         <Primitive.Handle className="drawer-handle" aria-label="Drag to close drawer" />
         {children}
       </Primitive.Content>
