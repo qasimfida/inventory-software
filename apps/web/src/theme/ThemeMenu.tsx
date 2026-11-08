@@ -56,11 +56,7 @@ function ThemeOptions({ submenu = false }: { submenu?: boolean }) {
   const { appearance, locked, setAppearance } = useAppearance();
   const state = useSyncExternalStore(settingsModel.subscribe, settingsModel.snapshot);
   const accent = settingsModel.effective().accent;
-  const colorLocked =
-    state.busy ||
-    !state.snapshot ||
-    state.snapshot.platform.values.enforced.accent !== undefined ||
-    state.business?.values.enforced.accent !== undefined;
+  const colorLocked = state.busy || !state.snapshot;
   return (
     <>
       <p className="text-sm font-medium">Appearance</p>

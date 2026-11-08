@@ -1,0 +1,19 @@
+[
+  "apps/mobile/src/pos/CashPanel.tsx",
+  "apps/mobile/src/pos/CashRecords.test.tsx",
+  "apps/mobile/src/pos/CashRecords.tsx",
+  "apps/mobile/src/pos/ReceiptFinance.test.tsx",
+  "apps/mobile/src/pos/ReceiptFinance.tsx",
+  "apps/mobile/src/pos/ReceiptPanel.test.tsx",
+  "apps/mobile/src/pos/ReceiptPanel.tsx",
+  "apps/web/src/features/pos/CashPanel.tsx",
+  "apps/web/src/features/pos/CashRecords.test.tsx",
+  "apps/web/src/features/pos/CashRecords.tsx",
+  "apps/web/src/features/pos/ReceiptFinance.test.tsx",
+  "apps/web/src/features/pos/ReceiptFinance.tsx",
+  "apps/web/src/features/pos/ReceiptPanel.test.tsx",
+  "apps/web/src/features/pos/ReceiptPanel.tsx",
+  "docs/design-system.md",
+  "packages/api-client/src/sales-cash-characterization.test.ts",
+  "scripts/redesign-sales-cash-browser.mjs"
+]

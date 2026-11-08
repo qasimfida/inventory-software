@@ -1,0 +1,18 @@
+[
+  "apps/mobile/src/storage/StorageDetails.tsx",
+  "apps/mobile/src/storage/WarehouseBalances.tsx",
+  "apps/mobile/src/warehouse/CountEvidence.test.tsx",
+  "apps/mobile/src/warehouse/CountEvidence.tsx",
+  "apps/mobile/src/warehouse/CountWorkflow.tsx",
+  "apps/mobile/src/warehouse/WarehousePanel.tsx",
+  "apps/web/src/features/storage/StorageDetails.tsx",
+  "apps/web/src/features/storage/WarehouseBalances.tsx",
+  "apps/web/src/features/warehouse/CountEvidence.test.tsx",
+  "apps/web/src/features/warehouse/CountEvidence.tsx",
+  "apps/web/src/features/warehouse/CountWorkflow.test.tsx",
+  "apps/web/src/features/warehouse/CountWorkflow.tsx",
+  "apps/web/src/features/warehouse/WarehousePanel.tsx",
+  "docs/design-system.md",
+  "packages/api-client/src/warehouse-characterization.test.ts",
+  "scripts/redesign-warehouse-browser.mjs"
+]

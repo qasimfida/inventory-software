@@ -1,0 +1,5 @@
+Redesign the online-store management features that already exist (inspect first: overview, setup card, Products tabs, drawer, add-products picker, listing history, settings pages, storefront destination). Don't assume a public customer storefront exists; don't invent customer checkout.
+
+Cover: store selection, setup status, metrics and warnings, empty/setup states; products (listing, search, filters, selection, add, details drawer, availability, publication status, warnings, partial results, bulk selection where supported, loading and error); settings (General, Fulfillment, Policies, Images, unsaved changes, validation, preview where available, business-derived defaults vs explicit overrides). On web, desktop and mobile.
+
+Acceptance: all online-store routes and settings work; publication readiness and actual publication status stay distinct; edits still reflect in Catalog, Inventory and POS.

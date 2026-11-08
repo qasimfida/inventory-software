@@ -1,3 +1,6 @@
+import { IconButton } from '@/components/common/IconButton';
+import { RecordDetails } from '@/components/common/RecordDetails';
+import { auditActionLabel, auditDetails, auditChangeDetails } from '@inventory/api-client';
 import { Select } from '@/components/ui/FormControls';
 import { FilterButton } from '@/components/common/FilterButton';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/Popover';
@@ -84,15 +87,12 @@ export function AuditHistory({
           </PopoverContent>
         </Popover>
         {onRefresh && (
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Refresh business logs"
+          <IconButton
+            label="Refresh business logs"
+            icon={RefreshCw}
             disabled={busy}
             onClick={onRefresh}
-          >
-            <RefreshCw />
-          </Button>
+          />
         )}
       </div>
       {!shown.length && (
@@ -108,7 +108,7 @@ export function AuditHistory({
               <th>Time / event</th>
               <th>Actor / record</th>
               <th>Scope</th>
-              <th>Change details</th>
+              <th data-actions>Change details</th>
             </tr>
           </thead>
           <tbody>
@@ -116,7 +116,9 @@ export function AuditHistory({
               <tr key={event.id}>
                 <td>
                   <p>
-                    {businessTime(event.occurredAt, timeZone)} · {event.action}
+                    {businessTime(event.occurredAt, timeZone)}
+                    <br />
+                    {auditActionLabel(event.action)}
                   </p>
                 </td>
                 <td>
@@ -130,7 +132,7 @@ export function AuditHistory({
                     {event.warehouseId ?? 'None'}
                   </p>
                 </td>
-                <td>
+                <td data-actions>
                   <Button variant="ghost" size="sm" onClick={() => setSelected(event)}>
                     View change details
                   </Button>
@@ -142,6 +144,7 @@ export function AuditHistory({
       </TableScroll>
       <FormSheet
         title="Activity details"
+        description="Immutable business activity and its recorded changes."
         open={!!selected}
         onOpenChange={(open) => {
           if (!open) setSelected(null);
@@ -149,23 +152,13 @@ export function AuditHistory({
       >
         {selected && (
           <>
-            <h3>{selected.action}</h3>
-            <dl className="record-details">
-              <dt>Time</dt>
-              <dd>{businessTime(selected.occurredAt, timeZone)}</dd>
-              <dt>Actor</dt>
-              <dd>{selected.actorEmail ?? selected.actorId}</dd>
-              <dt>Record</dt>
-              <dd>{selected.resourceId}</dd>
-              <dt>Store</dt>
-              <dd>{selected.storeId ?? 'Business-wide'}</dd>
-              <dt>Warehouse</dt>
-              <dd>{selected.warehouseId ?? '—'}</dd>
-            </dl>
+            <h3>{auditActionLabel(selected.action)}</h3>
+            <RecordDetails label="Activity context" items={auditDetails(selected, timeZone)} />
             <h4>Recorded changes</h4>
-            <pre className="overflow-auto text-xs">
-              {JSON.stringify({ before: selected.before, after: selected.after }, null, 2)}
-            </pre>
+            <RecordDetails
+              label="Recorded changes"
+              items={auditChangeDetails(selected.before, selected.after)}
+            />
           </>
         )}
       </FormSheet>

@@ -1,3 +1,10 @@
+import { ExportRecords } from '@/components/common/ExportRecords';
+import { EmptyState, ErrorState, LoadingState } from '@/components/common/AsyncState';
+import { IconButton } from '@/components/common/IconButton';
+import { CustomerProfile } from './CustomerProfile';
+import { CustomerEvidence } from './CustomerEvidence';
+import { ConfirmDialog } from '@/components/common/ConfirmDialog';
+import { FormSheet } from '@/components/common/FormSheet';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/Popover';
 import { FilterButton } from '@/components/common/FilterButton';
 import { RecordCollection } from '@/components/common/RecordCollection';
@@ -5,7 +12,6 @@ import { usePageCollection } from '@/components/common/usePageCollection';
 import { Pagination } from '@/components/common/Pagination';
 import { SearchControl } from '@/components/common/SearchControl';
 import { RefreshCw } from 'lucide-react';
-import { Grid } from '@/components/common/Layout';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { CustomerStatement } from './CustomerStatement';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
@@ -15,7 +21,6 @@ import {
   cancellableResource,
   customerProfileForm,
   customerDetailForms,
-  customerRetentionForms,
 } from '@inventory/api-client';
 import { hasPermission, businessTime, currencySchema } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
@@ -72,7 +77,6 @@ export function CustomerPanel({
             },
             signal,
           ),
-          retention: hasPermission(business, 'business.write') ? await client.retention() : null,
           prices:
             customerId && hasPermission(business, 'products.read')
               ? await client.prices(customerId)
@@ -113,10 +117,6 @@ export function CustomerPanel({
   const customer = state.data?.page.customers.find((c) => c.id === customerId);
   const forms = state.data
     ? [
-        ...(state.data.retention ? customerRetentionForms(client, state.data.retention) : []),
-        ...(hasPermission(business, 'customers.write')
-          ? [customerProfileForm(client, storeId)]
-          : []),
         ...(customer && state.data.statement
           ? customerDetailForms(client, pricing, customer, business, state.data.statement)
           : []),
@@ -156,7 +156,7 @@ export function CustomerPanel({
         </PopoverTrigger>
         <PopoverContent align="end" className="space-y-3">
           {' '}
-          <Grid className="screen-filters">
+          <div className="space-y-1">
             <div>
               <label htmlFor="customer-store">Customer store</label>
               <Select
@@ -175,7 +175,7 @@ export function CustomerPanel({
                 ))}
               </Select>
             </div>
-          </Grid>
+          </div>
           <div className="inventory-controls">
             <label>
               Status
@@ -214,35 +214,76 @@ export function CustomerPanel({
           </div>
         </PopoverContent>
       </Popover>
-      <Button
+      {(status || currency || search) && (
+        <Button
+          variant="ghost"
+          onClick={() => {
+            setStatus('');
+            setCurrency('');
+            setSearch('');
+            setCustomerId('');
+            setOffset(0);
+            setStatementOffset(0);
+          }}
+        >
+          Clear filters
+        </Button>
+      )}
+      <IconButton
+        icon={RefreshCw}
+        label="Refresh customers"
         onClick={() => void model.run()}
         disabled={state.busy || !storeId}
-        variant="ghost"
-        size="icon"
-        aria-label="Refresh customers"
-        title="Refresh"
-      >
-        <RefreshCw aria-hidden="true" />
-      </Button>
+      />
     </>
   );
   return (
     <section aria-label="Customers and credit" className="screen-section">
       <ScreenHeader
-        title="Customers and credit"
+        title="Customers"
+        actions={
+          <>
+            <ExportRecords
+              name="customers"
+              headers={['Name', 'Code', 'Contact', 'Currency', 'Status']}
+              rows={(state.data?.page.customers ?? []).map((c) => [
+                c.name,
+                c.code,
+                c.email || c.phone || '',
+                c.currency,
+                c.state,
+              ])}
+            />
+            {storeId && hasPermission(business, 'customers.write') && (
+              <CommandForm
+                primary
+                definition={{ ...customerProfileForm(client, storeId), title: 'Add customer' }}
+                run={(work) => void model.run(work)}
+              />
+            )}
+          </>
+        }
         description={
           <>
-            Duplicate email or phone in this store is rejected. Statements are scoped to your
-            access. Cash overpayments are rejected; credit overrides require explicit authority.
+            Manage customer profiles, review credit and track recorded payments for the selected
+            store.
           </>
         }
       />
-      {state.error && <p role="alert">{state.error}</p>}
+      {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
 
+      {!storeId && (
+        <EmptyState
+          message="No active store available"
+          description="Customer records require an active store within your access."
+        />
+      )}
+      {storeId && !state.data && !state.error && <LoadingState message="Loading customers…" />}
       {!state.data && <div className="collection-toolbar">{toolbar}</div>}
       {state.data && (
         <>
           <RecordCollection
+            showExport={false}
             toolbar={toolbar}
             items={state.data.page.customers.map((c) => ({
               id: c.id,
@@ -270,24 +311,86 @@ export function CustomerPanel({
             busy={state.busy || (!state.data && !state.error)}
             onChange={setOffset}
           />
-          {state.data.statement && (
-            <CustomerStatement
-              busy={state.busy || Boolean(state.error)}
-              statement={state.data.statement}
-              business={business}
-              statementOffset={statementOffset}
-              setStatementOffset={setStatementOffset}
-            />
-          )}
-          {state.data.prices?.prices.map((p) => (
-            <p key={p.id}>
-              Customer price (latest 100 periods) · {p.variantId} · {p.currency} {p.unitPrice} per
-              base unit · from {businessTime(p.startsAt, business.timeZone)}
-            </p>
-          ))}
-          {forms.map((f) => (
-            <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
-          ))}
+          <FormSheet
+            title="Customer details"
+            description="Review the customer profile, credit policy and recorded transactions."
+            open={!!customerId}
+            onOpenChange={(open) => {
+              if (!open) setCustomerId('');
+            }}
+          >
+            <div className="min-w-0 shrink-0 space-y-3">
+              {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
+              {customer && (
+                <CustomerProfile
+                  customer={customer}
+                  store={stores.find((s) => s.id === customer.storeId)?.name ?? customer.storeId}
+                />
+              )}
+              {state.data.statement && (
+                <CustomerStatement
+                  busy={state.busy || Boolean(state.error)}
+                  statement={state.data.statement}
+                  business={business}
+                  statementOffset={statementOffset}
+                  setStatementOffset={setStatementOffset}
+                />
+              )}
+              {state.data.prices && (
+                <CustomerEvidence
+                  title="Customer prices · latest 100 periods"
+                  columns={['Variant reference', 'Price per base unit', 'Effective from']}
+                  rows={state.data.prices.prices.map((p) => ({
+                    id: p.id,
+                    cells: [
+                      p.variantId,
+                      `${p.currency} ${p.unitPrice}`,
+                      businessTime(p.startsAt, business.timeZone),
+                    ],
+                  }))}
+                />
+              )}
+              {customer &&
+                !customer.anonymized &&
+                customer.state !== 'archived' &&
+                hasPermission(business, 'customers.write') && (
+                  <ConfirmDialog
+                    title="Archive customer?"
+                    trigger={
+                      <Button variant="destructive" disabled={state.busy}>
+                        Archive customer
+                      </Button>
+                    }
+                    description="Remove this customer from active use. Their transaction history is retained. Customers with an outstanding balance cannot be archived."
+                    confirmLabel="Archive customer"
+                    onConfirm={() => {
+                      if (!customer || state.busy) return;
+                      void model.run(async () => {
+                        await client.save(
+                          {
+                            code: customer.code,
+                            name: customer.name,
+                            email: customer.email,
+                            phone: customer.phone,
+                            address: customer.address,
+                            notes: customer.notes,
+                            currency: customer.currency,
+                            state: 'archived',
+                            storeId: customer.storeId,
+                          },
+                          customer.id,
+                          customer.version,
+                        );
+                        setCustomerId('');
+                      });
+                    }}
+                  />
+                )}
+              {forms.map((f) => (
+                <CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />
+              ))}
+            </div>
+          </FormSheet>
         </>
       )}
     </section>

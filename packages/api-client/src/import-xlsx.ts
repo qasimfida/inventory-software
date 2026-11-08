@@ -1,7 +1,7 @@
 import { unzipSync, strFromU8 } from 'fflate';
 import { XMLParser } from 'fast-xml-parser';
 /** Bounded XLSX values-only reader. No macros, formulas, links or spreadsheet code execute. */
-export function xlsxRows(bytes: Uint8Array): string[][] {
+export function xlsxRows(bytes: Uint8Array, maximumColumns = 6): string[][] {
   let size = 0,
     count = 0;
   const files = unzipSync(bytes, {
@@ -35,26 +35,33 @@ export function xlsxRows(bytes: Uint8Array): string[][] {
     )?.si?.map((v) => v.t ?? v.r?.map((r) => r.t ?? '').join('') ?? '') ?? [];
   const rows = (
     xml('xl/worksheets/sheet1.xml').worksheet as
-      { sheetData?: { row?: { c?: Cell[] }[] } } | undefined
+      { sheetData?: { row?: { '@_r'?: string; c?: Cell[] }[] } } | undefined
   )?.sheetData?.row;
   if (!rows || rows.length > 101)
     throw new Error('Use the first worksheet with a header and at most 100 products.');
-  return rows.map((row) => {
-    const values = Array<string>(6).fill('');
+  const result: string[][] = [];
+  for (const row of rows) {
+    const number = row['@_r'] ? Number(row['@_r']) : result.length + 1;
+    if (!Number.isInteger(number) || number <= result.length || number > 101)
+      throw new Error('Worksheet row numbers must be ordered and within 101 rows.');
+    while (result.length < number - 1) result.push([]);
+    const values = Array<string>(maximumColumns === 6 ? 6 : 0).fill('');
     for (const cell of row.c ?? []) {
       if (cell.f !== undefined)
         throw new Error('Replace spreadsheet formulas with values before importing.');
       const col = cell['@_r']?.match(/^([A-Z]+)[0-9]+$/)?.[1];
-      if (!col || col.length !== 1 || col < 'A' || col > 'F')
-        throw new Error('Use only the six template columns.');
+      const column = [...(col ?? '')].reduce((total, c) => total * 26 + c.charCodeAt(0) - 64, 0);
+      if (!column || column > maximumColumns)
+        throw new Error(`Use at most ${maximumColumns} source columns.`);
       const value =
         cell['@_t'] === 's'
           ? strings[Number(cell.v)]
           : cell['@_t'] === 'inlineStr'
             ? cell.is?.t
             : cell.v;
-      values[col.charCodeAt(0) - 65] = String(value ?? '');
+      values[column - 1] = String(value ?? '');
     }
-    return values;
-  });
+    result.push(Array.from(values, (v) => v ?? ''));
+  }
+  return result;
 }

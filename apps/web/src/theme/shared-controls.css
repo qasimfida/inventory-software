@@ -1,0 +1,248 @@
+/* Shared component ownership; conditions and source order retained during consolidation. */
+.command-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  padding: var(--space-small);
+  border-bottom: var(--border-width) solid var(--border);
+}
+.command-search input {
+  background: transparent;
+  min-width: 0;
+  width: 100%;
+  padding: var(--space-small);
+}
+.command-search svg,
+[cmdk-item] svg {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  flex-shrink: 0;
+}
+[cmdk-list] {
+  max-height: calc(var(--control-height) * 7);
+  overflow-y: auto;
+  padding: var(--space-small);
+}
+[cmdk-item] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-small);
+  min-height: var(--control-height);
+  padding: var(--space-small);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+[cmdk-item][data-selected='true'] {
+  background: var(--navigation-hover);
+  color: var(--foreground);
+}
+[cmdk-item][data-disabled='true'] {
+  color: var(--disabled-foreground);
+  pointer-events: none;
+}
+[cmdk-empty] {
+  padding: var(--space-medium);
+}
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+.quantity-control input {
+  min-width: 0;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  border: 0;
+  background: transparent;
+}
+.ui-checkbox {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  width: var(--selection-size);
+  height: var(--selection-size);
+  flex-shrink: 0;
+  border: var(--border-width) solid var(--input);
+  border-radius: var(--radius-small, 4px);
+  background: var(--card);
+  cursor: pointer;
+}
+.ui-checkbox[data-state='checked'],
+.ui-checkbox[data-state='indeterminate'] {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+.ui-checkbox svg {
+  width: 14px;
+  height: 14px;
+}
+.ui-checkbox:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.ui-checkbox[aria-invalid='true'] {
+  border-color: var(--destructive);
+}
+.view-tabs {
+  display: inline-flex;
+  background: var(--muted);
+  padding: var(--space-unit);
+  border-radius: var(--control-radius);
+  gap: var(--space-unit);
+}
+.view-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-small);
+  min-height: var(--control-small);
+  padding: var(--space-unit) var(--space-small);
+  border-radius: var(--control-radius);
+  font-size: calc(var(--font-control) * var(--text-scale));
+  color: var(--muted-foreground);
+}
+.view-tabs button[data-state='active'] {
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: var(--elevation-low);
+}
+.view-tabs svg {
+  width: 20px;
+  height: 20px;
+}
+@media (pointer: coarse) {
+  .view-tabs button {
+    min-height: var(--target-size);
+  }
+}
+.view-tabs {
+  background: var(--secondary);
+  border: var(--border-width) solid var(--border);
+}
+.command-search {
+  position: relative;
+  padding: var(--space-small);
+}
+.command-search > svg {
+  position: absolute;
+  left: var(--space-medium);
+  pointer-events: none;
+}
+.command-search input {
+  min-height: var(--control-small);
+  height: auto;
+  border: var(--border-width) solid var(--input);
+  border-radius: var(--control-radius);
+  padding-left: calc(var(--space-medium) + var(--icon-current) + var(--space-small));
+  background: var(--background);
+}
+.collection-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-small);
+}
+.collection-search {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+.feedback-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-small);
+  padding: var(--space-large);
+  background: var(--card);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--surface-radius);
+}
+.collection-toolbar > [role='combobox'],
+.screen-actions > [role='combobox'] {
+  width: auto;
+  min-width: min(100%, 10rem);
+}
+.filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--icon-small);
+  padding-inline: var(--space-unit);
+  border-radius: var(--radius-circle);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: calc(var(--font-small) * var(--text-scale));
+}
+
+/* Control geometry is independent of layout density; text may increase the minimum. */
+[data-slot='input'],
+[data-slot='textarea'],
+.select-trigger,
+.search-control input,
+[data-slot='button']:not([data-size^='icon']),
+.view-tabs button,
+.segmented-options span,
+[cmdk-item] {
+  min-height: var(--control-height);
+  padding-inline: var(--control-padding);
+}
+.quantity-control button,
+.quantity-control input {
+  min-height: var(--quantity-size);
+}
+.quantity-control button {
+  min-width: var(--quantity-size);
+}
+@media (pointer: coarse) {
+  [data-slot='button'],
+  [data-slot='input'],
+  .select-trigger,
+  .view-tabs button,
+  .quantity-control button,
+  .quantity-control input,
+  .segmented-options span,
+  [cmdk-item] {
+    min-height: var(--target-size);
+  }
+  [data-slot='button'][data-size^='icon'],
+  .quantity-control button {
+    min-width: var(--target-size);
+  }
+  .ui-checkbox {
+    min-width: var(--target-size);
+    min-height: var(--target-size);
+  }
+}
+
+/* Density cannot resize controls via inherited gap/padding utilities. */
+[data-slot='input'],
+[data-slot='textarea'],
+.select-trigger,
+.search-control input,
+[data-slot='button']:not([data-size^='icon']),
+.view-tabs button,
+.segmented-options span {
+  padding-block: var(--control-padding-block);
+}
+[data-slot='button'][data-size='sm'],
+[data-slot='button'][data-size='xs'] {
+  min-height: var(--control-small);
+}
+[data-slot='button'][data-size='lg'] {
+  min-height: var(--control-large);
+}
+.search-control input {
+  padding-inline-start: calc(var(--control-padding) + var(--icon-size) + var(--space-unit));
+  padding-inline-end: calc(var(--control-padding) + var(--control-icon));
+}
+
+/* Touch minima must win over the later size-specific compact overrides. */
+@media (pointer: coarse) {
+  [data-slot='button']:not([data-size^='icon']),
+  [data-slot='button'][data-size] {
+    min-height: max(var(--target-size), var(--control-height));
+  }
+}

@@ -67,6 +67,8 @@ it('applies all supported typography, accent, density and motion combinations wi
                     textSize,
                     accent,
                     motion,
+                    animation: undefined,
+                    charts: undefined,
                     density,
                     states: enhanced ? 'enhanced' : 'simple',
                     effects: enhanced,
@@ -90,13 +92,13 @@ it('applies all supported typography, accent, density and motion combinations wi
             const scale = textSize === 'small' ? 0.9 : textSize === 'large' ? 1.2 : 1;
             expect(
               parseFloat(getComputedStyle(screen.getByText('Scaled heading')).fontSize),
-            ).toBeCloseTo(28 * scale);
+            ).toBeCloseTo(22 * scale);
             expect(
               parseFloat(getComputedStyle(screen.getByText('Scaled body')).fontSize),
-            ).toBeCloseTo(16 * scale);
+            ).toBeCloseTo(15 * scale);
             expect(
               parseFloat(getComputedStyle(screen.getByLabelText('Draft')).fontSize),
-            ).toBeCloseTo(16 * scale);
+            ).toBeCloseTo(15 * scale);
             expect(screen.getByLabelText('Draft').getAttribute('value')).toBe('Unchanged');
             expect(getComputedStyle(screen.getByText('9007199254740993')).fontVariant).toContain(
               'tabular-nums',
@@ -104,7 +106,7 @@ it('applies all supported typography, accent, density and motion combinations wi
             const theme = JSON.parse(screen.getByTestId('theme').textContent);
             expect(theme.mode).toBe(appearance === 'dark' ? 'dark' : 'light');
             expect(theme.ring).toBe(theme.primary);
-            expect(theme.spacing).toBe(density === 'compact' ? 12 : 16);
+            expect(theme.spacing).toBe(density === 'compact' ? 12 : 20);
             expect(
               within(screen.getByRole('button', { name: 'Saving' })).queryAllByRole('progressbar'),
             ).toHaveLength(motion === 'enabled' ? 1 : 0);
@@ -122,7 +124,7 @@ it('follows a dark system and suppresses the spinner under OS reduced motion', (
   device.dark = true;
   device.reduced = true;
   render(
-    <ThemeProvider>
+    <ThemeProvider preview previewPreferences={{ appearance: 'system' }}>
       <Sample />
     </ThemeProvider>,
   );

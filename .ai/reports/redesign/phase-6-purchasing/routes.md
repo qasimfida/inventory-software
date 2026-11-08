@@ -1,0 +1,24 @@
+# Phase 6 purchasing coverage
+
+Scope: `/purchasing` and `/payables`; web and Tauri share `apps/web/src/features/purchasing/`, native uses `apps/mobile/src/purchasing/`. Corresponding filenames below exist in both directories. Generated root route registry remains separate.
+
+| Route / surface | Implementation and treatment | Preserved behavior / verification |
+| --- | --- | --- |
+| `/purchasing`: orders and suppliers | `PurchasingPanel.tsx`: shared ScreenHeader, search/filter toolbar, collection headings, list/grid collections and export | Existing bounded pagination, cancellable debounced search, warehouse/supplier/order-state filters retained. Browser populated collection; component permission tests. |
+| Supplier selection / details | `PurchasingPanel.tsx`: selected supplier RecordDetails, edit command beside supplier collection | Selection still filters orders and resets selection/pagination. Exact loaded contact, notes, status and code. Owner test verifies selected-only editor and no write on selection. |
+| Supplier create / edit | Existing `supplierForms` rendered through CommandForm beside supplier collection | Same required fields, version, state, schema and submit handler. Read-only role has no creation command. Browser opens create drawer; no mutation submitted. |
+| PO create | Existing `orderForms` creation command beside order collection | Same supplier/warehouse/currency/reference fields and permission checks; no pricing/state change. Existing command drawer retained. |
+| PO detail | `PurchaseDetails.tsx` in FormSheet / native SidePanel | Loaded metadata, lines, receipts, invoices and returns. No new detail endpoint. Browser opens and closes parent drawer; exact quantities and empty evidence tested. |
+| Draft lines / transitions | Existing order forms in detail drawer | Draft add-line and approve/cancel; approved order/cancel; ordered/partial cancel. State characterization tests cover six states. Same server commands and versions. |
+| Full / partial receipt | Existing Receive purchase delivery command in detail drawer | Same quantity/location/damage/idempotency validation. Characterization pins fractional quantity and stable retry identity. Browser opens nested receipt drawer in 12 viewport/theme combinations. Live receipt posting not tested. |
+| Supplier returns | Return received goods command and return evidence table | Existing receipt dependency, quantity/damage/reason/credit-reference fields and backend authority unchanged. Browser opens return drawer; no return submitted. |
+| Invoice recording | Record supplier invoice reference in detail drawer | Existing eligible-state command, exact amount/currency/due date. Browser opens nested drawer; no invoice created. |
+| `/payables`: invoices | `PayablePanel.tsx`: shared table, filter/search, retry/loading/empty states, supplier and invoice actions | Existing supplier filtering, pagination and per-currency totals. Exact outstanding minor units retained. Read-only web/native tests assert no writes/payment command. |
+| Invoice detail | FormSheet / SidePanel, balance RecordDetails, settlement history table | Original, credits, cash paid/refunded and outstanding remain exact; no currency conversion. All loaded event references, actor IDs, reasons and timestamps preserved. |
+| Credits / cash payment / refund | Existing `payableForms` commands inside invoice drawer | Same purchase/payment/cash permissions, positive/negative balance rules, confirmed return credit and retry keys. Existing payable tests retained. No live cash operation. |
+| Loading / error / empty | Shared AsyncState components; explicit receipt/history empties | Initial/interaction loading, retry and no-warehouse states retained. Empty purchase evidence tested. No success claimed before server confirmation. |
+| Responsive / themes / focus | Existing tokens, TableScroll, Drawer, CommandForm, native RecordTable / SidePanel | Chrome light/dark at 390, 844, 1024, 1280, 1440, 1920px; nested command open/Escape/parent close. Tables use labelled keyboard-scroll regions. Native JS tests/export only. |
+
+No standalone purchasing tabs, brand workflow, hard delete, sent metadata or full transition-audit endpoint exists in these screens. They were not fabricated. The actual PO state remains `ordered`; this redesign does not introduce a `sent` state. Supplier edit is a versioned status edit, not evidence deletion.
+
+Remaining verification: live approve/order/receipt/return/payment rollback and concurrency; all validation errors and unsaved-change behavior with a real API; large production datasets; exhaustive preferences; installed native/desktop accessibility and peripherals. Web and native share form definitions in `packages/api-client/src/purchase-forms.ts` and `payable-forms.ts`; those implementations were not changed.

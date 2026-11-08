@@ -1,3 +1,4 @@
+import { Panel, Grid, Cluster } from '@/components/common/Layout';
 import { WarehouseSelect } from '@/components/common/WarehouseSelect';
 import { LiveNotice } from './LiveNotice';
 import { CountWorkflow } from './CountWorkflow';
@@ -106,7 +107,11 @@ export function WarehousePanel({
             stay quarantined until purchasing approves an amended order.
           </Txt>
           <LiveNotice businessId={business.id} warehouseId={warehouseId} />
-          <Txt>{error}</Txt>
+          {error && (
+            <p role="status" className="rounded-(--radius) border p-3">
+              {error}
+            </p>
+          )}
           <WarehouseSelect
             label="Scanning warehouse"
             value={warehouseId}
@@ -142,32 +147,46 @@ export function WarehousePanel({
               setForms([]);
             }}
           />
-          <F label="Product barcode, SKU or variant ID" value={code} onChange={setCode} />
-          <Act label="Resolve product scan" onPress={() => void resolve(code)} />
-          <Camera
-            onCode={(raw) => {
-              setCode(raw);
-              void resolve(raw);
-            }}
-          />
-          <Txt>{product ? `${product.name} · ${product.id}` : 'No product selected'}</Txt>
-          <Pick
-            label="Scanned product unit"
-            value={unitId}
-            options={product?.units.map((u) => ({ value: u.id, label: u.code })) ?? []}
-            onChange={(v) => {
-              setUnit(v);
-              setForms([]);
-            }}
-          />
-          <F label="Location barcode / code / ID" value={locationCode} onChange={setLocationCode} />
-          <Camera onCode={setLocationCode} />
-          <Act label="Resolve source / count location" onPress={() => void location(false)} />
-          <Act label="Resolve destination location" onPress={() => void location(true)} />
-          <Txt>
-            Source/count location: {sourceId || 'warehouse root for count only'}; destination:{' '}
-            {destinationId || 'scan required'}
-          </Txt>
+          <Grid>
+            <Panel aria-label="Product scan">
+              <h3>Product scan</h3>
+              <F label="Product barcode, SKU or variant ID" value={code} onChange={setCode} />
+              <Act label="Resolve product scan" onPress={() => void resolve(code)} />
+              <Camera
+                onCode={(raw) => {
+                  setCode(raw);
+                  void resolve(raw);
+                }}
+              />
+              <Txt>{product ? `${product.name} · ${product.id}` : 'No product selected'}</Txt>
+              <Pick
+                label="Scanned product unit"
+                value={unitId}
+                options={product?.units.map((u) => ({ value: u.id, label: u.code })) ?? []}
+                onChange={(v) => {
+                  setUnit(v);
+                  setForms([]);
+                }}
+              />
+            </Panel>
+            <Panel aria-label="Location scan">
+              <h3>Location scan</h3>
+              <F
+                label="Location barcode / code / ID"
+                value={locationCode}
+                onChange={setLocationCode}
+              />
+              <Camera onCode={setLocationCode} />
+              <Cluster>
+                <Act label="Resolve source / count location" onPress={() => void location(false)} />
+                <Act label="Resolve destination location" onPress={() => void location(true)} />
+              </Cluster>
+              <Txt>
+                Source/count location: {sourceId || 'warehouse root for count only'}; destination:{' '}
+                {destinationId || 'scan required'}
+              </Txt>
+            </Panel>
+          </Grid>
           {mode === 'count' ? (
             <CountWorkflow
               key={warehouseId}

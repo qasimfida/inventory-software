@@ -1,3 +1,4 @@
+import { IconButton } from '@/components/common/IconButton';
 import { useNavigate } from 'react-router-dom';
 import { useCatalogLive } from '@/platform/useCatalogLive';
 import { useOptionalWorkspace } from '@/shell/WorkspaceContext';
@@ -12,7 +13,6 @@ import { authClient } from '@/platform/auth-client';
 import { MetricCard } from '@/components/common/MetricCard';
 import { Pagination } from '@/components/common/Pagination';
 import { ErrorState, LoadingState } from '@/components/common/AsyncState';
-import { Button } from '@/components/ui/Button';
 import { InventoryProducts } from './InventoryProducts';
 import { SearchControl } from '@/components/common/SearchControl';
 const icons = [Package, ArrowUpRight, ArrowDownRight, PackageX];
@@ -122,15 +122,6 @@ export function InventoryOverview({
               {data?.threshold ?? '…'} base units (positive availability only).
             </p>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Refresh"
-            disabled={state.busy}
-            onClick={() => void request.model.run()}
-          >
-            <RefreshCw />
-          </Button>
         </div>
         {state.error && (
           <ErrorState message={state.error} onRetry={() => void request.model.run()} />
@@ -164,6 +155,12 @@ export function InventoryOverview({
                   })) ?? []
                 }
                 busy={state.busy || (!state.data && !state.error)}
+              />
+              <IconButton
+                label="Refresh stock"
+                icon={RefreshCw}
+                disabled={state.busy}
+                onClick={() => void request.model.run()}
               />
               <Select
                 aria-label="Stock status"

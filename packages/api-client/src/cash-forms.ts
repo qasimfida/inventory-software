@@ -42,7 +42,7 @@ export function cashForms(
         }),
     },
   ];
-  for (const s of shifts.filter((s) => s.state === 'open')) {
+  for (const s of shifts.filter((s) => s.state === 'open' && s.canClose !== false)) {
     forms.push({
       title: `Close cash shift ${s.id}`,
       fields: [{ name: 'countedMinor', label: 'Counted cash (minor units)' }],

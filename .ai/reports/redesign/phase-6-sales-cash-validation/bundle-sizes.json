@@ -1,0 +1,202 @@
+[
+  {
+    "path": "apps/web/dist/index.html",
+    "bytes": 778,
+    "gzip": 371
+  },
+  {
+    "path": "apps/web/dist/sw.js",
+    "bytes": 1965,
+    "gzip": 955
+  },
+  {
+    "path": "apps/web/dist/assets/quill-zL3mIzDS.js",
+    "bytes": 199709,
+    "gzip": 58072
+  },
+  {
+    "path": "apps/web/dist/assets/Application-9JsXF2av.js",
+    "bytes": 271500,
+    "gzip": 74212
+  },
+  {
+    "path": "apps/web/dist/assets/FoundationPage-DY3Ov6d-.js",
+    "bytes": 104220,
+    "gzip": 18553
+  },
+  {
+    "path": "apps/web/dist/assets/dist-js-BzKGOnbP.js",
+    "bytes": 1485,
+    "gzip": 670
+  },
+  {
+    "path": "apps/web/dist/assets/ProductPage-IQYok4jS.js",
+    "bytes": 5249,
+    "gzip": 2059
+  },
+  {
+    "path": "apps/web/dist/assets/CategoryPage-CCk9FodN.js",
+    "bytes": 3529,
+    "gzip": 1497
+  },
+  {
+    "path": "apps/web/dist/assets/import-xlsx-k_0B6rwc.js",
+    "bytes": 63485,
+    "gzip": 21261
+  },
+  {
+    "path": "apps/web/dist/assets/StorefrontPanel-C3LzjBjy.js",
+    "bytes": 4432,
+    "gzip": 1988
+  },
+  {
+    "path": "apps/web/dist/assets/AccountingPanel-CDMs8pRS.js",
+    "bytes": 3684,
+    "gzip": 1732
+  },
+  {
+    "path": "apps/web/dist/assets/WarehousePanel-DFOB95Dc.js",
+    "bytes": 8587,
+    "gzip": 3183
+  },
+  {
+    "path": "apps/web/dist/assets/index-CESQbGf2.js",
+    "bytes": 364489,
+    "gzip": 114621
+  },
+  {
+    "path": "apps/web/dist/assets/NotificationsPanel-CFcF5DNU.js",
+    "bytes": 9369,
+    "gzip": 3357
+  },
+  {
+    "path": "apps/web/dist/assets/TransferPanel-DT4Er6oI.js",
+    "bytes": 6343,
+    "gzip": 2480
+  },
+  {
+    "path": "apps/web/dist/assets/Geist-Cz_WRCMl.ttf",
+    "bytes": 169056,
+    "gzip": 86506
+  },
+  {
+    "path": "apps/web/dist/assets/rolldown-runtime-XKyaHtl9.js",
+    "bytes": 726,
+    "gzip": 431
+  },
+  {
+    "path": "apps/web/dist/assets/desktop-storage-BQzhZksZ.js",
+    "bytes": 205,
+    "gzip": 175
+  },
+  {
+    "path": "apps/web/dist/assets/InventoryWorkspace-DnF2fSqa.js",
+    "bytes": 32190,
+    "gzip": 9287
+  },
+  {
+    "path": "apps/web/dist/assets/StoragePanel-CcvWU9z8.js",
+    "bytes": 12553,
+    "gzip": 4141
+  },
+  {
+    "path": "apps/web/dist/assets/auth-client-BUaw4_PM.js",
+    "bytes": 1264,
+    "gzip": 730
+  },
+  {
+    "path": "apps/web/dist/assets/TradingPanel-Bo4NVXfx.js",
+    "bytes": 4016,
+    "gzip": 1697
+  },
+  {
+    "path": "apps/web/dist/assets/ReportsPanel-DUAAxBO7.js",
+    "bytes": 4520,
+    "gzip": 1810
+  },
+  {
+    "path": "apps/web/dist/assets/IconButton-C5MHLoyO.css",
+    "bytes": 25727,
+    "gzip": 3938
+  },
+  {
+    "path": "apps/web/dist/assets/index-K_ilvJ5c.css",
+    "bytes": 109448,
+    "gzip": 19743
+  },
+  {
+    "path": "apps/web/dist/assets/Karla-Cc-z3u01.ttf",
+    "bytes": 94016,
+    "gzip": 57683
+  },
+  {
+    "path": "apps/web/dist/assets/Button-DXaM3rJg.js",
+    "bytes": 121291,
+    "gzip": 40381
+  },
+  {
+    "path": "apps/web/dist/assets/resource-model-rPcZXhw8.js",
+    "bytes": 1263,
+    "gzip": 588
+  },
+  {
+    "path": "apps/web/dist/assets/IconButton-D3Wid1n9.js",
+    "bytes": 103441,
+    "gzip": 31033
+  },
+  {
+    "path": "apps/web/dist/assets/GeistMono-aobeVSSS.ttf",
+    "bytes": 171968,
+    "gzip": 89566
+  },
+  {
+    "path": "apps/web/dist/assets/browser-C0zvGkjE.js",
+    "bytes": 5401,
+    "gzip": 2704
+  },
+  {
+    "path": "apps/web/dist/assets/PayablePanel-Uj-h16zT.js",
+    "bytes": 6022,
+    "gzip": 2245
+  },
+  {
+    "path": "apps/web/dist/assets/CustomerPanel-CqwWWE91.js",
+    "bytes": 6816,
+    "gzip": 2703
+  },
+  {
+    "path": "apps/web/dist/assets/IntegrationsPanel-Ch4omaEH.js",
+    "bytes": 2188,
+    "gzip": 1078
+  },
+  {
+    "path": "apps/web/dist/assets/core-IUlRufS4.js",
+    "bytes": 168,
+    "gzip": 140
+  },
+  {
+    "path": "apps/web/dist/assets/dist-Y_foZ1Nq.js",
+    "bytes": 346143,
+    "gzip": 109971
+  },
+  {
+    "path": "apps/web/dist/assets/Application-PQpIsXLt.css",
+    "bytes": 1632,
+    "gzip": 553
+  },
+  {
+    "path": "apps/web/dist/assets/Lora-C1B0tkav.ttf",
+    "bytes": 212196,
+    "gzip": 107014
+  },
+  {
+    "path": "apps/web/dist/assets/PurchasingPanel-CjwV8o21.js",
+    "bytes": 8340,
+    "gzip": 3014
+  },
+  {
+    "path": "apps/web/dist/assets/MovementHistory-V2O2FliW.js",
+    "bytes": 4016,
+    "gzip": 1517
+  }
+]

@@ -2,7 +2,7 @@ import { AccordionSection } from '@/components/ui/Accordion';
 import { IndustryFields } from './IndustryFields';
 import { useId, useState, useSyncExternalStore } from 'react';
 import { preferenceFields, notificationFields } from '@inventory/api-client';
-import { settingsPolicySchema } from '@inventory/contracts';
+import { settingsPolicySchema, isCosmeticPreference } from '@inventory/contracts';
 import type { PolicyRecord, SettingsPolicy } from '@inventory/contracts';
 import { settingsModel } from '@/platform/settings';
 import { Select } from '@/components/ui/FormControls';
@@ -29,40 +29,47 @@ export function PolicyEditor({
       title={<>{platform ? 'Platform policy' : 'Business policy'}</>}
     >
       <p>
-        Defaults apply when a user has no preference. Enforced values override personal choices.
-        Platform enforcement takes precedence. Authentication limits cannot be edited here.
+        Appearance follows the account. Platform appearance defaults apply only to unset choices;
+        old cosmetic enforcement is retained for history but no longer applied. Currency and
+        list-loading enforcement remain active. Authentication limits cannot be edited here.
       </p>
       {(['defaults', 'enforced'] as const).map((layer) => (
         <fieldset key={layer} disabled={state.busy} className="grid gap-2 sm:grid-cols-2">
           <legend>{layer}</legend>
-          {preferenceFields.map((field) => (
-            <label key={field.key} htmlFor={`${id}-${layer}-${field.key}`}>
-              {layer}: {field.label}
+          {preferenceFields
+            .filter(
+              (field) => !isCosmeticPreference(field.key) || (platform && layer === 'defaults'),
+            )
+            .map((field) => (
+              <label key={field.key} htmlFor={`${id}-${layer}-${field.key}`}>
+                {layer}: {field.label}
+                <Select
+                  id={`${id}-${layer}-${field.key}`}
+                  aria-label={`${platform ? 'Platform' : 'Business'} ${layer}: ${field.label}`}
+                  value={values[layer][field.key] ?? 'inherit'}
+                  onChange={(e) => update(layer, field.key, e.target.value)}
+                >
+                  <option value="inherit">Inherit</option>
+                  {field.options.map((option) => (
+                    <option key={option}>{option}</option>
+                  ))}
+                </Select>
+              </label>
+            ))}
+          {platform && layer === 'defaults' && (
+            <label htmlFor={`${id}-${layer}-effects`}>
+              Visual effects
               <Select
-                id={`${id}-${layer}-${field.key}`}
-                aria-label={`${platform ? 'Platform' : 'Business'} ${layer}: ${field.label}`}
-                value={values[layer][field.key] ?? 'inherit'}
-                onChange={(e) => update(layer, field.key, e.target.value)}
+                id={`${id}-${layer}-effects`}
+                value={String(values[layer].effects ?? 'inherit')}
+                onChange={(e) => update(layer, 'effects', e.target.value)}
               >
                 <option value="inherit">Inherit</option>
-                {field.options.map((option) => (
-                  <option key={option}>{option}</option>
-                ))}
+                <option value="true">Enabled</option>
+                <option value="false">Disabled</option>
               </Select>
             </label>
-          ))}
-          <label htmlFor={`${id}-${layer}-effects`}>
-            Visual effects
-            <Select
-              id={`${id}-${layer}-effects`}
-              value={String(values[layer].effects ?? 'inherit')}
-              onChange={(e) => update(layer, 'effects', e.target.value)}
-            >
-              <option value="inherit">Inherit</option>
-              <option value="true">Enabled</option>
-              <option value="false">Disabled</option>
-            </Select>
-          </label>
+          )}
         </fieldset>
       ))}
       <fieldset disabled={state.busy}>

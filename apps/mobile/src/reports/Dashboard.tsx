@@ -1,6 +1,7 @@
+import { settingsModel } from '../settings/model';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { View } from 'react-native';
-import { hasPermission } from '@inventory/contracts';
+import { currencySchema, hasPermission } from '@inventory/contracts';
 import type { Business } from '@inventory/contracts';
 import { createDashboardClient, cancellableResource } from '@inventory/api-client';
 import { IconAction } from '../ui/IconAction';
@@ -39,8 +40,16 @@ export function Dashboard(props: DashboardProps) {
   return <AuthorizedDashboard {...props} />;
 }
 function AuthorizedDashboard({ business, storeId, warehouseIds }: DashboardProps) {
+  useSyncExternalStore(settingsModel.subscribe, settingsModel.snapshot);
+  const transactionCurrency = settingsModel.transactionCurrency();
+  const [selection, setSelection] = useState<{
+    businessId: string;
+    currency: ReturnType<typeof currencySchema.parse>;
+  } | null>(null);
+  const currency = selection?.businessId === business.id ? selection.currency : transactionCurrency;
+  const setCurrency = (value: ReturnType<typeof currencySchema.parse>) =>
+    setSelection({ businessId: business.id, currency: value });
   const theme = useTheme(),
-    { navigate } = useNavigation(),
     [days, setDays] = useState<7 | 30>(30);
   const warehouseKey = warehouseIds?.join(',');
   const request = useMemo(() => {
@@ -49,7 +58,7 @@ function AuthorizedDashboard({ business, storeId, warehouseIds }: DashboardProps
       (signal) =>
         client.load(
           {
-            currency: theme.preferences.currency,
+            currency: currency,
             days,
             storeId,
             warehouseIds:
@@ -59,7 +68,7 @@ function AuthorizedDashboard({ business, storeId, warehouseIds }: DashboardProps
         ),
       () => new AbortController(),
     );
-  }, [business.id, theme.preferences.currency, days, storeId, warehouseKey]);
+  }, [business.id, currency, days, storeId, warehouseKey]);
   const state = useSyncExternalStore(request.model.subscribe, request.model.snapshot);
   useEffect(() => {
     void request.model.run();
@@ -70,10 +79,11 @@ function AuthorizedDashboard({ business, storeId, warehouseIds }: DashboardProps
       <ScreenHeader title="Welcome back" />
       <Text tone="muted">{business.name} · Confirmed activity in UTC</Text>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.small }}>
-        <Action
-          label={`${theme.preferences.currency} · Currency settings`}
-          variant="ghost"
-          onPress={() => navigate('/settings/preferences')}
+        <Choice
+          label="Overview recorded currency"
+          value={currency}
+          options={currencySchema.options.map((value) => ({ value, label: value }))}
+          onChange={(value) => setCurrency(currencySchema.parse(value))}
         />
         <IconAction
           label="Refresh dashboard"

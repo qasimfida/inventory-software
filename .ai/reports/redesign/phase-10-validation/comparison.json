@@ -1,0 +1,562 @@
+[
+  {
+    "name": "1440-dark-comfortable-dialog.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "dialog",
+    "before": null,
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-dialog.png",
+    "review": "Compact confirmation and stacked narrow actions; no matching Phase 1 screenshot, no before/after verdict."
+  },
+  {
+    "name": "1440-dark-comfortable-drawer.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "drawer",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-online-store-products-add.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-drawer.png",
+    "review": "Desktop right drawer preserved; narrow drawer fills viewport with actions. Before narrow partial-height capture is materially different; keyboard/software keyboard not qualified."
+  },
+  {
+    "name": "1440-dark-comfortable-empty.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "empty",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-inventory-empty.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-empty.png",
+    "review": "Neutral toolbar retained, but No products yet remains a minimal text state. Enhanced-empty preference fixture coverage still incomplete."
+  },
+  {
+    "name": "1440-dark-comfortable-inventory.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "inventory",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-inventory.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-inventory.png",
+    "review": "Neutral cards/toolbar, concise price/status details and menu; narrow screen remains single column."
+  },
+  {
+    "name": "1440-dark-comfortable-loading.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "loading",
+    "before": null,
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-loading.png",
+    "review": "Genuine pending overview/progress captured with paused clock. No matching Phase 1 screenshot; no before/after verdict."
+  },
+  {
+    "name": "1440-dark-comfortable-login.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "login",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-auth-login.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-login.png",
+    "review": "Neutral primary replaces blue; centered sign-in retained. Input/end icon remains inside control."
+  },
+  {
+    "name": "1440-dark-comfortable-pos.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "pos",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-pos.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-pos.png",
+    "review": "Neutral priced product buttons and retained cart; narrow View cart action added. Populated cart/checkout is outside these snapshots; shell regression remains relevant."
+  },
+  {
+    "name": "1440-dark-comfortable-preferences.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "preferences",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-settings-preferences.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-preferences.png",
+    "review": "New approved preview controls, compact density and neutral palette; advanced options below fold not covered by this screenshot."
+  },
+  {
+    "name": "1440-dark-comfortable-product-detail.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "product-detail",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-catalog-id.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-product-detail.png",
+    "review": "Desktop image/details now two columns; narrow layout stacks. Narrow tab labels wrap mid-word: unresolved visual defect."
+  },
+  {
+    "name": "1440-dark-comfortable-purchasing.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "purchasing",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-purchasing.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-purchasing.png",
+    "review": "Neutral filters, rows and status chips. Before dark fixture sometimes lacked populated rows; do not interpret data differences as calculations."
+  },
+  {
+    "name": "1440-dark-comfortable-reports.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "reports",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-reports.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-reports.png",
+    "review": "Neutral KPI and query panel, scope/as-of text clearer; dates deliberately differ from Phase 1 fixed time. Tables below viewport need separate evidence."
+  },
+  {
+    "name": "1440-dark-comfortable-settings.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "settings",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-settings-company.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-settings.png",
+    "review": "Shared tab strip and flatter company form; narrow fields stack. Only company subpage captured here."
+  },
+  {
+    "name": "1440-dark-comfortable-shell-dashboard.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "shell-dashboard",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-dashboard.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-shell-dashboard.png",
+    "review": "Neutral KPI and setup panel; section headings and setup completion added; mobile stacks. Setup consumes more vertical space."
+  },
+  {
+    "name": "1440-dark-comfortable-showcase.png",
+    "width": 1440,
+    "theme": "dark",
+    "density": "comfortable",
+    "key": "showcase",
+    "before": ".ai/reports/redesign/before/screens/1440-dark-design-system.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-dark-comfortable-showcase.png",
+    "review": "Additional approved preview controls and neutral tokens; all showcase sections not covered by top viewport."
+  },
+  {
+    "name": "1440-light-compact-dialog.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "dialog",
+    "before": null,
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-dialog.png",
+    "review": "Compact confirmation and stacked narrow actions; no matching Phase 1 screenshot, no before/after verdict."
+  },
+  {
+    "name": "1440-light-compact-drawer.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "drawer",
+    "before": ".ai/reports/redesign/before/screens/1440-light-online-store-products-add.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-drawer.png",
+    "review": "Desktop right drawer preserved; narrow drawer fills viewport with actions. Before narrow partial-height capture is materially different; keyboard/software keyboard not qualified."
+  },
+  {
+    "name": "1440-light-compact-empty.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "empty",
+    "before": ".ai/reports/redesign/before/screens/1440-light-inventory-empty.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-empty.png",
+    "review": "Neutral toolbar retained, but No products yet remains a minimal text state. Enhanced-empty preference fixture coverage still incomplete."
+  },
+  {
+    "name": "1440-light-compact-inventory.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "inventory",
+    "before": ".ai/reports/redesign/before/screens/1440-light-inventory.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-inventory.png",
+    "review": "Neutral cards/toolbar, concise price/status details and menu; narrow screen remains single column."
+  },
+  {
+    "name": "1440-light-compact-loading.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "loading",
+    "before": null,
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-loading.png",
+    "review": "Genuine pending overview/progress captured with paused clock. No matching Phase 1 screenshot; no before/after verdict."
+  },
+  {
+    "name": "1440-light-compact-login.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "login",
+    "before": ".ai/reports/redesign/before/screens/1440-light-auth-login.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-login.png",
+    "review": "Neutral primary replaces blue; centered sign-in retained. Input/end icon remains inside control."
+  },
+  {
+    "name": "1440-light-compact-pos.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "pos",
+    "before": ".ai/reports/redesign/before/screens/1440-light-pos.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-pos.png",
+    "review": "Neutral priced product buttons and retained cart; narrow View cart action added. Populated cart/checkout is outside these snapshots; shell regression remains relevant."
+  },
+  {
+    "name": "1440-light-compact-preferences.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "preferences",
+    "before": ".ai/reports/redesign/before/screens/1440-light-settings-preferences.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-preferences.png",
+    "review": "New approved preview controls, compact density and neutral palette; advanced options below fold not covered by this screenshot."
+  },
+  {
+    "name": "1440-light-compact-product-detail.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "product-detail",
+    "before": ".ai/reports/redesign/before/screens/1440-light-catalog-id.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-product-detail.png",
+    "review": "Desktop image/details now two columns; narrow layout stacks. Narrow tab labels wrap mid-word: unresolved visual defect."
+  },
+  {
+    "name": "1440-light-compact-purchasing.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "purchasing",
+    "before": ".ai/reports/redesign/before/screens/1440-light-purchasing.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-purchasing.png",
+    "review": "Neutral filters, rows and status chips. Before dark fixture sometimes lacked populated rows; do not interpret data differences as calculations."
+  },
+  {
+    "name": "1440-light-compact-reports.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "reports",
+    "before": ".ai/reports/redesign/before/screens/1440-light-reports.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-reports.png",
+    "review": "Neutral KPI and query panel, scope/as-of text clearer; dates deliberately differ from Phase 1 fixed time. Tables below viewport need separate evidence."
+  },
+  {
+    "name": "1440-light-compact-settings.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "settings",
+    "before": ".ai/reports/redesign/before/screens/1440-light-settings-company.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-settings.png",
+    "review": "Shared tab strip and flatter company form; narrow fields stack. Only company subpage captured here."
+  },
+  {
+    "name": "1440-light-compact-shell-dashboard.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "shell-dashboard",
+    "before": ".ai/reports/redesign/before/screens/1440-light-dashboard.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-shell-dashboard.png",
+    "review": "Neutral KPI and setup panel; section headings and setup completion added; mobile stacks. Setup consumes more vertical space."
+  },
+  {
+    "name": "1440-light-compact-showcase.png",
+    "width": 1440,
+    "theme": "light",
+    "density": "compact",
+    "key": "showcase",
+    "before": ".ai/reports/redesign/before/screens/1440-light-design-system.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/1440-light-compact-showcase.png",
+    "review": "Additional approved preview controls and neutral tokens; all showcase sections not covered by top viewport."
+  },
+  {
+    "name": "390-dark-compact-dialog.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "dialog",
+    "before": null,
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-dialog.png",
+    "review": "Compact confirmation and stacked narrow actions; no matching Phase 1 screenshot, no before/after verdict."
+  },
+  {
+    "name": "390-dark-compact-drawer.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "drawer",
+    "before": ".ai/reports/redesign/before/screens/390-dark-online-store-products-add.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-drawer.png",
+    "review": "Desktop right drawer preserved; narrow drawer fills viewport with actions. Before narrow partial-height capture is materially different; keyboard/software keyboard not qualified."
+  },
+  {
+    "name": "390-dark-compact-empty.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "empty",
+    "before": ".ai/reports/redesign/before/screens/390-dark-inventory-empty.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-empty.png",
+    "review": "Neutral toolbar retained, but No products yet remains a minimal text state. Enhanced-empty preference fixture coverage still incomplete."
+  },
+  {
+    "name": "390-dark-compact-inventory.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "inventory",
+    "before": ".ai/reports/redesign/before/screens/390-dark-inventory.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-inventory.png",
+    "review": "Neutral cards/toolbar, concise price/status details and menu; narrow screen remains single column."
+  },
+  {
+    "name": "390-dark-compact-loading.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "loading",
+    "before": null,
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-loading.png",
+    "review": "Genuine pending overview/progress captured with paused clock. No matching Phase 1 screenshot; no before/after verdict."
+  },
+  {
+    "name": "390-dark-compact-login.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "login",
+    "before": ".ai/reports/redesign/before/screens/390-dark-auth-login.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-login.png",
+    "review": "Neutral primary replaces blue; centered sign-in retained. Input/end icon remains inside control."
+  },
+  {
+    "name": "390-dark-compact-pos.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "pos",
+    "before": ".ai/reports/redesign/before/screens/390-dark-pos.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-pos.png",
+    "review": "Neutral priced product buttons and retained cart; narrow View cart action added. Populated cart/checkout is outside these snapshots; shell regression remains relevant."
+  },
+  {
+    "name": "390-dark-compact-preferences.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "preferences",
+    "before": ".ai/reports/redesign/before/screens/390-dark-settings-preferences.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-preferences.png",
+    "review": "New approved preview controls, compact density and neutral palette; advanced options below fold not covered by this screenshot."
+  },
+  {
+    "name": "390-dark-compact-product-detail.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "product-detail",
+    "before": ".ai/reports/redesign/before/screens/390-dark-catalog-id.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-product-detail.png",
+    "review": "Desktop image/details now two columns; narrow layout stacks. Narrow tab labels wrap mid-word: unresolved visual defect."
+  },
+  {
+    "name": "390-dark-compact-purchasing.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "purchasing",
+    "before": ".ai/reports/redesign/before/screens/390-dark-purchasing.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-purchasing.png",
+    "review": "Neutral filters, rows and status chips. Before dark fixture sometimes lacked populated rows; do not interpret data differences as calculations."
+  },
+  {
+    "name": "390-dark-compact-reports.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "reports",
+    "before": ".ai/reports/redesign/before/screens/390-dark-reports.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-reports.png",
+    "review": "Neutral KPI and query panel, scope/as-of text clearer; dates deliberately differ from Phase 1 fixed time. Tables below viewport need separate evidence."
+  },
+  {
+    "name": "390-dark-compact-settings.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "settings",
+    "before": ".ai/reports/redesign/before/screens/390-dark-settings-company.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-settings.png",
+    "review": "Shared tab strip and flatter company form; narrow fields stack. Only company subpage captured here."
+  },
+  {
+    "name": "390-dark-compact-shell-dashboard.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "shell-dashboard",
+    "before": ".ai/reports/redesign/before/screens/390-dark-dashboard.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-shell-dashboard.png",
+    "review": "Neutral KPI and setup panel; section headings and setup completion added; mobile stacks. Setup consumes more vertical space."
+  },
+  {
+    "name": "390-dark-compact-showcase.png",
+    "width": 390,
+    "theme": "dark",
+    "density": "compact",
+    "key": "showcase",
+    "before": ".ai/reports/redesign/before/screens/390-dark-design-system.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-dark-compact-showcase.png",
+    "review": "Additional approved preview controls and neutral tokens; all showcase sections not covered by top viewport."
+  },
+  {
+    "name": "390-light-comfortable-dialog.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "dialog",
+    "before": null,
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-dialog.png",
+    "review": "Compact confirmation and stacked narrow actions; no matching Phase 1 screenshot, no before/after verdict."
+  },
+  {
+    "name": "390-light-comfortable-drawer.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "drawer",
+    "before": ".ai/reports/redesign/before/screens/390-light-online-store-products-add.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-drawer.png",
+    "review": "Desktop right drawer preserved; narrow drawer fills viewport with actions. Before narrow partial-height capture is materially different; keyboard/software keyboard not qualified."
+  },
+  {
+    "name": "390-light-comfortable-empty.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "empty",
+    "before": ".ai/reports/redesign/before/screens/390-light-inventory-empty.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-empty.png",
+    "review": "Neutral toolbar retained, but No products yet remains a minimal text state. Enhanced-empty preference fixture coverage still incomplete."
+  },
+  {
+    "name": "390-light-comfortable-inventory.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "inventory",
+    "before": ".ai/reports/redesign/before/screens/390-light-inventory.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-inventory.png",
+    "review": "Neutral cards/toolbar, concise price/status details and menu; narrow screen remains single column."
+  },
+  {
+    "name": "390-light-comfortable-loading.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "loading",
+    "before": null,
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-loading.png",
+    "review": "Genuine pending overview/progress captured with paused clock. No matching Phase 1 screenshot; no before/after verdict."
+  },
+  {
+    "name": "390-light-comfortable-login.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "login",
+    "before": ".ai/reports/redesign/before/screens/390-light-auth-login.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-login.png",
+    "review": "Neutral primary replaces blue; centered sign-in retained. Input/end icon remains inside control."
+  },
+  {
+    "name": "390-light-comfortable-pos.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "pos",
+    "before": ".ai/reports/redesign/before/screens/390-light-pos.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-pos.png",
+    "review": "Neutral priced product buttons and retained cart; narrow View cart action added. Populated cart/checkout is outside these snapshots; shell regression remains relevant."
+  },
+  {
+    "name": "390-light-comfortable-preferences.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "preferences",
+    "before": ".ai/reports/redesign/before/screens/390-light-settings-preferences.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-preferences.png",
+    "review": "New approved preview controls, compact density and neutral palette; advanced options below fold not covered by this screenshot."
+  },
+  {
+    "name": "390-light-comfortable-product-detail.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "product-detail",
+    "before": ".ai/reports/redesign/before/screens/390-light-catalog-id.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-product-detail.png",
+    "review": "Desktop image/details now two columns; narrow layout stacks. Narrow tab labels wrap mid-word: unresolved visual defect."
+  },
+  {
+    "name": "390-light-comfortable-purchasing.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "purchasing",
+    "before": ".ai/reports/redesign/before/screens/390-light-purchasing.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-purchasing.png",
+    "review": "Neutral filters, rows and status chips. Before dark fixture sometimes lacked populated rows; do not interpret data differences as calculations."
+  },
+  {
+    "name": "390-light-comfortable-reports.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "reports",
+    "before": ".ai/reports/redesign/before/screens/390-light-reports.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-reports.png",
+    "review": "Neutral KPI and query panel, scope/as-of text clearer; dates deliberately differ from Phase 1 fixed time. Tables below viewport need separate evidence."
+  },
+  {
+    "name": "390-light-comfortable-settings.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "settings",
+    "before": ".ai/reports/redesign/before/screens/390-light-settings-company.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-settings.png",
+    "review": "Shared tab strip and flatter company form; narrow fields stack. Only company subpage captured here."
+  },
+  {
+    "name": "390-light-comfortable-shell-dashboard.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "shell-dashboard",
+    "before": ".ai/reports/redesign/before/screens/390-light-dashboard.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-shell-dashboard.png",
+    "review": "Neutral KPI and setup panel; section headings and setup completion added; mobile stacks. Setup consumes more vertical space."
+  },
+  {
+    "name": "390-light-comfortable-showcase.png",
+    "width": 390,
+    "theme": "light",
+    "density": "comfortable",
+    "key": "showcase",
+    "before": ".ai/reports/redesign/before/screens/390-light-design-system.png",
+    "after": ".ai/reports/redesign/phase-10-validation/visual-baseline/390-light-comfortable-showcase.png",
+    "review": "Additional approved preview controls and neutral tokens; all showcase sections not covered by top viewport."
+  }
+]

@@ -34,7 +34,7 @@ export const setupSteps = [
     key: 'product',
     icon: 'package',
     label: 'First product',
-    path: '/catalog',
+    path: '/inventory',
     permission: 'products.write',
   },
   {

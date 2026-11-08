@@ -1,3 +1,4 @@
+import { ExportRecords } from '@/components/common/ExportRecords';
 import { OverflowTabs } from '@/components/common/OverflowTabs';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { RefreshCw, X, Plus } from 'lucide-react';
@@ -272,6 +273,15 @@ export function OnlineProducts({
             </label>
           </PopoverContent>
         </Popover>
+        <ExportRecords
+          name="online-products-shown"
+          headers={['Product', 'Status', 'Attention messages']}
+          rows={(state.page?.items ?? []).map((item) => [
+            item.title,
+            item.status,
+            item.issues.map((issue) => issue.message).join('; '),
+          ])}
+        />
         <ViewTabs
           value={grid ? 'grid' : 'list'}
           onChange={(v) => setGrid(v === 'grid')}

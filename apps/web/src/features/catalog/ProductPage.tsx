@@ -1,15 +1,13 @@
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
+import { RecordDetails } from '@/components/common/RecordDetails';
+import { RichDescription } from '@/components/common/RichDescription';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { useOnlineCollection } from '../storefront/useOnlineCollection';
 import { ProductChannels } from '../storefront/ProductChannels';
 import { useCatalogLive } from '@/platform/useCatalogLive';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
-import {
-  createCatalogClient,
-  ResourceModel,
-  productDetailTabs,
-  posPriceLabel,
-} from '@inventory/api-client';
+import { createCatalogClient, ResourceModel, productDetailTabs } from '@inventory/api-client';
 import type { Business, Location } from '@inventory/contracts';
 import { hasPermission } from '@inventory/contracts';
 import { authClient } from '@/platform/auth-client';
@@ -29,6 +27,8 @@ export function ProductPage({
   locations: Location[];
   productId: string;
 }) {
+  const { posPriceLabel } = useDisplayMoney();
+
   const channels = useOnlineCollection([productId]);
   const [editing, setEditing] = useState(false);
   const model = useMemo(
@@ -49,11 +49,16 @@ export function ProductPage({
   const product = state.data;
   return (
     <section className="screen-section space-y-4" aria-label="Product detail">
-      <h2>{product.name}</h2>
-      {channels.items.some((l) => l.status === 'active') && <StatusBadge>Online</StatusBadge>}
-      <p>
-        {product.sku} · {product.state}
-      </p>
+      <header className="space-y-1">
+        <h2>{product.name}</h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-muted-foreground">{product.sku}</span>
+          <StatusBadge tone={product.state === 'active' ? 'success' : 'neutral'}>
+            {product.state}
+          </StatusBadge>
+          {channels.items.some((l) => l.status === 'active') && <StatusBadge>Online</StatusBadge>}
+        </div>
+      </header>
       <Tabs.Root defaultValue="Overview">
         <OverflowTabs label="Product">
           <Tabs.List className="view-tabs" aria-label="Product detail sections">
@@ -64,21 +69,35 @@ export function ProductPage({
             ))}
           </Tabs.List>
         </OverflowTabs>
-        <Tabs.Content value="Overview" className="space-y-3">
+        <Tabs.Content value="Overview" className="grid min-w-0 gap-4 lg:grid-cols-3">
           <div className="max-w-sm">
             <ProductImage product={product} />
           </div>
-          <p>{product.description || 'No description added.'}</p>
-          <p>{product.price ? posPriceLabel({ price: product.price }) : 'Not priced'}</p>
-          <p>
-            Type: {product.type} · Inventory tracking:{' '}
-            {product.trackInventory ? 'Enabled' : 'Disabled'}
-          </p>
-          <p>Barcodes: {product.barcodes.join(', ') || 'None'}</p>
-          <p>Alternative codes: {product.alternativeCodes.join(', ') || 'None'}</p>
-          {hasPermission(business, 'products.write') && product.state !== 'archived' && (
-            <Button onClick={() => setEditing(true)}>Edit product details</Button>
-          )}
+          <div className="min-w-0 space-y-3 lg:col-span-2">
+            <RichDescription value={product.description} />
+            <RecordDetails
+              label="Product information"
+              items={[
+                {
+                  label: 'Selling price / unit',
+                  value: product.price ? posPriceLabel({ price: product.price }) : 'Not priced',
+                },
+                { label: 'Product type', value: product.type },
+                {
+                  label: 'Inventory tracking',
+                  value: product.trackInventory ? 'Enabled' : 'Disabled',
+                },
+                { label: 'Barcodes', value: product.barcodes.join(', ') || 'None' },
+                {
+                  label: 'Alternative codes',
+                  value: product.alternativeCodes.join(', ') || 'None',
+                },
+              ]}
+            />
+            {hasPermission(business, 'products.write') && product.state !== 'archived' && (
+              <Button onClick={() => setEditing(true)}>Edit product details</Button>
+            )}
+          </div>
         </Tabs.Content>
         <Tabs.Content value="Pricing">
           <PricingPanel business={business} locations={locations} productId={productId} />

@@ -1,0 +1,21 @@
+[
+  "apps/web/src/features/storefront/OnlineStorePage.tsx",
+  "tests/browser/design-system.spec.ts",
+  "apps/web/src/shell/WorkspaceScreens.tsx",
+  "apps/mobile/src/shell/NativeScreens.tsx",
+  "apps/web/src/features/pos/PosPanel.tsx",
+  "apps/web/src/features/pos/PosCheckout.tsx",
+  "apps/mobile/src/pos/PosPanel.tsx",
+  "apps/mobile/src/pos/PosCheckout.tsx",
+  "apps/web/src/features/catalog/CatalogPanel.tsx",
+  "apps/mobile/src/ui/SidePanel.tsx",
+  "package.json",
+  "apps/web/src/features/organization/ManagementWorkflows.test.tsx",
+  "apps/web/src/features/reports/RegistrationTrend.test.tsx",
+  "apps/mobile/src/entry.test.tsx",
+  "apps/mobile/src/organization/ManagementPanel.test.tsx",
+  "docs/development.md",
+  "apps/web/src/features/pos/PosCheckout.test.tsx",
+  "scripts/redesign-qualification.mjs",
+  "scripts/redesign-budget.mjs"
+]

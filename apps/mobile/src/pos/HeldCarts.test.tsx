@@ -22,6 +22,7 @@ it('native operators can hold and resume a labelled draft without a server write
     user = userEvent.setup();
   model.add({ id, name: 'Mug', sku: 'MUG', unitId: id, units: [{ id, code: 'EA' }] });
   render(<Example model={model} />);
+  await user.click(screen.getByRole('button', { name: 'Held carts (0/10)' }));
   await user.type(screen.getByLabelText('Cart name (avoid personal information)'), 'Counter');
   await user.click(screen.getByRole('button', { name: 'Hold current cart' }));
   expect(model.snapshot().lines).toHaveLength(0);

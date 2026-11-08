@@ -5,4 +5,5 @@ export const settingsModel = new SettingsModel(
     async (...args) => (await import('../auth/client')).authClient.accountRequest(...args),
     async (...args) => (await import('../auth/client')).authClient.organizationRequest(...args),
   ),
+  () => ({ touch: true }),
 );

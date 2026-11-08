@@ -1,3 +1,7 @@
+import { ImportMappingDemo } from './ImportMappingDemo';
+import { useState, type ReactNode } from 'react';
+import type { PreferencePatch } from '@inventory/contracts';
+import { FoundationPreferences } from './FoundationPreferences';
 import { NavigationControlsDemo } from './NavigationControlsDemo';
 import { AccordionSection } from '@/components/ui/Accordion';
 import { InventoryControlsDemo } from './InventoryControlsDemo';
@@ -20,13 +24,16 @@ const webCatalog =
 const nativeCatalog = usage.split('## Native component API reference')[1] ?? '';
 
 export function FoundationPage() {
+  const [preferences, setPreferences] = useState<PreferencePatch>({});
   return (
-    <AppearanceProvider preview>
-      <Showcase />
+    <AppearanceProvider preview previewPreferences={preferences}>
+      <Showcase
+        controls={<FoundationPreferences value={preferences} onChange={setPreferences} />}
+      />
     </AppearanceProvider>
   );
 }
-function Showcase() {
+function Showcase({ controls }: { controls: ReactNode }) {
   return (
     <Page>
       <Stack className="max-w-2xl gap-3">
@@ -40,11 +47,13 @@ function Showcase() {
         </p>
       </Stack>
       <AppearanceControl />
+      {controls}
       <ShowcaseIndex />
       <TokensDemo />
       <ComponentsDemo />
       <PreferenceControlsDemo />
       <InventoryControlsDemo />
+      <ImportMappingDemo />
       <NavigationControlsDemo />
       <DataPresentationDemo />
       <WorkspaceControlsDemo />

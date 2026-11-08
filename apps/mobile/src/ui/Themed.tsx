@@ -120,7 +120,7 @@ export function TextInput({
           borderColor: invalid
             ? theme.colors.error
             : focused
-              ? theme.colors.primary
+              ? theme.tokens.ring
               : theme.tokens.input,
         },
         props.editable === false &&

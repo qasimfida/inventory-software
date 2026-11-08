@@ -1,5 +1,6 @@
+import { ProviderOverview } from './ProviderOverview';
 import { IconAction } from '../ui/IconAction';
-import { LoadingState } from '../ui/AsyncState';
+import { LoadingState, ErrorState } from '../ui/AsyncState';
 import { ScreenBody } from '../ui/ScreenHeader';
 import { DisclosureTrigger } from '../ui/DisclosureTrigger';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
@@ -43,7 +44,7 @@ export function IntegrationsPanel({
             the deployment operator.
           </Text>
           {state.busy && <LoadingState message="Loading…" />}
-          {Boolean(state.error) && <Text accessibilityRole="alert">{state.error}</Text>}
+          {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
           <IconAction
             label="Refresh integration status"
             onPress={() => void model.run()}
@@ -52,15 +53,7 @@ export function IntegrationsPanel({
           />
           {state.data && (
             <>
-              {state.data.services.map((service) => (
-                <Text key={service.id}>
-                  {service.id}: {service.state} — {service.detail}
-                </Text>
-              ))}
-              <Text>Available sections for your permissions:</Text>
-              {state.data.navigation.map((label) => (
-                <Text key={label}>{label}</Text>
-              ))}
+              <ProviderOverview data={state.data} />
               {state.data.services.some((s) => s.id === 'ai' && s.state === 'enabled') && (
                 <>
                   <Text>
@@ -88,7 +81,11 @@ export function IntegrationsPanel({
               )}
             </>
           )}
-          {!!answer && <Text>{answer}</Text>}
+          {!!answer && (
+            <Text accessibilityLabel="Navigation answer" accessibilityLiveRegion="polite">
+              {answer}
+            </Text>
+          )}
         </>
       )}
     </ScreenBody>

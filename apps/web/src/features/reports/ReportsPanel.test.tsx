@@ -39,7 +39,7 @@ it('renders exact accessible report tables and does not request invalid date ran
   render(<ReportsPanel business={business} locations={[]} />);
   const table = await screen.findByRole('table');
   expect(screen.getByRole('region', { name: 'Report table' }).tabIndex).toBe(0);
-  expect(within(table).getByText('9007199254740993')).toBeTruthy();
+  expect(within(table).getByText('$90071992547409.93')).toBeTruthy();
   expect(screen.getByLabelText('From (UTC)')).toBeTruthy();
   fireEvent.change(screen.getByLabelText('From (UTC)'), { target: { value: '2020-01-01' } });
   await user.click(screen.getByRole('button', { name: 'Run report' }));
@@ -60,4 +60,31 @@ it('hides financial report categories without domain permission and shows safe f
     'Unable to load data. Reconnect and retry.',
   );
   expect(screen.getByRole('button', { name: 'Try again' })).toBeTruthy();
+});
+it('does not fetch when no report is authorized', () => {
+  render(
+    <ReportsPanel
+      business={{ ...business, role: 'custom', permissions: ['stock.read'] }}
+      locations={[]}
+    />,
+  );
+  expect(request).not.toHaveBeenCalled();
+  expect(screen.queryByRole('button', { name: 'Run report' })).toBeNull();
+});
+it('keeps loaded report dates while a new range is only a draft', async () => {
+  request.mockResolvedValue({
+    section: 'sales',
+    from: '2026-10-01',
+    to: '2026-10-20',
+    asOf: '2026-10-20T12:00:00.000Z',
+    offset: 0,
+    hasMore: false,
+    notes: [],
+    rows: [],
+  });
+  render(<ReportsPanel business={business} locations={[]} />);
+  await screen.findByRole('region', { name: 'Report results' });
+  fireEvent.change(screen.getByLabelText('From (UTC)'), { target: { value: '2026-10-05' } });
+  expect(screen.getByText('2026-10-01 — 2026-10-20')).toBeTruthy();
+  expect(request).toHaveBeenCalledTimes(1);
 });

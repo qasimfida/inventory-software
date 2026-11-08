@@ -1,3 +1,4 @@
+import { hasPermission } from '@inventory/contracts';
 import { AccordionSection } from '@/components/ui/Accordion';
 import { EmptyState, LoadingState } from '@/components/common/AsyncState';
 import { Dashboard } from '../reports/Dashboard';
@@ -6,7 +7,7 @@ import { workflowIcons } from './workflow-icons';
 import { Suspense, useState } from 'react';
 import type { ReactNode } from 'react';
 import { SectionNavigation } from '@/components/layout/SectionNavigation';
-import { hasPermission } from '@inventory/contracts';
+import { routeAllowed, workspaceRoutes } from '@inventory/api-client';
 import type { Business, Location } from '@inventory/contracts';
 export function ManagementWorkflows({
   business,
@@ -21,8 +22,13 @@ export function ManagementWorkflows({
   const [visited, setVisited] = useState<string[]>([]);
   const available =
     business.state === 'active'
-      ? panels.filter((p) =>
-          p.permissions.every((permission) => hasPermission(business, permission)),
+      ? panels.filter(
+          (p) =>
+            p.name !== 'catalog' &&
+            routeAllowed(
+              workspaceRoutes.find((r) => r.panel === p.name)!,
+              business,
+            ),
         )
       : [];
   const current =

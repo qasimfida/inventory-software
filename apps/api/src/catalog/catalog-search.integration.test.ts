@@ -22,6 +22,7 @@ it('unifies barcode/name lookup, returns scoped base prices and honors stock/cur
       .body,
   );
   expect(data.items).toHaveLength(1);
+  expect(Number(data.items[0]?.available)).toBeGreaterThan(0);
   expect(data.items[0]?.price).toMatchObject({ unitPrice: '12.500000', currency: 'USD' });
   expect((await get({ search: 'LOOKUP-123', currency: 'PKR' }).expect(200)).body.items).toEqual([]);
   expect(
@@ -99,4 +100,79 @@ it('lists unpriced active products without bypassing checkout price validation',
       lines: [{ variantId: product.id, unitId, quantity: '1' }],
     })
     .expect(409);
+});
+
+it('defaults products to active and restores POS visibility without overriding independently disabled variants', async () => {
+  const f = fixture();
+  const create = async (sku: string, state?: string) =>
+    (
+      await f
+        .api()
+        .post(`${f.path}/products`)
+        .set(f.h)
+        .send({ name: sku, sku, ...(state ? { state } : {}) })
+        .expect(201)
+    ).body;
+  const active = await create('DEFAULT-ACTIVE');
+  expect(active.state).toBe('active');
+  const product = await create('TO-ACTIVATE', 'inactive');
+  const items = () =>
+    f
+      .api()
+      .get(`${f.path}/pos/items`)
+      .set(f.h)
+      .query({ warehouseId: f.warehouseA, search: product.sku });
+  expect((await items().expect(200)).body.items).toEqual([]);
+  const input = { name: product.name, sku: product.sku, state: 'active', version: product.version };
+  await f
+    .api()
+    .patch(`${f.path}/products/${product.id}`)
+    .set(native(f.viewerToken))
+    .send(input)
+    .expect(403);
+  await f
+    .api()
+    .patch(`${f.path}/products/${product.id}`)
+    .set(native(f.otherToken))
+    .send(input)
+    .expect(404);
+  const updated = (
+    await f.api().patch(`${f.path}/products/${product.id}`).set(f.h).send(input).expect(200)
+  ).body;
+  expect(posItemsSchema.parse((await items().expect(200)).body).items[0]).toMatchObject({
+    productId: product.id,
+    sku: product.sku,
+    available: '0',
+  });
+  await f
+    .api()
+    .patch(`${f.path}/products/${product.id}`)
+    .set(f.h)
+    .send({ ...input, state: 'inactive', version: updated.version })
+    .expect(200);
+  expect((await items().expect(200)).body.items).toEqual([]);
+  const variant = (
+    await f
+      .db()
+      .query('SELECT base_unit_id,version FROM catalog_variants WHERE id=$1', [product.id])
+  ).rows[0];
+  await f
+    .api()
+    .patch(`${f.path}/variants/${product.id}`)
+    .set(f.h)
+    .send({
+      name: product.name,
+      sku: product.sku,
+      baseUnitId: variant.base_unit_id,
+      state: 'inactive',
+      version: variant.version,
+    })
+    .expect(200);
+  await f
+    .api()
+    .patch(`${f.path}/products/${product.id}`)
+    .set(f.h)
+    .send({ ...input, state: 'active', version: updated.version + 1 })
+    .expect(200);
+  expect((await items().expect(200)).body.items).toEqual([]);
 });

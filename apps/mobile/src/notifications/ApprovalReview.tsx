@@ -1,3 +1,4 @@
+import { RecordDetails } from '../ui/RecordDetails';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { View } from 'react-native';
 import { operationKey } from '../platform/operation-key';
@@ -35,10 +36,14 @@ export function ApprovalReview({
       <Action label="Reload review" disabled={state.busy} onPress={() => void model.run()} />
       {state.data && (
         <>
-          <Text accessibilityRole="header">
-            {state.data.title} · {state.data.state}
-          </Text>
-          <Text>Document {item.id}</Text>
+          <Text accessibilityRole="header">{state.data.title}</Text>
+          <RecordDetails
+            label="Approval document"
+            items={[
+              { label: 'Status', value: state.data.state },
+              { label: 'Document reference', value: item.id },
+            ]}
+          />
           {state.data.details.map((line, i) => (
             <Text key={i}>{line}</Text>
           ))}

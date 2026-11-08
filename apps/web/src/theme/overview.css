@@ -176,7 +176,7 @@
   stroke-width: 1;
 }
 .overview-chart-line {
-  stroke: var(--primary);
+  stroke: var(--chart-1);
   stroke-width: 3;
   fill: none;
   stroke-linejoin: round;
@@ -218,7 +218,7 @@
   stroke: var(--muted);
 }
 .overview-growth-chart path:last-child {
-  stroke: var(--primary);
+  stroke: var(--chart-1);
 }
 .overview-top-list {
   list-style: none;
@@ -280,4 +280,12 @@
 }
 .overview-stock th:first-child {
   min-width: calc(var(--space-large) * 6);
+}
+
+.chart-values {
+  max-height: var(--chart-values-height);
+  overflow: auto;
+}
+.chart-presentation[data-prominence='charts'] .overview-chart {
+  max-height: none;
 }

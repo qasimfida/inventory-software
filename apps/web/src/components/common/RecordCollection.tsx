@@ -1,3 +1,4 @@
+import { ExportRecords } from './ExportRecords';
 import { EmptyState } from './AsyncState';
 import { ViewTabs } from './ViewTabs';
 import type { ReactNode } from 'react';
@@ -10,6 +11,8 @@ export type CollectionRecord = {
   title: string;
   subtitle: string;
   detail: string;
+  /** Original evidence for CSV when the display includes an indicative equivalent. */
+  exportDetail?: string;
   status: string;
   tone: 'success' | 'warning' | 'neutral';
 };
@@ -19,35 +22,62 @@ export function RecordCollection({
   label,
   onOpen,
   toolbar,
+  emptyState,
+  actions,
+  showExport = true,
+  allowGrid = true,
   columns = ['Name', 'Reference', 'Contact / currency'],
 }: {
   items: CollectionRecord[];
   label: string;
   toolbar?: ReactNode;
+  /** Optional loading, failure or contextual empty content supplied by the owning screen. */
+  emptyState?: ReactNode;
+  /** Permission-aware creation commands, placed after filters and view controls. */
+  actions?: ReactNode;
+  /** Hide only when the owning screen renders its export in the page action row. */
+  showExport?: boolean;
+  /** Use a fixed list for transaction history; product browsing keeps both views. */
+  allowGrid?: boolean;
   columns?: readonly [string, string, string];
   onOpen: (id: string) => void;
 }) {
   const viewId = useId();
-  const [grid, setGrid] = useState(false);
+  const [gridSelected, setGrid] = useState(false);
+  const grid = allowGrid && gridSelected;
   return (
     <div className="space-y-3">
       <div className="collection-toolbar">
         {toolbar}
-        <ViewTabs
-          panelId={viewId}
-          label={label}
-          value={grid ? 'grid' : 'list'}
-          onChange={(next) => setGrid(next === 'grid')}
-        />
+        {allowGrid && (
+          <ViewTabs
+            panelId={viewId}
+            label={label}
+            value={grid ? 'grid' : 'list'}
+            onChange={(next) => setGrid(next === 'grid')}
+          />
+        )}
+        {showExport && (
+          <ExportRecords
+            headers={['Name', 'Reference', 'Details', 'Status']}
+            rows={items.map((item) => [
+              item.title,
+              item.subtitle,
+              item.exportDetail ?? item.detail,
+              item.status,
+            ])}
+          />
+        )}
+        {actions}
       </div>
       <div
         id={viewId}
-        role="tabpanel"
+        role={allowGrid ? 'tabpanel' : 'region'}
         aria-label={`${label} ${grid ? 'grid' : 'list'} view`}
         tabIndex={0}
       >
         {!items.length ? (
-          <EmptyState announce message={`No matching ${label}.`} />
+          (emptyState ?? <EmptyState announce message={`No matching ${label}.`} />)
         ) : grid ? (
           <div className="inventory-product-grid">
             {items.map((item) => (

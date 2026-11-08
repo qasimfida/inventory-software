@@ -1,0 +1,14 @@
+[
+  "apps/mobile/src/reports/ReportResults.test.tsx",
+  "apps/mobile/src/reports/ReportResults.tsx",
+  "apps/mobile/src/reports/ReportsPanel.test.tsx",
+  "apps/mobile/src/reports/ReportsPanel.tsx",
+  "apps/web/src/features/reports/ReportResults.test.tsx",
+  "apps/web/src/features/reports/ReportResults.tsx",
+  "apps/web/src/features/reports/ReportsPanel.test.tsx",
+  "apps/web/src/features/reports/ReportsPanel.tsx",
+  "apps/web/src/features/reports/reports-print.css",
+  "docs/design-system.md",
+  "packages/api-client/src/reports-characterization.test.ts",
+  "scripts/redesign-reports-browser.mjs"
+]

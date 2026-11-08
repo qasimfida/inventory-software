@@ -1,4 +1,8 @@
+// Native photo picker is outside this shell-navigation test.
+vi.mock('expo-image-picker', () => ({ launchImageLibraryAsync: vi.fn() }));
 // @vitest-environment jsdom
+// WebView is a native bridge; this suite exercises the surrounding shell, not the editor.
+vi.mock('react-native-webview', () => ({ WebView: () => null }));
 vi.mock('react-native-safe-area-context', () => import('../ui/safe-area-test-adapter'));
 vi.mock('expo-print', () => ({ printAsync: vi.fn() }));
 vi.mock('../reports/Dashboard', () => ({ Dashboard: () => null }));
@@ -10,8 +14,8 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 vi.mock('../inventory/InventoryPanel', () => ({ InventoryPanel: () => null }));
-vi.mock('../catalog/CatalogPanel', () => ({
-  CatalogPanel: () => <input aria-label="Native catalog draft" />,
+vi.mock('../inventory/InventoryWorkspace', () => ({
+  InventoryWorkspace: () => <input aria-label="Native catalog draft" />,
 }));
 vi.mock('react-native', () => vi.importActual('react-native-web'));
 const { request } = vi.hoisted(() => ({ request: vi.fn() }));
@@ -36,7 +40,7 @@ it('automatically opens native membership-scoped management and hides owner and 
   await screen.findByText('Native business');
   await userEvent.click(await screen.findByRole('button', { name: 'Business & access' }));
   await screen.findByText('No locations or terminals yet.');
-  expect(screen.queryByText('Assign member')).toBeNull();
+  expect(screen.queryByText('Add member')).toBeNull();
   expect(screen.queryByText('Create location')).toBeNull();
   expect(request).toHaveBeenLastCalledWith('/' + business.id);
 });
@@ -48,16 +52,16 @@ it('defers native workflows until selected and preserves drafts across section c
     .mockResolvedValueOnce({ business: owned, locations: [], members: [] });
   render(<ManagementPanel />);
   await userEvent.click(await screen.findByRole('button', { name: 'Workspace sections' }));
-  const catalog = await screen.findByRole('button', { name: 'Catalog & pricing' });
+  const catalog = await screen.findByRole('button', { name: 'Inventory' });
   expect(screen.queryByLabelText('Native catalog draft')).toBeNull();
   const user = userEvent.setup();
   await user.click(catalog);
   await user.type(screen.getByLabelText('Native catalog draft'), 'Unsubmitted draft');
   await user.click(screen.getByRole('button', { name: /Workspace sections/ }));
-  await user.click(screen.getByRole('button', { name: 'Inventory' }));
+  await user.click(screen.getByRole('button', { name: 'Purchasing' }));
   expect(screen.queryByRole('textbox', { name: 'Native catalog draft' })).toBeNull();
   await user.click(screen.getByRole('button', { name: /Workspace sections/ }));
-  await user.click(screen.getByRole('button', { name: 'Catalog & pricing' }));
+  await user.click(screen.getByRole('button', { name: 'Inventory' }));
   expect(
     screen.getByRole<HTMLInputElement>('textbox', { name: 'Native catalog draft' }).value,
   ).toBe('Unsubmitted draft');

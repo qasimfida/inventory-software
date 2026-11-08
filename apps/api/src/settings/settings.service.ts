@@ -81,7 +81,15 @@ export class SettingsService {
       await tx.query(
         `INSERT INTO user_preferences(account_id,data) VALUES($1,$2)
         ON CONFLICT(account_id) DO UPDATE SET data=$2,version=user_preferences.version+1,updated_at=now()`,
-        [actor.accountId, JSON.stringify(input.values)],
+        [
+          actor.accountId,
+          JSON.stringify({
+            ...(current.values.controlSize ? { controlSize: current.values.controlSize } : {}),
+            ...(current.values.animation ? { animation: current.values.animation } : {}),
+            ...(current.values.charts ? { charts: current.values.charts } : {}),
+            ...input.values,
+          }),
+        ],
       );
       await securityEvent(tx, {
         event: 'settings.preferences_changed',

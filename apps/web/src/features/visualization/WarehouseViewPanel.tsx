@@ -1,7 +1,11 @@
+import { RecordCollection } from '@/components/common/RecordCollection';
+import { Panel } from '@/components/common/Layout';
+import { IconButton } from '@/components/common/IconButton';
+import { StatusBadge } from '@/components/ui/StatusBadge';
 import { WarehouseSelect } from '@/components/common/WarehouseSelect';
 import { Pagination } from '@/components/common/Pagination';
 import { usePageCollection } from '@/components/common/usePageCollection';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, ArrowLeft, Warehouse } from 'lucide-react';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { Table, TableScroll } from '@/components/ui/Table';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
@@ -9,22 +13,22 @@ import { createWarehouseViewClient, ResourceModel } from '@inventory/api-client'
 import type { Business, Location } from '@inventory/contracts';
 import { authClient } from '@/platform/auth-client';
 import { Button } from '@/components/ui/Button';
-import { useAppearance } from '@/theme/Appearance';
 import { EmptyState, LoadingState, ErrorState } from '@/components/common/AsyncState';
 export function WarehouseViewPanel({
   business,
   locations,
+  warehouseId: selectedWarehouseId,
 }: {
   business: Business;
   locations: Location[];
+  warehouseId?: string;
 }) {
   const warehouses = locations.filter((l) => l.kind === 'warehouses'),
-    [warehouseId, setWarehouseId] = useState(warehouses[0]?.id ?? ''),
+    [localWarehouseId, setWarehouseId] = useState(warehouses[0]?.id ?? ''),
     [locationId, setLocationId] = useState<string>(),
     [offset, setOffset] = useState(0),
-    [stockOffset, setStockOffset] = useState(0),
-    [cards, setCards] = useState(false);
-  const { preferences } = useAppearance();
+    [stockOffset, setStockOffset] = useState(0);
+  const warehouseId = selectedWarehouseId ?? localWarehouseId;
   const client = useMemo(
     () => createWarehouseViewClient(authClient.organizationRequest, business.id),
     [business.id],
@@ -55,116 +59,91 @@ export function WarehouseViewPanel({
   }
   return (
     <section aria-label="Warehouse hierarchy" className="screen-section">
-      <ScreenHeader
-        title="Warehouse hierarchy"
-        description={
-          <>
-            Browse actual zones, aisles, racks, shelves and bins. This schematic shows
-            relationships, not physical positions or dimensions. Stock belongs to the selected
-            location; child locations are not included in its totals.
-          </>
-        }
-      />
-      <WarehouseSelect
-        label="View warehouse"
-        aria-label="View warehouse"
-        value={warehouseId}
-        onChange={(e) => {
-          setWarehouseId(e.target.value);
-          navigate();
-        }}
-      >
-        {warehouses.map((w) => (
-          <option key={w.id} value={w.id}>
-            {w.name}
-          </option>
-        ))}
-      </WarehouseSelect>
+      {!selectedWarehouseId && (
+        <ScreenHeader
+          title="Warehouse hierarchy"
+          description="Open a location to browse its children and stock."
+        />
+      )}
+      {!selectedWarehouseId && (
+        <WarehouseSelect
+          label="View warehouse"
+          value={warehouseId}
+          onChange={(e) => {
+            setWarehouseId(e.target.value);
+            navigate();
+          }}
+        >
+          {warehouses.map((w) => (
+            <option key={w.id} value={w.id}>
+              {w.name}
+            </option>
+          ))}
+        </WarehouseSelect>
+      )}
       {!warehouseId && <EmptyState message="No warehouses in your scope." />}
-      <Button
-        disabled={!warehouseId || state.busy}
-        onClick={() => void model.run()}
-        variant="ghost"
-        size="icon"
-        aria-label="Refresh warehouse view"
-        title="Refresh"
-      >
-        <RefreshCw aria-hidden="true" />
-      </Button>
-      {state.busy && <LoadingState message="Loading warehouse view…" />}
+      {!state.data && state.busy && <LoadingState message="Loading warehouse view…" />}
       {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
       {state.data && (
         <>
-          <h3>
-            {state.data.node.name} · {state.data.node.type} · {state.data.node.state}
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            <Button disabled={state.data.node.id === warehouseId} onClick={() => navigate()}>
-              Warehouse root
-            </Button>
-            <Button
-              disabled={!state.data.node.parentId}
-              onClick={() => navigate(state.data!.node.parentId ?? undefined)}
-            >
-              Parent location
-            </Button>
-            {preferences.visualizations === 'enhanced' && (
-              <Button aria-pressed={cards} onClick={() => setCards(!cards)}>
-                {cards ? 'Use table view' : 'Use 2D hierarchy cards'}
-              </Button>
-            )}
-          </div>
-          {!state.data.children.length ? (
-            <EmptyState message="No child locations." />
-          ) : cards && preferences.visualizations === 'enhanced' ? (
-            <div
-              aria-label="Schematic child locations"
-              className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
-            >
-              {state.data.children.map((node) => (
-                <button
-                  type="button"
-                  key={node.id}
-                  className="min-h-24 rounded-lg border p-4 text-left hover:bg-accent"
-                  onClick={() => navigate(node.id)}
-                >
-                  <span className="block font-semibold">
-                    {node.code} · {node.name}
-                  </span>
-                  <span>
-                    {node.type} · {node.state}
-                  </span>
-                </button>
-              ))}
+          <Panel aria-label="Browse locations">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h3>{state.data.node.name}</h3>
+                <p className="text-sm text-muted-foreground">
+                  {state.data.node.code} · {state.data.node.type}
+                </p>
+              </div>
+              <StatusBadge tone={state.data.node.state === 'active' ? 'success' : 'neutral'}>
+                {state.data.node.state}
+              </StatusBadge>
             </div>
-          ) : (
-            <TableScroll label="Child locations table">
-              <Table>
-                <caption>Child locations</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Location</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">State</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {state.data.children.map((node) => (
-                    <tr key={node.id}>
-                      <th scope="row">
-                        <Button variant="ghost" size="sm" onClick={() => navigate(node.id)}>
-                          {node.code} · {node.name}
-                        </Button>
-                      </th>
-                      <td>{node.type}</td>
-                      <td>{node.state}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </TableScroll>
-          )}
-          <div className="flex flex-wrap gap-2">
+            <p className="text-sm text-muted-foreground">
+              Open a child location below to explore it. Use Locations to create or edit storage
+              details.
+            </p>
+            <RecordCollection
+              showExport={!selectedWarehouseId}
+              label="child locations"
+              columns={['Name', 'Code', 'Type']}
+              onOpen={navigate}
+              toolbar={
+                <>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    disabled={!state.data.node.parentId}
+                    onClick={() => navigate(state.data!.node.parentId ?? undefined)}
+                  >
+                    <ArrowLeft aria-hidden="true" />
+                    Parent location
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    disabled={state.data.node.id === warehouseId}
+                    onClick={() => navigate()}
+                  >
+                    <Warehouse aria-hidden="true" />
+                    Warehouse root
+                  </Button>
+                  <IconButton
+                    label="Refresh warehouse view"
+                    icon={RefreshCw}
+                    disabled={state.busy}
+                    onClick={() => void model.run()}
+                  />
+                </>
+              }
+              items={state.data.children.map((node) => ({
+                id: node.id,
+                title: node.name,
+                subtitle: node.code,
+                detail: node.type,
+                status: node.state,
+                tone: node.state === 'active' ? 'success' : 'neutral',
+              }))}
+            />
             <Pagination
               label="locations"
               offset={offset}
@@ -173,19 +152,49 @@ export function WarehouseViewPanel({
               busy={state.busy || Boolean(state.error)}
               onChange={setOffset}
             />
-          </div>
-          <h3>Stock at {state.data.node.name}</h3>
-          {!state.data.stock.length && <EmptyState message="No recorded stock at this location." />}
-          <ul className="record-list">
-            {state.data.stock.map((stock) => (
-              <li key={stock.variantId}>
-                {stock.sku}: {stock.onHand} on hand · {stock.available} available · {stock.damaged}{' '}
-                damaged {stock.unit}
-                {stock.low ? ' · At or below low-stock threshold' : ''}
-              </li>
-            ))}
-          </ul>
-          <div className="flex flex-wrap gap-2">
+          </Panel>
+          <Panel aria-label="Location stock">
+            <h3>Stock at {state.data.node.name}</h3>
+            <p className="text-sm text-muted-foreground">
+              Only stock stored directly here. Child locations are not included.
+            </p>
+            {!state.data.stock.length ? (
+              <EmptyState
+                message="No stock at this location"
+                description="Open a child location to check its stock, or use Move stock in Locations to record a movement."
+              />
+            ) : (
+              <TableScroll label="Location stock table">
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>SKU</th>
+                      <th>Unit</th>
+                      <th className="text-right">On hand</th>
+                      <th className="text-right">Available</th>
+                      <th className="text-right">Damaged</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {state.data.stock.map((stock) => (
+                      <tr key={stock.variantId}>
+                        <th scope="row">{stock.sku}</th>
+                        <td>{stock.unit}</td>
+                        <td className="text-right tabular-nums">{stock.onHand}</td>
+                        <td className="text-right tabular-nums">{stock.available}</td>
+                        <td className="text-right tabular-nums">{stock.damaged}</td>
+                        <td>
+                          <StatusBadge tone={stock.low ? 'warning' : 'neutral'}>
+                            {stock.low ? 'Low stock' : 'Above threshold'}
+                          </StatusBadge>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </TableScroll>
+            )}
             <Pagination
               label="location stock"
               offset={stockOffset}
@@ -194,7 +203,7 @@ export function WarehouseViewPanel({
               busy={state.busy || Boolean(state.error)}
               onChange={setStockOffset}
             />
-          </div>
+          </Panel>
         </>
       )}
     </section>

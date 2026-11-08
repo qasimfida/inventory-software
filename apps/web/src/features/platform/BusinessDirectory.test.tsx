@@ -93,3 +93,13 @@ it('groups branch cards separately from warehouses and opens their details', asy
     'North branch',
   );
 });
+
+it('keeps the workspace management handoff explicit and absent without its callback', async () => {
+  const manage = vi.fn();
+  const view = render(<BusinessDirectory items={[business]} grid={false} />);
+  await userEvent.click(screen.getByRole('button', { name: 'Example business' }));
+  expect(screen.queryByRole('button', { name: 'Manage in business workspace' })).toBeNull();
+  view.rerender(<BusinessDirectory items={[business]} grid={false} onManage={manage} />);
+  await userEvent.click(screen.getByRole('button', { name: 'Manage in business workspace' }));
+  expect(manage).toHaveBeenCalledExactlyOnceWith(business.id, false);
+});

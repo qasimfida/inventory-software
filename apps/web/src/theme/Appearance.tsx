@@ -1,8 +1,10 @@
+import type { PreferencePatch } from '@inventory/contracts';
 import {
   createContext,
   useContext,
-  useId,
   useEffect,
+  useId,
+  useLayoutEffect,
   useState,
   useSyncExternalStore,
   useMemo,
@@ -18,7 +20,7 @@ const Context = createContext<{
   locked: boolean;
   setAppearance: (value: Appearance) => void;
 }>({
-  appearance: 'system',
+  appearance: 'light',
   preferences: defaultPreferences,
   locked: false,
   setAppearance: () => {},
@@ -28,11 +30,13 @@ export const useAppearance = () => useContext(Context);
 export function AppearanceProvider({
   children,
   preview = false,
+  previewPreferences,
 }: {
   children: ReactNode;
   preview?: boolean;
+  previewPreferences?: PreferencePatch;
 }) {
-  const [guest, setGuest] = useState<Appearance>('system');
+  const [guest, setGuest] = useState<Appearance>('light');
   const state = useSyncExternalStore(settingsModel.subscribe, settingsModel.snapshot);
   const preferences = useMemo(
     () =>
@@ -41,21 +45,34 @@ export function AppearanceProvider({
             state.snapshot?.preferences.values,
             state.snapshot?.platform.values,
             state.business?.values,
+            { touch: window.matchMedia?.('(pointer: coarse)').matches ?? false },
           )
-        : { ...defaultPreferences, appearance: guest },
-    [state, guest, preview],
+        : resolveSettings(
+            { appearance: guest, ...previewPreferences },
+            {},
+            {},
+            { touch: window.matchMedia?.('(pointer: coarse)').matches ?? false },
+          ),
+    [state.accountId, state.snapshot, state.business, guest, preview, previewPreferences],
   );
-  const locked =
-    !preview &&
-    (state.busy ||
-      !!state.snapshot?.platform.values.enforced.appearance ||
-      !!state.business?.values.enforced.appearance);
+  useEffect(() => {
+    if (preview || !state.accountId) return;
+    void settingsModel.refreshRates();
+    const timer = setInterval(() => void settingsModel.refreshRates(), 60000);
+    const online = () => void settingsModel.refreshRates();
+    window.addEventListener('online', online);
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener('online', online);
+    };
+  }, [preview, state.accountId]);
+  const locked = !preview && state.busy;
   function setAppearance(value: Appearance) {
     if (locked) return;
     if (!preview && state.accountId) void settingsModel.save({ appearance: value });
     else setGuest(value);
   }
-  useEffect(() => {
+  useLayoutEffect(() => {
     const previous = { ...document.documentElement.dataset };
     const previousFont = document.documentElement.style.getPropertyValue('--font-family-sans');
     const dark = window.matchMedia?.('(prefers-color-scheme: dark)');
@@ -86,6 +103,9 @@ export function AppearanceProvider({
             : 'light'
           : effective.appearance;
       root.dataset.motion = effective.motion;
+      root.dataset.animation = effective.animation;
+      root.dataset.controlSize = effective.controlSize;
+      root.dataset.charts = effective.charts;
       root.dataset.density = effective.density;
       root.dataset.textSize = effective.textSize;
       root.dataset.iconSize = effective.iconSize;
@@ -107,6 +127,9 @@ export function AppearanceProvider({
         for (const key of [
           'theme',
           'motion',
+          'animation',
+          'controlSize',
+          'charts',
           'density',
           'textSize',
           'iconSize',

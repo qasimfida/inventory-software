@@ -135,12 +135,7 @@ export function InventoryOverview({
         <Text tone="muted">
           Available base units. Low stock up to {data?.threshold ?? '…'} units.
         </Text>
-        <IconAction
-          label="Refresh"
-          icon="↻"
-          disabled={state.busy}
-          onPress={() => void request.model.run()}
-        />
+
         {state.busy && <Text accessibilityLiveRegion="polite">Loading stock…</Text>}
         {Boolean(state.error) && (
           <ErrorState message={state.error} onRetry={() => void request.model.run()} />
@@ -158,6 +153,12 @@ export function InventoryOverview({
           onAdjust={onAdjust}
           controls={
             <>
+              <IconAction
+                label="Refresh stock"
+                icon="↻"
+                disabled={state.busy}
+                onPress={() => void request.model.run()}
+              />
               <View style={{ flex: 1, minWidth: 200 }}>
                 <SearchControl
                   label="Search inventory products"

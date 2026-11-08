@@ -52,3 +52,22 @@ for (const mode of ['light', 'dark'] as const) {
       expect(contrast(p[text], p[surface]), `${text} on ${surface}`).toBeGreaterThanOrEqual(4.5);
   });
 }
+
+for (const mode of ['light', 'dark'] as const) {
+  for (const key of [
+    'accent',
+    'primary-teal',
+    'primary-violet',
+    'primary-rose',
+    'primary-amber',
+  ] as const) {
+    it(`${mode} ${key} supports visible primary/navigation accents without changing statuses`, () => {
+      const p = palettes[mode];
+      expect(contrast(p['accent-foreground'], p[key])).toBeGreaterThanOrEqual(4.5);
+      for (const surface of ['card', 'background', 'elevated'] as const)
+        expect(contrast(p[key], p[surface])).toBeGreaterThanOrEqual(3);
+      expect(p.primary).toBe(p.accent);
+      expect(p['navigation-selected']).toBe(p.accent);
+    });
+  }
+}

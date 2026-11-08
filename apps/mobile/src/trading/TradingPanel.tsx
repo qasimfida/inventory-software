@@ -1,7 +1,10 @@
+import { TradingRelationships, TradingDetails } from './TradingEvidence';
+import { RecordCollection } from '../ui/RecordCollection';
+import { SidePanel } from '../ui/SidePanel';
 import { Pagination } from '../ui/Pagination';
 import { usePageCollection } from '../ui/usePageCollection';
 import { IconAction } from '../ui/IconAction';
-import { LoadingState, EmptyState } from '../ui/AsyncState';
+import { LoadingState, ErrorState } from '../ui/AsyncState';
 import { ScreenBody } from '../ui/ScreenHeader';
 import { DisclosureTrigger } from '../ui/DisclosureTrigger';
 import { TradingHistory } from './TradingHistory';
@@ -15,6 +18,7 @@ import { authClient } from '../auth/client';
 import { operationKey } from '../platform/operation-key';
 import { CommandForm } from '../components/CommandForm';
 export function TradingPanel({ business, page = false }: { business: Business; page?: boolean }) {
+  const [selectedRecord, setSelectedRecord] = useState('');
   const [offset, setOffset] = useState(0);
   const [open, setOpen] = useState(page);
   const client = useMemo(
@@ -32,11 +36,10 @@ export function TradingPanel({ business, page = false }: { business: Business; p
       setOffset(0);
     },
   );
-  const allowed = true;
   useEffect(() => {
-    if (allowed && open) void model.run();
+    if (open) void model.run();
     return model.reset;
-  }, [model, allowed, open]);
+  }, [model, open]);
   return (
     <ScreenBody>
       <DisclosureTrigger
@@ -57,45 +60,44 @@ export function TradingPanel({ business, page = false }: { business: Business; p
             stock and balances.
           </Text>
           <Text>Your business ID: {business.id}</Text>
-          {!allowed && (
-            <Text>
-              Accounting requires business-wide reports, payments, sales and purchasing read
-              permissions.
-            </Text>
-          )}
           {state.busy && <LoadingState message="Loading…" />}
-          {Boolean(state.error) && <Text accessibilityRole="alert">{state.error}</Text>}
+          {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
           <IconAction
             label="Refresh trading"
             onPress={() => void model.run()}
-            disabled={state.busy || !allowed}
+            disabled={state.busy}
             icon="↻"
           />
           {state.data && (
             <>
-              {!state.data.relationships.length && (
-                <EmptyState message="No trading relationships. Ask a partner owner for their business ID." />
-              )}
-              {state.data.relationships.map((r) => (
-                <Text key={r.id}>
-                  Relationship {r.id} · {r.proposerId} / {r.partnerId} · {r.state}
-                </Text>
-              ))}
-              {!state.data.orders.length && <EmptyState message="No shared orders on this page." />}
-              {state.data.orders.map((o) => (
-                <View key={o.id}>
-                  <Text>
-                    {o.reference} · {o.state} · buyer {o.buyerId} · seller {o.sellerId}
-                  </Text>
-                  <TradingHistory client={client} id={o.id} />
-                  {o.lines.map((l, i) => (
-                    <Text key={i}>
-                      {l.description}: {l.quantity} {l.unit} at {l.unitPriceMinor} {o.currency}{' '}
-                      minor units each
-                    </Text>
+              <TradingRelationships items={state.data.relationships} />
+              <Text accessibilityRole="header">Shared orders</Text>
+              <RecordCollection
+                label="trading orders"
+                onOpen={setSelectedRecord}
+                items={state.data.orders.map((o) => ({
+                  id: o.id,
+                  title: o.reference,
+                  subtitle: o.currency,
+                  detail: `${o.lines.length} ${o.lines.length === 1 ? 'line' : 'lines'}`,
+                  status: o.state[0]!.toUpperCase() + o.state.slice(1),
+                  tone: o.state === 'received' ? 'success' : 'neutral',
+                }))}
+              />
+              <SidePanel
+                title="Shared order details"
+                open={!!selectedRecord}
+                onClose={() => setSelectedRecord('')}
+              >
+                {state.data.orders
+                  .filter((item) => item.id === selectedRecord)
+                  .map((o) => (
+                    <View key={o.id}>
+                      <TradingDetails order={o} timeZone={business.timeZone} />
+                      <TradingHistory client={client} id={o.id} timeZone={business.timeZone} />
+                    </View>
                   ))}
-                </View>
-              ))}
+              </SidePanel>
               <View style={styles.group}>
                 {tradingForms(client, state.data, business.id).map((f) => (
                   <CommandForm

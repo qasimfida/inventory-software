@@ -1,3 +1,4 @@
+import { checkDesign } from './design-check.mjs';
 import { readdir, readFile, mkdir, writeFile } from 'node:fs/promises';
 import ts from 'typescript';
 import { checkParity } from './check-parity.mjs';
@@ -69,3 +70,5 @@ if (blocking.length) {
   console.error(blocking.join('\n'));
   process.exitCode = 1;
 }
+
+checkDesign();

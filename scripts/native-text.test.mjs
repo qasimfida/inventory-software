@@ -42,7 +42,7 @@ test('native sources do not place literal text or explicit spaces outside Text',
   assert.equal(invalidText('<View><Text>Hello</Text></View>', 'fixture.tsx').length, 0);
   const root = 'apps/mobile/src/';
   const failures = readdirSync(root, { recursive: true })
-    .filter((p) => p.endsWith('.tsx') && !p.includes('.test.'))
+    .filter((p) => p.endsWith('.tsx') && !p.includes('.test.') && !p.endsWith('.web.tsx'))
     .flatMap((p) => invalidText(readFileSync(root + p, 'utf8'), root + p));
   assert.deepEqual(failures, []);
 });

@@ -44,10 +44,11 @@ it('assigns a cashier to the selected store with labelled controls', async () =>
     />,
   );
   const user = userEvent.setup();
+  await user.click(screen.getByRole('button', { name: 'Add member' }));
   await user.type(screen.getByLabelText('Member email'), 'cashier@example.test');
   await selectOption(screen.getByLabelText('Role'), 'cashier');
   await selectOption(screen.getByLabelText('Access scope: store'), storeId);
-  await user.click(screen.getByRole('button', { name: 'Assign member' }));
+  await user.click(screen.getAllByRole('button', { name: 'Add member' }).at(-1)!);
   await waitFor(() =>
     expect(request).toHaveBeenCalledWith(`/${businessId}/members`, 'POST', {
       email: 'cashier@example.test',
@@ -68,7 +69,7 @@ it('read-only user permission never presents assignment controls', () => {
       busy={false}
     />,
   );
-  expect(screen.queryByRole('button', { name: 'Assign member' })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Add member' })).toBeNull();
 });
 it('submits checked custom permissions even after their groups are collapsed', async () => {
   const request = vi.fn().mockResolvedValue({});
@@ -82,6 +83,7 @@ it('submits checked custom permissions even after their groups are collapsed', a
   });
   render(<MemberEditor workspace={workspace} model={model} busy={false} />);
   const user = userEvent.setup();
+  await user.click(screen.getByRole('button', { name: 'Add member' }));
   await user.type(screen.getByLabelText('Member email'), 'inventory@example.test');
   await selectOption(screen.getByLabelText('Role'), 'custom');
   await selectOption(screen.getByLabelText('Access scope: store'), storeId);
@@ -90,7 +92,7 @@ it('submits checked custom permissions even after their groups are collapsed', a
     screen.getByRole('checkbox', { name: 'Create and edit · Inventory and transfers' }),
   );
   await user.click(screen.getByRole('button', { name: /Inventory and transfers · 1 selected/ }));
-  await user.click(screen.getByRole('button', { name: 'Assign member' }));
+  await user.click(screen.getAllByRole('button', { name: 'Add member' }).at(-1)!);
   await waitFor(() =>
     expect(request).toHaveBeenCalledWith(
       `/${businessId}/members`,
@@ -102,4 +104,34 @@ it('submits checked custom permissions even after their groups are collapsed', a
       }),
     ),
   );
+});
+
+it('shows archived scoped members as read-only without widening missing location access', async () => {
+  const request = vi.fn();
+  render(
+    <MemberEditor
+      workspace={{
+        ...workspace,
+        members: [
+          {
+            accountId: '00000000-0000-4000-8000-000000000003',
+            email: 'archived@example.test',
+            role: 'custom',
+            state: 'archived',
+            version: 2,
+            scope: { storeId, warehouseId: '00000000-0000-4000-8000-000000000004' },
+            permissions: [],
+          },
+        ],
+      }}
+      model={new OrganizationModel(createOrganizationClient(request))}
+      busy={false}
+    />,
+  );
+  await userEvent.click(screen.getByRole('button', { name: 'archived@example.test' }));
+  expect(screen.getByRole('dialog').textContent).toContain('Warehouse reference:');
+  expect(screen.getByRole('dialog').textContent).toContain('No permissions assigned');
+  expect(screen.queryByRole('button', { name: 'Save membership' })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Remove member access' })).toBeNull();
+  expect(request).not.toHaveBeenCalled();
 });

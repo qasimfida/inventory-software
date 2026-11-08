@@ -1,3 +1,4 @@
+import { EffectiveAppearance } from './EffectiveAppearance';
 import { AccordionSection } from '@/components/ui/Accordion';
 import { PreferenceFields } from './PreferenceFields';
 import { RefreshCw } from 'lucide-react';
@@ -39,9 +40,10 @@ export function SettingsPanel({
         </div>
       </div>
       <p>
-        Preferences belong to your account. Business and platform policies may enforce values.
-        Changes require a connection. Currency selects the overview’s transaction currency; existing
-        prices and receipts keep their recorded currency.
+        Appearance follows your account across businesses; cosmetic policies do not override it.
+        Changes save online. Currency and list-loading policies still apply. Display currency shows
+        indicative equivalents alongside original prices. Transaction currencies and payment amounts
+        do not change.
       </p>
       {state.message && <p role="alert">{state.message}</p>}
       <Button
@@ -54,22 +56,19 @@ export function SettingsPanel({
       >
         <RefreshCw aria-hidden="true" />
       </Button>
+      <EffectiveAppearance />
       <PreferenceFields />
       <Switch
-        label="Optional shadows and visual effects"
+        label="Advanced · Optional shadows and visual effects"
         description="Changes save to your account immediately."
         checked={effective.effects}
-        disabled={
-          state.busy ||
-          !state.snapshot ||
-          state.snapshot.platform.values.enforced.effects !== undefined ||
-          state.business?.values.enforced.effects !== undefined
-        }
+        disabled={state.busy || !state.snapshot}
         onCheckedChange={(effects) => void settingsModel.save({ effects })}
       />
       <p className="text-sm">
-        Bundled and system fonts. Reduced-motion accessibility overrides animation. Enhanced
-        visualizations do not download charts or 3D assets.
+        Bundled fonts work offline. Existing device fonts retain their fallback. Reduced-motion
+        accessibility overrides animation. Enhanced visualizations do not download charts or 3D
+        assets.
       </p>
       {!preferencesOnly && state.snapshot?.canManagePlatform && (
         <PolicyEditor
@@ -88,11 +87,6 @@ export function SettingsPanel({
         </p>
       )}
       {!preferencesOnly && <SecurityPanel platform={state.snapshot?.canManagePlatform ?? false} />}
-      {import.meta.env.DEV && (
-        <a className="text-primary underline" href="#/design-system">
-          Components / Design system
-        </a>
-      )}
     </AccordionSection>
   );
 }

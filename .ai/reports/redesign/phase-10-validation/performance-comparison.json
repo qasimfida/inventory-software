@@ -1,0 +1,32 @@
+[
+  {
+    "metric": "cold POS list readiness",
+    "beforeMean": 239,
+    "afterMean": 234,
+    "growth": -0.02092050209205021,
+    "range": [
+      234,
+      234
+    ]
+  },
+  {
+    "metric": "search to matching suggestion and filtered cards (debounce included)",
+    "beforeMean": 405,
+    "afterMean": 408.8,
+    "growth": 0.009382716049382678,
+    "range": [
+      387,
+      439
+    ]
+  },
+  {
+    "metric": "warm POS list readiness",
+    "beforeMean": 131.75,
+    "afterMean": 135,
+    "growth": 0.024667931688804545,
+    "range": [
+      62,
+      208
+    ]
+  }
+]

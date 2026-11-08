@@ -6,3 +6,13 @@ export * from './location-label.js';
 
 export * from './scanner.js';
 export * from './sellable-stock.js';
+export {
+  richDescriptionPrefix,
+  parseDescription,
+  descriptionHtml,
+  descriptionText,
+  richDescription,
+  safeDescriptionLink,
+  type DescriptionNode,
+} from '@inventory/contracts';
+export * from './display-money.js';

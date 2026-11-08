@@ -1,3 +1,4 @@
+import { CategoryPage } from '../catalog/CategoryPage';
 import { StorefrontPanel } from '../storefront/StorefrontPanel';
 import { Dashboard } from '../reports/Dashboard';
 import { DisclosureTrigger } from '../ui/DisclosureTrigger';
@@ -10,7 +11,6 @@ import { AccountingPanel } from '../accounting/AccountingPanel';
 import { IntegrationsPanel } from '../integrations/IntegrationsPanel';
 import { ReportsPanel } from '../reports/ReportsPanel';
 import { NotificationsPanel } from '../notifications/NotificationsPanel';
-import { WarehouseViewPanel } from '../visualization/WarehouseViewPanel';
 import { hasPermission } from '@inventory/contracts';
 import type { Business, Location, Permission } from '@inventory/contracts';
 import { WarehousePanel } from '../warehouse/WarehousePanel';
@@ -18,10 +18,11 @@ import { CustomerPanel } from '../customers/CustomerPanel';
 import { TransferPanel } from '../transfers/TransferPanel';
 import { StoragePanel } from '../storage/StoragePanel';
 import { PurchasingPanel } from '../purchasing/PurchasingPanel';
-import { InventoryPanel } from '../inventory/InventoryPanel';
-import { CatalogPanel } from '../catalog/CatalogPanel';
+import { InventoryWorkspace } from '../inventory/InventoryWorkspace';
+import { routeAllowed, workspaceRoutes } from '@inventory/api-client';
 import { PayablePanel } from '../purchasing/PayablePanel';
 export const panels = [
+  { name: 'categories', Component: CategoryPage, permissions: ['products.read', 'products.write'] },
   { name: 'storefront', Component: StorefrontPanel, permissions: ['onlineStore.view'] },
   { name: 'trading', Component: TradingPanel, permissions: ['business.write'] },
   {
@@ -32,16 +33,15 @@ export const panels = [
   { name: 'integrations', Component: IntegrationsPanel, permissions: ['business.read'] },
   { name: 'reports', Component: ReportsPanel, permissions: ['reports.read'] },
   { name: 'notifications', Component: NotificationsPanel, permissions: ['business.read'] },
-  { name: 'warehouse-view', Component: WarehouseViewPanel, permissions: ['stock.read'] },
   { name: 'customers', Component: CustomerPanel, permissions: ['customers.read'] },
-  { name: 'catalog', Component: CatalogPanel, permissions: ['products.read'] },
+  { name: 'catalog', Component: InventoryWorkspace, permissions: ['products.read'] },
   { name: 'warehouse', Component: WarehousePanel, permissions: ['stock.read'] },
   { name: 'transfers', Component: TransferPanel, permissions: ['stock.read'] },
   { name: 'purchasing', Component: PurchasingPanel, permissions: ['purchases.read'] },
   { name: 'payables', Component: PayablePanel, permissions: ['purchases.read', 'payments.read'] },
   { name: 'storage', Component: StoragePanel, permissions: ['stock.read'] },
-  { name: 'inventory', Component: InventoryPanel, permissions: ['stock.read'] },
-] satisfies { name: string; Component: typeof CatalogPanel; permissions: Permission[] }[];
+  { name: 'inventory', Component: InventoryWorkspace, permissions: ['stock.read'] },
+] satisfies { name: string; Component: typeof InventoryWorkspace; permissions: Permission[] }[];
 export function ManagementWorkflows({
   business,
   locations,
@@ -55,8 +55,13 @@ export function ManagementWorkflows({
   const [visited, setVisited] = useState<string[]>([]);
   const available =
     business.state === 'active'
-      ? panels.filter((p) =>
-          p.permissions.every((permission) => hasPermission(business, permission)),
+      ? panels.filter(
+          (p) =>
+            p.name !== 'catalog' &&
+            routeAllowed(
+              workspaceRoutes.find((r) => r.panel === p.name)!,
+              business,
+            ),
         )
       : [];
   const labels: Record<string, string> = {
@@ -69,8 +74,7 @@ export function ManagementWorkflows({
     customers: 'Customers',
     reports: 'Reports & dashboard',
     notifications: 'Notifications & approvals',
-    'warehouse-view': 'Warehouse hierarchy',
-    storage: 'Storage locations',
+    storage: 'Warehouse & storage',
     payables: 'Supplier balances',
     accounting: 'Accounting',
     trading: 'Business trading',

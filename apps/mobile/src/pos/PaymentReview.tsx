@@ -1,3 +1,4 @@
+import { RecordDetails } from '../ui/RecordDetails';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { checkoutForm, paymentAllocation } from '@inventory/api-client';
@@ -50,11 +51,23 @@ export function PaymentReview({
       {allocation.error ? (
         <Text accessibilityRole="alert">{allocation.error}</Text>
       ) : (
-        <Text accessibilityLiveRegion="polite">
-          Cash: {formatMinorUnits(allocation.cash, state.quote.currency)} · Unpaid credit:{' '}
-          {formatMinorUnits(allocation.credit, state.quote.currency)} · Change:{' '}
-          {formatMinorUnits(allocation.change, state.quote.currency)}
-        </Text>
+        <RecordDetails
+          label="Payment allocation"
+          items={[
+            {
+              label: 'Cash applied',
+              value: formatMinorUnits(allocation.cash, state.quote.currency),
+            },
+            {
+              label: 'Unpaid customer credit',
+              value: formatMinorUnits(allocation.credit, state.quote.currency),
+            },
+            {
+              label: 'Change due',
+              value: formatMinorUnits(allocation.change, state.quote.currency),
+            },
+          ]}
+        />
       )}
       {!allocation.error && !state.busy && (
         <CommandForm

@@ -1,14 +1,13 @@
+import { useDisplayMoney } from '../ui/useDisplayMoney';
+import { StatusBadge } from '../ui/StatusBadge';
+import { RecordDetails } from '../ui/RecordDetails';
+import { RichDescription } from '../ui/RichDescription';
 import { useOnlineCollection } from '../storefront/useOnlineCollection';
 import { ProductChannels } from '../storefront/ProductChannels';
 import { useCatalogLive } from '../platform/useCatalogLive';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { View, Pressable, Image } from 'react-native';
-import {
-  createCatalogClient,
-  ResourceModel,
-  productDetailTabs,
-  posPriceLabel,
-} from '@inventory/api-client';
+import { createCatalogClient, ResourceModel, productDetailTabs } from '@inventory/api-client';
 import type { ProductDetailTab } from '@inventory/api-client';
 import { hasPermission } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
@@ -30,6 +29,8 @@ export function ProductPage({
   locations: Location[];
   productId: string;
 }) {
+  const { posPriceLabel } = useDisplayMoney();
+
   const channels = useOnlineCollection([productId]);
   const theme = useTheme(),
     [tab, setTab] = useState<ProductDetailTab>('Overview'),
@@ -59,10 +60,12 @@ export function ProductPage({
   return (
     <View style={{ gap: theme.spacing.medium }}>
       <Text accessibilityRole="header">{product.name}</Text>
-      {channels.items.some((l) => l.status === 'active') && <Text>Online</Text>}
-      <Text>
-        {product.sku} · {product.state}
-      </Text>
+      {channels.items.some((l) => l.status === 'active') && <StatusBadge label="Online" />}
+      <Text tone="muted">{product.sku}</Text>
+      <StatusBadge
+        tone={product.state === 'active' ? 'success' : 'neutral'}
+        label={product.state}
+      />
       <ScrollableTabs label="Product">
         {productDetailTabs.map((name) => (
           <Pressable
@@ -91,14 +94,23 @@ export function ProductPage({
               style={{ width: '100%', height: 180, borderRadius: theme.radius }}
             />
           ))}
-          <Text>{product.description || 'No description added.'}</Text>
-          <Text>{product.price ? posPriceLabel({ price: product.price }) : 'Not priced'}</Text>
-          <Text>
-            Type: {product.type} · Inventory tracking:{' '}
-            {product.trackInventory ? 'Enabled' : 'Disabled'}
-          </Text>
-          <Text>Barcodes: {product.barcodes.join(', ') || 'None'}</Text>
-          <Text>Alternative codes: {product.alternativeCodes.join(', ') || 'None'}</Text>
+          <RichDescription value={product.description} />
+          <RecordDetails
+            label="Product information"
+            items={[
+              {
+                label: 'Selling price / unit',
+                value: product.price ? posPriceLabel({ price: product.price }) : 'Not priced',
+              },
+              { label: 'Product type', value: product.type },
+              {
+                label: 'Inventory tracking',
+                value: product.trackInventory ? 'Enabled' : 'Disabled',
+              },
+              { label: 'Barcodes', value: product.barcodes.join(', ') || 'None' },
+              { label: 'Alternative codes', value: product.alternativeCodes.join(', ') || 'None' },
+            ]}
+          />
           {hasPermission(business, 'products.write') && product.state !== 'archived' && (
             <Action label="Edit product details" onPress={() => setEditing(true)} />
           )}

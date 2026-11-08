@@ -4,12 +4,13 @@ import {
   operationsPageSchema,
   costDetailSchema,
   staffSchema,
+  staffDirectorySchema,
   staffInputSchema,
   staffUpdateSchema,
   costInputSchema,
   costPaymentSchema,
 } from '@inventory/contracts';
-import type { StaffInput, CostInput, CostPayment } from '@inventory/contracts';
+import type { StaffInput, CostInput, CostPayment, OperationQuery } from '@inventory/contracts';
 import type { OrganizationTransport } from './organization.js';
 import { queryString } from './catalog.js';
 import { RetryableCommands } from './retryable-commands.js';
@@ -21,10 +22,26 @@ export function createOperationsClient(
   const path = `/${encodeURIComponent(businessId)}/operations`,
     commands = new RetryableCommands(request, newKey);
   return {
-    list: async (search = '', offset = 0, signal?: CancellationSignal) =>
+    list: async (
+      search = '',
+      offset = 0,
+      signal?: CancellationSignal,
+      filters: Omit<OperationQuery, 'search' | 'offset'> = {},
+    ) =>
       operationsPageSchema.parse(
-        await request(`${path}?${queryString({ search, offset })}`, 'GET', undefined, signal),
+        await request(
+          `${path}?${queryString({ search, offset, ...filters })}`,
+          'GET',
+          undefined,
+          signal,
+        ),
       ),
+    directory: async (search = '', offset = 0, signal?: CancellationSignal) =>
+      staffDirectorySchema.parse(
+        await request(`${path}/staff?${queryString({ search, offset })}`, 'GET', undefined, signal),
+      ),
+    staff: async (id: string) =>
+      staffSchema.parse(await request(`${path}/staff/${encodeURIComponent(id)}`)),
     detail: async (id: string, offset = 0) =>
       costDetailSchema.parse(
         await request(`${path}/costs/${encodeURIComponent(id)}?offset=${offset}`),

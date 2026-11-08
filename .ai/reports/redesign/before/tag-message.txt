@@ -1,0 +1,7 @@
+Phase 1 redesign baseline checkpoint.
+
+Target HEAD: 4038da989042e9ba241ab0c60690c5d3bcee6020
+The baseline was measured on a dirty working tree. No commit was created.
+Reports and changes in .ai/reports/redesign, docs and scripts remain uncommitted.
+This tag does NOT contain or qualify those working-tree changes and is not a release tag.
+Source fingerprint SHA256: df3bb316eaccf831f0f4a6d00489a3d8bc77435e1db0e8800d36c9be555d16ba

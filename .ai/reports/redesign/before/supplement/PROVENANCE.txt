@@ -1,0 +1,1 @@
+Phase 3 reran this supplemental capture before its hardcoded output path was corrected. These supplemental images are not a Phase 1 visual baseline. The original primary before/screens set and phase-3-before remain intact. Use phase-3-final/supplement for final evidence.

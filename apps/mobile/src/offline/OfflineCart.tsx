@@ -142,7 +142,10 @@ export function OfflineCart({ model, data }: { model: OfflineWorkspace; data: Va
             <Action
               variant="outline"
               icon="cart"
-              label={price(item.unitPrice)}
+              label={
+                item.trackInventory && Number(item.available) <= 0 ? 'Sold' : price(item.unitPrice)
+              }
+              disabled={item.trackInventory && Number(item.available) <= 0}
               onPress={() => add(item.id)}
             />
           </View>

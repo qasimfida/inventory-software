@@ -1,0 +1,879 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "name": "online-product-valid-listing",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-light-online-product-valid-listing.png",
+    "route": "#/online-store/products/d0000000-0000-4000-8000-000000008000",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "name": "inventory-viewport",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-light-inventory-viewport.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "name": "product-editor",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-light-product-editor.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "name": "product-details",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-light-product-details.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "name": "product-tab-stock",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-light-product-tab-stock.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "name": "product-tab-pricing",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-light-product-tab-pricing.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "name": "product-tab-history",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-light-product-tab-history.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "name": "product-tab-channels",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-light-product-tab-channels.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "name": "pos-cart",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-light-pos-cart.png",
+    "route": "#/pos",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "name": "online-product-valid-listing",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-dark-online-product-valid-listing.png",
+    "route": "#/online-store/products/d0000000-0000-4000-8000-000000008000",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "name": "inventory-viewport",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-dark-inventory-viewport.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "name": "product-editor",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-dark-product-editor.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "name": "product-details",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-dark-product-details.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "name": "product-tab-stock",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-dark-product-tab-stock.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "name": "product-tab-pricing",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-dark-product-tab-pricing.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "name": "product-tab-history",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-dark-product-tab-history.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "name": "product-tab-channels",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-dark-product-tab-channels.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "name": "pos-cart",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/390-dark-pos-cart.png",
+    "route": "#/pos",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "name": "online-product-valid-listing",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-light-online-product-valid-listing.png",
+    "route": "#/online-store/products/d0000000-0000-4000-8000-000000008000",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "name": "inventory-viewport",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-light-inventory-viewport.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "name": "product-editor",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-light-product-editor.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "name": "product-details",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-light-product-details.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "name": "product-tab-stock",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-light-product-tab-stock.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "name": "product-tab-pricing",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-light-product-tab-pricing.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "name": "product-tab-history",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-light-product-tab-history.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "name": "product-tab-channels",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-light-product-tab-channels.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "name": "pos-cart",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-light-pos-cart.png",
+    "route": "#/pos",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "name": "online-product-valid-listing",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-dark-online-product-valid-listing.png",
+    "route": "#/online-store/products/d0000000-0000-4000-8000-000000008000",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "name": "inventory-viewport",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-dark-inventory-viewport.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "name": "product-editor",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-dark-product-editor.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "name": "product-details",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-dark-product-details.png",
+    "route": "#/inventory",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "name": "product-tab-stock",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-dark-product-tab-stock.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "name": "product-tab-pricing",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-dark-product-tab-pricing.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "name": "product-tab-history",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-dark-product-tab-history.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "name": "product-tab-channels",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-dark-product-tab-channels.png",
+    "route": "#/catalog/d0000000-0000-4000-8000-000000000100",
+    "alerts": []
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "name": "pos-cart",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/1440-dark-pos-cart.png",
+    "route": "#/pos",
+    "alerts": []
+  },
+  {
+    "role": "superadmin",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/role-superadmin.png",
+    "landing": "#/admin",
+    "links": [
+      {
+        "text": "Online store",
+        "href": "#/online-store"
+      },
+      {
+        "text": "Overview",
+        "href": "#/dashboard"
+      },
+      {
+        "text": "Point of sale",
+        "href": "#/pos"
+      },
+      {
+        "text": "Sales & receipts",
+        "href": "#/sales"
+      },
+      {
+        "text": "Cash shifts",
+        "href": "#/cash"
+      },
+      {
+        "text": "Categories",
+        "href": "#/categories"
+      },
+      {
+        "text": "Inventory",
+        "href": "#/inventory"
+      },
+      {
+        "text": "Stock counts & scanning",
+        "href": "#/warehouse"
+      },
+      {
+        "text": "Transfers",
+        "href": "#/transfers"
+      },
+      {
+        "text": "Warehouse & storage",
+        "href": "#/storage"
+      },
+      {
+        "text": "Purchasing & suppliers",
+        "href": "#/purchasing"
+      },
+      {
+        "text": "Customers",
+        "href": "#/customers"
+      },
+      {
+        "text": "Supplier balances",
+        "href": "#/payables"
+      },
+      {
+        "text": "Accounting",
+        "href": "#/accounting"
+      },
+      {
+        "text": "Reports",
+        "href": "#/reports"
+      },
+      {
+        "text": "Logs",
+        "href": "#/logs"
+      },
+      {
+        "text": "Notifications & approvals",
+        "href": "#/notifications"
+      },
+      {
+        "text": "Business trading",
+        "href": "#/trading"
+      },
+      {
+        "text": "Integrations & help",
+        "href": "#/integrations"
+      },
+      {
+        "text": "Expenses",
+        "href": "#/staff"
+      },
+      {
+        "text": "Team & permissions",
+        "href": "#/team"
+      },
+      {
+        "text": "Profile",
+        "href": "#/settings/profile"
+      },
+      {
+        "text": "Company profile",
+        "href": "#/settings/company"
+      },
+      {
+        "text": "Business",
+        "href": "#/settings/business"
+      },
+      {
+        "text": "Preferences",
+        "href": "#/settings/preferences"
+      },
+      {
+        "text": "Security",
+        "href": "#/settings/security"
+      },
+      {
+        "text": "Device & Offline",
+        "href": "#/settings/device"
+      },
+      {
+        "text": "Security notifications",
+        "href": "#/settings/notifications"
+      },
+      {
+        "text": "Stores & terminals",
+        "href": "#/settings/locations"
+      },
+      {
+        "text": "Audit history",
+        "href": "#/settings/audit"
+      }
+    ]
+  },
+  {
+    "role": "owner",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/role-owner.png",
+    "landing": "#/dashboard",
+    "links": [
+      {
+        "text": "Online store",
+        "href": "#/online-store"
+      },
+      {
+        "text": "Overview",
+        "href": "#/dashboard"
+      },
+      {
+        "text": "Point of sale",
+        "href": "#/pos"
+      },
+      {
+        "text": "Sales & receipts",
+        "href": "#/sales"
+      },
+      {
+        "text": "Cash shifts",
+        "href": "#/cash"
+      },
+      {
+        "text": "Categories",
+        "href": "#/categories"
+      },
+      {
+        "text": "Inventory",
+        "href": "#/inventory"
+      },
+      {
+        "text": "Stock counts & scanning",
+        "href": "#/warehouse"
+      },
+      {
+        "text": "Transfers",
+        "href": "#/transfers"
+      },
+      {
+        "text": "Warehouse & storage",
+        "href": "#/storage"
+      },
+      {
+        "text": "Purchasing & suppliers",
+        "href": "#/purchasing"
+      },
+      {
+        "text": "Customers",
+        "href": "#/customers"
+      },
+      {
+        "text": "Supplier balances",
+        "href": "#/payables"
+      },
+      {
+        "text": "Accounting",
+        "href": "#/accounting"
+      },
+      {
+        "text": "Reports",
+        "href": "#/reports"
+      },
+      {
+        "text": "Logs",
+        "href": "#/logs"
+      },
+      {
+        "text": "Notifications & approvals",
+        "href": "#/notifications"
+      },
+      {
+        "text": "Business trading",
+        "href": "#/trading"
+      },
+      {
+        "text": "Integrations & help",
+        "href": "#/integrations"
+      },
+      {
+        "text": "Expenses",
+        "href": "#/staff"
+      },
+      {
+        "text": "Team & permissions",
+        "href": "#/team"
+      },
+      {
+        "text": "Profile",
+        "href": "#/settings/profile"
+      },
+      {
+        "text": "Company profile",
+        "href": "#/settings/company"
+      },
+      {
+        "text": "Business",
+        "href": "#/settings/business"
+      },
+      {
+        "text": "Preferences",
+        "href": "#/settings/preferences"
+      },
+      {
+        "text": "Security",
+        "href": "#/settings/security"
+      },
+      {
+        "text": "Device & Offline",
+        "href": "#/settings/device"
+      },
+      {
+        "text": "Security notifications",
+        "href": "#/settings/notifications"
+      },
+      {
+        "text": "Stores & terminals",
+        "href": "#/settings/locations"
+      },
+      {
+        "text": "Audit history",
+        "href": "#/settings/audit"
+      },
+      {
+        "text": "Business profile",
+        "href": "#/settings/company"
+      },
+      {
+        "text": "Transaction currency",
+        "href": "#/settings/company"
+      },
+      {
+        "text": "Tax defaults",
+        "href": "#/settings/company"
+      },
+      {
+        "text": "Stores and warehouses",
+        "href": "#/settings/locations"
+      },
+      {
+        "text": "First product",
+        "href": "#/inventory"
+      },
+      {
+        "text": "First stock",
+        "href": "#/inventory"
+      }
+    ]
+  },
+  {
+    "role": "manager",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/role-manager.png",
+    "landing": "#/dashboard",
+    "links": [
+      {
+        "text": "Online store",
+        "href": "#/online-store"
+      },
+      {
+        "text": "Overview",
+        "href": "#/dashboard"
+      },
+      {
+        "text": "Point of sale",
+        "href": "#/pos"
+      },
+      {
+        "text": "Sales & receipts",
+        "href": "#/sales"
+      },
+      {
+        "text": "Cash shifts",
+        "href": "#/cash"
+      },
+      {
+        "text": "Inventory",
+        "href": "#/inventory"
+      },
+      {
+        "text": "Stock counts & scanning",
+        "href": "#/warehouse"
+      },
+      {
+        "text": "Transfers",
+        "href": "#/transfers"
+      },
+      {
+        "text": "Warehouse & storage",
+        "href": "#/storage"
+      },
+      {
+        "text": "Purchasing & suppliers",
+        "href": "#/purchasing"
+      },
+      {
+        "text": "Customers",
+        "href": "#/customers"
+      },
+      {
+        "text": "Supplier balances",
+        "href": "#/payables"
+      },
+      {
+        "text": "Reports",
+        "href": "#/reports"
+      },
+      {
+        "text": "Logs",
+        "href": "#/logs"
+      },
+      {
+        "text": "Notifications & approvals",
+        "href": "#/notifications"
+      },
+      {
+        "text": "Integrations & help",
+        "href": "#/integrations"
+      },
+      {
+        "text": "Profile",
+        "href": "#/settings/profile"
+      },
+      {
+        "text": "Preferences",
+        "href": "#/settings/preferences"
+      },
+      {
+        "text": "Security",
+        "href": "#/settings/security"
+      },
+      {
+        "text": "Device & Offline",
+        "href": "#/settings/device"
+      },
+      {
+        "text": "Security notifications",
+        "href": "#/settings/notifications"
+      },
+      {
+        "text": "Stores & terminals",
+        "href": "#/settings/locations"
+      },
+      {
+        "text": "Audit history",
+        "href": "#/settings/audit"
+      }
+    ]
+  },
+  {
+    "role": "cashier",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/role-cashier.png",
+    "landing": "#/pos",
+    "links": [
+      {
+        "text": "Point of sale",
+        "href": "#/pos"
+      },
+      {
+        "text": "Sales & receipts",
+        "href": "#/sales"
+      },
+      {
+        "text": "Cash shifts",
+        "href": "#/cash"
+      },
+      {
+        "text": "Inventory",
+        "href": "#/inventory"
+      },
+      {
+        "text": "Stock counts & scanning",
+        "href": "#/warehouse"
+      },
+      {
+        "text": "Transfers",
+        "href": "#/transfers"
+      },
+      {
+        "text": "Warehouse & storage",
+        "href": "#/storage"
+      },
+      {
+        "text": "Customers",
+        "href": "#/customers"
+      },
+      {
+        "text": "Notifications & approvals",
+        "href": "#/notifications"
+      },
+      {
+        "text": "Integrations & help",
+        "href": "#/integrations"
+      },
+      {
+        "text": "Profile",
+        "href": "#/settings/profile"
+      },
+      {
+        "text": "Preferences",
+        "href": "#/settings/preferences"
+      },
+      {
+        "text": "Security",
+        "href": "#/settings/security"
+      },
+      {
+        "text": "Device & Offline",
+        "href": "#/settings/device"
+      },
+      {
+        "text": "Security notifications",
+        "href": "#/settings/notifications"
+      }
+    ]
+  },
+  {
+    "role": "inventory",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/role-inventory.png",
+    "landing": "#/dashboard",
+    "links": [
+      {
+        "text": "Overview",
+        "href": "#/dashboard"
+      },
+      {
+        "text": "Inventory",
+        "href": "#/inventory"
+      },
+      {
+        "text": "Stock counts & scanning",
+        "href": "#/warehouse"
+      },
+      {
+        "text": "Transfers",
+        "href": "#/transfers"
+      },
+      {
+        "text": "Warehouse & storage",
+        "href": "#/storage"
+      },
+      {
+        "text": "Purchasing & suppliers",
+        "href": "#/purchasing"
+      },
+      {
+        "text": "Notifications & approvals",
+        "href": "#/notifications"
+      },
+      {
+        "text": "Integrations & help",
+        "href": "#/integrations"
+      },
+      {
+        "text": "Profile",
+        "href": "#/settings/profile"
+      },
+      {
+        "text": "Preferences",
+        "href": "#/settings/preferences"
+      },
+      {
+        "text": "Security",
+        "href": "#/settings/security"
+      },
+      {
+        "text": "Security notifications",
+        "href": "#/settings/notifications"
+      }
+    ]
+  },
+  {
+    "role": "accountant",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/role-accountant.png",
+    "landing": "#/dashboard",
+    "links": [
+      {
+        "text": "Overview",
+        "href": "#/dashboard"
+      },
+      {
+        "text": "Sales & receipts",
+        "href": "#/sales"
+      },
+      {
+        "text": "Cash shifts",
+        "href": "#/cash"
+      },
+      {
+        "text": "Customers",
+        "href": "#/customers"
+      },
+      {
+        "text": "Logs",
+        "href": "#/logs"
+      },
+      {
+        "text": "Notifications & approvals",
+        "href": "#/notifications"
+      },
+      {
+        "text": "Integrations & help",
+        "href": "#/integrations"
+      },
+      {
+        "text": "Profile",
+        "href": "#/settings/profile"
+      },
+      {
+        "text": "Preferences",
+        "href": "#/settings/preferences"
+      },
+      {
+        "text": "Security",
+        "href": "#/settings/security"
+      },
+      {
+        "text": "Security notifications",
+        "href": "#/settings/notifications"
+      },
+      {
+        "text": "Audit history",
+        "href": "#/settings/audit"
+      }
+    ]
+  },
+  {
+    "role": "viewer",
+    "path": ".ai/reports/redesign/phase-3-verified/supplement/role-viewer.png",
+    "landing": "#/dashboard",
+    "links": [
+      {
+        "text": "Overview",
+        "href": "#/dashboard"
+      },
+      {
+        "text": "Notifications & approvals",
+        "href": "#/notifications"
+      },
+      {
+        "text": "Integrations & help",
+        "href": "#/integrations"
+      },
+      {
+        "text": "Profile",
+        "href": "#/settings/profile"
+      },
+      {
+        "text": "Preferences",
+        "href": "#/settings/preferences"
+      },
+      {
+        "text": "Security",
+        "href": "#/settings/security"
+      },
+      {
+        "text": "Security notifications",
+        "href": "#/settings/notifications"
+      }
+    ]
+  }
+]

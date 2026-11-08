@@ -46,13 +46,17 @@ it.each(['rounded', 'circle'] as const)(
         <StatusBadge label="Low stock" tone="warning" />
       </ThemeProvider>,
     );
-    const expected = parseFloat(palettes.light.radius) * (radius === 'circle' ? 2 : 1);
+    const expected = parseFloat(
+      palettes.light[radius === 'circle' ? 'surface-radius-circle' : 'surface-radius'],
+    );
     for (const text of ['Card body', 'Stock'])
       expect(
         parseFloat(getComputedStyle(screen.getByText(text).parentElement!).borderTopLeftRadius),
       ).toBe(expected);
     const badgeRadius =
-      radius === 'circle' ? parseFloat(palettes.light['radius-circle']) : expected;
+      radius === 'circle'
+        ? parseFloat(palettes.light['radius-circle'])
+        : parseFloat(palettes.light.radius);
     expect(
       parseFloat(
         getComputedStyle(screen.getByText('Low stock').parentElement!).borderTopLeftRadius,
@@ -60,7 +64,11 @@ it.each(['rounded', 'circle'] as const)(
     ).toBe(badgeRadius);
     expect(
       parseFloat(getComputedStyle(screen.getByLabelText('Product name')).borderTopLeftRadius),
-    ).toBe(badgeRadius);
+    ).toBe(
+      radius === 'circle'
+        ? parseFloat(palettes.light['radius-circle'])
+        : parseFloat(palettes.light.radius),
+    );
     expect(screen.getByLabelText('Product name').getAttribute('value')).toBe('Unchanged');
     expect(save).not.toHaveBeenCalled();
   },

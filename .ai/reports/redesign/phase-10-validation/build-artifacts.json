@@ -1,0 +1,292 @@
+[
+  {
+    "path": "apps/web/dist/assets/AccountingPanel-Dd9Qwkkm.js",
+    "bytes": 5652,
+    "sha256": "9926b7e708bbe2073f66ec34ef72922dd293b031647a94330d7c2fe6b9d598de"
+  },
+  {
+    "path": "apps/web/dist/assets/Application-BFoqpGvH.js",
+    "bytes": 272616,
+    "sha256": "07a9d81ce82f57a983cdb1a2a8cb02a0e99e97d1cbecd5dc6c728770982674dd"
+  },
+  {
+    "path": "apps/web/dist/assets/Application-PQpIsXLt.css",
+    "bytes": 1632,
+    "sha256": "8aeb521362502df2f90738e3b106dc31a3c97b777ef23e43526bd7c84ca7e739"
+  },
+  {
+    "path": "apps/web/dist/assets/Button-DXaM3rJg.js",
+    "bytes": 121291,
+    "sha256": "84d14c9ae8e43b2a68e23c7fba065840e202d59e181306fc062e7c7a4b9a0715"
+  },
+  {
+    "path": "apps/web/dist/assets/CategoryPage-BMe55X_K.js",
+    "bytes": 3536,
+    "sha256": "5fa8565413fd27cd76de3899fcdf862772532011f77a1c305f4ff314d4fcf0b3"
+  },
+  {
+    "path": "apps/web/dist/assets/CustomerPanel-dziz3sZ9.js",
+    "bytes": 8825,
+    "sha256": "69837afae5c2b43adc6ac71096ea91cf98cfe3965fcb05baabc03a7f8f40acf9"
+  },
+  {
+    "path": "apps/web/dist/assets/FoundationPage-DfUOlLXE.js",
+    "bytes": 115193,
+    "sha256": "1a00d84fffe7794ea5e2049d5429dfdc633a54028e6703ea62d2926dcb2bd3d9"
+  },
+  {
+    "path": "apps/web/dist/assets/Geist-Cz_WRCMl.ttf",
+    "bytes": 169056,
+    "sha256": "73894e0448cae90a92b6c2f8732b7bb9acb7b94c418bff559dad4a18e1de9659"
+  },
+  {
+    "path": "apps/web/dist/assets/GeistMono-aobeVSSS.ttf",
+    "bytes": 171968,
+    "sha256": "87c2aff9723544a9adaea19d92e42a33705c9723624801b6e0224c2206a6af0d"
+  },
+  {
+    "path": "apps/web/dist/assets/IntegrationsPanel-DbrtnlMX.js",
+    "bytes": 3960,
+    "sha256": "644c3c7fc8a0235630529a5641cd35da6fb21c7e6c1987eb5fc672cc633f75c6"
+  },
+  {
+    "path": "apps/web/dist/assets/InventoryWorkspace-DONcexb2.js",
+    "bytes": 32206,
+    "sha256": "66127106c60641ecbe351ef2dd4ab6b105975a36712a28e9b784086d251dc5f8"
+  },
+  {
+    "path": "apps/web/dist/assets/Karla-Cc-z3u01.ttf",
+    "bytes": 94016,
+    "sha256": "ed3ca4cd9bdd899c543927c30bf5ff50706b24b3f2b7328e64b25f7d2a9d23dc"
+  },
+  {
+    "path": "apps/web/dist/assets/Lora-C1B0tkav.ttf",
+    "bytes": 212196,
+    "sha256": "822a6621ccbe8d97d20ac88c1c41f5615c9c2c202eaa75f272cd452aac6475a7"
+  },
+  {
+    "path": "apps/web/dist/assets/MovementHistory-D4sZhPnO.js",
+    "bytes": 4026,
+    "sha256": "d089c32828412219a4e9dbdae690dd4b28d0ca08c5c06950da92a8ed776937f6"
+  },
+  {
+    "path": "apps/web/dist/assets/NotificationsPanel-DWFItel2.js",
+    "bytes": 9309,
+    "sha256": "956c563342bf7e845ebc065f890b993137d005c84df90d10d67f2eecb098ea16"
+  },
+  {
+    "path": "apps/web/dist/assets/PayablePanel-IzvibWab.js",
+    "bytes": 7629,
+    "sha256": "58c30d0ccc447c49422e10b1280abafd3b4ccba64b91e8233e2e43df4474982a"
+  },
+  {
+    "path": "apps/web/dist/assets/ProductPage-BKb-5nHZ.js",
+    "bytes": 5255,
+    "sha256": "908d1fc872d77bc40bd54f18500e289ce15be372952c5b263585e5f4d80b544c"
+  },
+  {
+    "path": "apps/web/dist/assets/PurchasingPanel-DBe--fgo.js",
+    "bytes": 8350,
+    "sha256": "d5e98a6a987f2995ff7d0cf83ebc3199d8846a795bdaeeb8222389d129cf96b4"
+  },
+  {
+    "path": "apps/web/dist/assets/ReportsPanel-DCdduASX.css",
+    "bytes": 2382,
+    "sha256": "0a354b91869dae0197c8ecc9c3f3fd098f68283fd4b301905103fe72fb30ef0f"
+  },
+  {
+    "path": "apps/web/dist/assets/ReportsPanel-xGngw595.js",
+    "bytes": 5719,
+    "sha256": "1b3c56bc2ee8a247286881d06bc29c5552bed0f24c9cc5b947eab243af9f847f"
+  },
+  {
+    "path": "apps/web/dist/assets/StoragePanel-C3rxbeAF.js",
+    "bytes": 12560,
+    "sha256": "3fab703c904d23d5bd1a7d675d2f2c6a8318c249209577ce03574f3729f16a20"
+  },
+  {
+    "path": "apps/web/dist/assets/StorefrontPanel-B2G6Vi06.js",
+    "bytes": 4440,
+    "sha256": "bc55b36ee89e0ef43fda8152fed9d20cc3581732792e274d41fa204f4c29a05c"
+  },
+  {
+    "path": "apps/web/dist/assets/TradingPanel-BEXBFW6q.js",
+    "bytes": 6871,
+    "sha256": "ade455bda9e110e776c5262bec7edeaed5f0eff4ac6de85ff39b558382231bf7"
+  },
+  {
+    "path": "apps/web/dist/assets/TransferPanel-Qquv6z0O.js",
+    "bytes": 6353,
+    "sha256": "8ce43b1a63fcfb5f099b70cc32714ea2eca5464945902c0cda87992ed5544351"
+  },
+  {
+    "path": "apps/web/dist/assets/WarehousePanel-rMvcR9_H.js",
+    "bytes": 8598,
+    "sha256": "5ac09fb9ace4e5ea224ed98253185fb1c594b7f932e64dcd01178c8343b56c76"
+  },
+  {
+    "path": "apps/web/dist/assets/WorkspaceControls-C5MHLoyO.css",
+    "bytes": 25727,
+    "sha256": "c044cbdb292be6f307577c37f912339c113e59581ab85d91f06586626109e2cd"
+  },
+  {
+    "path": "apps/web/dist/assets/WorkspaceControls-CXVMBAn2.js",
+    "bytes": 103440,
+    "sha256": "ef4e909f851ffd36070dfe14d57505fe583e1e9425a2122dfa389ffca6b341b9"
+  },
+  {
+    "path": "apps/web/dist/assets/auth-client-Cl4ShW0i.js",
+    "bytes": 1264,
+    "sha256": "3678c644456203b639ce52fd8009ddfdb19f8dbaea3080ca71334eadd6990b16"
+  },
+  {
+    "path": "apps/web/dist/assets/browser-C0zvGkjE.js",
+    "bytes": 5401,
+    "sha256": "71a4df98b9ad4d9ba3f8f4408c4273e4c0290d1db8fa7f737636322213a3ef04"
+  },
+  {
+    "path": "apps/web/dist/assets/core-IUlRufS4.js",
+    "bytes": 168,
+    "sha256": "a402b9a4e4193c0d4a68bff691e5796210c58d54b3fe812b3bebc75499ae6641"
+  },
+  {
+    "path": "apps/web/dist/assets/desktop-storage-BQzhZksZ.js",
+    "bytes": 205,
+    "sha256": "e5f1785954d15d131440c121b397fbd8d15a8e4841b322430bd1f0ce2d1a7796"
+  },
+  {
+    "path": "apps/web/dist/assets/dist-js-BzKGOnbP.js",
+    "bytes": 1485,
+    "sha256": "a161107656155170a0ab834fecf405d1d3e589f480da5a5f4a549e719d353d9b"
+  },
+  {
+    "path": "apps/web/dist/assets/dist-mHn2Bm0X.js",
+    "bytes": 347713,
+    "sha256": "1765694f5e5e76ad01fbb03b75e26ffc2e53dbc63adca75909c075ca4af9297d"
+  },
+  {
+    "path": "apps/web/dist/assets/import-xlsx-k_0B6rwc.js",
+    "bytes": 63485,
+    "sha256": "217435103099fa3442d7066077ff635a7105e801a15fd8a7b6dc53fba3eefba3"
+  },
+  {
+    "path": "apps/web/dist/assets/index-DzZmapXH.css",
+    "bytes": 109601,
+    "sha256": "52754137bf9b376aba47b2cbe9a1c369c839d38c6e701621a625adbd06dafe37"
+  },
+  {
+    "path": "apps/web/dist/assets/index-Zybk63ra.js",
+    "bytes": 364509,
+    "sha256": "f062b9aa3e6f834ef590d1a3f54d31fc44109e9707894d79db5c48fa7c1191e9"
+  },
+  {
+    "path": "apps/web/dist/assets/quill-zL3mIzDS.js",
+    "bytes": 199709,
+    "sha256": "d67d796676ac306b9c0286b378e6985f4ac6de60f2574bc8bd0fb316f56b4b42"
+  },
+  {
+    "path": "apps/web/dist/assets/resource-model-rPcZXhw8.js",
+    "bytes": 1263,
+    "sha256": "c5903f47b549843b4f17154e2425906ba5e74a2391f6b50a398d5f771a424a0a"
+  },
+  {
+    "path": "apps/web/dist/assets/rolldown-runtime-XKyaHtl9.js",
+    "bytes": 726,
+    "sha256": "548d1dbf321e7d2ae804fcc158b588706a7c52f8ca175de1490c6ccb4dbe55b7"
+  },
+  {
+    "path": "apps/web/dist/index.html",
+    "bytes": 778,
+    "sha256": "ae3099c5ec4ce992d00b630f978e3008f46d5c0409d6c0d5ad31801b8e3d7d5e"
+  },
+  {
+    "path": "apps/web/dist/sw.js",
+    "bytes": 2016,
+    "sha256": "55a910779f8e3ef68decc08ba21645cba96777788ce66f85997708f264a21650"
+  },
+  {
+    "path": "apps/mobile/dist/_expo/static/js/android/index-ef6d0b5106a9d3cc8e9e43b091051b6c.hbc",
+    "bytes": 4800209,
+    "sha256": "0f20d9ec185f4da66c391b2069840d344e151c65701bdbc5a147d1f37e7c223a"
+  },
+  {
+    "path": "apps/mobile/dist/_expo/static/js/ios/index-6be6cdb59831a9f9af72515c006a1a7b.hbc",
+    "bytes": 4795107,
+    "sha256": "26803179d98a6e73b8fb21d611d9ef61368ab12288941d9bbc3331069d13a59e"
+  },
+  {
+    "path": "apps/mobile/dist/_expo/static/js/web/import-xlsx-d38639c3eae1f0aa9795108d813136ec.js",
+    "bytes": 116296,
+    "sha256": "536b9efe7303b9270ffc821f42407c735050ac8961bb675440d1e3c559d6532b"
+  },
+  {
+    "path": "apps/mobile/dist/_expo/static/js/web/index-6e4a881fa352061a0d925f56d39aa25e.js",
+    "bytes": 2296023,
+    "sha256": "da4e4395863969f929220f15e65d43aa9d0a7d149f3779ed95f234ab2f0596e8"
+  },
+  {
+    "path": "apps/mobile/dist/assets/19b1b51481623d36d6f0000efdd7e74a",
+    "bytes": 94016,
+    "sha256": "ed3ca4cd9bdd899c543927c30bf5ff50706b24b3f2b7328e64b25f7d2a9d23dc"
+  },
+  {
+    "path": "apps/mobile/dist/assets/3f599483f71a2100bf53030faeddd23f",
+    "bytes": 169056,
+    "sha256": "73894e0448cae90a92b6c2f8732b7bb9acb7b94c418bff559dad4a18e1de9659"
+  },
+  {
+    "path": "apps/mobile/dist/assets/6ff2091c2ccaba22f57e26df870c8f76",
+    "bytes": 171968,
+    "sha256": "87c2aff9723544a9adaea19d92e42a33705c9723624801b6e0224c2206a6af0d"
+  },
+  {
+    "path": "apps/mobile/dist/assets/__packages/design-tokens/fonts/Geist.3f599483f71a2100bf53030faeddd23f.ttf",
+    "bytes": 169056,
+    "sha256": "73894e0448cae90a92b6c2f8732b7bb9acb7b94c418bff559dad4a18e1de9659"
+  },
+  {
+    "path": "apps/mobile/dist/assets/__packages/design-tokens/fonts/GeistMono.6ff2091c2ccaba22f57e26df870c8f76.ttf",
+    "bytes": 171968,
+    "sha256": "87c2aff9723544a9adaea19d92e42a33705c9723624801b6e0224c2206a6af0d"
+  },
+  {
+    "path": "apps/mobile/dist/assets/__packages/design-tokens/fonts/Karla.19b1b51481623d36d6f0000efdd7e74a.ttf",
+    "bytes": 94016,
+    "sha256": "ed3ca4cd9bdd899c543927c30bf5ff50706b24b3f2b7328e64b25f7d2a9d23dc"
+  },
+  {
+    "path": "apps/mobile/dist/assets/__packages/design-tokens/fonts/Lora.e71368f221227338edf6af09034a5062.ttf",
+    "bytes": 212196,
+    "sha256": "822a6621ccbe8d97d20ac88c1c41f5615c9c2c202eaa75f272cd452aac6475a7"
+  },
+  {
+    "path": "apps/mobile/dist/assets/e71368f221227338edf6af09034a5062",
+    "bytes": 212196,
+    "sha256": "822a6621ccbe8d97d20ac88c1c41f5615c9c2c202eaa75f272cd452aac6475a7"
+  },
+  {
+    "path": "apps/mobile/dist/index.html",
+    "bytes": 1177,
+    "sha256": "7b813d447413840f1bb6af0805157f3a173bc25541e882dd16993eb3ab15d575"
+  },
+  {
+    "path": "apps/mobile/dist/metadata.json",
+    "bytes": 746,
+    "sha256": "6b5a9c9bee8f7f7efcfba9eca2bb55e7aaa25afbd37ce8d3f1c15f10741ef485"
+  },
+  {
+    "path": "apps/desktop/src-tauri/target/release/bundle/macos/Inventory Foundation.app/Contents/Info.plist",
+    "bytes": 1314,
+    "sha256": "ab116281da1bbf6d110ebe4b4eb0843bd909d4c7c73575807e240a227fc2c368"
+  },
+  {
+    "path": "apps/desktop/src-tauri/target/release/bundle/macos/Inventory Foundation.app/Contents/MacOS/inventory-desktop",
+    "bytes": 13097968,
+    "sha256": "39c9fa64d6dfdc29f2f27baae75558c70d002a444e3c2ff5569bfeb3ba3e9846"
+  },
+  {
+    "path": "apps/desktop/src-tauri/target/release/bundle/macos/Inventory Foundation.app/Contents/Resources/icon.icns",
+    "bytes": 42054,
+    "sha256": "608b26bfda2f0ab7502340d20a21c4efaa83b04fe251b04725c324f19bca65c9"
+  }
+]

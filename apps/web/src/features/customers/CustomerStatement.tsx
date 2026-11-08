@@ -1,6 +1,7 @@
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
 import { Pagination } from '@/components/common/Pagination';
 import { MoneyValue } from '@/components/common/DataValue';
-import { RecordDetails } from '@/components/common/RecordDetails';
+import { CustomerEvidence } from './CustomerEvidence';
 import { MetricCard } from '@/components/common/MetricCard';
 import { businessTime } from '@inventory/contracts';
 import type { Business } from '@inventory/contracts';
@@ -18,6 +19,8 @@ export function CustomerStatement({
   busy?: boolean;
   setStatementOffset: (v: number) => void;
 }) {
+  const { formatMinorUnits } = useDisplayMoney();
+
   return (
     <>
       <MetricCard
@@ -26,48 +29,50 @@ export function CustomerStatement({
         unit={statement.currency}
         primary
       />
-      {statement.receivables.map((r) => (
-        <RecordDetails
-          key={r.id}
-          label="Customer receivable"
-          items={[
-            { label: 'Sale', value: r.saleId },
-            { label: 'Due date', value: r.dueDate },
-            { label: `Outstanding (${statement.currency} minor units)`, value: r.outstandingMinor },
-          ]}
-        />
-      ))}
-      {statement.payments.map((p) => (
-        <RecordDetails
-          key={p.id}
-          label="Customer payment"
-          items={[
-            { label: `Cash (${statement.currency} minor units)`, value: p.amountMinor },
-            { label: 'Reference', value: p.reference },
-            { label: 'Time', value: businessTime(p.createdAt, business.timeZone) },
-          ]}
-        />
-      ))}
-      {statement.refunds.map((r) => (
-        <RecordDetails
-          key={r.id}
-          label="Customer refund"
-          items={[
-            { label: `Cash refund (${statement.currency} minor units)`, value: r.amountMinor },
-            { label: 'Return', value: r.sourceId },
-          ]}
-        />
-      ))}
-      {statement.credits.map((c) => (
-        <RecordDetails
-          key={c.id}
-          label="Customer credit"
-          items={[
-            { label: `Credit (${statement.currency} minor units)`, value: c.amountMinor },
-            { label: 'Source', value: c.sourceId },
-          ]}
-        />
-      ))}
+      <CustomerEvidence
+        title="Receivables"
+        columns={['Sale reference', 'Due date', `Outstanding (${statement.currency})`]}
+        rows={statement.receivables.map((r) => ({
+          id: r.id,
+          cells: [r.saleId, r.dueDate, formatMinorUnits(r.outstandingMinor, statement.currency)],
+        }))}
+      />
+      <CustomerEvidence
+        title="Cash payments"
+        columns={['Receipt reference', 'Recorded at', `Amount (${statement.currency})`]}
+        rows={statement.payments.map((p) => ({
+          id: p.id,
+          cells: [
+            p.reference,
+            businessTime(p.createdAt, business.timeZone),
+            formatMinorUnits(p.amountMinor, statement.currency),
+          ],
+        }))}
+      />
+      <CustomerEvidence
+        title="Cash refunds"
+        columns={['Return reference', 'Recorded at', `Amount (${statement.currency})`]}
+        rows={statement.refunds.map((r) => ({
+          id: r.id,
+          cells: [
+            r.sourceId,
+            businessTime(r.createdAt, business.timeZone),
+            formatMinorUnits(r.amountMinor, statement.currency),
+          ],
+        }))}
+      />
+      <CustomerEvidence
+        title="Credits"
+        columns={['Source reference', 'Recorded at', `Amount (${statement.currency})`]}
+        rows={statement.credits.map((c) => ({
+          id: c.id,
+          cells: [
+            c.sourceId,
+            businessTime(c.createdAt, business.timeZone),
+            formatMinorUnits(c.amountMinor, statement.currency),
+          ],
+        }))}
+      />
 
       <Pagination
         label="statement"

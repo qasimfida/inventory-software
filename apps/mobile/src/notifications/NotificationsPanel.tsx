@@ -153,6 +153,8 @@ export function NotificationsPanel({
                   items={state.data.inbox.notifications}
                   busy={state.busy}
                   timeZone={business.timeZone ?? 'UTC'}
+                  onUnread={(id) => void model.run(() => client.unread(id))}
+                  onDismiss={(id) => void model.run(() => client.dismiss(id))}
                   onRead={(id) => void model.run(() => client.read(id))}
                 />
 

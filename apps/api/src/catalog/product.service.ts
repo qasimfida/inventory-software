@@ -1,7 +1,13 @@
+import { hasPermission } from '@inventory/contracts';
 import { ensureDefaultVariant } from './variant.repository.js';
 import { Inject, Injectable } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
-import type { CatalogQuery, ProductInput, ProductEdit } from '@inventory/contracts';
+import type {
+  CatalogQuery,
+  ProductInput,
+  ProductEdit,
+  SkuAvailabilityQuery,
+} from '@inventory/contracts';
 import {
   OrganizationScope,
   audit,
@@ -23,6 +29,30 @@ export class ProductService {
   }
   get(actor: Actor, businessId: string, id: string) {
     return this.scope.run(actor, businessId, 'products.read', (ctx) => getProduct(ctx, id));
+  }
+  skuAvailability(actor: Actor, businessId: string, query: SkuAvailabilityQuery) {
+    return this.scope.run(actor, businessId, 'products.write', async (ctx) => {
+      requireBusinessScope(ctx);
+      if (query.excludeProductId) await getProduct(ctx, query.excludeProductId);
+      const result = await ctx.tx.query(
+        `SELECT product_id FROM catalog_identifiers WHERE business_id=$1 AND code=$2
+         AND NOT (product_id=COALESCE($3::uuid, '00000000-0000-0000-0000-000000000000'::uuid)
+           AND (variant_id IS NULL OR variant_id=product_id)) LIMIT 1`,
+        [businessId, query.sku, query.excludeProductId ?? null],
+      );
+      const match = result.rows[0];
+      if (!match || !hasPermission(ctx.business, 'products.read')) return { available: !match };
+      const product = await getProduct(ctx, String(match.product_id));
+      return {
+        available: false,
+        product: {
+          id: product.id,
+          name: product.name,
+          sku: product.sku,
+          image: product.images[0] ?? null,
+        },
+      };
+    });
   }
   create(actor: Actor, businessId: string, input: ProductInput) {
     return this.scope.run(actor, businessId, 'products.write', (ctx) =>

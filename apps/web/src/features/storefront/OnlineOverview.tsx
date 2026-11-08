@@ -1,3 +1,4 @@
+import { Progress } from '@/components/ui/Progress';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { MetricCard } from '@/components/common/MetricCard';
 import { IconButton } from '@/components/common/IconButton';
@@ -16,6 +17,7 @@ import {
   onlineAttentionLinks,
   onlineMessages,
   setupChecklist,
+  initialOnlineSettings,
 } from '@inventory/api-client';
 import { authClient } from '@/platform/auth-client';
 import { useCatalogLive } from '@/platform/useCatalogLive';
@@ -49,7 +51,10 @@ export function OnlineOverview({ business, storeId }: { business: Business; stor
     ) : (
       <LoadingState message="Loading online store overview…" />
     );
-  const steps = settings.settings ? setupChecklist(settings.settings, settings.prerequisites) : [];
+  const steps = setupChecklist(
+    settings.settings ?? initialOnlineSettings(business.id, storeId, settings.defaults),
+    settings.prerequisites,
+  );
   const incomplete = steps.filter((c) => !c.done);
   const counts = {
     changes: overview.counts.needs_changes,
@@ -107,7 +112,7 @@ export function OnlineOverview({ business, storeId }: { business: Business; stor
             <MetricCard
               label={label}
               value={count}
-              unit="View products"
+              unit={tab === 'active' ? 'Includes paused listings' : 'View products'}
               primary={tab === 'active'}
             />
           </Link>
@@ -136,7 +141,7 @@ export function OnlineOverview({ business, storeId }: { business: Business; stor
         {(incomplete.length > 0 || !settings.settings) && (
           <li>
             <Link
-              className="flex items-center gap-2 underline underline-offset-4"
+              className="flex items-center gap-3 rounded-lg border p-3 hover:bg-muted"
               to={
                 incomplete[0]?.path === '/settings/company' &&
                 !hasPermission(business, 'business.write')
@@ -158,27 +163,48 @@ export function OnlineOverview({ business, storeId }: { business: Business; stor
         </p>
       )}
       {(incomplete.length > 0 || !settings.settings) && (
-        <div id="online-setup-links" tabIndex={-1} className="space-y-2">
+        <section
+          id="online-setup-links"
+          aria-label="Complete your online store"
+          tabIndex={-1}
+          className="rounded-lg border bg-card p-4 space-y-3"
+        >
+          <h3>Complete your online store</h3>
+          <p>
+            {steps.filter((step) => step.done).length} of {steps.length} steps complete
+          </p>
+          <Progress
+            label="Store setup completion"
+            value={
+              steps.length ? (steps.filter((step) => step.done).length / steps.length) * 100 : 0
+            }
+          />
           <p className="text-muted-foreground">
-            Complete these details to prepare your online store:
+            Complete these details to prepare your online store. Saving setup does not publish
+            products.
           </p>
           {!settings.settings && (
             <Link className="underline underline-offset-4" to="/online-store/settings/general">
               Set up online store
             </Link>
           )}
-          {incomplete.map((step) => (
-            <p key={step.label}>
+          {steps.map((step) => (
+            <div key={step.label} className="flex items-center gap-3 rounded-lg border p-3">
+              {step.done ? (
+                <CheckCircle2 aria-label="Complete" className="text-success" />
+              ) : (
+                <AlertTriangle aria-label="To do" className="text-warning" />
+              )}
               {step.path === '/settings/company' && !hasPermission(business, 'business.write') ? (
                 <span>{step.label} — ask an administrator</span>
               ) : (
-                <Link className="underline underline-offset-4" to={step.path}>
+                <Link className="flex-1 hover:underline underline-offset-4" to={step.path}>
                   {step.label}
                 </Link>
               )}
-            </p>
+            </div>
           ))}
-        </div>
+        </section>
       )}
       {!Object.values(overview.counts).some(Boolean) &&
         hasPermission(business, 'onlineStore.manage') && (

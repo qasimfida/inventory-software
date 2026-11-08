@@ -32,7 +32,11 @@ it('new price forms initialize business defaults without changing explicit submi
     prices: seed.prices,
     promotions: [],
   });
-  const request = vi.fn().mockResolvedValue({});
+  const request = vi.fn().mockImplementation(async (path, method, input) => {
+    expect(path).toContain('/prices');
+    expect(method).toBe('POST');
+    return { ...input, id: seed.prices[0]!.id };
+  });
   const client = createPricingClient(request, seed.business.id, seed.products[0]!.id);
   const forms = priceForms(
     client,
@@ -48,6 +52,20 @@ it('new price forms initialize business defaults without changing explicit submi
   );
   const price = forms.find((form) => form.title === 'Publish price')!;
   expect(price.fields.find((field) => field.name === 'currency')?.value).toBe('PKR');
-  expect(price.fields.find((field) => field.name === 'taxBasisPoints')?.value).toBe('17.5');
+  expect(price.fields.find((field) => field.name === 'taxBasisPoints')?.value).toBe('');
   expect(price.fields.find((field) => field.name === 'taxInclusive')?.value).toBe(true);
+  const input = {
+    variantId: seed.variants[0]!.id,
+    storeId: '',
+    unitPrice: '3',
+    currency: 'PKR',
+    taxBasisPoints: '',
+    taxInclusive: true,
+    startsAt: '2026-11-08T00:00:00.000Z',
+    endsAt: '',
+  };
+  await price.submit(input);
+  expect(request.mock.calls.at(-1)?.[2]).toMatchObject({ taxBasisPoints: 1750, currency: 'PKR' });
+  await price.submit({ ...input, taxBasisPoints: '0' });
+  expect(request.mock.calls.at(-1)?.[2]).toMatchObject({ taxBasisPoints: 0 });
 });

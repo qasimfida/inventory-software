@@ -25,3 +25,17 @@ it('preserves exact quantity strings through native form controls', async () => 
   await user.click(screen.getByRole('button', { name: 'Post movement' }));
   await waitFor(() => expect(submit).toHaveBeenCalledWith({ quantity: '0.1' }));
 });
+
+it('announces the workflow error inside the open native command panel', async () => {
+  const submit = vi.fn();
+  render(
+    <CommandForm
+      definition={{ title: 'Close test shift', fields: [], submit }}
+      run={() => {}}
+      error="Close was not confirmed. Review the shift before retrying."
+    />,
+  );
+  await userEvent.click(screen.getByRole('button', { name: 'Close test shift' }));
+  expect(screen.getByRole('alert').textContent).toContain('Close was not confirmed');
+  expect(submit).not.toHaveBeenCalled();
+});

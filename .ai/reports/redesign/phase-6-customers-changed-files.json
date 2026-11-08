@@ -1,0 +1,17 @@
+[
+  "apps/web/src/features/customers/CustomerProfile.tsx",
+  "apps/web/src/features/customers/CustomerPanel.test.tsx",
+  "apps/web/src/features/customers/CustomerStatement.test.tsx",
+  "apps/web/src/features/customers/CustomerStatement.tsx",
+  "apps/web/src/features/customers/CustomerPanel.tsx",
+  "apps/web/src/features/customers/CustomerEvidence.tsx",
+  "apps/mobile/src/customers/CustomerProfile.tsx",
+  "apps/mobile/src/customers/CustomerPanel.test.tsx",
+  "apps/mobile/src/customers/CustomerStatement.test.tsx",
+  "apps/mobile/src/customers/CustomerStatement.tsx",
+  "apps/mobile/src/customers/CustomerPanel.tsx",
+  "apps/mobile/src/customers/CustomerEvidence.tsx",
+  "packages/api-client/src/customers-characterization.test.ts",
+  "scripts/redesign-customers-browser.mjs",
+  "docs/design-system.md"
+]

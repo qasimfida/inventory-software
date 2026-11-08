@@ -1,0 +1,17 @@
+[
+  "apps/mobile/src/purchasing/PayablePanel.test.tsx",
+  "apps/mobile/src/purchasing/PayablePanel.tsx",
+  "apps/mobile/src/purchasing/PurchaseDetails.test.tsx",
+  "apps/mobile/src/purchasing/PurchaseDetails.tsx",
+  "apps/mobile/src/purchasing/PurchasingPanel.test.tsx",
+  "apps/mobile/src/purchasing/PurchasingPanel.tsx",
+  "apps/web/src/features/purchasing/PayablePanel.test.tsx",
+  "apps/web/src/features/purchasing/PayablePanel.tsx",
+  "apps/web/src/features/purchasing/PurchaseDetails.test.tsx",
+  "apps/web/src/features/purchasing/PurchaseDetails.tsx",
+  "apps/web/src/features/purchasing/PurchasingPanel.test.tsx",
+  "apps/web/src/features/purchasing/PurchasingPanel.tsx",
+  "docs/design-system.md",
+  "packages/api-client/src/purchasing-characterization.test.ts",
+  "scripts/redesign-purchasing-browser.mjs"
+]

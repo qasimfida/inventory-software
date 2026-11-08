@@ -1,7 +1,8 @@
+import { RecordDetails } from '@/components/common/RecordDetails';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { hasPermission } from '@inventory/contracts';
 import type { Business, OnlineProductDetail } from '@inventory/contracts';
-import { onlineFieldLabel, onlineStatus, onlinePrice } from '@inventory/api-client';
+import { onlineFieldLabel, onlineStatus, onlineListingDetails } from '@inventory/api-client';
 import type { OnlineClient } from '@inventory/api-client';
 import { Button } from '@/components/ui/Button';
 import { OnlineProductImage } from './OnlineProductImage';
@@ -38,11 +39,12 @@ export function OnlineListingSummary({
         <div>
           <h3>{l.title}</h3>
           <StatusBadge>{onlineStatus(l, p)}</StatusBadge>
-          <p>
-            {onlinePrice(p)} · {p.quantity} available
-          </p>
         </div>
       </div>
+      <RecordDetails label="Listing context" items={onlineListingDetails(l, p)} />
+      <p className="text-sm text-muted-foreground">
+        Ready to publish is not published. Availability and visibility are shown separately.
+      </p>
       {(['error', 'warning'] as const).map((severity) => (
         <section key={severity}>
           <h4>{severity === 'error' ? 'Needs fixing' : 'Warnings'}</h4>
@@ -79,7 +81,7 @@ export function OnlineListingSummary({
           Remove this listing and select an active replacement.
         </p>
       )}
-      <div className="flex flex-wrap gap-2">
+      <div className="drawer-actions">
         <Button variant="outline" disabled={disabled || !catalog} onClick={() => fix('title')}>
           Edit product
         </Button>

@@ -2,7 +2,7 @@ import type { PosState } from './pos-types.js';
 export type HeldCartAction = { type: 'hold' | 'resume' | 'discard'; name: string };
 /** Ephemeral drafts only: no quotes, tenders, operation IDs or stock reservations. */
 export function changeHeldCart(state: PosState, action: HeldCartAction): Partial<PosState> | null {
-  if (state.busy || state.uncertain) return null;
+  if (state.busy || !!state.quoting || state.uncertain) return null;
   const name = action.name.trim();
   if (action.type === 'hold') {
     if (!state.lines.length) return { error: 'Add an item before holding this cart.' };

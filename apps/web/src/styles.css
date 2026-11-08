@@ -14,6 +14,8 @@
 @import './theme/shell-controls.css';
 @import './theme/operational-ui.css';
 @import './theme/catalog-cart.css';
+@import './theme/shared-collections.css';
+@import './theme/shared-controls.css';
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme inline {
@@ -38,6 +40,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
+  --color-link: var(--link);
+  --color-chart-1: var(--chart-1);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);

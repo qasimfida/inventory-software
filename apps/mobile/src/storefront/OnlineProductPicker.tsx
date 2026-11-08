@@ -1,5 +1,6 @@
+import { useDisplayMoney } from '../ui/useDisplayMoney';
 import { OnlineProductImage } from './OnlineProductImage';
-import { onlinePrice } from '@inventory/api-client';
+
 import { useNavigation } from '../shell/Navigation';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { View } from 'react-native';
@@ -30,6 +31,8 @@ export function OnlineProductPicker({
   storeId: string;
   onClose: () => void;
 }) {
+  const { onlinePrice } = useDisplayMoney();
+
   const { navigate } = useNavigation();
   const theme = useTheme(),
     client = useMemo(

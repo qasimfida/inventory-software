@@ -33,9 +33,9 @@ it('defers native accounting data and renders exact posted balances', async () =
   );
   expect(request).not.toHaveBeenCalled();
   await userEvent.click(screen.getByRole('button', { name: 'Accounting' }));
-  const balance = within(await screen.findByLabelText('Trial balance account'));
+  const balance = within(await screen.findByLabelText('Trial balance'));
   for (const value of [
-    '1000',
+    '1000 · Cash',
     'USD',
     'Debit (minor units)',
     '9007199254740993',
@@ -46,4 +46,21 @@ it('defers native accounting data and renders exact posted balances', async () =
   await userEvent.click(screen.getByRole('button', { name: 'Confirm balanced manual journal' }));
   expect(screen.getByLabelText('Journal reason (at least 10 characters)')).toBeTruthy();
   expect(request).toHaveBeenCalledTimes(1);
+});
+it('does not load or expose posting for a store-scoped account', () => {
+  render(
+    <AccountingPanel
+      page
+      business={{
+        id: '00000000-0000-4000-8000-000000000001',
+        name: 'Scoped account',
+        role: 'owner',
+        state: 'active',
+        version: 1,
+        scope: { storeId: '00000000-0000-4000-8000-000000000002', warehouseId: null },
+      }}
+    />,
+  );
+  expect(request).not.toHaveBeenCalled();
+  expect(screen.queryByRole('button', { name: 'Confirm balanced manual journal' })).toBeNull();
 });

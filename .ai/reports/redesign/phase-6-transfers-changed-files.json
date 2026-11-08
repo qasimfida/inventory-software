@@ -1,0 +1,13 @@
+[
+  "apps/mobile/src/transfers/TransferDetails.test.tsx",
+  "apps/mobile/src/transfers/TransferDetails.tsx",
+  "apps/mobile/src/transfers/TransferPanel.test.tsx",
+  "apps/mobile/src/transfers/TransferPanel.tsx",
+  "apps/web/src/features/transfers/TransferDetails.test.tsx",
+  "apps/web/src/features/transfers/TransferDetails.tsx",
+  "apps/web/src/features/transfers/TransferPanel.test.tsx",
+  "apps/web/src/features/transfers/TransferPanel.tsx",
+  "docs/design-system.md",
+  "packages/api-client/src/transfers-characterization.test.ts",
+  "scripts/redesign-transfers-browser.mjs"
+]

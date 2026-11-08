@@ -1,3 +1,4 @@
+import { settingsModel } from '../settings/model';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { customerProfileForm } from '@inventory/api-client';
@@ -24,7 +25,7 @@ export function CreateCustomerSheet({
 }) {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState('');
-  const theme = useTheme();
+  useTheme();
   const base = customerProfileForm(client, storeId);
   const definition = {
     ...base,
@@ -34,7 +35,7 @@ export function CreateCustomerSheet({
         f.name === 'name'
           ? name
           : f.name === 'currency'
-            ? theme.preferences.currency
+            ? settingsModel.transactionCurrency()
             : (f.value ?? ''),
     })),
     submit: async (values: Parameters<typeof base.submit>[0]) => {

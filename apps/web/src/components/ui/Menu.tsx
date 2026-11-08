@@ -29,7 +29,7 @@ export function MenuItem({ className, ...props }: ComponentProps<typeof Primitiv
   return (
     <Primitive.Item
       className={cn(
-        'flex min-h-(--control-height) cursor-pointer items-center rounded-sm px-3 py-2 text-control [overflow-wrap:anywhere] outline-none data-highlighted:ring-2 data-highlighted:ring-inset data-highlighted:ring-ring data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:text-disabled-foreground data-disabled:bg-disabled',
+        'flex min-h-(--control-height) cursor-pointer items-center rounded-sm px-3 py-2 text-control [overflow-wrap:anywhere] outline-none data-highlighted:ring-2 data-highlighted:ring-inset data-highlighted:ring-ring data-highlighted:bg-navigation-hover data-highlighted:text-foreground data-disabled:pointer-events-none data-disabled:text-disabled-foreground data-disabled:bg-disabled',
         className,
       )}
       {...props}

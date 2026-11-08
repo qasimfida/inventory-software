@@ -1,3 +1,9 @@
+import { lazy, Suspense } from 'react';
+const NativeShowcase = lazy(() =>
+  import('../ui/NativeShowcase').then((m) => ({ default: m.NativeShowcase })),
+);
+import { StaffDirectory } from '../operations/StaffDirectory';
+import { hasPermission } from '@inventory/contracts';
 import { onlineRoute } from '@inventory/api-client';
 import { OnlineStorePage } from '../storefront/OnlineStorePage';
 import { ProductPage } from '../catalog/ProductPage';
@@ -28,7 +34,7 @@ import { BusinessSettings } from './BusinessSettings';
 export function NativeScreens() {
   const { path: rawPath, search, navigate } = useNavigation(),
     { state, model, business, locations, storeId, warehouseIds, setLocked } = useWorkspace();
-  const path = onlineRoute(rawPath);
+  const path = rawPath === '/warehouse-view' ? '/storage' : onlineRoute(rawPath);
   const settings = useSyncExternalStore(settingsModel.subscribe, settingsModel.snapshot);
   const [visited, setVisited] = useState<string[]>([]);
   const destination = overviewDestination(business, settings.snapshot?.canManagePlatform ?? false);
@@ -61,6 +67,12 @@ export function NativeScreens() {
       r.path ===
       (productDetailId(path) ? '/catalog' : path === '/more' ? '/settings/profile' : path),
   );
+  if (path === '/design-system' && typeof __DEV__ !== 'undefined' && __DEV__)
+    return (
+      <Suspense fallback={<LoadingState message="Loading component showcase…" />}>
+        <NativeShowcase />
+      </Suspense>
+    );
   if (
     (!route && !['/admin', '/admin/businesses'].includes(path)) ||
     (route && !routeAllowed(route, business))
@@ -120,11 +132,19 @@ export function NativeScreens() {
         <OnlineStorePage business={business} locations={state.workspace.locations} path={rawPath} />
       )}
       {path === '/logs' && <LogsPage />}
+      {path === '/salaries' && (
+        <OperationsPanel mode="staff" business={business} locations={state.workspace.locations} />
+      )}
       {path === '/staff' && (
         <OperationsPanel business={business} locations={state.workspace.locations} />
       )}
       {path === '/team' && (
-        <MemberEditor model={model} workspace={state.workspace} busy={state.busy} />
+        <>
+          <MemberEditor model={model} workspace={state.workspace} busy={state.busy} />
+          {hasPermission(business, 'users.write') && !business.scope?.storeId && (
+            <StaffDirectory business={business} locations={state.workspace.locations} />
+          )}
+        </>
       )}
       {path.startsWith('/settings/') && <SettingsScreen />}
       {['/sales', '/cash'].includes(path) && (
@@ -151,6 +171,7 @@ export function NativeScreens() {
             importantForAccessibility={path === '/pos' ? 'auto' : 'no-hide-descendants'}
           >
             <PosPanel
+              active={path === '/pos'}
               showBack={false}
               business={business}
               onLockChange={setLocked}

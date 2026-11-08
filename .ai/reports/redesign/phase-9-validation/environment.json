@@ -1,0 +1,10 @@
+{
+  "host": "macOS-26.5.2-arm64-arm-64bit",
+  "adb": null,
+  "xcrun": "/usr/bin/xcrun",
+  "testDatabaseConfigured": false,
+  "simulator": {
+    "exit": 72,
+    "output": "xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH\n"
+  }
+}

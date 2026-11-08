@@ -23,7 +23,6 @@ import type { Business, Product, Location } from '@inventory/contracts';
 import { authClient } from '../auth/client';
 import { Action, Choice, choices, Field } from '../organization/Controls';
 import { ProductEditor } from './ProductEditor';
-import { CategoryEditor } from './CategoryEditor';
 import { BarcodeScanner } from './BarcodeScanner';
 export function CatalogPanel({
   business,
@@ -108,7 +107,7 @@ export function CatalogPanel({
     },
   );
   useEffect(() => {
-    const timer = setTimeout(() => void model.run(), 250);
+    const timer = setTimeout(() => void model.refresh(), 250);
     return () => {
       clearTimeout(timer);
       request.cancel();
@@ -140,13 +139,13 @@ export function CatalogPanel({
   }
   return (
     <ScreenBody>
-      <ScreenHeader title="Product catalog" />
+      <ScreenHeader title="Products & pricing" />
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: theme.spacing.small }}>
         {writable && (
           <BulkImport
             businessId={business.id}
             locations={locations}
-            onDone={() => void model.run()}
+            onDone={() => void model.refresh()}
           />
         )}
         {writable && state.data && (
@@ -234,12 +233,12 @@ export function CatalogPanel({
       </SidePanel>
       {Boolean(queryError) && <Text accessibilityRole="alert">{queryError}</Text>}
       {Boolean(state.error) && (
-        <ErrorState message={state.error} onRetry={() => void model.run()} />
+        <ErrorState message={state.error} onRetry={() => void model.refresh()} />
       )}
-      {state.busy && <LoadingState message="Loading catalog…" />}
+      {state.busy && !state.data && <LoadingState message="Loading catalog…" />}
       <IconAction
         label="Refresh catalog"
-        onPress={() => void model.run()}
+        onPress={() => void model.refresh()}
         disabled={state.busy}
         icon="↻"
       />
@@ -284,15 +283,15 @@ export function CatalogPanel({
             <>
               {(creating || editing) && (
                 <ProductEditor
+                  listingContext={{ business, locations }}
                   key={editing?.id ?? 'new'}
                   product={editing}
                   categories={state.data.categories}
                   client={client}
                   onClose={cancel}
-                  onSaved={(product) => {
+                  onSaved={() => {
                     cancel();
-                    setPricingProduct(product.id);
-                    void model.run();
+                    void model.refresh();
                   }}
                   onPricing={(id) => {
                     setPricingProduct(id);
@@ -300,11 +299,6 @@ export function CatalogPanel({
                   }}
                 />
               )}
-              <CategoryEditor
-                items={state.data.categories}
-                client={client}
-                run={(work) => void model.run(work)}
-              />
             </>
           )}
         </>

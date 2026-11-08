@@ -39,7 +39,7 @@ export function Action({
           : variant === 'secondary'
             ? theme.tokens['secondary-foreground']
             : variant === 'link'
-              ? theme.colors.primary
+              ? theme.tokens.link
               : theme.colors.foreground;
   const background = unavailable
     ? theme.tokens.disabled
@@ -67,11 +67,11 @@ export function Action({
       onPress={onPress}
       style={({ pressed }) => ({
         minHeight: metrics.target,
-        padding: theme.spacing.small + metrics.unit,
+        padding: parseFloat(theme.tokens['control-padding']),
         marginVertical: metrics.unit,
         borderRadius: theme.controlRadius,
         outlineWidth: focused ? metrics.focusWidth : 0,
-        outlineColor: theme.colors.primary,
+        outlineColor: theme.tokens.ring,
         outlineOffset: metrics.focusOffset,
         borderWidth: metrics.border,
         borderColor: focused

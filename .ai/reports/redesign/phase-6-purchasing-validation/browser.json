@@ -1,0 +1,86 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "purchasing": "passed",
+    "receiptDrawer": "passed",
+    "payables": "passed"
+  }
+]

@@ -1,0 +1,10 @@
+Argument names the module. For the module: (a) write characterization tests for its state transitions first; (b) redesign every route, tab, drawer, action and detail view on web, desktop and mobile; (c) preserve all transition rules and permissions.
+
+- inventory: workspace (overview, listing, search, filters, category filter, stock and pricing views, movement history, actions, bulk operations); product detail and editing (/catalog/:id: identity, SKU/barcode, images, description, categories, brands only where supported, units, variants, pricing, stock, warehouse availability, reservations, online-store channel status, history, editing, deletion with confirm, validation); categories (collection, search, filters, editor, parent-child if supported, destructive confirm). No standalone brand page unless one exists or is approved.
+- purchasing: suppliers, purchase orders and details, lines, partial and full receipts, returns, status transitions, payment information, history, filters. Keep partial receiving rules.
+- warehouse: overview, scan gate, stock count and workflow, adjustments, storage locations and hierarchy, movement, reservations, detail views. Keep scanning efficient.
+- transfers: list, create, source and destination, lines, dispatch, receipt (partial if supported), cancellation, history, confirmation.
+- sales-cash: sales list, receipt details, returns, voids, exchanges, cash shifts and records, reconciliation, confirmations. Distinguish consequential actions visually.
+- customers: collection, search, filters, details, statements, credit, payments, pricing information, history, editing. Keep financial rules.
+
+Acceptance: every route, tab, action and detail view for the module is accounted for in routes.md; stock and financial transitions unchanged; characterization tests pass.

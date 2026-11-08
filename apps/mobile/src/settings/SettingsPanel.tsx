@@ -39,7 +39,7 @@ export function SettingsPanel({
           <Surface muted>
             <Text accessibilityRole="header">Typography &amp; color</Text>
             <Text style={{ fontSize: metrics.title * 2 }}>Aa123</Text>
-            <Text>System type · Clear at every size</Text>
+            <Text>Your type · Clear at every size</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -73,9 +73,10 @@ export function SettingsPanel({
             </View>
           </Surface>
           <Text>
-            Preferences belong to your account. Policies may enforce values. Changes require a
-            connection. Currency selects the overview’s transaction currency; existing prices and
-            receipts keep their recorded currency.
+            Appearance follows your account across businesses; cosmetic policies do not override it.
+            Changes save online. Currency and list-loading policies still apply. Display currency
+            shows indicative equivalents alongside original prices. Transaction currencies and
+            payment amounts do not change.
           </Text>
           {state.message ? <Text accessibilityRole="alert">{state.message}</Text> : null}
           <IconAction
@@ -84,16 +85,17 @@ export function SettingsPanel({
             onPress={() => void settingsModel.connect(state.accountId, state.businessId)}
             icon="↻"
           />
+          <Text accessibilityLiveRegion="polite" tone="muted">
+            Current display: {theme.preferences.density} density · {theme.preferences.controlSize}{' '}
+            controls · {theme.preferences.animation} animation · {theme.preferences.charts} charts.{' '}
+            Device reduced motion and low-power constraints take priority without changing your
+            saved choices.
+          </Text>
           <PreferenceFields />
           <SettingSwitch
-            label="Optional visual effects"
+            label="Advanced · Optional visual effects"
             value={effective.effects}
-            disabled={
-              state.busy ||
-              !state.snapshot ||
-              state.snapshot.platform.values.enforced.effects !== undefined ||
-              state.business?.values.enforced.effects !== undefined
-            }
+            disabled={state.busy || !state.snapshot}
             onChange={(value) => void settingsModel.save({ effects: value })}
           />
           <Text>

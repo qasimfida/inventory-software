@@ -1,5 +1,14 @@
+import { PanelResizeHandle } from './PanelResizeHandle';
 import { ScrollEvents, useScrollEvents } from './ScrollEvents';
-import { Modal, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Modal,
+  Pressable,
+  ScrollView,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { useEffect, useRef, useState, type ReactNode, type ComponentRef } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../theme';
@@ -28,6 +37,7 @@ export function SidePanel({
   revealEndKey?: string;
   bottom?: boolean;
 }) {
+  const [customWidth, setCustomWidth] = useState<number | null>(null);
   const [expanded, setExpanded] = useState(false);
   const scroll = useRef<ComponentRef<typeof ScrollView>>(null);
   useEffect(() => {
@@ -38,6 +48,13 @@ export function SidePanel({
   const scrollEvents = useScrollEvents();
   const theme = useTheme(),
     { width } = useWindowDimensions();
+  const resizable = !bottom && !menu && width > 640;
+  const defaultWidth = parseFloat(
+    theme.tokens[wide ? 'preferences-width' : menu ? 'profile-menu-width' : 'drawer-width'],
+  );
+  const panelWidth = resizable
+    ? Math.min(width - 32, Math.max(320, customWidth ?? defaultWidth))
+    : Math.min(width, defaultWidth);
   return (
     <Modal
       visible={open}
@@ -59,62 +76,72 @@ export function SidePanel({
             accessibilityViewIsModal
             style={{
               ...(bottom ? { height: expanded ? ('100%' as const) : ('80%' as const) } : {}),
-              width: bottom
-                ? width
-                : Math.min(
-                    width,
-                    parseFloat(
-                      theme.tokens[
-                        wide ? 'preferences-width' : menu ? 'profile-menu-width' : 'drawer-width'
-                      ],
-                    ),
-                  ),
+              width: bottom ? width : panelWidth,
               backgroundColor: theme.colors.card,
             }}
           >
-            <View
-              style={{ flexDirection: 'row', alignItems: 'center', padding: theme.spacing.medium }}
+            <KeyboardAvoidingView
+              style={{ flex: 1 }}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
-              <Text accessibilityRole="header" style={{ flex: 1, fontWeight: '600' }}>
-                {title}
-              </Text>
-              {bottom && (
-                <IconAction
-                  label={expanded ? 'Collapse details' : 'Expand details'}
-                  icon={expanded ? '↓' : '↑'}
-                  onPress={() => setExpanded((v) => !v)}
+              {resizable && (
+                <PanelResizeHandle
+                  width={panelWidth}
+                  maximum={width - 32}
+                  onChange={setCustomWidth}
                 />
               )}
-              <IconAction label={`Close ${title.toLowerCase()}`} icon="×" onPress={onClose} />
-            </View>
-            <ScrollEvents.Provider value={scrollEvents}>
-              <ScrollView
-                ref={scroll}
-                onContentSizeChange={() => {
-                  if (revealEndKey) {
-                    scroll.current?.scrollToEnd({ animated: false });
-                  }
-                }}
-                onScroll={scrollEvents.notify}
-                scrollEventThrottle={100}
-                keyboardShouldPersistTaps="handled"
-                automaticallyAdjustKeyboardInsets
-                contentContainerStyle={{ padding: theme.spacing.medium, gap: theme.spacing.medium }}
-              >
-                {children}
-              </ScrollView>
-            </ScrollEvents.Provider>
-            {footer && (
               <View
                 style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
                   padding: theme.spacing.medium,
-                  borderTopWidth: metrics.border,
-                  borderColor: theme.tokens.border,
                 }}
               >
-                {footer}
+                <Text accessibilityRole="header" style={{ flex: 1, fontWeight: '600' }}>
+                  {title}
+                </Text>
+                {bottom && (
+                  <IconAction
+                    label={expanded ? 'Collapse details' : 'Expand details'}
+                    icon={expanded ? '↓' : '↑'}
+                    onPress={() => setExpanded((v) => !v)}
+                  />
+                )}
+                <IconAction label={`Close ${title.toLowerCase()}`} icon="×" onPress={onClose} />
               </View>
-            )}
+              <ScrollEvents.Provider value={scrollEvents}>
+                <ScrollView
+                  ref={scroll}
+                  onContentSizeChange={() => {
+                    if (revealEndKey) {
+                      scroll.current?.scrollToEnd({ animated: false });
+                    }
+                  }}
+                  onScroll={scrollEvents.notify}
+                  scrollEventThrottle={100}
+                  keyboardShouldPersistTaps="handled"
+                  automaticallyAdjustKeyboardInsets
+                  contentContainerStyle={{
+                    padding: theme.spacing.medium,
+                    gap: theme.spacing.medium,
+                  }}
+                >
+                  {children}
+                </ScrollView>
+              </ScrollEvents.Provider>
+              {footer && (
+                <View
+                  style={{
+                    padding: theme.spacing.medium,
+                    borderTopWidth: metrics.border,
+                    borderColor: theme.tokens.border,
+                  }}
+                >
+                  {footer}
+                </View>
+              )}
+            </KeyboardAvoidingView>
           </SafeAreaView>
         </View>
       </SafeAreaProvider>

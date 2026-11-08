@@ -20,7 +20,7 @@ export function RecordTable({
         <View
           style={{
             flexDirection: 'row',
-            backgroundColor: theme.tokens.secondary,
+            backgroundColor: theme.tokens['table-header'],
             borderBottomWidth: 1,
             borderColor: theme.tokens.border,
           }}
@@ -38,7 +38,8 @@ export function RecordTable({
             key={row.id}
             style={{
               flexDirection: 'row',
-              backgroundColor: index % 2 === 0 ? theme.tokens.muted : theme.tokens.card,
+              backgroundColor:
+                index % 2 === 0 ? theme.tokens['table-stripe'] : theme.tokens['table-row'],
               borderBottomWidth: 1,
               borderColor: theme.tokens.border,
             }}

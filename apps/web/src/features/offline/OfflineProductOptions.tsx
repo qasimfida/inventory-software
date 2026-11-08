@@ -36,7 +36,8 @@ export function OfflineProductOptions({
       <F label="Manual discount (basis points)" value={discount} onChange={setDiscount} />
       <Txt>Subject to this device’s cached permission limits.</Txt>
       <Act
-        label="Add to cart"
+        label={item.trackInventory && Number(item.available) <= 0 ? 'Sold' : 'Add to cart'}
+        disabled={item.trackInventory && Number(item.available) <= 0}
         onPress={() => {
           void model.add(item.id, unit, quantity, Number(discount)).then(() => {
             if (!model.snapshot().error) close();

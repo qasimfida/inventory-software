@@ -43,7 +43,7 @@ for (const width of [320, 1440]) {
                   checked++;
                   const scale = textSize === 'small' ? 0.9 : textSize === 'large' ? 1.2 : 1;
                   const key = [textSize, accent, motion, density, effects].join('/');
-                  if (Math.abs(parseFloat(getComputedStyle(title).fontSize) - 28 * scale) > 0.01)
+                  if (Math.abs(parseFloat(getComputedStyle(title).fontSize) - 22 * scale) > 0.01)
                     failures.push(key + ' title');
                   if (Math.abs(parseFloat(getComputedStyle(button).fontSize) - 14 * scale) > 0.01)
                     failures.push(key + ' button');
@@ -59,7 +59,7 @@ for (const width of [320, 1440]) {
                     (Math.min(foreground, background) + 0.05);
                   if (contrast < 4.5) failures.push(key + ' primary contrast');
                   if (
-                    getComputedStyle(root).getPropertyValue('--primary') !==
+                    getComputedStyle(root).getPropertyValue('--primary') ===
                     getComputedStyle(root).getPropertyValue('--ring')
                   )
                     failures.push(key + ' accent ring');
@@ -68,10 +68,7 @@ for (const width of [320, 1440]) {
                   if (root.scrollWidth > innerWidth) failures.push(key + ' overflow');
                   if (motion !== 'enabled' && getComputedStyle(button).transitionDuration !== '0s')
                     failures.push(key + ' motion');
-                  if (
-                    parseFloat(getComputedStyle(button).minHeight) !==
-                    (density === 'compact' ? 36 : 40)
-                  )
+                  if (parseFloat(getComputedStyle(button).minHeight) !== 34)
                     failures.push(key + ' target');
                 }
         return { checked, failures };

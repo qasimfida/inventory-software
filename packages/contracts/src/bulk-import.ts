@@ -35,3 +35,43 @@ export const importResultSchema = z.object({
 });
 export type ImportRow = z.infer<typeof importRowSchema>;
 export type ImportInput = z.infer<typeof importInputSchema>;
+
+export const importFieldSchema = z.enum([
+  'sku',
+  'name',
+  'description',
+  'price',
+  'currency',
+  'quantity',
+]);
+export const importMappingSchema = z
+  .object({
+    sku: z.string().min(1).max(120),
+    name: z.string().min(1).max(120),
+    price: z.string().min(1).max(120),
+    currency: z.string().min(1).max(120),
+    description: z.string().max(120).default(''),
+    quantity: z.string().max(120).default(''),
+  })
+  .strict()
+  .refine((value) => {
+    const columns = Object.values(value).filter(Boolean);
+    return new Set(columns).size === columns.length;
+  }, 'Each source column can map to only one product field.');
+export const importTemplateInputSchema = z
+  .object({ name: z.string().trim().min(1).max(80), mapping: importMappingSchema })
+  .strict();
+export const importTemplateEditSchema = importTemplateInputSchema.extend({
+  version: z.number().int().positive(),
+});
+export const importTemplateSchema = importTemplateEditSchema.extend({ id: z.uuid() });
+export const importTemplatesSchema = z.object({ items: z.array(importTemplateSchema).max(50) });
+export const importValidationSchema = z.object({
+  errors: z.array(
+    z.object({ row: z.number().int().min(2), field: z.string(), message: z.string() }),
+  ),
+});
+export type ImportMapping = z.infer<typeof importMappingSchema>;
+export type ImportTemplate = z.infer<typeof importTemplateSchema>;
+export type ImportTemplateInput = z.infer<typeof importTemplateInputSchema>;
+export type ImportIssue = z.infer<typeof importValidationSchema>['errors'][number];

@@ -1,3 +1,4 @@
+import { normalizeDescription } from './rich-description.js';
 import { z } from 'zod';
 import { pageQuerySchema, currencySchema, decimalSchema } from './conventions.js';
 const code = z
@@ -9,7 +10,12 @@ export const catalogStateSchema = z.enum(['active', 'inactive', 'archived']);
 const fields = {
   name: z.string().trim().min(1).max(120),
   sku: code,
-  description: z.string().max(2000).default(''),
+  description: z
+    .string()
+    .max(2000)
+    .transform(normalizeDescription)
+    .pipe(z.string().max(2000))
+    .default(''),
   images: z
     .array(
       z
@@ -26,24 +32,54 @@ const fields = {
   type: z.enum(['physical', 'service']).default('physical'),
   trackInventory: z.boolean().default(true),
 };
-function validProduct(v: {
-  sku: string;
-  barcodes: string[];
-  alternativeCodes: string[];
-  type: string;
-  trackInventory: boolean;
-}) {
-  const codes = [v.sku, ...v.barcodes, ...v.alternativeCodes];
-  return new Set(codes).size === codes.length && (v.type !== 'service' || !v.trackInventory);
+function validateProduct(
+  v: {
+    sku: string;
+    barcodes: string[];
+    alternativeCodes: string[];
+    type: string;
+    trackInventory: boolean;
+  },
+  ctx: z.RefinementCtx,
+) {
+  const seen = new Set([v.sku]);
+  for (const field of ['barcodes', 'alternativeCodes'] as const) {
+    for (const value of v[field]) {
+      if (seen.has(value))
+        ctx.addIssue({
+          code: 'custom',
+          path: [field],
+          message: 'Each SKU, barcode and alternative code must be unique.',
+        });
+      seen.add(value);
+    }
+  }
+  if (v.type === 'service' && v.trackInventory)
+    ctx.addIssue({
+      code: 'custom',
+      path: ['trackInventory'],
+      message: 'Turn off inventory tracking for services.',
+    });
 }
-export const createProductSchema = z
-  .object(fields)
-  .strict()
-  .refine(validProduct, 'Codes must be unique; services cannot track stock');
+export const skuAvailabilityQuerySchema = z
+  .object({
+    sku: code,
+    excludeProductId: z.uuid().optional(),
+  })
+  .strict();
+export const skuAvailabilitySchema = z.object({
+  available: z.boolean(),
+  product: z
+    .object({ id: z.uuid(), name: z.string(), sku: z.string(), image: z.url().nullable() })
+    .optional(),
+});
+export type SkuProductPreview = NonNullable<z.infer<typeof skuAvailabilitySchema>['product']>;
+export type SkuAvailabilityQuery = z.infer<typeof skuAvailabilityQuerySchema>;
+export const createProductSchema = z.object(fields).strict().superRefine(validateProduct);
 export const editProductSchema = z
   .object({ ...fields, version: z.number().int().positive() })
   .strict()
-  .refine(validProduct, 'Invalid product');
+  .superRefine(validateProduct);
 export const displayPriceSchema = z.object({
   unitPrice: decimalSchema,
   currency: currencySchema,

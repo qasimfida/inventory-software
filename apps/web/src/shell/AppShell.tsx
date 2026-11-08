@@ -1,3 +1,6 @@
+import { CurrencyNotice } from '@/components/common/CurrencyNotice';
+import { readSidebarLayout, saveSidebarLayout } from './sidebar-state';
+import { Hint } from '@/components/ui/Tooltip';
 import { workspaceRoutes } from '@inventory/api-client';
 import { PageTitleContext } from '@/components/common/ScreenHeader';
 import { useEffect, useRef, useState } from 'react';
@@ -11,10 +14,11 @@ import { Header } from './Header';
 import { SidebarResizeHandle } from './SidebarResizeHandle';
 import { SearchPalette } from './SearchPalette';
 export function AppShell({ children }: { children: ReactNode }) {
-  const [collapsed, setCollapsed] = useState(false),
+  const [collapsed, setCollapsed] = useState(() => readSidebarLayout().collapsed),
     [mobileOpen, setMobileOpen] = useState(false),
     [searchOpen, setSearchOpen] = useState(false);
-  const [sidebarWidth, setSidebarWidth] = useState(248);
+  const [sidebarWidth, setSidebarWidth] = useState(() => readSidebarLayout().width);
+  useEffect(() => saveSidebarLayout(collapsed, sidebarWidth), [collapsed, sidebarWidth]);
   const location = useLocation(),
     content = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -60,22 +64,25 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Button>
         </DrawerContent>
       </Drawer>
-      <Button
-        className="sidebar-edge-toggle desktop-sidebar-toggle"
-        variant="outline"
-        size="icon"
-        aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        aria-expanded={!collapsed}
-        onClick={() => setCollapsed(!collapsed)}
-      >
-        {collapsed ? <ChevronsRight /> : <ChevronsLeft />}
-      </Button>
+      <Hint label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
+        <Button
+          className="sidebar-edge-toggle desktop-sidebar-toggle"
+          variant="outline"
+          size="icon"
+          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          aria-expanded={!collapsed}
+          onClick={() => setCollapsed(!collapsed)}
+        >
+          {collapsed ? <ChevronsRight /> : <ChevronsLeft />}
+        </Button>
+      </Hint>
       <div className="shell-main">
         <Header onMenu={() => setMobileOpen(true)} />
         <main className="shell-content" id="page-content" ref={content} tabIndex={-1}>
           <PageTitleContext.Provider
             value={workspaceRoutes.find((r) => r.path === location.pathname)?.title ?? ''}
           >
+            <CurrencyNotice />
             {children}
           </PageTitleContext.Provider>
         </main>

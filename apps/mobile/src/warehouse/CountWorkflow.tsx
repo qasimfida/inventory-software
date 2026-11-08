@@ -1,3 +1,5 @@
+import { Surface } from '../ui/Surface';
+import { CountEvidence } from './CountEvidence';
 import { Text as Txt } from '../ui/Themed';
 import { useMemo, useState } from 'react';
 import { createCountClient, countExport } from '@inventory/api-client';
@@ -38,7 +40,8 @@ export function CountWorkflow({
     [reason, setReason] = useState(''),
     [sessions, setSessions] = useState<{ id: string; state: string }[]>([]);
   return (
-    <>
+    <Surface>
+      <Txt>Count scope & sessions</Txt>
       <Act
         label="Add selected product to new count scope"
         onPress={() => {
@@ -77,18 +80,7 @@ export function CountWorkflow({
       ))}
       {count && (
         <>
-          <Txt>
-            Count {count.count.id} · {count.count.state} · version {count.count.version}. Expected
-            stock is hidden during blind capture. Stock movement since snapshot requires a full
-            recount. Owner approval is required before adjustments.
-          </Txt>
-          {count.lines.map((l) => (
-            <Txt key={l.id}>
-              {l.name} / {l.sku}: counted {l.counted ?? 'not counted'}; expected{' '}
-              {l.expected ?? 'hidden'}; attempt {l.attempt};{' '}
-              {l.stale ? 'MOVEMENT: RECOUNT REQUIRED' : ''}
-            </Txt>
-          ))}
+          <CountEvidence detail={count} />
           <F label="Absolute counted quantity" value={quantity} onChange={setQuantity} />
           <Act
             label="Save / replace selected count line"
@@ -111,6 +103,7 @@ export function CountWorkflow({
             value={reason}
             onChange={setReason}
           />
+          <Txt>Review & approval</Txt>
           {(['submit', 'recount', 'approve'] as const).map((action) => (
             <Act
               key={action}
@@ -136,6 +129,6 @@ export function CountWorkflow({
           <Export text={countExport(count)} />
         </>
       )}
-    </>
+    </Surface>
   );
 }

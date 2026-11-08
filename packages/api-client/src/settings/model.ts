@@ -1,5 +1,11 @@
 import { resolveSettings } from '@inventory/contracts';
-import type { SettingsSnapshot, PolicyRecord, PreferencePatch } from '@inventory/contracts';
+import type {
+  SettingsSnapshot,
+  PolicyRecord,
+  PreferencePatch,
+  DevicePreferences,
+  ExchangeResponse,
+} from '@inventory/contracts';
 import type { createSettingsClient } from './client.js';
 export interface SettingsState {
   accountId: string | null;
@@ -8,6 +14,8 @@ export interface SettingsState {
   business: PolicyRecord | null;
   busy: boolean;
   message: string;
+  rates: ExchangeResponse;
+  ratesOnline: boolean;
 }
 export class SettingsModel {
   private state: SettingsState = {
@@ -17,10 +25,33 @@ export class SettingsModel {
     business: null,
     busy: false,
     message: '',
+    rates: { snapshot: null, reason: 'unavailable' },
+    ratesOnline: true,
   };
   private listeners = new Set<() => void>();
   private generation = 0;
-  constructor(readonly client: ReturnType<typeof createSettingsClient>) {}
+  private ratesPending = false;
+  transactionCurrency() {
+    return this.state.business?.values.company?.transactionCurrency ?? 'USD';
+  }
+  async refreshRates() {
+    if (!this.state.accountId || this.ratesPending) return;
+    const accountId = this.state.accountId;
+    this.ratesPending = true;
+    try {
+      const rates = await this.client.rates();
+      if (this.state.accountId === accountId) this.update({ rates, ratesOnline: true });
+    } catch {
+      if (this.state.accountId === accountId) this.update({ ratesOnline: false });
+    } finally {
+      this.ratesPending = false;
+    }
+  }
+
+  constructor(
+    readonly client: ReturnType<typeof createSettingsClient>,
+    private readonly device: () => DevicePreferences = () => ({}),
+  ) {}
   snapshot = () => this.state;
   subscribe = (listener: () => void) => {
     this.listeners.add(listener);
@@ -37,15 +68,22 @@ export class SettingsModel {
       this.state.snapshot?.preferences.values,
       this.state.snapshot?.platform.values,
       this.state.business?.values,
+      this.device(),
     );
   }
   async connect(accountId: string | null, businessId: string | null = null) {
     const generation = ++this.generation;
     this.update({
+      ...(accountId !== this.state.accountId
+        ? { rates: { snapshot: null, reason: 'unavailable' as const }, ratesOnline: true }
+        : {}),
       accountId,
       businessId,
       snapshot: accountId === this.state.accountId ? this.state.snapshot : null,
-      business: null,
+      business:
+        accountId === this.state.accountId && businessId === this.state.businessId
+          ? this.state.business
+          : null,
       busy: !!accountId,
       message: '',
     });
@@ -57,7 +95,7 @@ export class SettingsModel {
     } catch {
       if (generation === this.generation)
         this.update({
-          snapshot: null,
+          snapshot: accountId === this.state.accountId ? this.state.snapshot : null,
           message: 'Settings unavailable. Safe defaults apply; reconnect and refresh.',
         });
     } finally {
@@ -70,11 +108,14 @@ export class SettingsModel {
     const generation = this.generation;
     this.update({ busy: true, message: '' });
     try {
-      await this.client.save({
+      const confirmed = await this.client.save({
         version: snapshot.preferences.version,
         values: { ...snapshot.preferences.values, ...values },
       });
-      if (generation === this.generation) await this.connect(accountId, businessId);
+      if (generation === this.generation) {
+        this.update({ snapshot: { ...snapshot, preferences: confirmed } });
+        await this.connect(accountId, businessId);
+      }
     } catch {
       if (generation === this.generation)
         this.update({

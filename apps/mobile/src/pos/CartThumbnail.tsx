@@ -2,14 +2,22 @@ import { useState } from 'react';
 import { Image, View } from 'react-native';
 import { Text } from '../ui/Themed';
 import { useTheme } from '../theme';
-export function CartThumbnail({ uri, name }: { uri: string | undefined; name: string }) {
+export function CartThumbnail({
+  uri,
+  name,
+  expanded = false,
+}: {
+  uri: string | undefined;
+  name: string;
+  expanded?: boolean;
+}) {
   const theme = useTheme();
   const [failed, setFailed] = useState(false);
   return (
     <View
       style={{
-        width: theme.spacing.large * 2,
-        height: theme.spacing.large * 2,
+        width: expanded ? '100%' : theme.spacing.large * 2,
+        height: theme.spacing.large * (expanded ? 4 : 2),
         borderRadius: theme.radius,
         backgroundColor: theme.tokens.card,
         alignItems: 'center',

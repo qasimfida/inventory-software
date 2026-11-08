@@ -27,6 +27,10 @@ export function configureHttp(app: INestApplication, environment: Environment) {
     next();
   });
   app.use(helmet());
+  // Only image uploads receive the larger bounded JSON envelope; all other requests keep their limit.
+  app.use(`${API_PREFIX}/businesses/:businessId/product-images`, json({ limit: 710000 }));
+  // Imports remain bounded to 100 rows; this accommodates their validated rich-text payloads.
+  app.use(`${API_PREFIX}/businesses/:businessId/imports/products`, json({ limit: 1024 * 1024 }));
   app.use(json({ limit: environment.REQUEST_BODY_LIMIT_BYTES }));
   app.use(
     urlencoded({

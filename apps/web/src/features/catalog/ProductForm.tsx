@@ -1,6 +1,11 @@
-import { useState, useEffect } from 'react';
+import { ProductImages } from './ProductImages';
+import { ProductCategory } from './ProductCategory';
+import { useState } from 'react';
+import { RichTextEditor } from '@/components/common/RichTextEditor';
+import { SkuStatusIcon, SkuProductHint } from './SkuStatus';
+import { useProductFormFeedback } from './useProductFormFeedback';
 import { AccordionSection } from '@/components/ui/Accordion';
-import { createProductSchema, editProductSchema } from '@inventory/contracts';
+import { saveProductDetails } from '@inventory/api-client';
 import type { Product, Category } from '@inventory/contracts';
 import type { createCatalogClient } from '@inventory/api-client';
 import { Input, Select, Textarea } from '@/components/ui/FormControls';
@@ -14,31 +19,44 @@ export function ProductForm({
   cancel,
   onSaved,
   busy = false,
+  canCreateCategory = false,
 }: {
   product: Product | null;
   focusField?: string;
   busy?: boolean;
+  canCreateCategory?: boolean;
   categories: Category[];
   client: ReturnType<typeof createCatalogClient>;
   run: (work: () => Promise<unknown>) => void;
   cancel: () => void;
   onSaved?: (product: Product) => void;
 }) {
-  useEffect(() => {
-    if (focusField) {
-      const field =
-        focusField === 'title'
-          ? 'name'
-          : focusField === 'categoryId'
-            ? 'category'
-            : focusField.split('.')[0];
-      requestAnimationFrame(() => document.getElementById('product-' + field)?.focus());
-    }
-  }, [focusField]);
-  const [basicsOpen, setBasicsOpen] = useState(true);
+  const [images, setImages] = useState(product?.images ?? []);
+  const [imageBusy, setImageBusy] = useState(false);
+  const [categoryBusy, setCategoryBusy] = useState(false);
+  const [categoryId, setCategoryId] = useState(product?.categoryId ?? '');
+  const [description, setDescription] = useState(product?.description ?? '');
+  const {
+    clearField,
+    sku,
+    feedback,
+    skuError,
+    message,
+    invalidProps,
+    codesOpen,
+    setCodesOpen,
+    settingsOpen,
+    setSettingsOpen,
+    showErrors,
+    basicsOpen,
+    setBasicsOpen,
+    onChange,
+  } = useProductFormFeedback(product, client, focusField);
   return (
     <form
       className="space-y-2"
+      noValidate
+      onChange={onChange}
       onInvalidCapture={(event) => {
         const control = event.target;
         if (control instanceof HTMLInputElement && ['name', 'sku'].includes(control.name)) {
@@ -48,6 +66,7 @@ export function ProductForm({
       }}
       onSubmit={(e) => {
         e.preventDefault();
+        if (categoryBusy || imageBusy || busy) return;
         const data = new FormData(e.currentTarget);
         const split = (name: string) =>
           String(data.get(name) || '')
@@ -59,7 +78,7 @@ export function ProductForm({
             name: data.get('name'),
             sku: data.get('sku'),
             description: data.get('description'),
-            images: split('images'),
+            images,
             categoryId: data.get('categoryId') || null,
             barcodes: split('barcodes'),
             alternativeCodes: split('alternativeCodes'),
@@ -67,12 +86,7 @@ export function ProductForm({
             type: data.get('type'),
             trackInventory: data.get('trackInventory') === 'yes',
           };
-          const result = product
-            ? await client.edit(
-                product.id,
-                editProductSchema.parse({ ...input, version: product.version }),
-              )
-            : await client.create(createProductSchema.parse(input));
+          const result = await saveProductDetails(client, product, input, showErrors);
           if (onSaved) onSaved(result);
           else cancel();
           return result;
@@ -89,27 +103,81 @@ export function ProductForm({
         ).map(([id, label, value]) => (
           <div key={id}>
             <label htmlFor={`product-${id}`}>{label}</label>
-            <Input
-              id={`product-${id}`}
-              name={id}
-              defaultValue={value}
-              required
-              maxLength={id === 'sku' ? 64 : 120}
-            />
+            <div className="relative">
+              <Input
+                className={id === 'sku' ? 'pr-9' : undefined}
+                {...invalidProps(id)}
+                id={`product-${id}`}
+                name={id}
+                defaultValue={value}
+                required
+                maxLength={id === 'sku' ? 64 : 120}
+              />
+              {id === 'sku' && (
+                <SkuStatusIcon feedback={feedback?.value === sku ? feedback : null} />
+              )}
+            </div>
+            {id === 'sku' && skuError ? (
+              <div className="flex items-center gap-1">
+                {message(id)}
+                <SkuProductHint key={sku} feedback={feedback?.value === sku ? feedback : null} />
+              </div>
+            ) : (
+              message(id)
+            )}
+            {id === 'sku' &&
+              !skuError &&
+              feedback?.value === sku &&
+              feedback.state !== 'duplicate' && (
+                <p
+                  role="status"
+                  className={
+                    feedback.state === 'available' ? 'sr-only' : 'text-sm text-muted-foreground'
+                  }
+                >
+                  {feedback.state === 'checking'
+                    ? 'Checking SKU…'
+                    : feedback.state === 'unknown'
+                      ? 'SKU check unavailable. It will be checked when saving.'
+                      : 'SKU is available.'}
+                </p>
+              )}
           </div>
         ))}
         <label htmlFor="product-description">Description</label>
-        <Textarea
+        <input type="hidden" name="description" value={description} />
+        <RichTextEditor
           id="product-description"
-          name="description"
-          defaultValue={product?.description ?? ''}
-          maxLength={2000}
+          label="Description"
+          value={description}
+          onChange={(value) => {
+            setDescription(value);
+            clearField('description');
+          }}
+          invalid={invalidProps('description')['aria-invalid']}
+          describedBy={invalidProps('description')['aria-describedby']}
+          disabled={busy}
         />
+        {message('description')}
       </AccordionSection>
-      <AccordionSection title="Images and product codes" defaultOpen={!!focusField}>
+      <AccordionSection
+        title="Images and product codes"
+        open={codesOpen}
+        onOpenChange={setCodesOpen}
+      >
+        <ProductImages
+          upload={client.uploadImage}
+          onBusyChange={setImageBusy}
+          value={images}
+          disabled={busy}
+          onChange={(value) => {
+            setImages(value);
+            clearField('images');
+          }}
+        />
+        {message('images')}
         {(
           [
-            ['images', 'Image HTTPS URLs (one per line)', product?.images ?? []],
             ['barcodes', 'Barcodes (one per line)', product?.barcodes ?? []],
             [
               'alternativeCodes',
@@ -120,29 +188,47 @@ export function ProductForm({
         ).map(([id, label, values]) => (
           <div key={id}>
             <label htmlFor={`product-${id}`}>{label}</label>
-            <Textarea id={`product-${id}`} name={id} defaultValue={values.join('\n')} />
+            <Textarea
+              {...invalidProps(id)}
+              id={`product-${id}`}
+              name={id}
+              defaultValue={values.join('\n')}
+            />
+            {message(id)}
           </div>
         ))}
       </AccordionSection>
-      <AccordionSection title="Category and inventory settings" defaultOpen={!!focusField}>
+      <AccordionSection
+        title="Category and inventory settings"
+        open={settingsOpen}
+        onOpenChange={setSettingsOpen}
+      >
         <label htmlFor="product-category">Category</label>
-        <Select id="product-category" name="categoryId" defaultValue={product?.categoryId ?? ''}>
-          <option value="">Uncategorized</option>
-          {categories
-            .filter((c) => c.state === 'active' || c.id === product?.categoryId)
-            .map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-        </Select>
+        <input type="hidden" name="categoryId" value={categoryId} />
+        <ProductCategory
+          onBusyChange={setCategoryBusy}
+          categories={categories}
+          client={client}
+          value={categoryId}
+          onChange={setCategoryId}
+          canCreate={canCreateCategory}
+          disabled={busy}
+        />
+        {message('categoryId')}
         <label htmlFor="product-type">Product type</label>
-        <Select id="product-type" name="type" defaultValue={product?.type ?? 'physical'}>
+        <Select
+          {...invalidProps('type')}
+          id="product-type"
+          name="type"
+          defaultValue={product?.type ?? 'physical'}
+        >
           <option>physical</option>
           <option>service</option>
         </Select>
+        {message('type')}
         <label htmlFor="product-tracking">Track inventory</label>
         <Select
+          {...invalidProps('trackInventory')}
           id="product-tracking"
           name="trackInventory"
           defaultValue={product?.trackInventory === false ? 'no' : 'yes'}
@@ -150,27 +236,36 @@ export function ProductForm({
           <option value="yes">Yes</option>
           <option value="no">No (required for services)</option>
         </Select>
+        {message('trackInventory')}
         <label htmlFor="product-state">Product status</label>
-        <Select id="product-state" name="state" defaultValue={product?.state ?? 'active'}>
+        <Select
+          {...invalidProps('state')}
+          id="product-state"
+          name="state"
+          defaultValue={product?.state ?? 'active'}
+        >
           {['active', 'inactive', 'archived'].map((s) => (
             <option key={s}>{s}</option>
           ))}
         </Select>
+        {message('state')}
         <p>
-          Archiving is permanent. Stock quantities are managed through inventory movements, never
-          this form.
+          Archiving is permanent. Use the Quantity step to record opening stock or an adjustment.
         </p>
       </AccordionSection>
       <p className="text-sm text-muted-foreground">
-        Save product details first, then set the selling price. Existing receipts keep their
-        original prices.
+        Save details, then continue to Price & units and Quantity. Each step confirms its own
+        changes.
       </p>
-      <Button type="submit" disabled={busy}>
-        {product || !onSaved ? 'Save product' : 'Save and set price'}
-      </Button>
-      <Button variant="outline" disabled={busy} onClick={cancel}>
-        Cancel product edit
-      </Button>
+      <div className="drawer-actions">
+        {' '}
+        <Button type="submit" disabled={busy || categoryBusy || imageBusy || !!skuError}>
+          {product || !onSaved ? 'Save product' : 'Save details & continue'}
+        </Button>
+        <Button variant="outline" disabled={busy} onClick={cancel}>
+          Cancel product edit
+        </Button>
+      </div>
     </form>
   );
 }

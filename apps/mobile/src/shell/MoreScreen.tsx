@@ -74,7 +74,7 @@ export function MoreScreen({ go }: { go: (path: string) => void }) {
         );
         return items.length ? (
           <View key={group} style={{ gap: theme.spacing.small }}>
-            {group !== 'Online store' && (
+            {items.length > 1 && group !== 'Online store' && (
               <DisclosureTrigger
                 label={group}
                 expanded={!collapsed.includes(group) || !!search}
@@ -85,9 +85,9 @@ export function MoreScreen({ go }: { go: (path: string) => void }) {
                 }
               />
             )}
-            {(!collapsed.includes(group) || !!search) &&
+            {(items.length === 1 || !collapsed.includes(group) || !!search) &&
               items.map((r) => (
-                <Action key={r.path} variant="outline" label={r.title} onPress={() => go(r.path)} />
+                <Action key={r.path} variant="ghost" label={r.title} onPress={() => go(r.path)} />
               ))}
           </View>
         ) : null;

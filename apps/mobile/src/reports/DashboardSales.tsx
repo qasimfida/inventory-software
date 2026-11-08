@@ -1,8 +1,9 @@
+import { useDisplayMoney } from '../ui/useDisplayMoney';
 import { View } from 'react-native';
 import type { Business, DashboardSnapshot } from '@inventory/contracts';
 import { hasPermission } from '@inventory/contracts';
 import { dashboardGrowth } from '@inventory/api-client';
-import { formatMinorUnits } from '@inventory/domain';
+
 import { useTheme } from '../theme';
 import { useNavigation } from '../shell/Navigation';
 import { Text } from '../ui/Themed';
@@ -18,6 +19,8 @@ export function DashboardSales({
   data: DashboardSnapshot;
   business: Business;
 }) {
+  const { formatMinorUnits } = useDisplayMoney();
+
   const sales = data.sales!,
     theme = useTheme(),
     { navigate } = useNavigation();

@@ -1,3 +1,5 @@
+import { useTheme } from '../theme';
+import { ManageProduct } from '../catalog/ManageProduct';
 import { useCatalogLive } from '../platform/useCatalogLive';
 import { PosCart } from './PosCart';
 import { SidePanel } from '../ui/SidePanel';
@@ -22,13 +24,19 @@ import { operationKey } from '../platform/operation-key';
 export function PosCheckout({
   business,
   warehouse,
+  locations = [warehouse],
   onLockChange,
+  active = true,
 }: {
+  active?: boolean;
   business: Business;
   warehouse: Location;
+  locations?: Location[];
   onLockChange: (locked: boolean) => void;
 }) {
+  const [editingProduct, setEditingProduct] = useState<string | null>(null);
   const { width } = useWindowDimensions();
+  const theme = useTheme();
   const dock = useCartDock(),
     [cartOpen, setCartOpen] = useState(false);
   const setDock = dock.setCart;
@@ -76,7 +84,11 @@ export function PosCheckout({
     };
   }, [customerModel, customerRequest, business]);
   useEffect(() => model.reset, [model]);
+  // Retain drafts and recovery. Only an idle, hidden checkout stops polling.
+  const shouldPoll =
+    active || state.lines.length > 0 || state.heldCarts.length > 0 || state.busy || state.uncertain;
   useEffect(() => {
+    if (!shouldPoll) return;
     const feed = new Invalidations(
       createSyncClient(authClient.organizationRequest, business.id),
       warehouse.id,
@@ -89,7 +101,7 @@ export function PosCheckout({
       feed.stop();
       clearInterval(timer);
     };
-  }, [model, business.id, warehouse.id]);
+  }, [model, business.id, warehouse.id, shouldPoll]);
   useEffect(() => {
     onLockChange(
       state.busy || state.uncertain || state.lines.length > 0 || state.heldCarts.length > 0,
@@ -130,11 +142,30 @@ export function PosCheckout({
     />
   );
   return (
-    <View style={{ gap: 16 }}>
-      <View style={{ flexDirection: width >= 1000 ? 'row' : 'column', gap: 20 }}>
+    <View style={{ gap: theme.spacing.medium }}>
+      <View style={{ flexDirection: width >= 1000 ? 'row' : 'column', gap: theme.spacing.large }}>
         <View style={{ flex: 1, minWidth: 0 }}>
+          {editingProduct && (
+            <ManageProduct
+              business={business}
+              locations={locations}
+              productId={editingProduct}
+              onClose={() => {
+                setEditingProduct(null);
+                model.invalidate();
+                setPriceRevision((old) => old + 1);
+              }}
+            />
+          )}
           <ProductPicker
             revision={priceRevision}
+            onManage={
+              hasPermission(business, 'products.write') &&
+              hasPermission(business, 'products.read') &&
+              !business.scope?.storeId
+                ? setEditingProduct
+                : undefined
+            }
             client={client}
             warehouseId={warehouse.id}
             add={(item) => model.add(item)}

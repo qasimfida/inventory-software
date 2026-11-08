@@ -1,0 +1,98 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "overflow": false,
+    "repeatedAdds": "merged",
+    "quantityEdits": "passed",
+    "scanEnter": "search only, no auto-add"
+  }
+]

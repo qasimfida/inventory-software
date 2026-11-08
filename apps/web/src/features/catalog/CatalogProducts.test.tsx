@@ -24,9 +24,11 @@ it('opens real product details with keyboard controls and preserves pricing and 
   await user.keyboard('{Enter}');
   expect(screen.getByRole('dialog', { name: 'Product detail' }).textContent).toContain('12345');
   await user.click(screen.getByRole('button', { name: 'Close Product detail' }));
-  await user.click(screen.getByRole('button', { name: 'Variants and pricing for Desk chair' }));
+  await user.click(screen.getByRole('button', { name: 'Actions for CHAIR' }));
+  await user.click(screen.getByRole('menuitem', { name: 'Variants and pricing' }));
   expect(onPricing).toHaveBeenCalledWith(product.id);
-  await user.click(screen.getByRole('button', { name: 'Edit product Desk chair' }));
+  await user.click(screen.getByRole('button', { name: 'Actions for CHAIR' }));
+  await user.click(screen.getByRole('menuitem', { name: 'Edit product' }));
   expect(onEdit).toHaveBeenCalledWith(product);
   expect(screen.queryByRole('dialog')).toBeNull();
 });

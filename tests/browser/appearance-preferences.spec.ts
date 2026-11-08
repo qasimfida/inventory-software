@@ -7,9 +7,13 @@ test('resolved preferences scale the hierarchy, preserve targets and disable all
   const title = page.getByRole('heading', { level: 1 });
   const button = page.getByRole('button', { name: 'Primary example', exact: true });
   const input = page.getByRole('textbox', { name: /Preview label/ });
-  expect(await button.evaluate((el) => getComputedStyle(el).transitionProperty)).toBe('box-shadow');
-  expect(await input.evaluate((el) => getComputedStyle(el).transitionProperty)).toBe('box-shadow');
-  expect(await title.evaluate((el) => getComputedStyle(el).fontSize)).toBe('28px');
+  expect(await button.evaluate((el) => getComputedStyle(el).transitionProperty)).toBe(
+    'opacity, box-shadow',
+  );
+  expect(await input.evaluate((el) => getComputedStyle(el).transitionProperty)).toBe(
+    'opacity, box-shadow',
+  );
+  expect(await title.evaluate((el) => getComputedStyle(el).fontSize)).toBe('22px');
   expect(await input.evaluate((el) => getComputedStyle(el).fontSize)).toBe('14px');
   for (const [size, scale] of [
     ['small', 0.9],
@@ -21,13 +25,13 @@ test('resolved preferences scale the hierarchy, preserve targets and disable all
       document.documentElement.dataset.density = 'compact';
     }, size);
     expect(await title.evaluate((el) => parseFloat(getComputedStyle(el).fontSize))).toBeCloseTo(
-      28 * scale,
+      22 * scale,
     );
     expect(await button.evaluate((el) => parseFloat(getComputedStyle(el).fontSize))).toBeCloseTo(
       14 * scale,
     );
-    expect((await button.boundingBox())!.height).toBeGreaterThanOrEqual(36);
-    expect((await input.boundingBox())!.height).toBeGreaterThanOrEqual(36);
+    expect((await button.boundingBox())!.height).toBeGreaterThanOrEqual(34);
+    expect((await input.boundingBox())!.height).toBeGreaterThanOrEqual(34);
   }
   await page.setViewportSize({ width: 320, height: 1000 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
@@ -37,7 +41,7 @@ test('resolved preferences scale the hierarchy, preserve targets and disable all
   });
   await expect
     .poll(() => button.evaluate((el) => getComputedStyle(el).backgroundColor))
-    .toBe('rgb(15, 118, 110)');
+    .toBe('rgb(23, 23, 23)');
   const outline = page.getByRole('button', { name: /A longer action label/ });
   expect(await outline.evaluate((el) => getComputedStyle(el).boxShadow)).toBe('none');
   await page.getByRole('button', { name: /Example actions/ }).click();

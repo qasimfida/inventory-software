@@ -1,3 +1,5 @@
+import { ProductMediaController } from './product-media.controller.js';
+import { ConfigurationModule } from '../config/configuration.module.js';
 import { CatalogSearch } from './catalog-search.js';
 import { CustomerPrices } from './customer-prices.js';
 import { CustomerModule } from '../customers/customer.module.js';
@@ -11,8 +13,8 @@ import { CatalogController } from './catalog.controller.js';
 import { ProductService } from './product.service.js';
 import { CategoryService } from './category.service.js';
 @Module({
-  imports: [OrganizationModule, CustomerModule],
-  controllers: [CatalogController, PricingController, CustomerPrices],
+  imports: [OrganizationModule, CustomerModule, ConfigurationModule],
+  controllers: [CatalogController, PricingController, CustomerPrices, ProductMediaController],
   providers: [
     CatalogSearch,
     ProductService,

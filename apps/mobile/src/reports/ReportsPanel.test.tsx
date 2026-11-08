@@ -40,3 +40,21 @@ it('defers native reports until opened and provides an accessible empty summary'
   expect(screen.getByLabelText('From (UTC)')).toBeTruthy();
   expect(request).toHaveBeenCalledTimes(1);
 });
+it('does not fetch reports for a role without report access', () => {
+  render(
+    <ReportsPanel
+      page
+      business={{
+        id: '00000000-0000-4000-8000-000000000001',
+        name: 'Test',
+        role: 'custom',
+        state: 'active',
+        version: 1,
+        permissions: ['stock.read'],
+      }}
+      locations={[]}
+    />,
+  );
+  expect(request).not.toHaveBeenCalled();
+  expect(screen.queryByRole('button', { name: 'Run report' })).toBeNull();
+});

@@ -1,0 +1,42 @@
+[
+  {
+    "path": "/storage",
+    "width": 1440,
+    "theme": "light",
+    "status": "captured",
+    "screenshot": ".ai/reports/redesign/phase-3-verified/screens/1440-light-storage-retry.png",
+    "overflow": false,
+    "headings": [
+      "Overview",
+      "Sales",
+      "Inventory",
+      "Purchasing",
+      "Customers",
+      "Finance",
+      "Reports",
+      "Administration",
+      "Settings",
+      "Warehouse & storage"
+    ]
+  },
+  {
+    "path": "/trading",
+    "width": 1440,
+    "theme": "light",
+    "status": "captured",
+    "screenshot": ".ai/reports/redesign/phase-3-verified/screens/1440-light-trading-retry.png",
+    "overflow": false,
+    "headings": [
+      "Overview",
+      "Sales",
+      "Inventory",
+      "Purchasing",
+      "Customers",
+      "Finance",
+      "Reports",
+      "Administration",
+      "Settings",
+      "Business trading"
+    ]
+  }
+]

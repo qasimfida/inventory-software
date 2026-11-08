@@ -6,7 +6,7 @@ test('named POS carts resume with fresh totals and expose cash/credit allocation
   await page.getByLabel('Account email').fill('owner@demo.example.test');
   await page.getByLabel('Password', { exact: true }).fill('local-demo');
   await page.getByRole('button', { name: 'Log in', exact: true }).click();
-  await expect(page.getByRole('region', { name: 'Business setup' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Business setup' })).toBeVisible();
   await page.evaluate(() => {
     location.hash = '/pos';
   });

@@ -1,9 +1,10 @@
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
 import { ArrowUpRight, Package, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { Business, DashboardSnapshot } from '@inventory/contracts';
 import { hasPermission } from '@inventory/contracts';
 import { dashboardGrowth } from '@inventory/api-client';
-import { formatMinorUnits } from '@inventory/domain';
+
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { EmptyState } from '@/components/common/AsyncState';
 import { DashboardTrend } from './DashboardTrend';
@@ -14,6 +15,8 @@ export function DashboardSales({
   data: DashboardSnapshot;
   business: Business;
 }) {
+  const { formatMinorUnits } = useDisplayMoney();
+
   const sales = data.sales!;
   const money = (v: string) => formatMinorUnits(v, data.currency),
     growth = dashboardGrowth(sales.periodMinor, sales.previousMinor);

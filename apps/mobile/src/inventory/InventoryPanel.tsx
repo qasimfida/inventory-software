@@ -1,3 +1,4 @@
+import { SearchControl } from '../ui/SearchControl';
 import { StockPlanning } from './StockPlanning';
 import { ManageProduct } from '../catalog/ManageProduct';
 import { StockAdjustment } from './StockAdjustment';
@@ -8,7 +9,7 @@ import { DisclosureTrigger } from '../ui/DisclosureTrigger';
 import { Pagination } from '../ui/Pagination';
 import { IconAction } from '../ui/IconAction';
 import { InventoryOverview } from './InventoryOverview';
-import { LoadingState } from '../ui/AsyncState';
+import { LoadingState, EmptyState, ErrorState } from '../ui/AsyncState';
 import { MovementHistory } from './MovementHistory';
 import { ScreenBody, ScreenHeader } from '../ui/ScreenHeader';
 import { StockSnapshot } from './StockSnapshot';
@@ -20,7 +21,7 @@ import type { Business, Location } from '@inventory/contracts';
 import { authClient } from '../auth/client';
 import { operationKey } from '../platform/operation-key';
 import { CommandForm } from '../components/CommandForm';
-import { Action, Field } from '../organization/Controls';
+import { Action } from '../organization/Controls';
 export function InventoryPanel({
   business,
   locations,
@@ -75,7 +76,10 @@ export function InventoryPanel({
     <ScreenBody>
       <ScreenHeader title="Inventory" description="Monitor available stock by warehouse." />
       {!warehouses.length ? (
-        <Text>Create an active warehouse to manage stock.</Text>
+        <EmptyState
+          message="No active warehouse"
+          description="Create or request access to an active warehouse to manage stock."
+        />
       ) : (
         <>
           {hasPermission(business, 'stock.write') && (
@@ -144,14 +148,13 @@ export function InventoryPanel({
             </Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ flex: 1 }}>
-                <Field
+                <SearchControl
                   label="Search stock item / SKU"
                   value={search}
                   onChange={(value) => {
                     setSearch(value);
                     setOffset(0);
                   }}
-                  maxLength={120}
                 />
               </View>
               <IconAction
@@ -161,7 +164,9 @@ export function InventoryPanel({
                 icon="↻"
               />
             </View>
-            {Boolean(state.error) && <Text accessibilityRole="alert">{state.error}</Text>}
+            {Boolean(state.error) && (
+              <ErrorState message={state.error} onRetry={() => void model.run()} />
+            )}
             {state.busy && <LoadingState message="Loading inventory…" />}
 
             {state.data && (

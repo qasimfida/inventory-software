@@ -1,3 +1,4 @@
+import { RecordDetails } from '@/components/common/RecordDetails';
 import { useId, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { createApprovalReviewClient, ResourceModel } from '@inventory/api-client';
 import { authClient } from '@/platform/auth-client';
@@ -37,13 +38,17 @@ export function ApprovalReview({
       </Button>
       {state.data && (
         <>
-          <h3>
-            {state.data.title} · {state.data.state}
-          </h3>
-          <p className="break-all">Document {item.id}</p>
+          <h3>{state.data.title}</h3>
+          <RecordDetails
+            label="Approval document"
+            items={[
+              { label: 'Status', value: state.data.state },
+              { label: 'Document reference', value: item.id },
+            ]}
+          />
           <ul className="space-y-2">
             {state.data.details.map((line, i) => (
-              <li key={i} className="break-all">
+              <li key={i} className="break-words">
                 {line}
               </li>
             ))}

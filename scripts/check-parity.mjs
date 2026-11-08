@@ -3,8 +3,10 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   entries,
+  pathAliases,
   parse,
   renderedRoutes,
+  standaloneRoutes,
   rendersComponent,
   rendersPanels,
 } from './parity-source.mjs';
@@ -13,6 +15,7 @@ export const sourcePaths = {
   registry: 'packages/api-client/src/workspace-navigation.ts',
   web: {
     dispatcher: 'apps/web/src/shell/WorkspaceScreens.tsx',
+    router: 'apps/web/src/app/router.tsx',
     settings: 'apps/web/src/shell/SettingsPage.tsx',
     panels: 'apps/web/src/features/organization/workflow-panels.ts',
     settingsComponent: 'SettingsPage',
@@ -36,12 +39,21 @@ export function checkParity(read, exceptions = []) {
     const settings = parse(read(config.settings), config.settings);
     const panels = entries(parse(read(config.panels), config.panels), 'panels');
     const routes = renderedRoutes(dispatcher);
+    if (config.router)
+      for (const path of standaloneRoutes(parse(read(config.router), config.router)))
+        routes.add(path);
     const settingsRoutes = renderedRoutes(settings);
     if (rendersComponent(dispatcher, config.settingsComponent))
       for (const path of settingsRoutes) routes.add(path);
     if (rendersPanels(dispatcher))
       for (const panel of panels)
         if (/^[A-Z][A-Za-z0-9_]*$/.test(panel.Component ?? '')) routes.add(`/${panel.name}`);
+    const navigation =
+      platform === 'mobile'
+        ? parse(read('apps/mobile/src/shell/Navigation.tsx'), 'Navigation.tsx')
+        : dispatcher;
+    for (const [alias, target] of [...pathAliases(dispatcher), ...pathAliases(navigation)])
+      if (routes.has(target)) routes.add(alias);
     coverage[platform] = { routes, settingsRoutes };
   }
   const paths = new Set([

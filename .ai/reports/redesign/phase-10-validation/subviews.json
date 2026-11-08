@@ -1,0 +1,1370 @@
+[
+  {
+    "path": "apps/web/src/components/common/CommandForm.tsx",
+    "line": 87,
+    "declaration": "<FormSheet title={definition.title} open={open} onOpenChange={setOpen}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/components/common/SetupCard.tsx",
+    "line": 52,
+    "declaration": "<AccordionSection title=\"View all steps\" open={open} onOpenChange={setOpen}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/components/common/ViewTabs.tsx",
+    "line": 25,
+    "declaration": "<Tabs.Trigger aria-controls={panelId} value=\"list\" aria-label={`${label} list view`}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/components/common/ViewTabs.tsx",
+    "line": 31,
+    "declaration": "<Tabs.Trigger aria-controls={panelId} value=\"grid\" aria-label={`${label} grid view`}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/accounting/AccountingPanel.tsx",
+    "line": 95,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/accounting/AccountingPanel.tsx",
+    "line": 116,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/auth/PasswordRecovery.tsx",
+    "line": 40,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/BulkImport.tsx",
+    "line": 47,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/CatalogDetails.tsx",
+    "line": 19,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/CatalogPanel.tsx",
+    "line": 208,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/CategoryEditor.tsx",
+    "line": 54,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ManageProduct.tsx",
+    "line": 43,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ManageProduct.tsx",
+    "line": 60,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ProductEditor.tsx",
+    "line": 96,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ProductForm.tsx",
+    "line": 88,
+    "declaration": "<AccordionSection title=\"Product basics\" open={basicsOpen} onOpenChange={setBasicsOpen}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ProductForm.tsx",
+    "line": 154,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ProductForm.tsx",
+    "line": 182,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ProductPage.tsx",
+    "line": 68,
+    "declaration": "<Tabs.Trigger key={tab} value={tab}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ProductPage.tsx",
+    "line": 74,
+    "declaration": "<Tabs.Content value=\"Overview\" className=\"grid min-w-0 gap-4 lg:grid-cols-3\">",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ProductPage.tsx",
+    "line": 104,
+    "declaration": "<Tabs.Content value=\"Pricing\">",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ProductPage.tsx",
+    "line": 108,
+    "declaration": "<Tabs.Content key={tab} value={tab}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ProductPage.tsx",
+    "line": 121,
+    "declaration": "<Tabs.Content value=\"Channels\" className=\"space-y-3\">",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/catalog/ProductQuantity.tsx",
+    "line": 102,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/customers/CreateCustomerSheet.tsx",
+    "line": 42,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/customers/CreateCustomerSheet.tsx",
+    "line": 51,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/customers/CustomerPanel.tsx",
+    "line": 253,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/customers/CustomerPanel.tsx",
+    "line": 285,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/customers/CustomerPanel.tsx",
+    "line": 328,
+    "declaration": "<ConfirmDialog",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/customers/CustomerPanel.tsx",
+    "line": 361,
+    "declaration": "<CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/customers/CustomerRetention.tsx",
+    "line": 31,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/foundation/ComponentsDemo.tsx",
+    "line": 83,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/foundation/DataPresentationDemo.tsx",
+    "line": 75,
+    "declaration": "<AccordionSection className=\"rounded-md border p-4\" title={<>Expandable example</>}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/foundation/FormDemo.tsx",
+    "line": 87,
+    "declaration": "<ConfirmDialog",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/foundation/FoundationPage.tsx",
+    "line": 58,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/foundation/FoundationPage.tsx",
+    "line": 68,
+    "declaration": "<AccordionSection key={title} className=\"rounded-md border p-4\" title={<>{title}</>}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/foundation/NavigationControlsDemo.tsx",
+    "line": 34,
+    "declaration": "<AccordionSection title=\"Example section\" defaultOpen>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/foundation/NavigationControlsDemo.tsx",
+    "line": 46,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/foundation/NavigationControlsDemo.tsx",
+    "line": 73,
+    "declaration": "<Tabs.Trigger key={tab} value={tab}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/foundation/NavigationControlsDemo.tsx",
+    "line": 88,
+    "declaration": "<Tabs.Content key={tab} value={tab}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/foundation/ShowcaseIndex.tsx",
+    "line": 47,
+    "declaration": "<AccordionSection title={<>Tabs, popovers, tooltips, drawers and notifications</>}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/inventory/InventoryPanel.tsx",
+    "line": 133,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/inventory/InventoryPanel.tsx",
+    "line": 185,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/inventory/InventoryPanel.tsx",
+    "line": 192,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/inventory/MovementHistory.tsx",
+    "line": 56,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/inventory/StockAdjustment.tsx",
+    "line": 28,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/inventory/StockAdjustment.tsx",
+    "line": 40,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/inventory/StockPlanning.tsx",
+    "line": 50,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/inventory/StockPlanning.tsx",
+    "line": 68,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/notifications/NotificationTable.tsx",
+    "line": 88,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/offline/OfflinePolicy.tsx",
+    "line": 23,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/offline/OfflineProductOptions.tsx",
+    "line": 22,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/offline/SyncStatus.tsx",
+    "line": 61,
+    "declaration": "<FormSheet title=\"Synchronization details\" open={open} onOpenChange={setOpen}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/operations/CostDetails.tsx",
+    "line": 29,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/operations/CostDetails.tsx",
+    "line": 77,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/operations/OperationsPanel.tsx",
+    "line": 103,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/operations/StaffDetails.tsx",
+    "line": 40,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/operations/StaffDetails.tsx",
+    "line": 62,
+    "declaration": "{salaryDefinition && <CommandForm definition={salaryDefinition} run={run} />}",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/operations/StaffDetails.tsx",
+    "line": 63,
+    "declaration": "{editing && <CommandForm key={staff.version} inline definition={definition} run={run} />}",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/AccessFields.tsx",
+    "line": 28,
+    "declaration": "<AccordionSection title=\"View included permissions\">",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/AccessFields.tsx",
+    "line": 82,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/AddBusiness.tsx",
+    "line": 58,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/AuditHistory.tsx",
+    "line": 145,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/BusinessEditor.tsx",
+    "line": 62,
+    "declaration": "<AccordionSection title=\"Business status and archiving\">",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/BusinessEditor.tsx",
+    "line": 78,
+    "declaration": "<ConfirmDialog",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/LocationDetails.tsx",
+    "line": 57,
+    "declaration": "<ConfirmDialog",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/LocationDetails.tsx",
+    "line": 75,
+    "declaration": "<ConfirmDialog",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/LocationEditor.tsx",
+    "line": 98,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/ManagementPanel.tsx",
+    "line": 86,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/ManagementWorkflows.tsx",
+    "line": 87,
+    "declaration": "<AccordionSection title={<>All workspace sections</>}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/MemberEditor.tsx",
+    "line": 52,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/MemberEditor.tsx",
+    "line": 65,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/organization/MemberEditor.tsx",
+    "line": 161,
+    "declaration": "<ConfirmDialog",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/platform/BusinessDirectory.tsx",
+    "line": 130,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pos/CartLineDetails.tsx",
+    "line": 19,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pos/CashPanel.tsx",
+    "line": 65,
+    "declaration": "<CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pos/CashRecords.tsx",
+    "line": 71,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pos/CashRecords.tsx",
+    "line": 103,
+    "declaration": "<CommandForm key={f.title} definition={f} run={run} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pos/HeldCarts.tsx",
+    "line": 11,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pos/HeldCarts.tsx",
+    "line": 47,
+    "declaration": "<ConfirmDialog",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pos/PaymentReview.tsx",
+    "line": 19,
+    "declaration": "if (state.uncertain) return <CommandForm inline definition={form} run={(work) => void work()} />;",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pos/PaymentReview.tsx",
+    "line": 69,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pos/ProductPicker.tsx",
+    "line": 244,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pos/ReceiptPanel.tsx",
+    "line": 139,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pos/ReceiptPanel.tsx",
+    "line": 182,
+    "declaration": "<CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pricing/PricingPanel.tsx",
+    "line": 119,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pricing/PricingPanel.tsx",
+    "line": 136,
+    "declaration": "<AccordionSection title=\"Price history\" defaultOpen={!simple}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pricing/PricingPanel.tsx",
+    "line": 174,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pricing/PricingPanel.tsx",
+    "line": 197,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pricing/PricingPanel.tsx",
+    "line": 211,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/pricing/PricingPanel.tsx",
+    "line": 227,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/purchasing/PayablePanel.tsx",
+    "line": 209,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/purchasing/PayablePanel.tsx",
+    "line": 237,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/purchasing/PurchasingPanel.tsx",
+    "line": 121,
+    "declaration": "<CommandForm key={form.title} definition={form} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/purchasing/PurchasingPanel.tsx",
+    "line": 329,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/settings/PolicyEditor.tsx",
+    "line": 27,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/settings/SecurityEvents.tsx",
+    "line": 58,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/settings/SecurityNotifications.tsx",
+    "line": 33,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/settings/SettingsPanel.tsx",
+    "line": 22,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storage/StorageDetails.tsx",
+    "line": 25,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storage/StorageDetails.tsx",
+    "line": 46,
+    "declaration": "<CommandForm key={location.id} inline definition={form} run={run} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storage/StorageManagementPanel.tsx",
+    "line": 111,
+    "declaration": "<CommandForm key={f.title} definition={f} run={run} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storage/StorageManagementPanel.tsx",
+    "line": 118,
+    "declaration": "<Tabs.Content value={renderBody ? 'Browse hierarchy' : 'Locations'} className=\"space-y-4\">",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storage/StoragePanel.tsx",
+    "line": 24,
+    "declaration": "<Tabs.Trigger value=\"Locations\">Locations</Tabs.Trigger>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storage/StoragePanel.tsx",
+    "line": 25,
+    "declaration": "<Tabs.Trigger value=\"Browse hierarchy\">Browse hierarchy</Tabs.Trigger>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storage/WarehouseBalances.tsx",
+    "line": 23,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/OnlineBulkResult.tsx",
+    "line": 28,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/OnlineListingHistory.tsx",
+    "line": 40,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/OnlineProductDetails.tsx",
+    "line": 163,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/OnlineProductPicker.tsx",
+    "line": 112,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/OnlineProducts.tsx",
+    "line": 161,
+    "declaration": "<Tabs.Trigger key={t} value={t} aria-controls=\"online-products-panel\">",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/OnlineProducts.tsx",
+    "line": 473,
+    "declaration": "<FormSheet title=\"Remove from online store?\" open onOpenChange={() => setConfirm(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/OnlineStoreEditor.tsx",
+    "line": 106,
+    "declaration": "<ConfirmDialog",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/OnlineStorePage.tsx",
+    "line": 65,
+    "declaration": "<Tabs.Trigger value=\"overview\">Overview</Tabs.Trigger>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/OnlineStorePage.tsx",
+    "line": 66,
+    "declaration": "<Tabs.Trigger value=\"products\">Products</Tabs.Trigger>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/OnlineStorePage.tsx",
+    "line": 67,
+    "declaration": "<Tabs.Trigger value=\"settings\">Settings</Tabs.Trigger>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/OnlineStorePage.tsx",
+    "line": 92,
+    "declaration": "<Tabs.Content value={activeTab}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/StorefrontPanel.tsx",
+    "line": 115,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/storefront/StorefrontPanel.tsx",
+    "line": 149,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/trading/TradingHistory.tsx",
+    "line": 36,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/trading/TradingPanel.tsx",
+    "line": 81,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/trading/TradingPanel.tsx",
+    "line": 100,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/transfers/TransferPanel.tsx",
+    "line": 164,
+    "declaration": "<CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/transfers/TransferPanel.tsx",
+    "line": 191,
+    "declaration": "<FormSheet",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/transfers/TransferPanel.tsx",
+    "line": 209,
+    "declaration": "<CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/features/warehouse/WarehousePanel.tsx",
+    "line": 215,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/shell/SettingsPage.tsx",
+    "line": 48,
+    "declaration": "<Tabs.Trigger key={r.path} value={r.path} aria-controls={panelId}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/shell/SettingsPage.tsx",
+    "line": 56,
+    "declaration": "<Tabs.Content value={path} id={panelId} className=\"min-w-0 space-y-5\">",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/web/src/shell/Sidebar.tsx",
+    "line": 48,
+    "declaration": "<AccordionSection",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/accounting/AccountingPanel.tsx",
+    "line": 106,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/accounting/AccountingPanel.tsx",
+    "line": 124,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/catalog/BarcodeScanner.native.tsx",
+    "line": 38,
+    "declaration": "<SidePanel title=\"Barcode scanner\" open={open} onClose={() => setOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/catalog/BulkImport.tsx",
+    "line": 44,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/catalog/CatalogPanel.tsx",
+    "line": 206,
+    "declaration": "<SidePanel title=\"Catalog filters\" open={filtersOpen} onClose={() => setFiltersOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/catalog/CatalogPanel.tsx",
+    "line": 246,
+    "declaration": "<SidePanel title=\"Variants and pricing\" open onClose={() => setPricingProduct(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/catalog/CatalogProducts.tsx",
+    "line": 138,
+    "declaration": "<SidePanel title=\"Product actions\" open={!!actions} onClose={() => setActions(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/catalog/CatalogProducts.tsx",
+    "line": 176,
+    "declaration": "<SidePanel title=\"Product details\" open={!!selected} onClose={() => setSelectedId(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/catalog/CategoryEditor.tsx",
+    "line": 61,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/catalog/ManageProduct.tsx",
+    "line": 43,
+    "declaration": "<SidePanel title=\"Variants and pricing\" open onClose={onClose}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/catalog/ManageProduct.tsx",
+    "line": 54,
+    "declaration": "<SidePanel title=\"Edit product details\" open onClose={onClose}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/catalog/ProductEditor.tsx",
+    "line": 96,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/catalog/ProductQuantity.tsx",
+    "line": 105,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/components/CommandForm.tsx",
+    "line": 79,
+    "declaration": "<SidePanel title={definition.title} open={open} onClose={() => setOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/customers/CreateCustomerSheet.tsx",
+    "line": 48,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/customers/CreateCustomerSheet.tsx",
+    "line": 57,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/customers/CustomerPanel.tsx",
+    "line": 151,
+    "declaration": "<SidePanel title=\"Customer filters\" open={filtersOpen} onClose={() => setFiltersOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/customers/CustomerPanel.tsx",
+    "line": 225,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/customers/CustomerPanel.tsx",
+    "line": 257,
+    "declaration": "<SidePanel title=\"Customer details\" open={!!customerId} onClose={() => setCustomerId('')}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/customers/CustomerPanel.tsx",
+    "line": 321,
+    "declaration": "<CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/customers/CustomerRetention.tsx",
+    "line": 33,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/inventory/InventoryPanel.tsx",
+    "line": 190,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/inventory/InventoryPanel.tsx",
+    "line": 197,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/inventory/InventoryProducts.tsx",
+    "line": 187,
+    "declaration": "<SidePanel title=\"Product details\" open={Boolean(selected)} onClose={() => setSelected(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/inventory/MovementHistory.tsx",
+    "line": 47,
+    "declaration": "<SidePanel title=\"Stock movement\" open={Boolean(movement)} onClose={() => setSelected(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/inventory/StockAdjustment.tsx",
+    "line": 29,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/inventory/StockAdjustment.tsx",
+    "line": 40,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/inventory/StockPlanning.tsx",
+    "line": 67,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/notifications/NotificationTable.tsx",
+    "line": 67,
+    "declaration": "<SidePanel title=\"Notification details\" open={!!detail} onClose={() => setSelectedId(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/notifications/NotificationsPanel.tsx",
+    "line": 118,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/offline/OfflineCart.tsx",
+    "line": 172,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/offline/OfflinePolicy.tsx",
+    "line": 25,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/offline/OfflineProductOptions.tsx",
+    "line": 22,
+    "declaration": "<SidePanel title={item.name} open onClose={close}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/offline/SyncStatus.tsx",
+    "line": 77,
+    "declaration": "<SidePanel title=\"Synchronization details\" open={open} onClose={() => setOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/operations/CostDetails.tsx",
+    "line": 30,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/operations/CostDetails.tsx",
+    "line": 66,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/operations/OperationsFilters.tsx",
+    "line": 30,
+    "declaration": "<SidePanel title=\"Filters\" open={open} onClose={() => setOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/operations/OperationsPanel.tsx",
+    "line": 96,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/operations/StaffDetails.tsx",
+    "line": 42,
+    "declaration": "<SidePanel title=\"Staff details\" open onClose={onClose}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/operations/StaffDetails.tsx",
+    "line": 62,
+    "declaration": "{salaryDefinition && <CommandForm definition={salaryDefinition} run={run} />}",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/operations/StaffDetails.tsx",
+    "line": 63,
+    "declaration": "{editing && <CommandForm key={staff.version} inline definition={definition} run={run} />}",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/organization/AuditHistory.tsx",
+    "line": 78,
+    "declaration": "<SidePanel title=\"Audit filters\" open={filtersOpen} onClose={() => setFiltersOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/organization/AuditHistory.tsx",
+    "line": 132,
+    "declaration": "<SidePanel title=\"Activity details\" open={!!selected} onClose={() => setSelected(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/organization/LocationEditor.tsx",
+    "line": 102,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/organization/MemberCollection.tsx",
+    "line": 58,
+    "declaration": "<SidePanel title=\"Team filters\" open={open} onClose={() => setOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/organization/MemberEditor.tsx",
+    "line": 61,
+    "declaration": "<SidePanel title=\"Member details\" open={open} onClose={() => setOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/organization/MemberEditor.tsx",
+    "line": 69,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/platform-businesses/AddBusiness.tsx",
+    "line": 58,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/platform-businesses/BusinessDirectory.tsx",
+    "line": 83,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/CartLineDetails.tsx",
+    "line": 26,
+    "declaration": "<SidePanel title=\"Product details\" open={!!line} onClose={onClose}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/CashPanel.tsx",
+    "line": 68,
+    "declaration": "<CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/CashRecords.tsx",
+    "line": 62,
+    "declaration": "<SidePanel title=\"Cash shift details\" open={Boolean(shift)} onClose={() => setSelected('')}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/CashRecords.tsx",
+    "line": 87,
+    "declaration": "<CommandForm key={f.title} definition={f} run={run} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/PaymentReview.tsx",
+    "line": 24,
+    "declaration": "if (state.uncertain) return <CommandForm inline definition={form} run={(work) => void work()} />;",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/PaymentReview.tsx",
+    "line": 73,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/PosCheckout.tsx",
+    "line": 179,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/ProductPicker.tsx",
+    "line": 143,
+    "declaration": "<SidePanel title=\"Product filters\" open={filtersOpen} onClose={() => setFiltersOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/ProductPicker.tsx",
+    "line": 240,
+    "declaration": "<SidePanel title=\"Product actions\" open={!!actions} onClose={() => setActions(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/ProductPicker.tsx",
+    "line": 257,
+    "declaration": "<SidePanel title=\"Product details\" open={!!detail} onClose={() => setDetail(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/ReceiptPanel.tsx",
+    "line": 141,
+    "declaration": "<SidePanel title=\"Sale receipt\" open={!!id} onClose={() => setId('')}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pos/ReceiptPanel.tsx",
+    "line": 180,
+    "declaration": "<CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pricing/PricingPanel.tsx",
+    "line": 120,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pricing/PricingPanel.tsx",
+    "line": 179,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pricing/PricingPanel.tsx",
+    "line": 194,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/pricing/PricingPanel.tsx",
+    "line": 210,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/purchasing/PayablePanel.tsx",
+    "line": 181,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/purchasing/PayablePanel.tsx",
+    "line": 206,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/purchasing/PurchasingPanel.tsx",
+    "line": 121,
+    "declaration": "<CommandForm key={form.title} definition={form} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/purchasing/PurchasingPanel.tsx",
+    "line": 162,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/purchasing/PurchasingPanel.tsx",
+    "line": 296,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/settings/SecurityNotifications.tsx",
+    "line": 34,
+    "declaration": "<SidePanel title=\"New device sign-in\" open={!!detail} onClose={() => setId('')}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/settings/SecurityPanel.tsx",
+    "line": 109,
+    "declaration": "<SidePanel title=\"Security filters\" open={filtersOpen} onClose={() => setFiltersOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/settings/SecurityPanel.tsx",
+    "line": 120,
+    "declaration": "<SidePanel title=\"Security event details\" open={!!details} onClose={() => setDetails(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/shell/NativeProfileMenu.tsx",
+    "line": 48,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/shell/NativeStatus.tsx",
+    "line": 71,
+    "declaration": "<SidePanel title=\"Notifications\" open={open} onClose={() => setOpen(false)} menu>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/shell/WorkspaceSwitcher.tsx",
+    "line": 57,
+    "declaration": "<SidePanel title=\"Switch workspace\" open={open} onClose={() => setOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storage/StorageDetails.tsx",
+    "line": 26,
+    "declaration": "<SidePanel title=\"Storage location details\" open={!!selectedId} onClose={() => close()}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storage/StorageDetails.tsx",
+    "line": 45,
+    "declaration": "<CommandForm key={location.id} inline definition={form} run={run} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storage/StorageManagementPanel.tsx",
+    "line": 111,
+    "declaration": "<CommandForm key={f.title} definition={f} run={run} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storage/WarehouseBalances.tsx",
+    "line": 22,
+    "declaration": "<SidePanel title=\"Warehouse balances\" open={open} onClose={() => setOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storefront/OnlineBulkResult.tsx",
+    "line": 26,
+    "declaration": "<SidePanel title=\"Product results\" open onClose={onClose}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storefront/OnlineListingHistory.tsx",
+    "line": 38,
+    "declaration": "<SidePanel title=\"Listing history\" open onClose={onClose}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storefront/OnlineProductDetails.tsx",
+    "line": 181,
+    "declaration": "<SidePanel title=\"Online product details\" open wide bottom onClose={onClose}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storefront/OnlineProductPicker.tsx",
+    "line": 118,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storefront/OnlineProductRows.tsx",
+    "line": 180,
+    "declaration": "<SidePanel title=\"Product issues\" open onClose={() => setIssues(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storefront/OnlineProductRows.tsx",
+    "line": 210,
+    "declaration": "<SidePanel title=\"Remove from online store?\" open onClose={() => setRemove(null)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storefront/OnlineProducts.tsx",
+    "line": 233,
+    "declaration": "<SidePanel title=\"Product filters\" open onClose={() => setFiltersOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storefront/OnlineProducts.tsx",
+    "line": 369,
+    "declaration": "<SidePanel title=\"Selected products\" open onClose={() => setBulkOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storefront/StorefrontPanel.tsx",
+    "line": 104,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/storefront/StorefrontPanel.tsx",
+    "line": 145,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/trading/TradingPanel.tsx",
+    "line": 87,
+    "declaration": "<SidePanel",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/trading/TradingPanel.tsx",
+    "line": 103,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/transfers/TransferPanel.tsx",
+    "line": 153,
+    "declaration": "<CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/transfers/TransferPanel.tsx",
+    "line": 179,
+    "declaration": "<SidePanel title=\"Transfer details\" open={!!transferId} onClose={() => setTransferId('')}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/transfers/TransferPanel.tsx",
+    "line": 189,
+    "declaration": "<CommandForm key={f.title} definition={f} run={(work) => void model.run(work)} />",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/ui/NativeShowcase.tsx",
+    "line": 95,
+    "declaration": "<SidePanel title=\"Example details\" open={panel} onClose={() => setPanel(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/ui/NativeShowcase.tsx",
+    "line": 195,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/ui/SelectChoice.tsx",
+    "line": 53,
+    "declaration": "<SidePanel title={label} open={open} onClose={() => setOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/ui/WarehouseSelect.tsx",
+    "line": 18,
+    "declaration": "<SidePanel title={props.label} open={open} onClose={() => setOpen(false)}>",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  },
+  {
+    "path": "apps/mobile/src/warehouse/WarehousePanel.tsx",
+    "line": 200,
+    "declaration": "<CommandForm",
+    "review": "Source inventoried; dynamic states/device verification partial"
+  }
+]

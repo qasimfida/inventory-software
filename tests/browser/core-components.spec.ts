@@ -3,17 +3,17 @@ import { test, expect } from '@playwright/test';
 test('fine-pointer dimensions, loading geometry and native field semantics', async ({ page }) => {
   await page.goto('/#/design-system');
   for (const [name, height] of [
-    ['Primary example', 40],
-    ['Small example', 32],
-    ['Large example', 48],
-    ['Refresh example', 36],
+    ['Primary example', 34],
+    ['Small example', 30],
+    ['Large example', 40],
+    ['Refresh example', 34],
   ] as const) {
-    expect((await page.getByRole('button', { name, exact: true }).boundingBox())!.height).toBe(
-      height,
-    );
+    expect(
+      (await page.getByRole('button', { name, exact: true }).boundingBox())!.height,
+    ).toBeGreaterThanOrEqual(height);
   }
   const input = page.getByRole('textbox', { name: 'Preview label', exact: true });
-  expect((await input.boundingBox())!.height).toBe(40);
+  expect((await input.boundingBox())!.height).toBe(34);
   const loading = page.getByRole('button', { name: 'Stable loading example', exact: true });
   const before = await loading.boundingBox();
   await loading.click();

@@ -1,3 +1,6 @@
+import { EmptyState } from '@/components/common/AsyncState';
+import { ChartPresentation } from '@/components/common/ChartPresentation';
+import { Table, TableScroll } from '@/components/ui/Table';
 import { useId } from 'react';
 import type { PlatformOverview } from '@inventory/contracts';
 import { dashboardHeights } from '@inventory/api-client';
@@ -14,7 +17,29 @@ export function RegistrationTrend({ rows }: { rows: PlatformOverview['registrati
         <span>Last 30 days · UTC</span>
       </div>
       {rows.length ? (
-        <>
+        <ChartPresentation
+          label="Registration chart"
+          values={
+            <TableScroll label="Daily registrations">
+              <Table>
+                <thead>
+                  <tr>
+                    <th>Date (UTC)</th>
+                    <th data-numeric>Registrations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row) => (
+                    <tr key={row.date}>
+                      <td>{row.date}</td>
+                      <td data-numeric>{row.count}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </TableScroll>
+          }
+        >
           <svg viewBox="0 0 600 190" className="overview-chart" role="img" aria-labelledby={id}>
             <title id={id}>
               Daily business registrations.{' '}
@@ -30,9 +55,12 @@ export function RegistrationTrend({ rows }: { rows: PlatformOverview['registrati
             <span>{rows[0]?.date}</span>
             <span>{rows.at(-1)?.date}</span>
           </div>
-        </>
+        </ChartPresentation>
       ) : (
-        <p>No registration history available.</p>
+        <EmptyState
+          message="No registration history"
+          description="Daily business registration counts will appear here when available."
+        />
       )}
     </section>
   );

@@ -1,0 +1,12 @@
+{
+  "system": "macOS-26.5.2-arm64-arm-64bit",
+  "TEST_DATABASE_URL_configured": false,
+  "tools": {
+    "adb": false,
+    "xcrun": true,
+    "cargo": true,
+    "rustc": true,
+    "psql": true
+  },
+  "node_modules": true
+}

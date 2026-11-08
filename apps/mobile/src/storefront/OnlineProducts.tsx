@@ -1,3 +1,4 @@
+import { ExportRecords } from '../ui/ExportRecords';
 import { StatusBadge } from '../ui/StatusBadge';
 import { ViewTabs } from '../ui/ViewTabs';
 import { FilterButton } from '../ui/FilterButton';
@@ -210,6 +211,15 @@ export function OnlineProducts({
             attention,
           ].filter(Boolean)}
           onPress={() => setFiltersOpen(true)}
+        />
+        <ExportRecords
+          name="online-products-shown"
+          headers={['Product', 'Status', 'Attention messages']}
+          rows={(state.page?.items ?? []).map((item) => [
+            item.title,
+            item.status,
+            item.issues.map((issue) => issue.message).join('; '),
+          ])}
         />
         <ViewTabs grid={grid} onChange={setGrid} label="Online products" />
         <IconAction

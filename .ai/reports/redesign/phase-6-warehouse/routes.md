@@ -1,0 +1,23 @@
+# Phase 6 warehouse coverage
+
+Web owners are relative to `apps/web/src/features/`; native equivalents are relative to `apps/mobile/src/`. Tauri uses the web owners. Generated root route evidence remains separate.
+
+| Route / surface | Owners / treatment | Behavior and evidence |
+| --- | --- | --- |
+| `/warehouse` workbench | `warehouse/WarehousePanel.tsx`: grouped product scan/location scan, responsive web columns, native surfaces | Same workbench open state, warehouse/workflow selection, unit selection and context resets. Existing camera/keyboard scanning adapters unchanged. |
+| Product and location resolution | WarehousePanel; shared `scanning.ts`, domain `scanner.ts` | Scans resolve only; no automatic quantity increment/posting. ScanGate duplicate suppression and leading-zero/multiple-scan handling tested. No camera/hardware qualification. |
+| Count scope and sessions | `warehouse/CountWorkflow.tsx`: labelled scope/session group, spaced commands | Same explicit unique variant scope, blind create, list/resume, absolute capture, version and JSON export. Resume test proves reads do not mutate stock. |
+| Count evidence / review | New feature-local `warehouse/CountEvidence.tsx` web/native | Shared metadata/table components show exact counted/expected/attempt values, hidden/not-counted and stale warnings. Tests cover fractional quantity, blind value and empty lines. No expected-stock inference. |
+| Submit / recount / approve | Existing CountWorkflow actions retained | Same endpoints, version/reason, retry identity, backend role checks and transaction ownership. Characterization covers all three command actions. No live approval/rollback test. |
+| Scanned purchasing receipt | Existing `warehouseForms` confirmation | Same matching variant/unit, warehouse verification, quarantine warning, quantity/damage fields and protected command. Purchasing module owns PO lifecycle; unchanged here. |
+| Scanned location move | Existing `warehouseForms` confirmation | Loading form cannot post; exact fractional quantity/source/destination pinned in characterization. No stock mutation during browser review. |
+| Scanned transfer dispatch/receive | Existing `warehouseForms` confirmation | Same document/source/destination validation, all-lines dispatch, received/damaged/shortage fields. Transfer lifecycle redesign not started. |
+| `/storage` Locations | `storage/StoragePanel.tsx`, `StorageManagementPanel.tsx` retained | Shared tabs, scope, bounded search, list/grid/export, refresh, pagination and permission-gated create/move commands already consistent. Browser populated list and responsive capture. |
+| Location details/edit | `storage/StorageDetails.tsx`, `LocationLabel.tsx` | Existing drawer/edit tab and label adapter retained; detail metadata now uses shared RecordDetails on web/native. Same loaded location, versioned form, notes and parent/root semantics. |
+| Warehouse balances | `storage/WarehouseBalances.tsx` | Exact totals in web Table/native RecordTable, explicit empty state, scoped product fallback references. No duplicate drawer title. Browser drawer checked in both themes/all six widths. |
+| Hierarchy | `visualization/WarehouseViewPanel.tsx` retained | Existing root/parent navigation, children list/grid, per-location stock, low-stock badges, separate bounded pagination and refresh. Browser opens hierarchy. Native labelled stock cards retained as a usable alternative. |
+| `/warehouse-view` | Hidden compatibility entry to storage | No route/redirect change. No new warehouse view added. |
+| Adjustments/movement | `/inventory`, `inventory/StockAdjustment.tsx`, `InventoryPanel.tsx`, `MovementHistory.tsx` | Prior inventory redesign reused. Existing permission-gated ledger commands, movement drawer, reconciliation and exact deltas retained. No duplicate adjustment interface in warehouse. |
+| Reservations | `/inventory`, `inventory/StockPlanning.tsx`, shared inventory/stock-planning forms | Existing reserve/release, order holds and reorder controls, table/status/empty states retained. Holds do not create sales or payments. No offline extension or new allocation behavior. |
+
+State review: existing async retry/error/success semantics and command validation retained; added explicit count-line and balance empties. Browser reviewed populated counts/storage/hierarchy/balances, not every server failure or large production dataset. Existing workbench exposes command choices before backend eligibility validation; it was not converted into a new client authorization/state machine. Unsaved drafts, server denials, live stale/recount transitions and peripheral handling still require integration/device verification.

@@ -25,7 +25,7 @@ export function PaymentReview({
     !!state.customerId,
   );
   return (
-    <section aria-label="Payment allocation" className="space-y-2">
+    <section aria-label="Payment allocation" className="pos-payment-review space-y-2">
       <h4>Cash and customer credit</h4>
       <p>
         Credit is an unpaid customer balance, subject to server authorization and limits. Card
@@ -50,11 +50,20 @@ export function PaymentReview({
       {allocation.error ? (
         <p role="alert">{allocation.error}</p>
       ) : (
-        <p role="status">
-          Cash: {formatMinorUnits(allocation.cash, state.quote.currency)} · Unpaid credit:{' '}
-          {formatMinorUnits(allocation.credit, state.quote.currency)} · Change:{' '}
-          {formatMinorUnits(allocation.change, state.quote.currency)}
-        </p>
+        <dl className="checkout-totals" aria-live="polite">
+          <div>
+            <dt>Cash applied</dt>
+            <dd>{formatMinorUnits(allocation.cash, state.quote.currency)}</dd>
+          </div>
+          <div>
+            <dt>Unpaid customer credit</dt>
+            <dd>{formatMinorUnits(allocation.credit, state.quote.currency)}</dd>
+          </div>
+          <div>
+            <dt>Change due</dt>
+            <dd>{formatMinorUnits(allocation.change, state.quote.currency)}</dd>
+          </div>
+        </dl>
       )}
       <fieldset disabled={!!allocation.error || state.busy}>
         <CommandForm

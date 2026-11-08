@@ -1,11 +1,14 @@
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
+import { CartThumbnail } from './CartThumbnail';
+import { RowActions } from '@/components/common/RowActions';
+import { FormSheet } from '@/components/common/FormSheet';
 import { FilterButton } from '@/components/common/FilterButton';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/Popover';
-import { useAppearance } from '@/theme/Appearance';
 import { usePageCollection } from '@/components/common/usePageCollection';
-import { Package, ShoppingCart, ScanBarcode } from 'lucide-react';
+import { ShoppingCart, ScanBarcode } from 'lucide-react';
 import { EmptyState, LoadingState, ErrorState } from '@/components/common/AsyncState';
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { cancellableResource, posPriceLabel } from '@inventory/api-client';
+import { cancellableResource, isPosSoldOut } from '@inventory/api-client';
 import type { createSalesClient, PosItem } from '@inventory/api-client';
 import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/FormControls';
@@ -17,14 +20,18 @@ export function ProductPicker({
   add,
   disabled,
   revision = 0,
+  onManage,
 }: {
   client: ReturnType<typeof createSalesClient>;
   warehouseId: string;
   add: (item: PosItem) => void;
   disabled: boolean;
   revision?: number;
+  onManage?: ((productId: string) => void) | undefined;
 }) {
-  const { preferences } = useAppearance();
+  const { posPriceLabel } = useDisplayMoney();
+
+  const [detail, setDetail] = useState<PosItem | null>(null);
   const lookup = useRef<HTMLDivElement>(null);
   const [categoryId, setCategoryId] = useState(''),
     [availability, setAvailability] = useState<'all' | 'in-stock' | 'out-of-stock'>('all');
@@ -55,7 +62,6 @@ export function ProductPicker({
             {
               warehouseId,
               ...query,
-              currency: preferences.currency,
               ...(categoryId ? { categoryId } : {}),
               availability,
             },
@@ -63,13 +69,13 @@ export function ProductPicker({
           ),
         () => new AbortController(),
       ),
-    [client, warehouseId, query, preferences.currency, categoryId, availability],
+    [client, warehouseId, query, categoryId, availability],
   );
   const { model } = request;
   const rawPageState = useSyncExternalStore(model.subscribe, model.snapshot, model.snapshot);
   const state = usePageCollection(
     rawPageState,
-    [warehouseId, query.search, query.code, preferences.currency, categoryId, availability],
+    [warehouseId, query.search, query.code, categoryId, availability],
     query.offset,
     ['items'],
     () => {
@@ -95,14 +101,14 @@ export function ProductPicker({
           onSubmit={() => setQuery({ search, code: '', offset: 0 })}
           onSelect={(id) => {
             const item = state.data?.items.find((i) => i.id === id);
-            if (item) add(item);
+            if (item && !isPosSoldOut(item)) add(item);
           }}
           disabled={disabled}
           busy={state.busy || (!state.data && !state.error)}
           suggestions={
             state.data?.items.map((item) => ({
               value: item.id,
-              label: `${item.name} · ${item.sku} · ${posPriceLabel(item)}`,
+              label: `${item.name} · ${item.sku} · ${isPosSoldOut(item) ? 'Sold' : posPriceLabel(item)}`,
             })) ?? []
           }
         />
@@ -131,7 +137,7 @@ export function ProductPicker({
           <PopoverContent align="end" className="space-y-3">
             <h3>Product filters</h3>
             <span className="text-sm text-muted-foreground">
-              {preferences.currency} · search prices
+              Product prices use their configured currency
             </span>
             <Select
               aria-label="Product category"
@@ -172,7 +178,7 @@ export function ProductPicker({
         </Popover>
       </div>
       {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
-      {state.busy && <LoadingState message="Loading products…" />}
+      {state.busy && !state.data && <LoadingState message="Loading products…" />}
       {state.data?.items.length === 0 && (
         <EmptyState
           message="No products match this search."
@@ -181,13 +187,38 @@ export function ProductPicker({
       )}
       <ul className="product-grid">
         {state.data?.items.map((item) => (
-          <li key={item.id} className="product-card">
+          <li key={item.id} className="product-card product-card-link">
             <div className="product-art" aria-hidden="true">
-              <Package />
+              <CartThumbnail
+                key={item.images?.[0] ?? 'missing'}
+                uri={item.images?.[0]}
+                name={item.name}
+              />
               <span>{item.sku}</span>
             </div>
             <div className="space-y-1">
-              <h3 className="text-base">{item.name}</h3>
+              <Button
+                variant="ghost"
+                className="product-card-title"
+                onClick={() => setDetail(item)}
+              >
+                {item.name}
+              </Button>
+              <div className="product-card-actions">
+                <RowActions
+                  label={item.name}
+                  actions={[
+                    { label: 'View details', onSelect: () => setDetail(item) },
+                    {
+                      label: 'Edit product / manage listing',
+                      disabled: disabled || !onManage || !item.productId,
+                      onSelect: () => {
+                        if (item.productId) onManage?.(item.productId);
+                      },
+                    },
+                  ]}
+                />
+              </div>
               <p className="text-xs text-muted-foreground">
                 {item.sku} · {item.units.find((u) => u.id === item.unitId)?.code}
               </p>
@@ -195,12 +226,16 @@ export function ProductPicker({
             <Button
               variant="outline"
               className="w-full"
-              aria-label={`Add ${item.sku} · ${item.name}`}
-              disabled={disabled}
+              aria-label={`${isPosSoldOut(item) ? 'Sold' : 'Add'} ${item.sku} · ${item.name}`}
+              disabled={disabled || isPosSoldOut(item)}
               onClick={() => add(item)}
             >
               <ShoppingCart aria-hidden="true" />
-              {item.price ? posPriceLabel(item).replace(/ \/ .*$/, '') : 'Check pricing'}
+              {isPosSoldOut(item)
+                ? 'Sold'
+                : item.price
+                  ? posPriceLabel(item).replace(/ \/ .*$/, '')
+                  : 'Check pricing'}
             </Button>
           </li>
         ))}
@@ -209,6 +244,37 @@ export function ProductPicker({
         Scan or type in the same search field. Prices shown are per base unit before tax and
         discounts; the cart verifies final pricing.
       </p>
+      <FormSheet
+        title="Product details"
+        description="Current catalog information. Checkout verifies the final price and availability."
+        open={!!detail}
+        onOpenChange={(open) => {
+          if (!open) setDetail(null);
+        }}
+      >
+        {detail && (
+          <>
+            <h3>{detail.name}</h3>
+            <dl className="record-details">
+              <dt>SKU</dt>
+              <dd>{detail.sku}</dd>
+              <dt>Price</dt>
+              <dd>{posPriceLabel(detail)}</dd>
+              <dt>Selected unit</dt>
+              <dd>{detail.units.find((unit) => unit.id === detail.unitId)?.code}</dd>
+            </dl>
+            <Button
+              disabled={disabled || isPosSoldOut(detail)}
+              onClick={() => {
+                add(detail);
+                setDetail(null);
+              }}
+            >
+              {isPosSoldOut(detail) ? 'Sold' : 'Add to cart'}
+            </Button>
+          </>
+        )}
+      </FormSheet>
       <Pagination
         label="products"
         offset={query.offset}

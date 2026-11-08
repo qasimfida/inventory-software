@@ -1,0 +1,128 @@
+# Design system
+
+## Start here
+
+Reuse the actual components at `/#/design-system` before writing UI. Web and Tauri use the existing shadcn-style/Radix primitives and Vaul drawers with small token-based adjustments; do not install another component library. Native uses React Native equivalents, never DOM wrappers. A feature owns its state/permissions; primitives own presentation and accessibility.
+
+| Responsibility                | Web (relative to `apps/web/src`)                | Native (relative to `apps/mobile/src`)                    |
+| ----------------------------- | ----------------------------------------------- | --------------------------------------------------------- |
+| Primitive controls            | `components/ui/`                                | `ui/Controls.tsx`, `ui/Themed.tsx`, `ui/SelectChoice.tsx` |
+| Reusable application patterns | `components/common/`                            | `ui/`                                                     |
+| Shell/navigation              | `components/layout/` and app routing            | `shell/` and navigation registries                        |
+| Business UI                   | `features/<feature>/`                           | `<feature>/`                                              |
+| Appearance adapter            | `theme/Appearance.tsx`, `theme/preferences.css` | `theme.tsx`                                               |
+
+## Tokens and user preferences
+
+`packages/design-tokens/tokens.css` is the palette/metric source. Run `npm run build:shared` to generate native exports. Use semantic surface/text/primary/border/focus/status/navigation/table/chart tokens; use spacing, typography, radius and elevation tokens instead of feature-local values. Physical print/barcode black and white are deliberate exceptions. Layout breakpoints, aspect ratios and actual media dimensions may be explicit; do not replace them blindly.
+
+`packages/contracts/src/settings.ts` owns schema/defaults and `resolveSettings`: defaults → platform defaults → business defaults → user values → business enforced → platform enforced → device accessibility/performance constraints. Preserve this precedence, account isolation, persistence and existing policy locks. No extra localStorage/theme system, reset, or per-page preference copy.
+
+| Preference     | Required behavior                                                                                                                                  |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Appearance     | Light, dark, system; system reacts to OS changes, including portals                                                                                |
+| Accent         | Existing blue/teal/violet/rose/amber palette; primary/focus/navigation/selection/chart tokens follow it, semantic errors/warnings stay distinct    |
+| Font           | Default Karla; existing Lora/system/serif/monospace/local choices; native unsupported local font falls back safely, preserve tabular numbers/icons |
+| Text size      | Small/medium/large scale headings, controls, menus, tables and help; native OS scaling remains enabled                                             |
+| Radius         | Rounded: restrained corners; circle: pill controls/avatars and larger card corners; multiline fields stay readable                                 |
+| Density        | Existing compact/comfortable spacing and row/control sizing; never sacrifice native/coarse-pointer targets                                         |
+| Icon size      | Existing small/medium/large metrics; named icons, consistent stroke and accessible icon-only labels                                                |
+| Motion         | Disabled/reduced beats every component animation/transition, including portals; OS reduced motion also wins                                        |
+| Effects        | Optional decorative elevations; disabling never removes focus, selection or functional feedback                                                    |
+| Visualizations | Simple keeps lightweight summaries/tables/SVG; enhanced loads available visualization modules lazily, never invents data                           |
+| States         | Simple/enhanced presentation, same data/error semantics; enhanced empty states have icon/title/description and only permitted relevant actions     |
+| Pagination     | Existing pages/scroll behavior; no paginator for one page, keep bounded data loading and stable selection                                          |
+| Currency       | Existing supported codes/symbol formatter; no conversion or reinterpretation of posted monetary values                                             |
+
+Settings controls belong in Preferences, not repeated on every feature page. Keep user choice effective throughout mounted screens and overlays without resetting drafts. Explain enforced choices rather than offering an ineffective toggle.
+
+## Screen contract
+
+- One authoritative heading/description and consistent action placement; preserve existing route shell and history-aware back action. Auth has its own layout; no business controls stacked under login.
+- One wrapping collection toolbar: search with leading icon/clear, filter badge/summary, view tabs where supported, relevant refresh and permission-gated creation/export. Debounce/cancel reads; never retry unsafe commands generically.
+- Existing Table/TableScroll: aligned headers/cells, fixed narrow selection column, select-all in header, right-aligned actions, tabular numeric values, token zebra rows. Wide tables scroll inside a named region, not the whole page.
+- Use StatusBadge with explicit semantic tone, never an unstyled `status-badge` span. Status is text plus color. Links underline on hover; icon actions use real tooltips and keyboard names.
+- Cards reflow with content-driven columns; preserve names, units and prices. Show selection only with authorized bulk actions. Selected counts appear only when relevant.
+- Keep cart below the sticky header with internal scrolling and visible checkout; present authoritative totals and unknown/failed states honestly.
+- Stores/terminals open read-only details first; scoped writers get Edit, Activate/Deactivate and confirmed Archive. Archival preserves history, is permanent and is not hard deletion; the server enforces parent/dependent-record rules.
+- Drawers use existing FormSheet/SidePanel and focus/keyboard/safe-area handling. Keep small confirmations in ConfirmDialog. Do not replace platform-accessible selection/menu behavior with hand-built clickable divs.
+- Empty search explains no matches; empty collections offer permitted creation; failures offer a real retry; offline/sync UI distinguishes local persistence from remote confirmation.
+- Support 320px through desktop widths, large text, keyboard, visible focus, meaningful labels/errors, screen readers, reduced motion and touch. No feature removal to fit a smaller viewport.
+
+## Web component API reference
+
+Use TypeScript declarations in the linked implementation as the exact required/optional/default prop contract; examples below exercise real components. Shared additions require inline prop documentation, a local-state showcase example, meaningful interaction tests and an update here. Avoid a second prose copy of every prop signature that will become stale.
+
+| Component source                                                         | Use / limitation                                                                                                                  |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `components/common/Layout.tsx`                                           | Page main landmark/skip link; Stack/Cluster/Grid/Panel layout. One main per route, avoid unnecessary card nesting.                |
+| `components/common/FormField.tsx`                                        | Label, hint and error associations; spread supplied control props onto actual input. ErrorSummary focuses invalid controls.       |
+| `components/ui/FormControls.tsx`                                         | Shared Input/Textarea/Select; use native validation and existing schemas. Search only for sufficiently large/dynamic option sets. |
+| `components/common/IconButton.tsx`                                       | Named icon + label/tooltip; never encode permission or command behavior in the primitive.                                         |
+| `components/ui/StatusBadge.tsx`                                          | `children`; optional `tone`: neutral (default), success, warning, error, info. Not an action.                                     |
+| `components/common/SearchControl.tsx`                                    | Controlled text/suggestions, clear and keyboard listbox; owner supplies bounded, cancellable reads.                               |
+| `components/common/FilterButton.tsx`, `ViewTabs.tsx`, `OverflowTabs.tsx` | Active filter summary, list/grid and overflow chevrons. OverflowTabs child uses the established settings-tabs style.              |
+| `components/ui/Table.tsx`                                                | Semantic table and named keyboard-scroll region; caller owns sort/filter/page/selection.                                          |
+| `components/common/FormSheet.tsx`, `ConfirmDialog.tsx`                   | Controlled drawer or confirmation with title/description/focus. Preserve pending/dismissal rules; model owns async work.          |
+| `components/common/AsyncState.tsx`                                       | Loading/empty/error; preserve announcements and safe retry identity.                                                              |
+| `components/common/MetricCard.tsx`                                       | Label/value/unit, optional primary treatment; no fabricated trend or calculation.                                                 |
+| `components/ui/Accordion.tsx`, `Popover.tsx`, `Tooltip.tsx`              | Existing keyboard/portal primitives; no hover-only critical information or clipped actions.                                       |
+
+```tsx
+import { StatusBadge } from '@/components/ui/StatusBadge';
+import { Panel } from '@/components/common/Layout';
+<Panel>
+  <h2>Availability</h2>
+  <StatusBadge tone="warning">Low stock</StatusBadge>
+</Panel>;
+```
+
+## Native component API reference
+
+Native `ui/Themed.tsx` Text/TextInput resolve font, size, colors and state; `ui/Controls.tsx` provides Action/Field/Choice. `ui/IconAction.tsx` takes an accessible label and native icon name. Use `ui/StatusBadge.tsx`, `MetricCard.tsx`, `Surface.tsx`, `SearchControl.tsx`, `FilterButton.tsx` and `ViewTabs.tsx` for equivalent patterns. `ui/SidePanel.tsx` owns modal safe areas, scrolling and optional footer. Native controls support system text scaling; keep minimum touch targets even in compact mode. Local desktop font availability does not imply that font exists on a phone.
+
+```tsx
+import { Surface } from './ui/Surface';
+import { Text } from './ui/Themed';
+<Surface>
+  <Text>Current warehouse stock</Text>
+</Surface>;
+```
+
+Browser/React Native Web tests do not qualify VoiceOver/TalkBack, native modals, keyboard avoidance or installed WebViews. Use the release checklist in [development](development.md#release-qualification).
+
+Collection toolbars use `RecordCollection.toolbar` for search/filters and `.actions` for permission-aware creation commands after the view tabs (native equivalent: `ui/RecordCollection`). The navigation-control showcase demonstrates local-only search, list/grid and creation. Team contains employment/salary records; Expenses is separate. Customer retention lives in Business settings. Product edit drawers reuse ProductChannels for online actions and the versioned catalog command for activation; catalog inactivity also prevents POS sales and online publication.
+
+POS quantity edits keep controls available during read-only repricing; checkout requires a fresh authoritative quote. Product discovery does not treat display currency as a listing filter. Parent activation never revives independently disabled SKUs; an older inactive default SKU may need activation in Variants and pricing.
+
+Operational sizing uses 34px desktop controls (32px compact), 38px table rows (32px compact) and 22px page titles; native/coarse-pointer touch targets stay intact. Product cards use a text-scaled minimum width independent of sidebar resizing. Card action menus appear on hover/focus and remain visible on touch; POS details never add a cart line implicitly. Category management is at `/categories`.
+
+`components/common/ExportRecords.tsx` and native `ui/ExportRecords.tsx` accept required `headers`/`rows` (readonly string arrays), optional `name` and `label`; defaults are `records-shown` / “Export shown records”. Use only already-authorized visible rows; exports protect spreadsheet formula cells and preserve exact strings. RecordCollection includes a working showcase example. Exporting is not an all-pages/background report job. Drawer action groups use `drawer-actions` for two-column layout.
+
+Security event lists use readable event/outcome labels and `MMM D, YYYY h:mm A` device-local time; details include weekday, seconds and zone. Drawers render labelled loaded event data, not JSON or another detail request. Actor labels use the authorized account email until personal names exist; identifiers remain secondary references.
+
+Business notification drawers follow the same labelled-detail pattern using the business timezone, full event/read timestamps and secondary record references. Render the authorized loaded inbox record; preserve read/unread/dismiss commands and never invent missing actor names or transaction details.
+
+Inventory is the combined product/stock workspace: Products & pricing reuses the catalog editor, variants, units, pricing and listing controls; Stock & movements reuses the ledger workflows. Show sections by their existing read permissions and retain command-level write/scope checks. `/catalog` is a hidden compatibility entry; navigation and product search use `/inventory`.
+
+Product setup stays in one drawer: save Details, then Price & units, Quantity and optional Listing availability. The primary price form saves an immediate price; scheduled prices/variants/promotions remain advanced. Quantity records base-unit opening/add/remove movements at a selected warehouse root, never overwrites a balance. Each step saves independently, preserves confirmed earlier steps and enforces its original permissions.
+
+POS uses scoped available stock to label tracked products with zero/negative stock “Sold” and disable card/detail/search additions; untracked or unknown availability is not sold out. Background catalog/pricing refreshes keep loaded content visible. A confirmed save followed by a failed refresh must say it was saved and offer a read-only reload, never imply that the mutation needs repeating.
+
+Drawer widths are view-local, not account preferences. Shared `DrawerContent` uses `DrawerResizeHandle` (content ref + onResize callback) for edge dragging, 16px arrow-key steps, Home/End bounds and double-click reset; width stays within 320px and viewport minus 32px. Phone drawers fill the viewport, with no splitter. Native `SidePanel` uses `PanelResizeHandle` (width, maximum, onChange) for tablet edge dragging and screen-reader increment/decrement; small screens and menus retain their responsive layouts. These handles only change presentation, never form drafts or save/close behavior. The web NavigationControlsDemo and native showcase demonstrate the actual drawers; native gestures still require device qualification.
+
+Product details: failed saves keep the draft and show a dismissible error toast (native: pinned panel notice); field errors stay beside accessible controls and reveal their section. `FormSection.open/onOpenChange` controls native sections to reveal validation errors; the native showcase demonstrates it. SKU checks debounce 350 ms and cancel stale reads; unavailable checks never claim uniqueness. The business-scoped server constraint remains authoritative, including concurrent saves.
+
+SKU feedback uses an in-input check/X with accessible tooltips; the duplicate message has a hover/focus/tap product preview, limited by backend product-read permission. Native `Field.trailing` and `errorAccessory` keep equivalent affordances within the control and beside its error (showcase examples included).
+
+Overview Sales trend has no collapsible daily-figures footer. The selected overview period controls its server snapshot, dates, totals and points; exact values remain available through the accessible web table/native bar labels.
+
+Warehouse & storage (`/storage`) opens the searchable Locations list first, with Browse hierarchy as the secondary view under one warehouse selector on web/desktop and native mobile. Search, view controls, export and commands share the collection toolbar. Warehouse balances open on demand in a drawer; hierarchy stock uses a numeric table (labelled native cards). Location details and labels open read-only, with an authorized Edit location tab; creation and within-warehouse movement retain existing permissions and ledger commands. `/warehouse-view` remains a hidden compatibility route to this workspace. Facility administration and Stock counts & scanning remain separate workflows. Switching warehouse resets location navigation and pagination; switching tabs reloads the visible data.
+
+Storage workspace tabs reuse the label-only Radix `view-tabs` treatment (native Settings tab treatment). The shell owns the page title; do not add a visible “Storage view” legend or duplicate introductory header.
+
+## Rich descriptions and storage workspace
+
+Product and online-description forms use `RichTextEditor` (web `components/common/`, native `ui/`) with controlled `value`/`onChange`; web also requires `id`/`label`, native requires `label`. Optional disabled/error associations preserve form validation. Use `RichDescription` with `value` for displays, never raw HTML. The showcase demonstrates both. Quill supports bold, italic, underline, lists and safe links; assets are local and generated for mobile by `build:shared`. Native uses an isolated WebView, Expo web an iframe; native font availability and keyboard/device behavior require qualification. Existing plain descriptions remain unchanged; the 2,000-character limit includes rich markup.
+
+Storage uses one top row: Locations/Hierarchy tabs → Export locations/Create storage location/Move stock → warehouse selector. Actions retain their permissions and selected warehouse in either tab. Export covers loaded locations only. `RecordCollection.showExport` defaults to true; set false only when a parent supplies export (see showcase).

@@ -1,8 +1,11 @@
+import { posPriceLabel as originalPriceLabel } from '@inventory/api-client';
+import { useDisplayMoney } from '@/theme/useDisplayMoney';
+import { ExportRecords } from '@/components/common/ExportRecords';
 import { OnlineCollectionFeedback } from '../storefront/OnlineCollectionFeedback';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { useOnlineCollection } from '../storefront/useOnlineCollection';
 import { EmptyState } from '@/components/common/AsyncState';
-import { posPriceLabel } from '@inventory/api-client';
+
 import { ViewTabs } from '@/components/common/ViewTabs';
 import type { ReactNode } from 'react';
 import { RowActions } from '@/components/common/RowActions';
@@ -41,11 +44,38 @@ export function InventoryProducts({
   onEdit?: ((productId: string) => void) | undefined;
   onAdjust?: ((sku: string) => void) | undefined;
 }) {
+  const { posPriceLabel } = useDisplayMoney();
+
   const viewId = useId();
   const [view, setView] = useState<'list' | 'grid'>('list');
   const [selection, setSelected] = useState<Item | null>(null);
   const channels = useOnlineCollection(items.flatMap((i) => (i.productId ? [i.productId] : [])));
   const selected = items.find((item) => item.id === selection?.id) ?? null;
+  const actions = (item: Item) => (
+    <RowActions
+      label={item.sku}
+      actions={[
+        ...(channels.manage && item.productId
+          ? [
+              {
+                label: 'Add to online store',
+                onSelect: () => void channels.add([item.productId!]),
+              },
+            ]
+          : []),
+        { label: 'View details', onSelect: () => setSelected(item) },
+        ...(onEdit && item.productId
+          ? [
+              {
+                label: 'Edit product details and pricing',
+                onSelect: () => onEdit(item.productId!),
+              },
+            ]
+          : []),
+        ...(onAdjust ? [{ label: 'Adjust stock', onSelect: () => onAdjust(item.sku) }] : []),
+      ]}
+    />
+  );
   return (
     <>
       <OnlineCollectionFeedback channels={channels} />
@@ -63,6 +93,18 @@ export function InventoryProducts({
       <div className="inventory-controls" role="group" aria-label="Inventory view">
         {controls}
         <ViewTabs panelId={viewId} label="Inventory" value={view} onChange={setView} />
+        <ExportRecords
+          name="inventory-shown"
+          headers={['Product', 'SKU', 'Unit', 'Price', 'Available', 'Status']}
+          rows={items.map((item) => [
+            item.name,
+            item.sku,
+            item.unit,
+            item.price ? originalPriceLabel({ price: item.price }) : 'Not priced',
+            item.available,
+            item.status,
+          ])}
+        />
       </div>
       <div id={viewId} role="tabpanel" aria-label={`Inventory ${view} view`} tabIndex={0}>
         {!items.length ? (
@@ -118,33 +160,7 @@ export function InventoryProducts({
                     <td>
                       <StockBadge item={item} />
                     </td>
-                    <td data-actions>
-                      <RowActions
-                        label={item.sku}
-                        actions={[
-                          ...(channels.manage && item.productId
-                            ? [
-                                {
-                                  label: 'Add to online store',
-                                  onSelect: () => void channels.add([item.productId!]),
-                                },
-                              ]
-                            : []),
-                          { label: 'View details', onSelect: () => setSelected(item) },
-                          ...(onEdit && item.productId
-                            ? [
-                                {
-                                  label: 'Edit product details and pricing',
-                                  onSelect: () => onEdit(item.productId!),
-                                },
-                              ]
-                            : []),
-                          ...(onAdjust
-                            ? [{ label: 'Adjust stock', onSelect: () => onAdjust(item.sku) }]
-                            : []),
-                        ]}
-                      />
-                    </td>
+                    <td data-actions>{actions(item)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -153,7 +169,7 @@ export function InventoryProducts({
         ) : (
           <div className="catalog-product-grid">
             {items.map((item) => (
-              <article key={item.id} className="product-card selectable-card">
+              <article key={item.id} className="product-card selectable-card product-card-link">
                 {channels.manage && item.productId && (
                   <>
                     <Checkbox
@@ -161,12 +177,6 @@ export function InventoryProducts({
                       checked={channels.selected.includes(item.productId)}
                       onCheckedChange={() => channels.toggle(item.productId!)}
                     />
-                    <Button
-                      disabled={channels.busy}
-                      onClick={() => void channels.add([item.productId!])}
-                    >
-                      Add to online store
-                    </Button>
                   </>
                 )}
                 {channels.items.some(
@@ -188,20 +198,11 @@ export function InventoryProducts({
                   {item.sku} · {item.unit}
                 </span>
                 <p>{item.price ? posPriceLabel({ price: item.price }) : 'Not priced'}</p>
-                {onEdit && item.productId && (
-                  <Button variant="ghost" onClick={() => onEdit(item.productId!)}>
-                    Edit product details and pricing
-                  </Button>
-                )}
+                <div className="product-card-actions">{actions(item)}</div>
                 <div className="product-card-summary">
                   <span>{item.available} available</span>
                   <StockBadge item={item} />
                 </div>
-                {onAdjust && (
-                  <Button variant="outline" onClick={() => onAdjust(item.sku)}>
-                    Adjust stock
-                  </Button>
-                )}
               </article>
             ))}
           </div>

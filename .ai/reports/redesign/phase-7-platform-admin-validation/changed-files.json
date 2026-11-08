@@ -1,0 +1,17 @@
+[
+  "packages/api-client/src/platform-businesses.ts",
+  "apps/web/src/features/platform/BusinessDirectory.tsx",
+  "apps/web/src/features/platform/BusinessLocations.tsx",
+  "apps/web/src/features/platform/BusinessLocationCards.tsx",
+  "apps/web/src/features/platform/RegisteredBusinesses.tsx",
+  "apps/web/src/features/reports/PlatformOverview.tsx",
+  "apps/web/src/features/reports/RegistrationTrend.tsx",
+  "apps/mobile/src/platform-businesses/BusinessDirectory.tsx",
+  "apps/mobile/src/platform-businesses/BusinessLocationCards.tsx",
+  "apps/mobile/src/platform-businesses/RegisteredBusinesses.tsx",
+  "apps/mobile/src/reports/PlatformOverview.tsx",
+  "apps/mobile/src/reports/RegistrationTrend.tsx",
+  "packages/api-client/src/platform-businesses.test.ts",
+  "apps/web/src/features/platform/BusinessDirectory.test.tsx",
+  "scripts/redesign-platform-admin-browser.mjs"
+]

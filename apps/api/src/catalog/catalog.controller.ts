@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 import {
   catalogQuerySchema,
+  skuAvailabilityQuerySchema,
   createProductSchema,
   editProductSchema,
   categoryInputSchema,
@@ -19,6 +20,7 @@ import {
 } from '@inventory/contracts';
 import type {
   CatalogQuery,
+  SkuAvailabilityQuery,
   ProductInput,
   ProductEdit,
   CategoryInput,
@@ -41,6 +43,13 @@ export class CatalogController {
     @Query(new SchemaPipe(catalogQuerySchema)) q: CatalogQuery,
   ) {
     return this.products.list(requestActor(r), b, q);
+  }
+  @Get('products/sku-availability') skuAvailability(
+    @Req() r: AuthRequest,
+    @Param('businessId', new ParseUUIDPipe()) b: string,
+    @Query(new SchemaPipe(skuAvailabilityQuerySchema)) q: SkuAvailabilityQuery,
+  ) {
+    return this.products.skuAvailability(requestActor(r), b, q);
   }
   @Get('products/:id') get(
     @Req() r: AuthRequest,

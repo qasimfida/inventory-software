@@ -1,5 +1,8 @@
+import { useDisplayMoney } from '../ui/useDisplayMoney';
+import { RichTextEditor } from '../ui/RichTextEditor';
+import { RichDescription } from '../ui/RichDescription';
 import { View } from 'react-native';
-import { overridePreview, onlinePrice } from '@inventory/api-client';
+import { overridePreview } from '@inventory/api-client';
 import type { OnlineClient } from '@inventory/api-client';
 import { allowedImageUrl } from '@inventory/contracts';
 import type { OnlineOverrides, OnlineProductPreview } from '@inventory/contracts';
@@ -22,6 +25,8 @@ export function OnlineDetailsForm({
   disabled: boolean;
   client: OnlineClient;
 }) {
+  const { onlinePrice } = useDisplayMoney();
+
   const theme = useTheme();
   let live = preview;
   try {
@@ -39,13 +44,11 @@ export function OnlineDetailsForm({
         maxLength={120}
         onChange={(title) => onChange({ ...value, title })}
       />
-      <Field
-        label={`Online description (${value.description === null ? 'Inherited' : 'Override'})`}
+      <RichTextEditor
+        label="Online description"
         value={value.description ?? preview.inherited.description}
-        disabled={disabled}
-        multiline
-        maxLength={2000}
         onChange={(description) => onChange({ ...value, description })}
+        disabled={disabled}
       />
       <Text accessibilityRole="header">Product images — selected order</Text>
       {preview.images.map((url) => (
@@ -131,7 +134,7 @@ export function OnlineDetailsForm({
         <Text tone="muted">
           Draft preview. The server recalculates prices and taxes on save and publication.
         </Text>
-        <Text>{live.source.description}</Text>
+        <RichDescription value={live.source.description} />
         <Text>{onlinePrice(live)}</Text>
         <Text>{live.source.soldOut ? 'Sold out' : 'In stock'} · Preview only</Text>
       </View>

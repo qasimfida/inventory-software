@@ -7,7 +7,7 @@ import {
   safePreferences,
   settingsPolicySchema,
 } from './settings.js';
-it('resolves default, platform, business, user, enforcement and device precedence', () => {
+it('keeps personal cosmetics while enforcing device and operational constraints', () => {
   const platform = {
     defaults: { appearance: 'dark', density: 'compact' },
     enforced: { appearance: 'light', motion: 'enabled', effects: true },
@@ -23,16 +23,16 @@ it('resolves default, platform, business, user, enforcement and device precedenc
     { reducedMotion: true, lowPower: true },
   );
   expect(result).toMatchObject({
-    appearance: 'light',
+    appearance: 'system',
     density: 'comfortable',
-    textSize: 'small',
+    textSize: 'medium',
     motion: 'reduced',
     effects: false,
     visualizations: 'simple',
   });
   expect(
     resolveSettings({}, {}, { enforced: { motion: 'disabled' } }, { reducedMotion: true }).motion,
-  ).toBe('disabled');
+  ).toBe('reduced');
 });
 it('recovers invalid persisted preferences without accepting unknown security switches', () => {
   expect(
@@ -85,12 +85,12 @@ it('defaults currency to USD and validates account and policy currency choices',
   expect(preferencePatchSchema.safeParse({ currency: 'INVALID' }).success).toBe(false);
 });
 
-it('keeps supported palette and font preferences under the existing policy precedence', () => {
+it('keeps supported palette and font preferences under account-level cosmetic precedence', () => {
   expect(resolveSettings({ font: 'Karla', accent: 'violet' })).toMatchObject({
     font: 'Karla',
     accent: 'violet',
   });
-  expect(resolveSettings({ font: 'Lora' }, { enforced: { font: 'system' } }).font).toBe('system');
+  expect(resolveSettings({ font: 'Lora' }, { enforced: { font: 'system' } }).font).toBe('Lora');
   expect(preferencePatchSchema.safeParse({ font: 'local:Arial Unicode MS' }).success).toBe(true);
   expect(preferencePatchSchema.safeParse({ font: 'local:"; color:red' }).success).toBe(false);
   expect(preferencePatchSchema.safeParse({ font: 'https://example.test/font.ttf' }).success).toBe(
@@ -105,7 +105,39 @@ it('keeps existing preference values while defaulting and validating icon sizes'
   });
   expect(resolveSettings({ iconSize: 'small' }).iconSize).toBe('small');
   expect(resolveSettings({ iconSize: 'large' }, { enforced: { iconSize: 'small' } }).iconSize).toBe(
-    'small',
+    'large',
   );
   expect(resolveSettings({ iconSize: 'invalid' }).iconSize).toBe('medium');
+});
+
+it('defaults only absent axes and keeps legacy motion/chart behavior until explicit choice', () => {
+  expect(safePreferences({})).toEqual({});
+  expect(resolveSettings({})).toMatchObject({
+    appearance: 'light',
+    density: 'compact',
+    controlSize: 'medium',
+    animation: 'minimal',
+    charts: 'balanced',
+  });
+  expect(resolveSettings({}, {}, {}, { touch: true }).density).toBe('default');
+  expect(resolveSettings({ density: 'compact' }, {}, {}, { touch: true }).density).toBe('compact');
+  expect(resolveSettings({ motion: 'reduced', visualizations: 'enhanced' })).toMatchObject({
+    motion: 'reduced',
+    animation: 'off',
+    visualizations: 'enhanced',
+  });
+  expect(
+    resolveSettings({ motion: 'disabled', animation: 'full', charts: 'numbers' }),
+  ).toMatchObject({ motion: 'enabled', animation: 'full', charts: 'numbers' });
+  expect(resolveSettings({ animation: 'full' }, {}, {}, { reducedMotion: true })).toMatchObject({
+    animation: 'off',
+    motion: 'reduced',
+  });
+});
+it('business switches cannot change personal cosmetics or unset defaults', () => {
+  const user = { font: 'local:Arial', radius: 'circle', textSize: 'large' };
+  expect(
+    resolveSettings(user, {}, { defaults: { appearance: 'dark' }, enforced: { font: 'Karla' } }),
+  ).toEqual(resolveSettings(user));
+  expect(resolveSettings(user, { defaults: { appearance: 'dark' } }).appearance).toBe('dark');
 });

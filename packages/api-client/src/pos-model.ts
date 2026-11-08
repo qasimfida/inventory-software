@@ -4,6 +4,7 @@ import { cartSchema, checkoutSchema } from '@inventory/contracts';
 import type { Checkout } from '@inventory/contracts';
 import type { createSalesClient } from './sales.js';
 type Client = ReturnType<typeof createSalesClient>;
+import { isPosSoldOut } from './pos-types.js';
 import type { PosItem, DraftLine, PosState } from './pos-types.js';
 import { addCartLine } from './cart-lines.js';
 export class PosModel {
@@ -36,6 +37,10 @@ export class PosModel {
     };
   };
   private publish(patch: Partial<PosState>) {
+    if ('lines' in patch || 'customerId' in patch) {
+      this.generation++;
+      patch.quoting = false;
+    }
     this.state = { ...this.state, ...patch };
     this.listeners.forEach((l) => l());
   }
@@ -45,6 +50,7 @@ export class PosModel {
     this.generation++;
     this.publish({
       quote: null,
+      quoting: false,
       error: this.state.lines.length
         ? 'Prices or stock may have changed. Calculate and review again.'
         : '',
@@ -76,6 +82,10 @@ export class PosModel {
   }
   add(item: PosItem) {
     if (!this.editable()) return;
+    if (isPosSoldOut(item)) {
+      this.publish({ error: 'This product is sold out in the selected warehouse.' });
+      return;
+    }
     let lines: DraftLine[];
     try {
       lines = addCartLine(this.state.lines, {
@@ -145,20 +155,21 @@ export class PosModel {
     if (!this.editable()) return;
     const generation = ++this.generation,
       version = this.invalidation;
-    this.publish({ busy: true, error: '', quote: null });
+    this.publish({ quoting: true, error: '', quote: null });
     try {
       const quote = await this.client.quote(this.cart());
       if (generation === this.generation)
         this.publish({
           quote: version === this.invalidation ? quote : null,
-          busy: false,
+          quoting: false,
           error:
             version === this.invalidation
               ? ''
               : 'Prices or stock changed during calculation. Calculate and review again.',
         });
     } catch (error) {
-      if (generation === this.generation) this.publish({ busy: false, error: this.message(error) });
+      if (generation === this.generation)
+        this.publish({ quoting: false, error: this.message(error) });
     }
   }
   async checkout(

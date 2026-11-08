@@ -41,6 +41,10 @@ export class AuthenticationError extends Error {
       details &&
         [
           'PRICE_UNAVAILABLE',
+          'CASH_SHIFT_REQUIRED',
+          'STOCK_UNAVAILABLE',
+          'QUOTE_CHANGED',
+          'PAYMENT_ALLOCATION_INVALID',
           'CART_CURRENCY_MISMATCH',
           'CHECKOUT_STORE_REQUIRED',
           'LISTING_CHANGED',

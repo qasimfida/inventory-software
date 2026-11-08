@@ -1,4 +1,5 @@
-import { onlineFieldLabel, onlinePrice, onlineStatus } from '@inventory/api-client';
+import { useDisplayMoney } from '../ui/useDisplayMoney';
+import { onlineFieldLabel, onlineStatus } from '@inventory/api-client';
 import type { OnlineClient } from '@inventory/api-client';
 import { hasPermission } from '@inventory/contracts';
 import type { Business, ChannelListing, OnlineProductPreview } from '@inventory/contracts';
@@ -44,6 +45,8 @@ export function OnlineProductRows({
     items: ChannelListing[],
   ) => Promise<void>;
 }) {
+  const { onlinePrice } = useDisplayMoney();
+
   const theme = useTheme(),
     { width, fontScale } = useWindowDimensions(),
     manage = hasPermission(business, 'onlineStore.manage');

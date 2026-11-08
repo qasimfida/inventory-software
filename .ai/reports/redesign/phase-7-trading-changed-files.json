@@ -1,0 +1,13 @@
+[
+  "apps/mobile/src/trading/TradingEvidence.tsx",
+  "apps/mobile/src/trading/TradingHistory.tsx",
+  "apps/mobile/src/trading/TradingPanel.test.tsx",
+  "apps/mobile/src/trading/TradingPanel.tsx",
+  "apps/web/src/features/trading/TradingEvidence.tsx",
+  "apps/web/src/features/trading/TradingHistory.tsx",
+  "apps/web/src/features/trading/TradingPanel.test.tsx",
+  "apps/web/src/features/trading/TradingPanel.tsx",
+  "docs/design-system.md",
+  "packages/api-client/src/trading-characterization.test.ts",
+  "scripts/redesign-trading-browser.mjs"
+]

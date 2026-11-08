@@ -18,3 +18,12 @@ it('preserves exact quantities and rejects ambiguous precision, exponent notatio
   for (const value of ['1e3', 'NaN', '1.0000001', '1000000000000000000'])
     expect(() => decimal(value)).toThrow();
 });
+
+it('keeps fractional package movements reversible without rounding stock', () => {
+  for (const quantity of ['0.25', '0.333', '0.5', '0.75', '1']) {
+    const grams = convertQuantity(quantity, '1000', '1');
+    expect(convertQuantity(grams, '1', '1000')).toBe(quantity);
+  }
+  expect(convertQuantity('3', '1', '3')).toBe('1');
+  expect(() => convertQuantity('1', '1', '3')).toThrow('precision');
+});

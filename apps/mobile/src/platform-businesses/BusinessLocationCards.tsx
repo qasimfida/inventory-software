@@ -1,3 +1,4 @@
+import { registrationTone } from '@inventory/api-client';
 import { View } from 'react-native';
 import type { Location } from '@inventory/contracts';
 import { useTheme } from '../theme';
@@ -43,10 +44,7 @@ export function BusinessLocationCards({
                   · {location.code}
                 </Text>
                 <Action label={location.name} variant="ghost" onPress={() => onOpen(location)} />
-                <StatusBadge
-                  label={location.state}
-                  tone={location.state === 'active' ? 'success' : 'warning'}
-                />
+                <StatusBadge label={location.state} tone={registrationTone(location.state)} />
               </View>
             ))}
           </View>

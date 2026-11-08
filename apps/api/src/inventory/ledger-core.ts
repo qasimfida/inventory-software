@@ -1,3 +1,4 @@
+import { PricingConflict } from '../http/pricing-conflict.js';
 import type { StockEntry } from './stock-entry.js';
 import { lowStock } from './low-stock.js';
 import {
@@ -114,7 +115,7 @@ export class LedgerCore {
           next.damaged === 0n
         ))
     )
-      throw new ConflictException();
+      throw new PricingConflict('STOCK_UNAVAILABLE');
     let values: string[];
     try {
       values = [next.onHand, next.reserved, next.damaged, next.inTransit].map(decimalString);

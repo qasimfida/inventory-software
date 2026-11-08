@@ -17,19 +17,71 @@ export class ShiftService {
   list(actor: Actor, b: string, q: ShiftQuery) {
     return this.scope.run(actor, b, 'payments.read', async (ctx) => {
       await this.locations.warehouse(ctx, q.warehouseId);
+      const projection = `SELECT s.id,s.warehouse_id AS "warehouseId",s.terminal_id AS "terminalId",s.actor_id AS "actorId",
+        CASE WHEN $6::boolean OR s.actor_id=$4 THEN a.email ELSE NULL END AS "actorName",
+        t.name AS "terminalName",st.name AS "storeName",
+        ($7::boolean AND s.state='open' AND ($3::boolean OR s.actor_id=$4)) AS "canClose",
+        s.currency,s.opening_minor::text AS "openingMinor",s.state,(${expectedCash})::text AS "expectedMinor",
+        s.counted_minor::text AS "countedMinor",(s.counted_minor-s.expected_minor)::text AS "discrepancyMinor",
+        s.opened_at::text AS "openedAt",s.closed_at::text AS "closedAt"
+        FROM cash_shifts s JOIN terminals t ON t.business_id=s.business_id AND t.id=s.terminal_id
+        JOIN warehouses w ON w.business_id=s.business_id AND w.id=s.warehouse_id
+        JOIN stores st ON st.business_id=w.business_id AND st.id=w.store_id
+        JOIN auth_accounts a ON a.id=s.actor_id
+        WHERE s.business_id=$1 AND s.warehouse_id=$2 AND ($3::boolean OR s.actor_id=$4)`;
+      const args = [
+        b,
+        q.warehouseId,
+        hasPermission(ctx.business, 'payments.cash'),
+        actor.accountId,
+        q.offset,
+        hasPermission(ctx.business, 'users.read'),
+        hasPermission(ctx.business, 'payments.write'),
+      ];
       const rows = (
         await ctx.tx.query(
-          `SELECT s.id,s.warehouse_id AS "warehouseId",s.terminal_id AS "terminalId",s.actor_id AS "actorId",s.currency,s.opening_minor::text AS "openingMinor",s.state,(${expectedCash})::text AS "expectedMinor",s.counted_minor::text AS "countedMinor",(s.counted_minor-s.expected_minor)::text AS "discrepancyMinor",s.opened_at::text AS "openedAt",s.closed_at::text AS "closedAt" FROM cash_shifts s WHERE s.business_id=$1 AND s.warehouse_id=$2 AND ($3::boolean OR s.actor_id=$4) ORDER BY s.opened_at DESC,s.id LIMIT 26 OFFSET $5`,
+          `${projection}
+        AND ($8::text IS NULL OR s.state=$8)
+        AND ($9::uuid IS NULL OR s.terminal_id=$9)
+        AND ($10::uuid IS NULL OR s.actor_id=$10)
+        AND ($11::date IS NULL OR (s.opened_at AT TIME ZONE $14)::date >= $11)
+        AND ($12::date IS NULL OR (s.opened_at AT TIME ZONE $14)::date <= $12)
+        AND ($13::text IS NULL OR position(lower($13) in lower(concat_ws(' ',s.id::text,s.actor_id::text,t.name,t.code,st.name,st.code,s.state,
+          CASE WHEN $6::boolean OR s.actor_id=$4 THEN a.email ELSE '' END)))>0)
+        ORDER BY s.opened_at DESC,s.id LIMIT 26 OFFSET $5`,
           [
-            b,
-            q.warehouseId,
-            hasPermission(ctx.business, 'payments.cash'),
-            actor.accountId,
-            q.offset,
+            ...args,
+            q.state ?? null,
+            q.terminalId ?? null,
+            q.actorId ?? null,
+            q.from ?? null,
+            q.to ?? null,
+            q.search || null,
+            ctx.business.timeZone ?? 'UTC',
           ],
         )
       ).rows;
-      return { shifts: rows.slice(0, 25), hasMore: rows.length > 25, offset: q.offset };
+      const activeShifts = (
+        await ctx.tx.query(
+          `${projection} AND s.actor_id=$4 AND s.state='open'
+        ORDER BY s.opened_at DESC,s.id LIMIT 25 OFFSET $5`,
+          [...args.slice(0, 4), 0, ...args.slice(5)],
+        )
+      ).rows;
+      const staff = (
+        await ctx.tx.query<{ id: string; label: string }>(
+          `SELECT DISTINCT s.actor_id AS id, CASE WHEN $5::boolean OR s.actor_id=$4 THEN a.email ELSE s.actor_id::text END AS label
+         FROM cash_shifts s JOIN auth_accounts a ON a.id=s.actor_id WHERE s.business_id=$1 AND s.warehouse_id=$2 AND ($3::boolean OR s.actor_id=$4) ORDER BY label,id LIMIT 100`,
+          [b, q.warehouseId, args[2], actor.accountId, args[5]],
+        )
+      ).rows;
+      return {
+        staff,
+        shifts: rows.slice(0, 25),
+        activeShifts,
+        hasMore: rows.length > 25,
+        offset: q.offset,
+      };
     });
   }
   open(actor: Actor, b: string, input: ShiftOpen) {

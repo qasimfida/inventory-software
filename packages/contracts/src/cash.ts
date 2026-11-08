@@ -22,13 +22,30 @@ export const cashAdjustmentSchema = z
   })
   .strict();
 export const shiftQuerySchema = z
-  .object({ warehouseId: z.uuid(), offset: z.coerce.number().int().min(0).max(100000).default(0) })
-  .strict();
+  .object({
+    warehouseId: z.uuid(),
+    offset: z.coerce.number().int().min(0).max(100000).default(0),
+    search: z.string().trim().max(120).optional(),
+    state: z.enum(['open', 'closed']).optional(),
+    terminalId: z.uuid().optional(),
+    actorId: z.uuid().optional(),
+    from: z.iso.date().optional(),
+    to: z.iso.date().optional(),
+  })
+  .strict()
+  .refine((q) => !q.from || !q.to || q.from <= q.to, {
+    message: 'Start date must not follow end date.',
+    path: ['to'],
+  });
 export const shiftSchema = z.object({
   id: z.uuid(),
   warehouseId: z.uuid(),
   terminalId: z.uuid(),
   actorId: z.uuid(),
+  actorName: z.string().nullable().optional(),
+  terminalName: z.string().optional(),
+  storeName: z.string().optional(),
+  canClose: z.boolean().optional(),
   currency: currencySchema,
   openingMinor: z.string(),
   state: z.enum(['open', 'closed']),
@@ -40,6 +57,8 @@ export const shiftSchema = z.object({
 });
 export const shiftPageSchema = z.object({
   shifts: z.array(shiftSchema),
+  activeShifts: z.array(shiftSchema).optional(),
+  staff: z.array(z.object({ id: z.uuid(), label: z.string() })).optional(),
   hasMore: z.boolean(),
   offset: z.number(),
 });

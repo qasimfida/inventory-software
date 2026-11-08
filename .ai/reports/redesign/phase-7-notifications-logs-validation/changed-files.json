@@ -1,0 +1,20 @@
+[
+  "apps/web/src/features/notifications/NotificationTable.tsx",
+  "apps/web/src/features/notifications/ApprovalReview.tsx",
+  "apps/web/src/features/settings/SecurityPanel.tsx",
+  "apps/web/src/features/settings/SecurityNotifications.tsx",
+  "apps/web/src/features/organization/AuditHistory.tsx",
+  "apps/mobile/src/notifications/NotificationTable.tsx",
+  "apps/mobile/src/notifications/ApprovalReview.tsx",
+  "apps/mobile/src/settings/SecurityPanel.tsx",
+  "apps/mobile/src/settings/SecurityNotifications.tsx",
+  "apps/mobile/src/organization/AuditHistory.tsx",
+  "apps/web/src/features/settings/SecurityEvents.tsx",
+  "packages/api-client/src/index.ts",
+  "apps/web/src/features/notifications/NotificationsPanel.tsx",
+  "apps/web/src/features/organization/AuditHistory.test.tsx",
+  "packages/api-client/src/audit-presentation.ts",
+  "packages/api-client/src/audit-presentation.test.ts",
+  "scripts/redesign-notifications-logs-browser.mjs",
+  "scripts/redesign-security-browser.mjs"
+]

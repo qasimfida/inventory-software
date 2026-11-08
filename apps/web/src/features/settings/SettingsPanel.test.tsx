@@ -39,7 +39,7 @@ it('opens preference popup controls immediately without exposing connectivity se
   expect(screen.getByRole('radio', { name: 'scroll' })).toBeDefined();
   expect(screen.queryByText('Readiness')).toBeNull();
 });
-it('labels enforced settings, persists account choices and applies accessibility constraints', async () => {
+it('retires cosmetic enforcement and persists account choices with version checks', async () => {
   fixture.account.mockResolvedValue(snapshot);
   await settingsModel.connect('account');
   render(
@@ -48,10 +48,10 @@ it('labels enforced settings, persists account choices and applies accessibility
     </AppearanceProvider>,
   );
   await userEvent.click(screen.getByText('Settings, connectivity and security'));
-  expect(
-    screen.getByRole('group', { name: 'Account appearance (enforced)' }).hasAttribute('disabled'),
-  ).toBe(true);
-  expect(document.documentElement.dataset.theme).toBe('light');
+  expect(screen.getByRole('group', { name: 'Account appearance' }).hasAttribute('disabled')).toBe(
+    false,
+  );
+  expect(document.documentElement.dataset.theme).toBe('dark');
   expect(screen.queryByText('Platform policy')).toBeNull();
   fixture.account.mockImplementation(async (path: string, method?: string) =>
     path === 'settings' && method === 'PUT'
@@ -78,4 +78,18 @@ it('loads only the selected account rather than accepting a user id in a setting
     version: 1,
     values: { appearance: 'dark' },
   });
+});
+it('separates basic, advanced and operational choices without hiding controls', async () => {
+  fixture.account.mockResolvedValue(snapshot);
+  await settingsModel.connect('account');
+  render(
+    <AppearanceProvider>
+      <SettingsPanel preferencesOnly />
+    </AppearanceProvider>,
+  );
+  expect(screen.getByRole('heading', { name: 'Basic' })).toBeDefined();
+  expect(screen.getByRole('heading', { name: 'Advanced · Style & typography' })).toBeDefined();
+  expect(screen.getByRole('heading', { name: 'Regional & list behavior' })).toBeDefined();
+  expect(screen.getByRole('status').textContent).toContain('Current display:');
+  expect(fixture.account.mock.calls.some((call) => call[1] === 'PUT')).toBe(false);
 });

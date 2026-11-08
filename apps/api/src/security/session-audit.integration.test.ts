@@ -72,3 +72,20 @@ it('never reports another account session as revoked and keeps historical IDs af
     ).rows[0].session_id,
   ).toBe(a.sessionId);
 });
+
+it('returns actor labels only within the authorized security event scope', async () => {
+  const a = await f.register('named-a@example.test');
+  const b = await f.register('named-b@example.test');
+  const response = await f
+    .api()
+    .get('/api/v1/auth/security/events')
+    .set(native(a.token))
+    .expect(200);
+  expect(response.body.events.length).toBeGreaterThan(0);
+  for (const event of response.body.events) {
+    expect(event.actorId).toBe(a.user.id);
+    expect(event.actorName).toBe(a.user.email);
+    expect(event.actorName).not.toBe(b.user.email);
+  }
+  await f.api().get('/api/v1/auth/security/platform/events').set(native(a.token)).expect(403);
+});

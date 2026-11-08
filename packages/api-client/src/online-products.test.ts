@@ -127,3 +127,17 @@ it('does not let a live page refresh discard an in-flight command result', async
   expect(f.model.snapshot().result?.items[0]?.ok).toBe(true);
   expect(f.model.snapshot().busy).toBe(false);
 });
+
+it('presents readiness separately from publication and preserves authoritative availability', async () => {
+  const { onlineListingDetails } = await import('./online-products.js');
+  const f = fixture();
+  const page = await f.client.listings({ tab: 'ready' });
+  const detail = await f.client.detail(page.items[0]!.id);
+  const fields = onlineListingDetails(detail.listing, detail.preview);
+  expect(fields).toContainEqual({ label: 'Publication state', value: 'ready' });
+  expect(fields).toContainEqual({ label: 'Available quantity', value: detail.preview.quantity });
+  expect(fields.find((f) => f.label === 'Availability and visibility')?.value).toBe(
+    'Ready to publish',
+  );
+  expect(fields).not.toContainEqual({ label: 'Availability and visibility', value: 'Live' });
+});

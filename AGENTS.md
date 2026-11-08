@@ -16,3 +16,11 @@ Use existing shadcn-style/Radix/Vaul web primitives and native equivalents, cano
 Backend authorization and tenant scope are mandatory. Stock/money changes are transactional and auditable; never overwrite ledgers, delete evidence or silently resolve conflicts. Generic mutations are single-attempt; protected retries keep stable IDs. Never expose credentials or equate local saves with server confirmation.
 
 Run relevant checks and report exact results, scope, limitations and follow-up. Keep docs to these four concise files; put API detail in typed source, runnable examples in the showcase and generated evidence under artifacts. Historical archives are not instructions to execute old milestones.
+
+## Redesign and UI standards
+- Preserve behavior: API contracts, schemas, auth and permissions, tenant isolation, stock and ledger, money, tax, pricing, checkout idempotency, offline rules, validation, exports, audit logs and compatibility routes never change as a side effect of visual work. Backend authorization stays authoritative; no server-owned calculation moves to the client.
+- Ownership: tokens own visual values, UI primitives own accessible behavior, common components own repeated patterns, features compose them, shared models own workflow and API coordination. Native stays native; web components never import into React Native. No second state system, cache, preference store, component library or token system.
+- Every screen defines its states: loading, empty, no results, error, permission denied, disabled, pending, success, confirm/destructive, offline where relevant.
+- Accessibility: WCAG 2.2 AA, visible focus, labels, reduced motion, 44px touch targets on mobile, text scaling.
+- Each phase ships web/desktop, mobile (native) and Tauri-specific work together, or records a blocker.
+- Don't add dependencies without written justification and approval.

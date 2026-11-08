@@ -1,0 +1,15 @@
+[
+  "apps/web/src/features/purchasing/PayableDetails.tsx",
+  "apps/web/src/features/purchasing/PayablePanel.tsx",
+  "apps/web/src/features/purchasing/PayableEvidence.tsx",
+  "apps/web/src/features/purchasing/PayablePanel.test.tsx",
+  "apps/web/src/features/purchasing/PayableDetails.test.tsx",
+  "apps/mobile/src/purchasing/PayableDetails.tsx",
+  "apps/mobile/src/purchasing/PayablePanel.tsx",
+  "apps/mobile/src/purchasing/PayableEvidence.tsx",
+  "apps/mobile/src/purchasing/PayablePanel.test.tsx",
+  "apps/mobile/src/purchasing/PayableDetails.test.tsx",
+  "packages/api-client/src/payables-characterization.test.ts",
+  "scripts/redesign-payables-browser.mjs",
+  "docs/design-system.md"
+]

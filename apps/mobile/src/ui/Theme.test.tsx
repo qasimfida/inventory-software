@@ -35,7 +35,7 @@ it('keeps native body readable and derives heading line height from its font siz
       <Text style={{ fontSize: 20, lineHeight: 32 }}>Explicit line height</Text>
     </ThemeProvider>,
   );
-  expect(getComputedStyle(screen.getByText('Native body')).fontSize).toBe('16px');
+  expect(getComputedStyle(screen.getByText('Native body')).fontSize).toBe('15px');
   expect(getComputedStyle(screen.getByText('Native title')).lineHeight).toBe('42px');
   expect(getComputedStyle(screen.getByText('Explicit line height')).lineHeight).toBe('32px');
 });

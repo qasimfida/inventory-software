@@ -1,3 +1,12 @@
+import { CurrencyNotice } from './CurrencyNotice';
+import { useDisplayMoney } from './useDisplayMoney';
+import { LoadingState as CollectionLoadingState } from './AsyncState';
+import { ImportMappingDemo } from './ImportMappingDemo';
+import { fontLicense } from '@inventory/design-tokens';
+import { FoundationPreferences } from './FoundationPreferences';
+import type { PreferencePatch } from '@inventory/contracts';
+import { RichTextEditor } from './RichTextEditor';
+import { RichDescription } from './RichDescription';
 import { SetupCard } from './SetupCard';
 import { FilterButton } from './FilterButton';
 import { RecordTable } from './RecordTable';
@@ -16,7 +25,7 @@ import { MetricCard } from './MetricCard';
 import { DisclosureTrigger } from './DisclosureTrigger';
 import { DataRow } from './DataRow';
 import { metrics } from './metrics';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { View } from 'react-native';
 import { Action, Field, Choice } from './Controls';
 import { Text } from './Themed';
@@ -26,13 +35,17 @@ import { AppearanceControl } from './AppearanceControl';
 import { ConfirmAction } from './ConfirmAction';
 import { CommandForm } from '../components/CommandForm';
 export function NativeShowcase() {
+  const [preferences, setPreferences] = useState<PreferencePatch>({});
   return (
-    <ThemeProvider preview>
-      <Showcase />
+    <ThemeProvider preview previewPreferences={preferences}>
+      <Showcase
+        controls={<FoundationPreferences value={preferences} onChange={setPreferences} />}
+      />
     </ThemeProvider>
   );
 }
-function Showcase() {
+function Showcase({ controls }: { controls: ReactNode }) {
+  const [description, setDescription] = useState('Example product description');
   const [open, setOpen] = useState(false);
   const [panel, setPanel] = useState(false);
   const [focusExample, setFocusExample] = useState(false);
@@ -42,6 +55,7 @@ function Showcase() {
   const [density, setDensity] = useState('comfortable');
   const [message, setMessage] = useState('');
   const theme = useTheme();
+  const money = useDisplayMoney();
   return (
     <View style={{ gap: theme.spacing.small, backgroundColor: theme.colors.background }}>
       <DisclosureTrigger
@@ -49,6 +63,9 @@ function Showcase() {
         label="Components / Design system"
         onPress={() => setOpen(!open)}
       />
+      <CurrencyNotice />
+      <Text>Sample original price (no transaction): {money.formatDecimalPrice('3', 'USD')}</Text>
+      <ImportMappingDemo />
       <RecordTable
         label="Example records"
         columns={['Record', 'Status']}
@@ -74,8 +91,19 @@ function Showcase() {
             <FormSection title="Grouped form example" defaultOpen>
               <Field label="Section draft" value={value} onChange={setValue} />
             </FormSection>
+            <FormSection title="Validation reveals the section" open onOpenChange={() => {}}>
+              <Field
+                label="Required section field"
+                value=""
+                onChange={() => {}}
+                error="Enter a value before saving."
+              />
+            </FormSection>
             <Action label="Open example side panel" onPress={() => setPanel(true)} />
             <SidePanel title="Example details" open={panel} onClose={() => setPanel(false)}>
+              <Text>
+                On tablets, drag the left edge to resize. Screen readers can adjust Drawer width.
+              </Text>
               <Text>Local presentation example only.</Text>
             </SidePanel>
             <Text>Loaded {loaded} local example batches</Text>
@@ -116,6 +144,10 @@ function Showcase() {
             />
           </ScreenBody>
           <AppearanceControl />
+          {controls}
+          <FormSection title="Bundled Geist font license">
+            <Text>{fontLicense}</Text>
+          </FormSection>
           <LoadingState message="Loading local example…" />
           <EmptyState message="No local example records." />
           <Surface muted>
@@ -142,6 +174,8 @@ function Showcase() {
             onChange={() => {}}
           />
           <Field
+            trailing={<Text accessibilityLabel="Invalid value">×</Text>}
+            errorAccessory={<Text accessibilityLabel="Validation information">ⓘ</Text>}
             label="Native invalid example"
             value="Example"
             error="Example linked validation error."
@@ -167,6 +201,7 @@ function Showcase() {
           />
           <DataRow label="Exact report example" value="9007199254740993" unit="USD minor units" />
           <CommandForm
+            error="Example only: the change was not confirmed. Review the record before retrying."
             inline
             definition={{
               title: 'Preview native command',
@@ -180,7 +215,46 @@ function Showcase() {
               void work();
             }}
           />
+          <RichTextEditor
+            label="Description editor"
+            value={description}
+            onChange={setDescription}
+          />
+          <RichDescription value={description} />
+          <ScreenHeader
+            title="Fixed receipt list"
+            actions={
+              <Action
+                label="Local header action"
+                onPress={() => setMessage('Local header action selected')}
+              />
+            }
+          />
           <RecordCollection
+            label="loading example"
+            allowGrid={false}
+            showExport={false}
+            items={[]}
+            emptyState={<CollectionLoadingState message="Example loading records…" />}
+            onOpen={() => {}}
+          />
+          <RecordCollection
+            allowGrid={false}
+            label="example receipts"
+            items={[
+              {
+                id: 'receipt',
+                title: 'Example receipt',
+                subtitle: 'LOCAL-RECEIPT',
+                detail: '$12.00',
+                status: 'completed',
+                tone: 'success',
+              },
+            ]}
+            onOpen={() => setMessage('Local receipt selected')}
+          />
+          <RecordCollection
+            showExport={false}
             toolbar={
               <Action
                 label="Refresh local example"

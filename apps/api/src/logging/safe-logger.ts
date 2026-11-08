@@ -1,7 +1,7 @@
 import type { LoggerService } from '@nestjs/common';
 
 const sensitiveKey =
-  /private.?key|prompt|response|completion|api.?key|model.?output|password|passwd|secret|token|authorization|cookie|credential|database.?url|connection.?string|body|headers|sql|query|params|stack|email|phone|address|customer.?name|contact/i;
+  /open.?exchange.?rates.?app.?id|app_id|private.?key|prompt|response|completion|api.?key|model.?output|password|passwd|secret|token|authorization|cookie|credential|database.?url|connection.?string|body|headers|sql|query|params|stack|email|phone|address|customer.?name|contact/i;
 
 export function redact(value: unknown, seen = new WeakSet<object>()): unknown {
   if (value instanceof Error) return { name: 'Error', message: '[REDACTED]' };

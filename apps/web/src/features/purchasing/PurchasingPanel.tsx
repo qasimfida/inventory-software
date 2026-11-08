@@ -1,3 +1,10 @@
+import { FormSheet } from '@/components/common/FormSheet';
+import { RecordDetails } from '@/components/common/RecordDetails';
+import { IconButton } from '@/components/common/IconButton';
+import { EmptyState, ErrorState, LoadingState } from '@/components/common/AsyncState';
+import { RecordCollection } from '@/components/common/RecordCollection';
+import { FilterButton } from '@/components/common/FilterButton';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/Popover';
 import { WarehouseSelect } from '@/components/common/WarehouseSelect';
 import { usePageCollection } from '@/components/common/usePageCollection';
 import { Pagination } from '@/components/common/Pagination';
@@ -19,7 +26,6 @@ import {
 import { hasPermission } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
 import { CommandForm } from '@/components/common/CommandForm';
-import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/FormControls';
 import { authClient } from '@/platform/auth-client';
 const operationKey = () => crypto.randomUUID();
@@ -106,10 +112,18 @@ export function PurchasingPanel({
           ...(state.data.detail ? purchaseDetailForms(client, state.data.detail) : []),
         ]
       : [];
+  const selectedSupplier = state.data?.workspace.suppliers.find(
+    (supplier) => supplier.id === supplierId,
+  );
+  const supplierAction = (title: string) =>
+    title === 'Create supplier' || title.startsWith('Save supplier ');
+  const renderCommand = (form: (typeof forms)[number]) => (
+    <CommandForm key={form.title} definition={form} run={(work) => void model.run(work)} />
+  );
   return (
     <section aria-label="Purchasing" className="screen-section">
       <ScreenHeader
-        title="Purchasing"
+        title="Purchasing & suppliers"
         description={
           <>
             Receipts and returns post stock movements. Use Supplier balances to record invoice
@@ -118,30 +132,8 @@ export function PurchasingPanel({
           </>
         }
       />
-      <Grid className="screen-filters">
-        <div>
-          <WarehouseSelect
-            label="Purchasing warehouse"
-            id="purchase-warehouse"
-            value={warehouseId}
-            onChange={(e) =>
-              ((value: string) => {
-                setWarehouseId(value);
-                setOrderId('');
-                setOffset(0);
-              })(e.target.value)
-            }
-          >
-            {warehouses
-              .map((w) => ({ value: w.id, label: w.name }))
-              .map((o) => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
-                </option>
-              ))}
-          </WarehouseSelect>
-        </div>
-        <div>
+      <div className="collection-toolbar">
+        <div className="collection-search">
           <SearchControl
             label="Search suppliers / purchase reference / item"
             suggestions={
@@ -159,65 +151,112 @@ export function PurchasingPanel({
             }}
           />
         </div>
-        <Button
-          onClick={() => void model.run()}
-          disabled={state.busy || !warehouseId}
-          variant="ghost"
-          size="icon"
-          aria-label="Refresh purchasing"
-          title="Refresh"
-        >
-          <RefreshCw aria-hidden="true" />
-        </Button>
-      </Grid>
-      {state.error && <p role="alert">{state.error}</p>}
-      {state.data && (
-        <>
-          <Grid className="screen-filters">
+        <Popover>
+          <PopoverTrigger asChild>
+            <FilterButton
+              aria-label="Purchasing filters"
+              active={[
+                supplierId && 'Supplier selected',
+                warehouseId &&
+                  `Warehouse: ${warehouses.find((w) => w.id === warehouseId)?.name ?? warehouseId}`,
+              ].filter((v): v is string => !!v)}
+            />
+          </PopoverTrigger>
+          <PopoverContent align="end" className="space-y-3">
             <div>
-              <label htmlFor="purchase-supplier-history">Supplier history</label>
-              <Select
-                id="purchase-supplier-history"
-                value={supplierId}
+              <WarehouseSelect
+                label="Purchasing warehouse"
+                id="purchase-warehouse"
+                value={warehouseId}
                 onChange={(e) =>
                   ((value: string) => {
-                    setSupplierId(value);
-                    setOffset(0);
+                    setWarehouseId(value);
                     setOrderId('');
+                    setOffset(0);
                   })(e.target.value)
                 }
               >
-                {[
-                  { value: '', label: 'All suppliers' },
-                  ...state.data.workspace.suppliers.map((s) => ({ value: s.id, label: s.name })),
-                ].map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </Select>
+                {warehouses
+                  .map((w) => ({ value: w.id, label: w.name }))
+                  .map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label}
+                    </option>
+                  ))}
+              </WarehouseSelect>
             </div>
-            <div>
-              <label htmlFor="purchase-document">Purchase order</label>
-              <Select
-                id="purchase-document"
-                value={orderId}
-                onChange={(e) => setOrderId(e.target.value)}
-              >
-                {[
-                  { value: '', label: 'Select order' },
-                  ...state.data.workspace.orders.map((o) => ({
-                    value: o.id,
-                    label: `${o.reference} · ${o.state}`,
-                  })),
-                ].map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </Select>
-            </div>
-          </Grid>
+            {state.data && (
+              <>
+                {' '}
+                <Grid className="screen-filters">
+                  <div>
+                    <label htmlFor="purchase-supplier-history">Supplier history</label>
+                    <Select
+                      id="purchase-supplier-history"
+                      value={supplierId}
+                      onChange={(e) =>
+                        ((value: string) => {
+                          setSupplierId(value);
+                          setOffset(0);
+                          setOrderId('');
+                        })(e.target.value)
+                      }
+                    >
+                      {[
+                        { value: '', label: 'All suppliers' },
+                        ...state.data.workspace.suppliers.map((s) => ({
+                          value: s.id,
+                          label: s.name,
+                        })),
+                      ].map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      ))}
+                    </Select>
+                  </div>
+                  <div>
+                    <label htmlFor="purchase-document">Purchase order</label>
+                    <Select
+                      id="purchase-document"
+                      value={orderId}
+                      onChange={(e) => setOrderId(e.target.value)}
+                    >
+                      {[
+                        { value: '', label: 'Select order' },
+                        ...state.data.workspace.orders.map((o) => ({
+                          value: o.id,
+                          label: `${o.reference} · ${o.state}`,
+                        })),
+                      ].map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      ))}
+                    </Select>
+                  </div>
+                </Grid>
+              </>
+            )}
+          </PopoverContent>
+        </Popover>
+        <IconButton
+          label="Refresh purchasing"
+          icon={RefreshCw}
+          disabled={state.busy || !warehouseId}
+          onClick={() => void model.run()}
+        />
+      </div>
+      {!warehouseId && (
+        <EmptyState
+          message="No active warehouse"
+          description="Select or request access to an active warehouse to view purchasing."
+        />
+      )}
+      {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
+      {warehouseId && !state.data && !state.error && <LoadingState message="Loading purchasing…" />}
+      {state.data && (
+        <>
           <Pagination
             label="purchasing"
             offset={offset}
@@ -226,10 +265,88 @@ export function PurchasingPanel({
             busy={state.busy || (!state.data && !state.error)}
             onChange={setOffset}
           />
-          {state.data.detail && <PurchaseDetails detail={state.data.detail} />}
-          {forms.map((form) => (
-            <CommandForm key={form.title} definition={form} run={(work) => void model.run(work)} />
-          ))}
+          <h3>Purchase orders</h3>
+          <RecordCollection
+            label="purchase orders"
+            actions={forms.filter((f) => f.title === 'Create purchase order').map(renderCommand)}
+            columns={['Reference', 'Supplier', 'Currency']}
+            onOpen={setOrderId}
+            items={state.data.workspace.orders.map((o) => ({
+              id: o.id,
+              title: o.reference,
+              subtitle:
+                state.data!.workspace.suppliers.find((supplier) => supplier.id === o.supplierId)
+                  ?.name ?? 'Supplier outside this page',
+              detail: o.currency,
+              status: o.state.replaceAll('_', ' '),
+              tone:
+                o.state === 'completed'
+                  ? 'success'
+                  : o.state === 'partially_received'
+                    ? 'warning'
+                    : 'neutral',
+            }))}
+          />
+          <h3>Suppliers</h3>
+          <RecordCollection
+            label="suppliers"
+            actions={forms
+              .filter(
+                (f) =>
+                  f.title === 'Create supplier' ||
+                  (selectedSupplier && f.title === `Save supplier ${selectedSupplier.code}`),
+              )
+              .map(renderCommand)}
+            columns={['Supplier', 'Code', 'Contact']}
+            onOpen={(id) => {
+              setSupplierId(id);
+              setOrderId('');
+              setOffset(0);
+            }}
+            items={state.data.workspace.suppliers.map((supplier) => ({
+              id: supplier.id,
+              title: supplier.name,
+              subtitle: supplier.code,
+              detail: supplier.email || supplier.phone || 'No contact details',
+              status: supplier.state,
+              tone: supplier.state === 'active' ? 'success' : 'neutral',
+            }))}
+          />
+          {selectedSupplier && (
+            <RecordDetails
+              label="Supplier details"
+              items={[
+                { label: 'Supplier', value: selectedSupplier.name },
+                { label: 'Code', value: selectedSupplier.code },
+                { label: 'Email', value: selectedSupplier.email || 'Not provided' },
+                { label: 'Phone', value: selectedSupplier.phone || 'Not provided' },
+                { label: 'Notes', value: selectedSupplier.notes || 'None' },
+                { label: 'Status', value: selectedSupplier.state },
+              ]}
+            />
+          )}
+          {state.data.detail && (
+            <FormSheet
+              title={`Purchase ${state.data.detail.order.reference}`}
+              open
+              onOpenChange={(open) => {
+                if (!open && !state.busy) setOrderId('');
+              }}
+            >
+              <div className="space-y-3 shrink-0 min-w-0">
+                <PurchaseDetails detail={state.data.detail} timeZone={business.timeZone} />
+                <div
+                  className="flex flex-wrap gap-2"
+                  role="group"
+                  aria-label="Purchase order actions"
+                >
+                  {forms
+                    .filter((f) => !supplierAction(f.title) && f.title !== 'Create purchase order')
+                    .map(renderCommand)}
+                </div>
+              </div>
+            </FormSheet>
+          )}
         </>
       )}
     </section>

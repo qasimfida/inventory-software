@@ -1,3 +1,4 @@
+import { StaffDirectory } from '@/features/operations/StaffDirectory';
 import { onlineRoute } from '@inventory/api-client';
 import { OnlineStorePage } from '@/features/storefront/OnlineStorePage';
 import { lazy } from 'react';
@@ -31,11 +32,13 @@ export function WorkspaceScreens() {
     location = useLocation(),
     navigate = useNavigate();
   const path =
-      location.pathname === '/settings/staff'
-        ? '/staff'
-        : location.pathname === '/settings/users'
-          ? '/team'
-          : onlineRoute(location.pathname),
+      location.pathname === '/warehouse-view'
+        ? '/storage'
+        : location.pathname === '/settings/staff'
+          ? '/staff'
+          : location.pathname === '/settings/users'
+            ? '/team'
+            : onlineRoute(location.pathname),
     route = workspaceRoutes.find((r) => r.path === (productDetailId(path) ? '/catalog' : path));
   const settings = useSyncExternalStore(settingsModel.subscribe, settingsModel.snapshot);
   const [visited, setVisited] = useState<string[]>([path]);
@@ -116,11 +119,19 @@ export function WorkspaceScreens() {
         />
       )}
       {path === '/logs' && <LogsPage />}
+      {path === '/salaries' && (
+        <OperationsPanel mode="staff" business={business} locations={state.workspace.locations} />
+      )}
       {path === '/staff' && (
         <OperationsPanel business={business} locations={state.workspace.locations} />
       )}
       {path === '/team' && (
-        <MemberEditor model={model} workspace={state.workspace} busy={state.busy} />
+        <>
+          <MemberEditor model={model} workspace={state.workspace} busy={state.busy} />
+          {hasPermission(business, 'users.write') && !business.scope?.storeId && (
+            <StaffDirectory business={business} locations={state.workspace.locations} />
+          )}
+        </>
       )}
       {path.startsWith('/settings/') && <SettingsPage />}
       {path === '/dashboard' && (!destination || destination === path) && (
@@ -157,6 +168,7 @@ export function WorkspaceScreens() {
         ) && (
           <div hidden={path !== '/pos'}>
             <PosPanel
+              active={path === '/pos'}
               showBack={false}
               business={business}
               onLockChange={setLocked}
@@ -172,7 +184,10 @@ export function WorkspaceScreens() {
         .filter(
           (p) =>
             visited.includes('/' + p.name) &&
-            p.permissions.every((permission) => hasPermission(business, permission)),
+            routeAllowed(
+              workspaceRoutes.find((r) => r.panel === p.name)!,
+              business,
+            ),
         )
         .map(({ name, Component }) => (
           <div key={name} hidden={path !== '/' + name}>

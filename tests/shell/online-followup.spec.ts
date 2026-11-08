@@ -6,17 +6,14 @@ async function login(page: Page) {
   await page.getByLabel('Account email').fill('owner@demo.example.test');
   await page.getByLabel('Password', { exact: true }).fill('local-demo');
   await page.getByRole('button', { name: 'Log in', exact: true }).click();
-  await expect(page.getByRole('region', { name: 'Business setup' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Business setup' })).toBeVisible();
   expect(new URL(page.url()).pathname).toBe('/');
 }
-test('compact server-backed setup dismissal, single navigation, attention chips and all-clear', async ({
-  page,
-}) => {
+test('setup links, single navigation, attention chips and all-clear', async ({ page }) => {
   await login(page);
-  const setup = page.getByRole('region', { name: 'Business setup' });
-  await expect(setup.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100');
-  await setup.getByRole('button', { name: 'Dismiss completed setup' }).click();
-  await expect(setup).toHaveCount(0);
+  const setup = page.getByRole('navigation', { name: 'Business setup' });
+  await expect(setup.getByRole('link')).toHaveCount(6);
+  await expect(setup.getByRole('button')).toHaveCount(0);
   await page.evaluate(() => {
     location.hash = '/online-store';
   });
@@ -62,12 +59,13 @@ test('drawer catalog fix, effective price and shared Catalog Inventory POS consu
   await drawer.getByRole('button', { name: 'Edit product', exact: true }).click();
   await page.getByLabel('Product name', { exact: true }).fill('Follow-up live product');
   await page.getByRole('button', { name: 'Save product', exact: true }).click();
+  await page.getByRole('button', { name: 'Done', exact: true }).click();
   await expect(drawer.getByText('Now ready to publish', { exact: true })).toBeVisible();
   await drawer.getByRole('button', { name: 'Edit product', exact: true }).click();
-  await page.getByRole('button', { name: 'Set / adjust price', exact: true }).click();
+  await page.getByText('Price & units', { exact: true }).click();
   await page.getByLabel('Base-unit selling price', { exact: true }).fill('87.25');
-  await page.getByRole('button', { name: 'Publish price', exact: true }).click();
-  await page.getByRole('button', { name: 'Close Variants and pricing', exact: true }).click();
+  await page.getByRole('button', { name: 'Save selling price', exact: true }).click();
+  await page.getByRole('button', { name: 'Done', exact: true }).click();
   await expect(drawer.getByText(/\$87.25/).first()).toBeVisible();
   await page.getByRole('button', { name: 'Close Online product details', exact: true }).click();
   for (const path of ['/catalog', '/inventory', '/pos']) {
@@ -75,6 +73,11 @@ test('drawer catalog fix, effective price and shared Catalog Inventory POS consu
       location.hash = path;
     }, path);
     await expect(page.getByText('Follow-up live product', { exact: true }).first()).toBeVisible();
+    if (path === '/pos')
+      await page
+        .locator('.pos-products')
+        .getByRole('button', { name: 'Follow-up live product', exact: true })
+        .click();
     await expect(
       page
         .getByText(/\$87.25/)

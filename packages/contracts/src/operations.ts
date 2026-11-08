@@ -51,10 +51,16 @@ export const costPaymentSchema = z
 export const operationQuerySchema = z
   .object({
     search: z.string().trim().max(120).default(''),
+    storeId: z.uuid().optional(),
+    kind: z.enum(['salary', 'expense']).optional(),
+    staffState: z.enum(['active', 'inactive']).optional(),
     offset: z.coerce.number().int().min(0).max(100000).default(0),
   })
   .strict();
+export type OperationQuery = z.infer<typeof operationQuerySchema>;
 export const costSchema = z.object({
+  actorId: z.uuid().optional(),
+  actorName: z.string().nullable().optional(),
   id: z.uuid(),
   kind: z.enum(['salary', 'expense']),
   staffId: z.uuid().nullable(),
@@ -91,3 +97,10 @@ export const costDetailSchema = z.object({
   ),
   hasMore: z.boolean(),
 });
+
+/** Employment directory deliberately excludes compensation and financial records. */
+export const staffSummarySchema = staffSchema.omit({ salaryMinor: true, currency: true }).strict();
+export const staffDirectorySchema = z
+  .object({ staff: z.array(staffSummarySchema), hasMore: z.boolean() })
+  .strict();
+export type StaffSummary = z.infer<typeof staffSummarySchema>;

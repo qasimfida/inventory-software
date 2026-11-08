@@ -1,6 +1,7 @@
 /* Three icon sizes, selected by the existing account preference. Charts are not icons. */
 :root {
   --icon-current: var(--icon-medium);
+  --icon-size: var(--icon-current);
 }
 :root[data-icon-size='small'] {
   --icon-current: var(--icon-small);
@@ -44,27 +45,6 @@
   top: var(--header-occupied-height, var(--shell-header-height));
   z-index: 20;
   box-shadow: var(--elevation-low);
-}
-.view-tabs {
-  background: var(--secondary);
-  border: var(--border-width) solid var(--border);
-}
-.command-search {
-  position: relative;
-  padding: var(--space-small);
-}
-.command-search > svg {
-  position: absolute;
-  left: var(--space-medium);
-  pointer-events: none;
-}
-.command-search input {
-  min-height: var(--control-small);
-  height: auto;
-  border: var(--border-width) solid var(--input);
-  border-radius: var(--control-radius);
-  padding-left: calc(var(--space-medium) + var(--icon-current) + var(--space-small));
-  background: var(--background);
 }
 .popover-panel .search-control input,
 .command-select-panel input {
@@ -156,7 +136,7 @@
 .overview-metric-stock .metric-card {
   background: color-mix(in srgb, var(--destructive) 6%, var(--card));
 }
-@media (min-width: 1000px) {
+@media (min-width: 1100px) {
   .pos-cart {
     height: calc(100dvh - var(--pos-cart-top, var(--shell-header-height)) - var(--space-medium));
     max-height: calc(

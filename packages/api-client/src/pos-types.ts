@@ -14,7 +14,14 @@ export interface PosState {
   customerId: string | null;
   quote: SaleQuote | null;
   receipt: Awaited<ReturnType<Client['receipt']>> | null;
+  /** Read-only pricing is separate from the checkout mutation lock. */
+  quoting?: boolean;
   busy: boolean;
   uncertain: boolean;
   error: string;
+}
+
+/** Missing stock is unknown, and untracked services are not sold out. */
+export function isPosSoldOut(item: Pick<PosItem, 'available'>): boolean {
+  return item.available != null && Number(item.available) <= 0;
 }

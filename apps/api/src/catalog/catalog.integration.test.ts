@@ -145,3 +145,94 @@ it('preserves versions, enforces immutable archival and denies scoped catalog ch
   const history = (await api().get(`${root}/${a}/audit`).set(native(ownerToken)).expect(200)).body;
   expect(history.events.some((e: { action: string }) => e.action === 'product.updated')).toBe(true);
 });
+
+it('checks SKU availability within the authorized business including barcode collisions and own-product exclusion', async () => {
+  const { api, a, b, root, ownerToken, viewerToken, otherToken } = fixture();
+  const endpoint = `${root}/${a}/products/sku-availability`;
+  const created = (
+    await api()
+      .post(`${root}/${a}/products`)
+      .set(native(ownerToken))
+      .send({ name: 'Availability test', sku: 'CHECK-SKU', barcodes: ['CHECK-BARCODE'] })
+      .expect(201)
+  ).body;
+  expect(
+    (await api().get(endpoint).query({ sku: 'check-sku' }).set(native(ownerToken)).expect(200))
+      .body,
+  ).toMatchObject({ available: false });
+  expect(
+    (await api().get(endpoint).query({ sku: 'CHECK-BARCODE' }).set(native(ownerToken)).expect(200))
+      .body,
+  ).toMatchObject({ available: false });
+  expect(
+    (
+      await api()
+        .get(endpoint)
+        .query({ sku: 'CHECK-SKU', excludeProductId: created.id })
+        .set(native(ownerToken))
+        .expect(200)
+    ).body,
+  ).toEqual({ available: true });
+  expect(
+    (
+      await api()
+        .get(`${root}/${b}/products/sku-availability`)
+        .query({ sku: 'CHECK-SKU' })
+        .set(native(otherToken))
+        .expect(200)
+    ).body,
+  ).toEqual({ available: true });
+  await api().get(endpoint).query({ sku: 'CHECK-SKU' }).expect(401);
+  await api().get(endpoint).query({ sku: 'CHECK-SKU' }).set(native(viewerToken)).expect(403);
+  await api().get(endpoint).query({ sku: 'CHECK-SKU' }).set(native(otherToken)).expect(404);
+  await api().get(endpoint).query({ sku: 'invalid code' }).set(native(ownerToken)).expect(400);
+  await api()
+    .get(`${root}/${b}/products/sku-availability`)
+    .query({ sku: 'CHECK-SKU', excludeProductId: created.id })
+    .set(native(otherToken))
+    .expect(404);
+  const preview = (
+    await api().get(endpoint).query({ sku: 'CHECK-SKU' }).set(native(ownerToken)).expect(200)
+  ).body.product;
+  expect(preview).toEqual({ id: created.id, name: created.name, sku: created.sku, image: null });
+  const workspace = (
+    await api()
+      .get(`${root}/${a}/products/${created.id}/pricing`)
+      .set(native(ownerToken))
+      .expect(200)
+  ).body;
+  await api()
+    .post(`${root}/${a}/products/${created.id}/variants`)
+    .set(native(ownerToken))
+    .send({
+      name: 'Blue',
+      sku: 'CHECK-VARIANT',
+      attributes: { color: 'blue' },
+      baseUnitId: workspace.units[0].id,
+    })
+    .expect(201);
+  expect(
+    (
+      await api()
+        .get(endpoint)
+        .query({ sku: 'CHECK-VARIANT', excludeProductId: created.id })
+        .set(native(ownerToken))
+        .expect(200)
+    ).body,
+  ).toMatchObject({ available: false });
+  await api()
+    .patch(`${root}/${a}/products/${created.id}`)
+    .set(native(ownerToken))
+    .send({
+      name: created.name,
+      sku: created.sku,
+      barcodes: created.barcodes,
+      state: 'archived',
+      version: created.version,
+    })
+    .expect(200);
+  expect(
+    (await api().get(endpoint).query({ sku: 'CHECK-SKU' }).set(native(ownerToken)).expect(200))
+      .body,
+  ).toMatchObject({ available: false });
+});

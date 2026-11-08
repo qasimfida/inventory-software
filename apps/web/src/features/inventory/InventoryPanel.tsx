@@ -10,14 +10,15 @@ import { InventoryOverview } from './InventoryOverview';
 import { MovementHistory } from './MovementHistory';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { StockTable } from './StockTable';
-import { LoadingState } from '@/components/common/AsyncState';
+import { LoadingState, EmptyState, ErrorState } from '@/components/common/AsyncState';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { createInventoryClient, cancellableResource, inventoryForms } from '@inventory/api-client';
 import { hasPermission } from '@inventory/contracts';
 import type { Business, Location } from '@inventory/contracts';
 import { authClient } from '@/platform/auth-client';
 import { CommandForm } from '@/components/common/CommandForm';
-import { Input } from '@/components/ui/FormControls';
+import { SearchControl } from '@/components/common/SearchControl';
+import { IconButton } from '@/components/common/IconButton';
 import { Button } from '@/components/ui/Button';
 export function InventoryPanel({
   business,
@@ -74,7 +75,10 @@ export function InventoryPanel({
     <section aria-label="Inventory ledger" className="screen-section">
       <ScreenHeader title="Inventory" description="Monitor available stock by warehouse." />
       {!warehouses.length ? (
-        <p>Create an active warehouse to manage stock.</p>
+        <EmptyState
+          message="No active warehouse"
+          description="Create or request access to an active warehouse to manage stock."
+        />
       ) : (
         <>
           {hasPermission(business, 'stock.write') && (
@@ -140,29 +144,23 @@ export function InventoryPanel({
             </p>
             <div className="collection-toolbar">
               <div className="collection-search">
-                <label htmlFor="stock-search">Search stock item / SKU</label>
-                <Input
-                  id="stock-search"
+                <SearchControl
+                  label="Search stock item / SKU"
                   value={search}
-                  onChange={(e) => {
-                    setSearch(e.target.value);
+                  onChange={(value) => {
+                    setSearch(value);
                     setOffset(0);
                   }}
-                  maxLength={120}
                 />
               </div>
-              <Button
+              <IconButton
+                label="Refresh inventory"
+                icon={RefreshCw}
                 disabled={state.busy}
                 onClick={() => void model.run()}
-                variant="ghost"
-                size="icon"
-                aria-label="Refresh inventory"
-                title="Refresh"
-              >
-                <RefreshCw aria-hidden="true" />
-              </Button>
+              />
             </div>
-            {state.error && <p role="alert">{state.error}</p>}
+            {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
             {state.busy && <LoadingState message="Loading inventory…" />}
 
             {state.data && (

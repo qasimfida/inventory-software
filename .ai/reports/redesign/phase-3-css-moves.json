@@ -1,0 +1,338 @@
+[
+  {
+    "file": "apps/web/src/theme/navigation-refinement.css",
+    "line": 97,
+    "selector": ".command-search",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/navigation-refinement.css",
+    "line": 104,
+    "selector": ".command-search input",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/navigation-refinement.css",
+    "line": 110,
+    "selector": ".command-search svg,\n[cmdk-item] svg",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/navigation-refinement.css",
+    "line": 116,
+    "selector": "[cmdk-list]",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/navigation-refinement.css",
+    "line": 121,
+    "selector": "[cmdk-item]",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/navigation-refinement.css",
+    "line": 131,
+    "selector": "[cmdk-item][data-selected='true']",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/navigation-refinement.css",
+    "line": 135,
+    "selector": "[cmdk-item][data-disabled='true']",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/navigation-refinement.css",
+    "line": 139,
+    "selector": "[cmdk-empty]",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 2,
+    "selector": ".data-table",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 10,
+    "selector": ".data-table caption",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 15,
+    "selector": ".data-table th,\n  .data-table td",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 23,
+    "selector": ".data-table th",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 29,
+    "selector": ".data-table thead th",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 37,
+    "selector": ".data-table tbody tr:nth-child(odd)",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 40,
+    "selector": ".data-table tbody tr:nth-child(even)",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 43,
+    "selector": ".data-table tbody tr:last-child > *",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 46,
+    "selector": ".data-table tbody tr:hover",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 49,
+    "selector": ".data-table tbody tr[data-selected='true'],\n  .data-table tbody tr[aria-selected='true']",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 54,
+    "selector": ".data-table [data-numeric]",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 60,
+    "selector": ".data-table th[aria-sort='ascending']::after",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/data-presentation.css",
+    "line": 63,
+    "selector": ".data-table th[aria-sort='descending']::after",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/inventory-refinement.css",
+    "line": 111,
+    "selector": ".quantity-control",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/inventory-refinement.css",
+    "line": 116,
+    "selector": ".quantity-control input",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/inventory-refinement.css",
+    "line": 140,
+    "selector": ".data-table tbody tr > :first-child",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/inventory-refinement.css",
+    "line": 143,
+    "selector": ".data-table tbody tr > :last-child",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 128,
+    "selector": ".data-table tbody tr:nth-child(odd)",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 131,
+    "selector": ".data-table tbody tr:nth-child(even)",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 134,
+    "selector": ".data-table tbody tr:hover",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 137,
+    "selector": ".data-table tbody tr[data-selected='true']",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 140,
+    "selector": ".data-table thead th",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 144,
+    "selector": ".data-table [data-actions],\n.data-table td:has([data-row-actions])",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 148,
+    "selector": ".ui-checkbox",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 161,
+    "selector": ".ui-checkbox[data-state='checked'],\n.ui-checkbox[data-state='indeterminate']",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 167,
+    "selector": ".ui-checkbox svg",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 171,
+    "selector": ".ui-checkbox:disabled",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 175,
+    "selector": ".ui-checkbox[aria-invalid='true']",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 183,
+    "selector": ".view-tabs",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 190,
+    "selector": ".view-tabs button",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 201,
+    "selector": ".view-tabs button[data-state='active']",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 206,
+    "selector": ".view-tabs svg",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 211,
+    "selector": ".view-tabs button",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/sidebar-refinement.css",
+    "line": 293,
+    "selector": ".data-table a:hover,\n.data-table .product-card-title:not(:disabled):hover,\n.data-table th[scope='row'] button:not(:disabled):hover,\n.data-table th[scope='row'] button:focus-visible",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/operational-ui.css",
+    "line": 48,
+    "selector": ".view-tabs",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/operational-ui.css",
+    "line": 52,
+    "selector": ".command-search",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/operational-ui.css",
+    "line": 56,
+    "selector": ".command-search > svg",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/operational-ui.css",
+    "line": 61,
+    "selector": ".command-search input",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/catalog-cart.css",
+    "line": 154,
+    "selector": "table th:has(> .ui-checkbox),\ntable td:has(> .ui-checkbox)",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/catalog-cart.css",
+    "line": 159,
+    "selector": "table th:has(> .ui-checkbox) + th,\ntable td:has(> .ui-checkbox) + th,\ntable td:has(> .ui-checkbox) + td",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/catalog-cart.css",
+    "line": 165,
+    "selector": ".collection-toolbar",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/catalog-cart.css",
+    "line": 171,
+    "selector": ".collection-search",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/catalog-cart.css",
+    "line": 186,
+    "selector": ".data-table :is(th, td):has(> .ui-checkbox)",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/catalog-cart.css",
+    "line": 190,
+    "selector": ".data-table :is(th, td):has(> .ui-checkbox) + :is(th, td)",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/catalog-cart.css",
+    "line": 194,
+    "selector": ".data-table :is(th, td) > .product-card-title",
+    "destination": "collections"
+  },
+  {
+    "file": "apps/web/src/theme/catalog-cart.css",
+    "line": 298,
+    "selector": ".feedback-state",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/catalog-cart.css",
+    "line": 315,
+    "selector": ".collection-toolbar > [role='combobox']",
+    "destination": "controls"
+  },
+  {
+    "file": "apps/web/src/theme/catalog-cart.css",
+    "line": 319,
+    "selector": ".filter-count",
+    "destination": "controls"
+  }
+]

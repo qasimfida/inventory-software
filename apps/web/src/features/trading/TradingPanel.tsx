@@ -1,16 +1,20 @@
+import { TradingRelationships, TradingDetails } from './TradingEvidence';
+import { RecordCollection } from '@/components/common/RecordCollection';
+import { FormSheet } from '@/components/common/FormSheet';
 import { Pagination } from '@/components/common/Pagination';
 import { usePageCollection } from '@/components/common/usePageCollection';
 import { RefreshCw } from 'lucide-react';
-import { LoadingState, EmptyState } from '@/components/common/AsyncState';
+import { LoadingState, ErrorState } from '@/components/common/AsyncState';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
 import { TradingHistory } from './TradingHistory';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { createTradingClient, tradingForms, ResourceModel } from '@inventory/api-client';
 import type { Business } from '@inventory/contracts';
 import { authClient } from '@/platform/auth-client';
-import { Button } from '@/components/ui/Button';
+import { IconButton } from '@/components/common/IconButton';
 import { CommandForm } from '@/components/common/CommandForm';
 export function TradingPanel({ business }: { business: Business }) {
+  const [selectedRecord, setSelectedRecord] = useState('');
   const [offset, setOffset] = useState(0);
   const client = useMemo(
     () =>
@@ -28,11 +32,10 @@ export function TradingPanel({ business }: { business: Business }) {
       setOffset(0);
     },
   );
-  const allowed = true;
   useEffect(() => {
-    if (allowed) void model.run();
+    void model.run();
     return model.reset;
-  }, [model, allowed]);
+  }, [model]);
   return (
     <section aria-label="Business trading" className="screen-section">
       <ScreenHeader
@@ -50,49 +53,48 @@ export function TradingPanel({ business }: { business: Business }) {
         and balances.
       </p>
       <p>Your business ID: {business.id}</p>
-      {!allowed && (
-        <p>
-          Accounting requires business-wide reports, payments, sales and purchasing read
-          permissions.
-        </p>
-      )}
       {state.busy && <LoadingState message="Loading…" />}
-      {state.error && <p role="alert">{state.error}</p>}
-      <Button
+      {state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
+      <IconButton
+        label="Refresh trading"
+        icon={RefreshCw}
         onClick={() => void model.run()}
-        disabled={state.busy || !allowed}
-        variant="ghost"
-        size="icon"
-        aria-label="Refresh trading"
-        title="Refresh"
-      >
-        <RefreshCw aria-hidden="true" />
-      </Button>
+        disabled={state.busy}
+      />
       {state.data && (
         <>
-          {!state.data.relationships.length && (
-            <EmptyState message="No trading relationships. Ask a partner owner for their business ID." />
-          )}
-          {state.data.relationships.map((r) => (
-            <p key={r.id}>
-              Relationship {r.id} · {r.proposerId} / {r.partnerId} · {r.state}
-            </p>
-          ))}
-          {!state.data.orders.length && <EmptyState message="No shared orders on this page." />}
-          {state.data.orders.map((o) => (
-            <div key={o.id}>
-              <p>
-                {o.reference} · {o.state} · buyer {o.buyerId} · seller {o.sellerId}
-              </p>
-              <TradingHistory client={client} id={o.id} />
-              {o.lines.map((l, i) => (
-                <p key={i}>
-                  {l.description}: {l.quantity} {l.unit} at {l.unitPriceMinor} {o.currency} minor
-                  units each
-                </p>
+          <TradingRelationships items={state.data.relationships} />
+          <h3>Shared orders</h3>
+          <RecordCollection
+            label="trading orders"
+            columns={['Order reference', 'Currency', 'Shared lines']}
+            onOpen={setSelectedRecord}
+            items={state.data.orders.map((o) => ({
+              id: o.id,
+              title: o.reference,
+              subtitle: o.currency,
+              detail: `${o.lines.length} ${o.lines.length === 1 ? 'line' : 'lines'}`,
+              status: o.state[0]!.toUpperCase() + o.state.slice(1),
+              tone: o.state === 'received' ? 'success' : 'neutral',
+            }))}
+          />
+          <FormSheet
+            title="Shared order details"
+            description="Review shared terms and coordination history. This view does not post stock or money."
+            open={!!selectedRecord}
+            onOpenChange={(open) => {
+              if (!open) setSelectedRecord('');
+            }}
+          >
+            {state.data.orders
+              .filter((item) => item.id === selectedRecord)
+              .map((o) => (
+                <div key={o.id} className="min-w-0 shrink-0 space-y-3">
+                  <TradingDetails order={o} timeZone={business.timeZone} />
+                  <TradingHistory client={client} id={o.id} timeZone={business.timeZone} />
+                </div>
               ))}
-            </div>
-          ))}
+          </FormSheet>
           <fieldset disabled={state.busy} className="min-w-0 space-y-3">
             {tradingForms(client, state.data, business.id).map((f) => (
               <CommandForm

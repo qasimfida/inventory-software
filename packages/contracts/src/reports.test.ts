@@ -23,7 +23,7 @@ it('validates calendar dates, bounded ordered ranges, paging and supported profi
       .success,
   ).toBe(false);
 });
-it('retains versioned profiles without changing appearance precedence', () => {
+it('retains versioned industry profiles independently of retired cosmetic enforcement', () => {
   const profile = {
     schemaVersion: 1 as const,
     kind: 'wholesale' as const,
@@ -31,5 +31,5 @@ it('retains versioned profiles without changing appearance precedence', () => {
   };
   const policy = safePolicy({ enforced: { appearance: 'dark' }, industry: profile });
   expect(policy.industry).toEqual(profile);
-  expect(resolveSettings({}, {}, policy).appearance).toBe('dark');
+  expect(resolveSettings({}, {}, policy).appearance).toBe('light');
 });

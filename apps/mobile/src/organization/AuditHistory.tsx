@@ -1,3 +1,5 @@
+import { RecordDetails } from '../ui/RecordDetails';
+import { auditActionLabel, auditDetails, auditChangeDetails } from '@inventory/api-client';
 import { FilterButton } from '../ui/FilterButton';
 import { useTheme } from '../theme';
 import { Choice } from '../ui/Controls';
@@ -130,15 +132,13 @@ export function AuditHistory({
         <SidePanel title="Activity details" open={!!selected} onClose={() => setSelected(null)}>
           {selected && (
             <>
-              <Text accessibilityRole="header">{selected.action}</Text>
-              <Text>{businessTime(selected.occurredAt, timeZone)}</Text>
-              <Text>Actor: {selected.actorEmail ?? selected.actorId}</Text>
-              <Text>Record: {selected.resourceId}</Text>
-              <Text>Store: {selected.storeId ?? 'Business-wide'}</Text>
-              <Text>Warehouse: {selected.warehouseId ?? '—'}</Text>
-              <Text>
-                {JSON.stringify({ before: selected.before, after: selected.after }, null, 2)}
-              </Text>
+              <Text accessibilityRole="header">{auditActionLabel(selected.action)}</Text>
+              <RecordDetails label="Activity context" items={auditDetails(selected, timeZone)} />
+              <Text accessibilityRole="header">Recorded changes</Text>
+              <RecordDetails
+                label="Recorded changes"
+                items={auditChangeDetails(selected.before, selected.after)}
+              />
             </>
           )}
         </SidePanel>

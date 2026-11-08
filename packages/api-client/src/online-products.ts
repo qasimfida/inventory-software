@@ -18,10 +18,10 @@ export const onlineTabLabels = {
   'changes-required': 'Changes required',
   ready: 'Ready to publish',
 };
-export function onlinePrice(p: OnlineProductPreview) {
+export function onlinePrice(p: OnlineProductPreview, format = formatMinorUnits) {
   const prices = p.source.variants.filter((v) => v.priceMinor !== null && v.currency);
   return prices.length
-    ? [...new Set(prices.map((v) => formatMinorUnits(v.priceMinor!, v.currency!)))].join(' / ')
+    ? [...new Set(prices.map((v) => format(v.priceMinor!, v.currency!)))].join(' / ')
     : 'Price missing';
 }
 export function onlineStatus(l: ChannelListing, p?: OnlineProductPreview) {
@@ -169,4 +169,16 @@ export class OnlineProductsModel {
     } while (cursor);
     return items;
   }
+}
+
+/** Display server listing state separately from availability and effective online price. */
+export function onlineListingDetails(l: ChannelListing, p: OnlineProductPreview) {
+  return [
+    { label: 'Publication state', value: l.status.replaceAll('_', ' ') },
+    { label: 'Availability and visibility', value: onlineStatus(l, p) },
+    { label: 'Online price', value: onlinePrice(p) },
+    { label: 'Available quantity', value: p.quantity },
+    { label: 'Product reference', value: p.productId },
+    { label: 'Listing reference', value: l.id },
+  ];
 }

@@ -1,0 +1,242 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "runtimeErrors": []
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 844,
+    "runtimeErrors": []
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "runtimeErrors": []
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 1280,
+    "runtimeErrors": []
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "runtimeErrors": []
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "route": "/inventory",
+    "overflow": false
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "route": "/categories",
+    "overflow": false
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "route": "/catalog",
+    "overflow": false
+  },
+  {
+    "width": 1920,
+    "runtimeErrors": []
+  }
+]

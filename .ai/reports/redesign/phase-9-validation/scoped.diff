@@ -1,0 +1,611 @@
+--- before/apps/web/src/features/storefront/OnlineStorePage.tsx
++++ after/apps/web/src/features/storefront/OnlineStorePage.tsx
+@@ -36,15 +36,14 @@
+         description="Create an active store and link a warehouse before configuring an online store."
+       />
+     );
++  const activeTab = path.startsWith('/online-store/products')
++    ? 'products'
++    : path.startsWith('/online-store/settings')
++      ? 'settings'
++      : 'overview';
+   return (
+     <Tabs.Root
+-      value={
+-        path.startsWith('/online-store/products')
+-          ? 'products'
+-          : path.startsWith('/online-store/settings')
+-            ? 'settings'
+-            : 'overview'
+-      }
++      value={activeTab}
+       onValueChange={(tab) =>
+         void navigate(
+           tab === 'overview'
+@@ -90,39 +89,43 @@
+           </div>
+         )}
+       </div>
+-      {path === '/online-store' ? (
+-        <OnlineOverview
+-          key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}
+-          business={business}
+-          storeId={selected}
+-        />
+-      ) : path.startsWith('/online-store/products') ? (
+-        <div key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}>
+-          <OnlineProducts business={business} storeId={selected} locations={locations} />
+-          {path.endsWith('/add') ? (
+-            <OnlineProductPicker
+-              business={business}
+-              storeId={selected}
+-              onClose={() => void navigate('/online-store/products')}
+-            />
+-          ) : path !== '/online-store/products' ? (
+-            <OnlineProductDetails
+-              business={business}
+-              storeId={selected}
+-              id={path.split('/').pop()!}
+-              onClose={() => void navigate('/online-store/products')}
+-            />
+-          ) : null}
+-        </div>
+-      ) : (
+-        <OnlineStoreEditor
+-          key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}
+-          business={business}
+-          storeId={selected}
+-          locations={locations}
+-          path={path}
+-        />
+-      )}
++      <Tabs.Content value={activeTab}>
++        {path === '/online-store' ? (
++          <OnlineOverview
++            key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}
++            business={business}
++            storeId={selected}
++          />
++        ) : path.startsWith('/online-store/products') ? (
++          <div
++            key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}
++          >
++            <OnlineProducts business={business} storeId={selected} locations={locations} />
++            {path.endsWith('/add') ? (
++              <OnlineProductPicker
++                business={business}
++                storeId={selected}
++                onClose={() => void navigate('/online-store/products')}
++              />
++            ) : path !== '/online-store/products' ? (
++              <OnlineProductDetails
++                business={business}
++                storeId={selected}
++                id={path.split('/').pop()!}
++                onClose={() => void navigate('/online-store/products')}
++              />
++            ) : null}
++          </div>
++        ) : (
++          <OnlineStoreEditor
++            key={`${business.id}:${selected}:${business.role}:${business.permissions?.join(',')}`}
++            business={business}
++            storeId={selected}
++            locations={locations}
++            path={path}
++          />
++        )}
++      </Tabs.Content>
+     </Tabs.Root>
+   );
+ }
+--- before/tests/browser/design-system.spec.ts
++++ after/tests/browser/design-system.spec.ts
+@@ -94,6 +94,8 @@
+ }) => {
+   await page.emulateMedia({ colorScheme: 'dark' });
+   await page.goto('/#/design-system');
++  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
++  await chooseSelect(page, 'Appearance', 'system');
+   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+   await chooseSelect(page, 'Appearance', 'light');
+   await page.emulateMedia({ colorScheme: 'light' });
+--- before/apps/web/src/shell/WorkspaceScreens.tsx
++++ after/apps/web/src/shell/WorkspaceScreens.tsx
+@@ -168,6 +168,7 @@
+         ) && (
+           <div hidden={path !== '/pos'}>
+             <PosPanel
++              active={path === '/pos'}
+               showBack={false}
+               business={business}
+               onLockChange={setLocked}
+--- before/apps/mobile/src/shell/NativeScreens.tsx
++++ after/apps/mobile/src/shell/NativeScreens.tsx
+@@ -161,6 +161,7 @@
+             importantForAccessibility={path === '/pos' ? 'auto' : 'no-hide-descendants'}
+           >
+             <PosPanel
++              active={path === '/pos'}
+               showBack={false}
+               business={business}
+               onLockChange={setLocked}
+--- before/apps/web/src/features/pos/PosPanel.tsx
++++ after/apps/web/src/features/pos/PosPanel.tsx
+@@ -15,11 +15,13 @@
+   close,
+   onLockChange,
+   showBack = true,
++  active = true,
+ }: {
+   business: Business;
+   locations: Location[];
+   close: () => void;
+   showBack?: boolean;
++  active?: boolean;
+   onLockChange?: (locked: boolean) => void;
+ }) {
+   const online = useReachability();
+@@ -87,6 +89,7 @@
+           />
+         ) : (
+           <PosCheckout
++            active={active}
+             key={warehouse.id}
+             business={business}
+             warehouse={warehouse}
+--- before/apps/web/src/features/pos/PosCheckout.tsx
++++ after/apps/web/src/features/pos/PosCheckout.tsx
+@@ -31,7 +31,9 @@
+   warehouse,
+   locations = [warehouse],
+   onLockChange,
++  active = true,
+ }: {
++  active?: boolean;
+   business: Business;
+   warehouse: Location;
+   locations?: Location[];
+@@ -88,7 +90,11 @@
+     };
+   }, [customerModel, customerRequest, business]);
+   useEffect(() => model.reset, [model]);
++  // Retain drafts and recovery. Only an idle, hidden checkout stops polling.
++  const shouldPoll =
++    active || state.lines.length > 0 || state.heldCarts.length > 0 || state.busy || state.uncertain;
+   useEffect(() => {
++    if (!shouldPoll) return;
+     const feed = new Invalidations(
+       createSyncClient(authClient.organizationRequest, business.id),
+       warehouse.id,
+@@ -101,7 +107,7 @@
+       feed.stop();
+       clearInterval(timer);
+     };
+-  }, [model, business.id, warehouse.id]);
++  }, [model, business.id, warehouse.id, shouldPoll]);
+   useEffect(() => {
+     onLockChange(
+       state.busy || state.uncertain || state.lines.length > 0 || state.heldCarts.length > 0,
+--- before/apps/mobile/src/pos/PosPanel.tsx
++++ after/apps/mobile/src/pos/PosPanel.tsx
+@@ -20,11 +20,13 @@
+   close,
+   onLockChange,
+   showBack = true,
++  active = true,
+ }: {
+   business: Business;
+   locations: Location[];
+   close: () => void;
+   showBack?: boolean;
++  active?: boolean;
+   onLockChange?: (locked: boolean) => void;
+ }) {
+   const pageTitle = useContext(PageTitleContext);
+@@ -88,6 +90,7 @@
+           </Suspense>
+         ) : (
+           <PosCheckout
++            active={active}
+             key={warehouse.id}
+             business={business}
+             warehouse={warehouse}
+--- before/apps/mobile/src/pos/PosCheckout.tsx
++++ after/apps/mobile/src/pos/PosCheckout.tsx
+@@ -26,7 +26,9 @@
+   warehouse,
+   locations = [warehouse],
+   onLockChange,
++  active = true,
+ }: {
++  active?: boolean;
+   business: Business;
+   warehouse: Location;
+   locations?: Location[];
+@@ -82,7 +84,11 @@
+     };
+   }, [customerModel, customerRequest, business]);
+   useEffect(() => model.reset, [model]);
+-  useEffect(() => {
++  // Retain drafts and recovery. Only an idle, hidden checkout stops polling.
++  const shouldPoll =
++    active || state.lines.length > 0 || state.heldCarts.length > 0 || state.busy || state.uncertain;
++  useEffect(() => {
++    if (!shouldPoll) return;
+     const feed = new Invalidations(
+       createSyncClient(authClient.organizationRequest, business.id),
+       warehouse.id,
+@@ -95,7 +101,7 @@
+       feed.stop();
+       clearInterval(timer);
+     };
+-  }, [model, business.id, warehouse.id]);
++  }, [model, business.id, warehouse.id, shouldPoll]);
+   useEffect(() => {
+     onLockChange(
+       state.busy || state.uncertain || state.lines.length > 0 || state.heldCarts.length > 0,
+--- before/apps/web/src/features/catalog/CatalogPanel.tsx
++++ after/apps/web/src/features/catalog/CatalogPanel.tsx
+@@ -179,48 +179,51 @@
+         </div>
+         <div className="min-w-0 space-y-4">
+           {queryError && <p role="alert">{queryError}</p>}
+-          {state.error && <ErrorState message={state.error} onRetry={() => void model.refresh()} />}
+-          {state.busy && !state.data && <LoadingState message="Loading catalog…" />}
+-
+-          {state.data && writable && (creating || editing) && (
+-            <ProductEditor
+-              listingContext={{ business, locations }}
+-              key={editing?.id ?? 'new'}
+-              product={editing}
+-              categories={state.data.categories}
+-              client={client}
+-              onClose={cancel}
+-              onSaved={() => {
+-                cancel();
+-                void model.refresh();
+-              }}
+-              onPricing={(id) => {
+-                setPricingProduct(id);
+-                cancel();
+-              }}
+-            />
+-          )}
+-
+-          {pricingProduct && (
+-            <FormSheet
+-              title="Variants and pricing"
+-              open
+-              onOpenChange={(open) => {
+-                if (!open) setPricingProduct(null);
+-              }}
+-            >
+-              <PricingPanel
+-                key={pricingProduct}
+-                productId={pricingProduct}
+-                business={business}
+-                locations={locations}
++          <div id={panelId} role="tabpanel" aria-label={`Catalog ${view} view`} tabIndex={0}>
++            {state.error && (
++              <ErrorState message={state.error} onRetry={() => void model.refresh()} />
++            )}
++            {state.busy && !state.data && <LoadingState message="Loading catalog…" />}
++
++            {state.data && writable && (creating || editing) && (
++              <ProductEditor
++                listingContext={{ business, locations }}
++                key={editing?.id ?? 'new'}
++                product={editing}
++                categories={state.data.categories}
++                client={client}
++                onClose={cancel}
++                onSaved={() => {
++                  cancel();
++                  void model.refresh();
++                }}
++                onPricing={(id) => {
++                  setPricingProduct(id);
++                  cancel();
++                }}
+               />
+-            </FormSheet>
+-          )}
+-          {state.data && (
+-            <>
+-              <p>{state.data.page.total} products</p>
+-              <div id={panelId} role="tabpanel" aria-label={`Catalog ${view} view`} tabIndex={0}>
++            )}
++
++            {pricingProduct && (
++              <FormSheet
++                title="Variants and pricing"
++                open
++                onOpenChange={(open) => {
++                  if (!open) setPricingProduct(null);
++                }}
++              >
++                <PricingPanel
++                  key={pricingProduct}
++                  productId={pricingProduct}
++                  business={business}
++                  locations={locations}
++                />
++              </FormSheet>
++            )}
++            {state.data && (
++              <>
++                <p>{state.data.page.total} products</p>
++
+                 <CatalogProducts
+                   filtered={Boolean(query.search || query.code || query.state || query.categoryId)}
+                   onCreate={() => setCreating(true)}
+@@ -233,21 +236,21 @@
+                     setCreating(false);
+                   }}
+                 />
+-              </div>
+-              <Pagination
+-                label="products"
+-                offset={query.offset}
+-                pageSize={query.limit}
+-                total={state.data.page.total}
+-                hasMore={state.data.page.hasMore}
+-                busy={state.busy || Boolean(state.error)}
+-                onChange={(offset) => {
+-                  cancel();
+-                  setQuery({ ...query, offset });
+-                }}
+-              />
+-            </>
+-          )}
++                <Pagination
++                  label="products"
++                  offset={query.offset}
++                  pageSize={query.limit}
++                  total={state.data.page.total}
++                  hasMore={state.data.page.hasMore}
++                  busy={state.busy || Boolean(state.error)}
++                  onChange={(offset) => {
++                    cancel();
++                    setQuery({ ...query, offset });
++                  }}
++                />
++              </>
++            )}
++          </div>
+         </div>
+       </div>
+     </section>
+--- before/apps/mobile/src/ui/SidePanel.tsx
++++ after/apps/mobile/src/ui/SidePanel.tsx
+@@ -1,6 +1,14 @@
+ import { PanelResizeHandle } from './PanelResizeHandle';
+ import { ScrollEvents, useScrollEvents } from './ScrollEvents';
+-import { Modal, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
++import {
++  KeyboardAvoidingView,
++  Platform,
++  Modal,
++  Pressable,
++  ScrollView,
++  View,
++  useWindowDimensions,
++} from 'react-native';
+ import { useEffect, useRef, useState, type ReactNode, type ComponentRef } from 'react';
+ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+ import { useTheme } from '../theme';
+@@ -72,56 +80,68 @@
+               backgroundColor: theme.colors.card,
+             }}
+           >
+-            {resizable && (
+-              <PanelResizeHandle
+-                width={panelWidth}
+-                maximum={width - 32}
+-                onChange={setCustomWidth}
+-              />
+-            )}
+-            <View
+-              style={{ flexDirection: 'row', alignItems: 'center', padding: theme.spacing.medium }}
++            <KeyboardAvoidingView
++              style={{ flex: 1 }}
++              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+             >
+-              <Text accessibilityRole="header" style={{ flex: 1, fontWeight: '600' }}>
+-                {title}
+-              </Text>
+-              {bottom && (
+-                <IconAction
+-                  label={expanded ? 'Collapse details' : 'Expand details'}
+-                  icon={expanded ? '↓' : '↑'}
+-                  onPress={() => setExpanded((v) => !v)}
++              {resizable && (
++                <PanelResizeHandle
++                  width={panelWidth}
++                  maximum={width - 32}
++                  onChange={setCustomWidth}
+                 />
+               )}
+-              <IconAction label={`Close ${title.toLowerCase()}`} icon="×" onPress={onClose} />
+-            </View>
+-            <ScrollEvents.Provider value={scrollEvents}>
+-              <ScrollView
+-                ref={scroll}
+-                onContentSizeChange={() => {
+-                  if (revealEndKey) {
+-                    scroll.current?.scrollToEnd({ animated: false });
+-                  }
+-                }}
+-                onScroll={scrollEvents.notify}
+-                scrollEventThrottle={100}
+-                keyboardShouldPersistTaps="handled"
+-                automaticallyAdjustKeyboardInsets
+-                contentContainerStyle={{ padding: theme.spacing.medium, gap: theme.spacing.medium }}
+-              >
+-                {children}
+-              </ScrollView>
+-            </ScrollEvents.Provider>
+-            {footer && (
+               <View
+                 style={{
++                  flexDirection: 'row',
++                  alignItems: 'center',
+                   padding: theme.spacing.medium,
+-                  borderTopWidth: metrics.border,
+-                  borderColor: theme.tokens.border,
+                 }}
+               >
+-                {footer}
++                <Text accessibilityRole="header" style={{ flex: 1, fontWeight: '600' }}>
++                  {title}
++                </Text>
++                {bottom && (
++                  <IconAction
++                    label={expanded ? 'Collapse details' : 'Expand details'}
++                    icon={expanded ? '↓' : '↑'}
++                    onPress={() => setExpanded((v) => !v)}
++                  />
++                )}
++                <IconAction label={`Close ${title.toLowerCase()}`} icon="×" onPress={onClose} />
+               </View>
+-            )}
++              <ScrollEvents.Provider value={scrollEvents}>
++                <ScrollView
++                  ref={scroll}
++                  onContentSizeChange={() => {
++                    if (revealEndKey) {
++                      scroll.current?.scrollToEnd({ animated: false });
++                    }
++                  }}
++                  onScroll={scrollEvents.notify}
++                  scrollEventThrottle={100}
++                  keyboardShouldPersistTaps="handled"
++                  automaticallyAdjustKeyboardInsets
++                  contentContainerStyle={{
++                    padding: theme.spacing.medium,
++                    gap: theme.spacing.medium,
++                  }}
++                >
++                  {children}
++                </ScrollView>
++              </ScrollEvents.Provider>
++              {footer && (
++                <View
++                  style={{
++                    padding: theme.spacing.medium,
++                    borderTopWidth: metrics.border,
++                    borderColor: theme.tokens.border,
++                  }}
++                >
++                  {footer}
++                </View>
++              )}
++            </KeyboardAvoidingView>
+           </SafeAreaView>
+         </View>
+       </SafeAreaProvider>
+--- before/package.json
++++ after/package.json
+@@ -56,6 +56,7 @@
+     "redesign:inventory": "node scripts/route-coverage.mjs && node scripts/redesign-components.mjs",
+     "redesign:baseline": "node scripts/redesign-baseline.mjs && node scripts/redesign-supplement.mjs && node scripts/redesign-performance.mjs",
+     "check:docs": "node scripts/check-docs.mjs",
++    "check:redesign-budget": "node scripts/redesign-budget.mjs",
+     "check:redesign": "node scripts/route-coverage.mjs --check && npm run check:docs"
+   },
+   "devDependencies": {
+--- before/apps/web/src/features/organization/ManagementWorkflows.test.tsx
++++ after/apps/web/src/features/organization/ManagementWorkflows.test.tsx
+@@ -6,8 +6,8 @@
+ import type { Business } from '@inventory/contracts';
+ import { ManagementWorkflows } from './ManagementWorkflows';
+ 
+-vi.mock('../catalog/CatalogPanel', () => ({
+-  CatalogPanel: () => (
++vi.mock('../inventory/InventoryWorkspace', () => ({
++  InventoryWorkspace: () => (
+     <label>
+       Product draft
+       <input />
+@@ -32,7 +32,7 @@
+   expect(screen.getByRole('region', { name: 'Workspace overview' })).toBeTruthy();
+   expect(screen.queryByLabelText('Product draft')).toBeNull();
+   const navigation = within(screen.getByRole('navigation', { name: 'Workspace sections' }));
+-  const catalog = navigation.getByRole('button', { name: 'Catalog & pricing' });
++  const catalog = navigation.getByRole('button', { name: 'Inventory' });
+   catalog.focus();
+   await user.keyboard('{Enter}');
+   expect(catalog.getAttribute('aria-current')).toBe('page');
+@@ -50,10 +50,10 @@
+     wrapper: MemoryRouter,
+   });
+   const navigation = within(screen.getByRole('navigation', { name: 'Workspace sections' }));
+-  await userEvent.click(navigation.getByRole('button', { name: 'Catalog & pricing' }));
++  await userEvent.click(navigation.getByRole('button', { name: 'Inventory' }));
+   view.rerender(<ManagementWorkflows {...props} business={{ ...business, role: 'viewer' }} />);
+   expect(screen.queryByLabelText('Product draft')).toBeNull();
+-  expect(navigation.queryByRole('button', { name: 'Catalog & pricing' })).toBeNull();
++  expect(navigation.queryByRole('button', { name: 'Inventory' })).toBeNull();
+   expect(screen.getByText(/No transaction sections are available/)).toBeTruthy();
+   expect(navigation.getByRole('button', { name: 'Overview' }).getAttribute('aria-current')).toBe(
+     'page',
+--- before/apps/web/src/features/reports/RegistrationTrend.test.tsx
++++ after/apps/web/src/features/reports/RegistrationTrend.test.tsx
+@@ -11,6 +11,6 @@
+ });
+ it('shows an honest empty state when no registration history exists', () => {
+   render(<RegistrationTrend rows={[]} />);
+-  expect(screen.getByText('No registration history available.')).toBeTruthy();
++  expect(screen.getByText('No registration history')).toBeTruthy();
+   expect(screen.queryByRole('img')).toBeNull();
+ });
+--- before/apps/mobile/src/entry.test.tsx
++++ after/apps/mobile/src/entry.test.tsx
+@@ -1,4 +1,6 @@
+ // @vitest-environment jsdom
++// WebView is a native bridge; this suite exercises the surrounding shell, not the editor.
++vi.mock('react-native-webview', () => ({ WebView: () => null }));
+ vi.mock('expo-image-picker', () => ({ launchImageLibraryAsync: async () => ({ canceled: true }) }));
+ vi.mock('expo-font', () => ({ useFonts: () => [true, null] }));
+ vi.hoisted(() => vi.stubGlobal('__DEV__', false));
+--- before/apps/mobile/src/organization/ManagementPanel.test.tsx
++++ after/apps/mobile/src/organization/ManagementPanel.test.tsx
+@@ -1,4 +1,6 @@
+ // @vitest-environment jsdom
++// WebView is a native bridge; this suite exercises the surrounding shell, not the editor.
++vi.mock('react-native-webview', () => ({ WebView: () => null }));
+ vi.mock('react-native-safe-area-context', () => import('../ui/safe-area-test-adapter'));
+ vi.mock('expo-print', () => ({ printAsync: vi.fn() }));
+ vi.mock('../reports/Dashboard', () => ({ Dashboard: () => null }));
+@@ -10,8 +12,8 @@
+ import { cleanup, render, screen } from '@testing-library/react';
+ import userEvent from '@testing-library/user-event';
+ vi.mock('../inventory/InventoryPanel', () => ({ InventoryPanel: () => null }));
+-vi.mock('../catalog/CatalogPanel', () => ({
+-  CatalogPanel: () => <input aria-label="Native catalog draft" />,
++vi.mock('../inventory/InventoryWorkspace', () => ({
++  InventoryWorkspace: () => <input aria-label="Native catalog draft" />,
+ }));
+ vi.mock('react-native', () => vi.importActual('react-native-web'));
+ const { request } = vi.hoisted(() => ({ request: vi.fn() }));
+@@ -48,16 +50,16 @@
+     .mockResolvedValueOnce({ business: owned, locations: [], members: [] });
+   render(<ManagementPanel />);
+   await userEvent.click(await screen.findByRole('button', { name: 'Workspace sections' }));
+-  const catalog = await screen.findByRole('button', { name: 'Catalog & pricing' });
++  const catalog = await screen.findByRole('button', { name: 'Inventory' });
+   expect(screen.queryByLabelText('Native catalog draft')).toBeNull();
+   const user = userEvent.setup();
+   await user.click(catalog);
+   await user.type(screen.getByLabelText('Native catalog draft'), 'Unsubmitted draft');
+   await user.click(screen.getByRole('button', { name: /Workspace sections/ }));
+-  await user.click(screen.getByRole('button', { name: 'Inventory' }));
++  await user.click(screen.getByRole('button', { name: 'Purchasing' }));
+   expect(screen.queryByRole('textbox', { name: 'Native catalog draft' })).toBeNull();
+   await user.click(screen.getByRole('button', { name: /Workspace sections/ }));
+-  await user.click(screen.getByRole('button', { name: 'Catalog & pricing' }));
++  await user.click(screen.getByRole('button', { name: 'Inventory' }));
+   expect(
+     screen.getByRole<HTMLInputElement>('textbox', { name: 'Native catalog draft' }).value,
+   ).toBe('Unsubmitted draft');

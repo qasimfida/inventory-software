@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { selectOption } from '@/../test/select-option';
 import { afterEach, expect, it, vi } from 'vitest';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { readDashboard } from '../../../../../packages/api-client/src/mock/read-dashboard';
@@ -15,7 +15,9 @@ afterEach(() => {
   vi.resetAllMocks();
 });
 it('shows confirmed metrics, bounded previews and a keyboard-accessible exact trend table', async () => {
-  request.mockResolvedValue(readDashboard(seed, { get: () => null }, false));
+  request.mockImplementation(async (path: string) =>
+    readDashboard(seed, new URL(path, 'http://test.local').searchParams, false),
+  );
   render(
     <MemoryRouter>
       <Dashboard business={seed.business} />
@@ -23,9 +25,8 @@ it('shows confirmed metrics, bounded previews and a keyboard-accessible exact tr
   );
   expect(await screen.findByRole('heading', { name: 'Top products' })).toBeTruthy();
   expect(screen.getByText('28', { exact: true })).toBeTruthy();
-  expect(screen.getByRole('link', { name: /Currency settings/ }).getAttribute('href')).toBe(
-    '/settings/preferences',
-  );
+  expect(screen.getByRole('combobox', { name: 'Overview recorded currency' })).toBeTruthy();
+  expect(document.querySelectorAll('.overview-chart circle[data-date]')).toHaveLength(30);
   await selectOption(screen.getByRole('combobox', { name: 'Overview period' }), '7');
   await waitFor(() =>
     expect(request).toHaveBeenCalledWith(
@@ -35,8 +36,23 @@ it('shows confirmed metrics, bounded previews and a keyboard-accessible exact tr
       expect.anything(),
     ),
   );
-  await userEvent.click(screen.getByText('View daily figures'));
-  expect(screen.getByRole('region', { name: 'Daily sales values' })).toBeTruthy();
+  await waitFor(() =>
+    expect(document.querySelectorAll('.overview-chart circle[data-date]')).toHaveLength(7),
+  );
+  expect(screen.queryByText('View daily figures')).toBeNull();
+  const data = readDashboard(seed, new URLSearchParams({ days: '7' }), false);
+  expect(
+    within(screen.getByRole('region', { name: 'Sales trend' })).getByText(
+      `${data.from} – ${data.to} UTC`,
+    ),
+  ).toBeTruthy();
+  expect(
+    within(screen.getByRole('region', { name: 'Daily sales values' })).getAllByRole('row'),
+  ).toHaveLength(8);
+  await selectOption(screen.getByRole('combobox', { name: 'Overview period' }), '30');
+  await waitFor(() =>
+    expect(document.querySelectorAll('.overview-chart circle[data-date]')).toHaveLength(30),
+  );
 });
 it('keeps restricted sections absent and shows request failures rather than invented totals', async () => {
   request.mockResolvedValue({ ...readDashboard(seed, { get: () => null }, false), sales: null });

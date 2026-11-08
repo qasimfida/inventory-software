@@ -1,5 +1,6 @@
 import {
   settingsSnapshotSchema,
+  exchangeResponseSchema,
   platformOverviewSchema,
   platformOverviewQuerySchema,
   preferenceRecordSchema,
@@ -17,6 +18,7 @@ export function createSettingsClient(
   business: OrganizationTransport,
 ) {
   return {
+    rates: async () => exchangeResponseSchema.parse(await account('exchange-rates')),
     load: async () => settingsSnapshotSchema.parse(await account('settings')),
     save: async (input: z.infer<typeof preferenceRecordSchema>) =>
       preferenceRecordSchema.parse(await account('settings', 'PUT', input)),

@@ -2,6 +2,8 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, expect, it, vi } from 'vitest';
 vi.mock('react-native', () => vi.importActual('react-native-web'));
+// jsdom exercises the real iframe adapter; native WebView requires a device runtime.
+vi.mock('../ui/RichTextEditor', () => import('../ui/RichTextEditor.web'));
 vi.mock('react-native-safe-area-context', () => import('../ui/safe-area-test-adapter'));
 import { OnlineDetailsForm } from './OnlineDetailsForm';
 import { createOnlineStoreClient } from '@inventory/api-client';

@@ -1,0 +1,86 @@
+[
+  {
+    "width": 390,
+    "theme": "light",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 844,
+    "theme": "light",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 844,
+    "theme": "dark",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1280,
+    "theme": "light",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1280,
+    "theme": "dark",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "inboxAndAudit": "passed",
+    "detailDrawers": "passed",
+    "overflow": "passed"
+  }
+]

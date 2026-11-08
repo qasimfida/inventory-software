@@ -1,9 +1,11 @@
+import './locations.css';
+import { LocationDetails } from './LocationDetails';
 import { SearchControl } from '@/components/common/SearchControl';
 import { RecordCollection } from '@/components/common/RecordCollection';
 import { FormSheet } from '@/components/common/FormSheet';
 import { EmptyState } from '@/components/common/AsyncState';
 import { ScreenHeader } from '@/components/common/ScreenHeader';
-import { hasPermission, creatableLocationKinds, locationInScope } from '@inventory/contracts';
+import { hasPermission, creatableLocationKinds } from '@inventory/contracts';
 import { useState } from 'react';
 import { createLocationSchema, editLocationSchema } from '@inventory/contracts';
 import type { Location, Workspace } from '@inventory/contracts';
@@ -43,7 +45,10 @@ export function LocationEditor({
     </>
   );
   return (
-    <section className="screen-section" aria-label="Stores warehouses and terminals">
+    <section
+      className="screen-section location-collection"
+      aria-label="Stores warehouses and terminals"
+    >
       <ScreenHeader title="Locations and devices" level={3} />
       {writable && (
         <Button
@@ -64,17 +69,8 @@ export function LocationEditor({
         onOpen={(id) => {
           const item = workspace.locations.find((l) => l.id === id);
           if (!item) return;
-          if (
-            writable &&
-            locationInScope(workspace.business, item, true) &&
-            item.state !== 'archived'
-          ) {
-            setEditing(item);
-            setViewing(null);
-          } else {
-            setEditing(null);
-            setViewing(item);
-          }
+          setEditing(null);
+          setViewing(item);
           setOpen(true);
         }}
         items={workspace.locations
@@ -89,20 +85,53 @@ export function LocationEditor({
               workspace.locations.find((parent) => parent.id === item.storeId)?.name ??
               'Business location',
             status: item.state,
-            tone: item.state === 'active' ? 'success' : 'neutral',
+            tone:
+              item.state === 'active'
+                ? 'success'
+                : item.state === 'suspended'
+                  ? 'warning'
+                  : 'neutral',
           }))}
         columns={['Location', 'Code / type', 'Parent store']}
       />
       {!workspace.locations.length && <EmptyState message="No locations or terminals yet." />}
       <FormSheet
+        description={
+          viewing
+            ? 'Location details and authorized management actions.'
+            : 'Update the name and code. Parent relationships remain fixed.'
+        }
         title={viewing?.name ?? (editing ? `Edit ${editing.name}` : 'Add location')}
         open={open}
         onOpenChange={setOpen}
       >
         {viewing && (
-          <p>
-            {viewing.name} · {viewing.code} · {viewing.type} · {viewing.state}
-          </p>
+          <LocationDetails
+            item={viewing}
+            workspace={workspace}
+            busy={busy}
+            onEdit={() => {
+              setEditing(viewing);
+              setViewing(null);
+            }}
+            onState={(state) => {
+              void model.refresh(async () => {
+                await model.client.editLocation(
+                  workspace.business.id,
+                  viewing.kind,
+                  viewing.id,
+                  editLocationSchema.parse({
+                    name: viewing.name,
+                    code: viewing.code,
+                    version: viewing.version,
+                    state,
+                  }),
+                );
+                setOpen(false);
+                setViewing(null);
+              });
+            }}
+          />
         )}
         {writable && !viewing && (
           <form
@@ -236,7 +265,7 @@ export function LocationEditor({
                 <>
                   <label htmlFor="location-state">Location state</label>
                   <Select id="location-state" name="state" defaultValue={editing.state}>
-                    {['active', 'suspended', 'archived'].map((state) => (
+                    {['active', 'suspended'].map((state) => (
                       <option key={state}>{state}</option>
                     ))}
                   </Select>
@@ -248,7 +277,13 @@ export function LocationEditor({
               )}
               <Button type="submit">{editing ? 'Save location' : 'Create location'}</Button>
               {editing && (
-                <Button variant="outline" onClick={() => setEditing(null)}>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setViewing(editing);
+                    setEditing(null);
+                  }}
+                >
                   Cancel edit
                 </Button>
               )}

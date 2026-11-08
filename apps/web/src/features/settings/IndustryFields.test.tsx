@@ -17,7 +17,7 @@ it('allows intermediate invalid threshold edits without crashing other policy co
   await user.clear(threshold);
   await user.type(threshold, '-');
   expect(screen.getByRole('alert')).toBeTruthy();
-  await selectOption(screen.getByLabelText('Business enforced: Appearance'), 'dark');
+  await selectOption(screen.getByLabelText('Business enforced: Display currency'), 'PKR');
   expect(
     screen.getByRole<HTMLButtonElement>('button', { name: 'Save business policy' }).disabled,
   ).toBe(true);

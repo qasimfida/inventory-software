@@ -26,6 +26,13 @@ const environmentSchema = z.object({
   REQUEST_BODY_LIMIT_BYTES: z.coerce.number().int().min(1024).max(1048576).default(102400),
   HTTP_REQUEST_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120000).default(30000),
   SHUTDOWN_TIMEOUT_MS: z.coerce.number().int().min(1000).max(120000).default(15000),
+  OPEN_EXCHANGE_RATES_APP_ID: z
+    .string()
+    .regex(/^[a-zA-Z0-9]*$/)
+    .max(128)
+    .default(''),
+  PRODUCT_MEDIA_DIRECTORY: z.string().default(''),
+  PRODUCT_MEDIA_PUBLIC_BASE_URL: z.string().max(350).default(''),
   STOREFRONT_MEDIA_ORIGINS: z.string().default(''),
   CORS_ORIGINS: z.string().default('http://localhost:5173,http://127.0.0.1:5173'),
 });
@@ -38,6 +45,26 @@ export function parseEnvironment(input: Record<string, unknown>) {
     );
   }
   const env = parsed.data;
+  if (Boolean(env.PRODUCT_MEDIA_DIRECTORY) !== Boolean(env.PRODUCT_MEDIA_PUBLIC_BASE_URL))
+    throw new Error('Configure both PRODUCT_MEDIA_DIRECTORY and PRODUCT_MEDIA_PUBLIC_BASE_URL.');
+  if (env.PRODUCT_MEDIA_DIRECTORY) {
+    if (!/^(?:\/|[A-Za-z]:[\\/])/.test(env.PRODUCT_MEDIA_DIRECTORY))
+      throw new Error('PRODUCT_MEDIA_DIRECTORY must be absolute.');
+    const media = z.url({ protocol: /^https$/ }).safeParse(env.PRODUCT_MEDIA_PUBLIC_BASE_URL);
+    if (!media.success) throw new Error('PRODUCT_MEDIA_PUBLIC_BASE_URL must use HTTPS.');
+    const url = new URL(media.data);
+    if (
+      url.username ||
+      url.password ||
+      url.search ||
+      url.hash ||
+      !url.pathname.endsWith('/api/v1/product-media')
+    )
+      throw new Error(
+        'PRODUCT_MEDIA_PUBLIC_BASE_URL must end in /api/v1/product-media without credentials or query.',
+      );
+  }
+
   const parsedOrigins = z
     .array(originSchema)
     .safeParse(env.CORS_ORIGINS.split(',').map((value) => value.trim()));

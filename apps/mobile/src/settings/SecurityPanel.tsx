@@ -1,3 +1,13 @@
+import { RecordDetails } from '../ui/RecordDetails';
+import { RecordTable } from '../ui/RecordTable';
+import {
+  securityEventPresentation,
+  securityEventDetails,
+  securityTime,
+  securityActor,
+  type SecurityState,
+} from '@inventory/api-client';
+import { SecurityNotifications } from './SecurityNotifications';
 import { SearchControl } from '../ui/SearchControl';
 import { FilterButton } from '../ui/FilterButton';
 import { SidePanel } from '../ui/SidePanel';
@@ -30,7 +40,7 @@ export function SecurityPanel({
   const [search, setSearch] = useState(''),
     [outcome, setOutcome] = useState('');
   const [filtersOpen, setFiltersOpen] = useState(false),
-    [details, setDetails] = useState('');
+    [details, setDetails] = useState<SecurityState['events'][number] | null>(null);
   const matches = (value: unknown) =>
     JSON.stringify(value).toLowerCase().includes(search.toLowerCase());
   const state = {
@@ -107,8 +117,16 @@ export function SecurityPanel({
           onChange={setOutcome}
         />
       </SidePanel>
-      <SidePanel title="Security event details" open={!!details} onClose={() => setDetails('')}>
-        <Text>{details}</Text>
+      <SidePanel title="Security event details" open={!!details} onClose={() => setDetails(null)}>
+        {details && (
+          <View style={styles.group}>
+            <Text>{securityEventPresentation(details.event).description}</Text>
+            <RecordDetails
+              label="Security event context"
+              items={securityEventDetails(details).map(([label, value]) => ({ label, value }))}
+            />
+          </View>
+        )}
       </SidePanel>
       {state.message ? (
         <ErrorState message={state.message} onRetry={() => void model.load(state.view)} />
@@ -118,24 +136,11 @@ export function SecurityPanel({
         New-device alerts appear after in-app delivery. A marker identifies an installation, not a
         trusted person. Review and revoke sessions in Settings → Security.
       </Text>
-      {state.notifications.map((item) => (
-        <View key={item.id}>
-          <Text>
-            New device · {new Date(item.occurredAt).toLocaleString()} · {item.audience} · Account{' '}
-            {item.actorId} · Device {item.deviceId}
-            {item.businessId ? ` · Business ${item.businessId}` : ''}
-          </Text>
-          {item.readAt ? (
-            <Text>Read</Text>
-          ) : (
-            <Action
-              label="Mark notification read"
-              disabled={state.busy}
-              onPress={() => void model.action(item.id)}
-            />
-          )}
-        </View>
-      ))}
+      <SecurityNotifications
+        items={state.notifications}
+        busy={state.busy}
+        onRead={(id) => void model.action(id)}
+      />
       {state.events.map((event, index) => (
         <View
           key={event.id}
@@ -145,36 +150,57 @@ export function SecurityPanel({
           }}
         >
           <Text>
-            {event.event} · {event.outcome} · {new Date(event.occurredAt).toLocaleString()}
+            {securityEventPresentation(event.event).title} ·{' '}
+            {{ success: 'Successful', denied: 'Denied', failure: 'Failed' }[event.outcome]} ·{' '}
+            {securityTime(event.occurredAt)}
           </Text>
-          <Text>Actor: {event.actorId ?? 'Unauthenticated request'}</Text>
-          <Action
-            variant="ghost"
-            label="View details"
-            onPress={() => setDetails(JSON.stringify(event, null, 2))}
-          />
+          <Text>Actor: {securityActor(event)}</Text>
+          <Action variant="ghost" label="View details" onPress={() => setDetails(event)} />
         </View>
       ))}
-      {state.deliveries.map((item) => (
-        <View key={item.id}>
-          <Text>
-            {item.state} · Attempts {item.attempts} · {item.failureCode ?? 'Queued'} · {item.id}
-          </Text>
-          {item.state === 'failed' && (
-            <Action
-              label="Retry notification"
-              disabled={state.busy}
-              onPress={() => void model.action(item.id, true)}
-            />
-          )}
-        </View>
-      ))}
-      {state.diagnostics.map((item) => (
-        <Text key={item.id}>
-          {item.code} · {item.operation} · {item.environment}/{item.applicationVersion} ·{' '}
-          {item.reason} · {item.recovery} · Reference {item.requestId}
-        </Text>
-      ))}
+      {state.view === 'deliveries' && (
+        <RecordTable
+          label="Delivery attempts"
+          columns={['Status', 'Attempts', 'Failure code', 'Delivery reference', 'Action']}
+          rows={state.deliveries.map((item) => ({
+            id: item.id,
+            cells: [
+              item.state,
+              String(item.attempts),
+              item.failureCode ?? 'Not recorded',
+              item.id,
+              item.state === 'failed' ? (
+                <Action
+                  key={item.id}
+                  label="Retry notification"
+                  disabled={state.busy}
+                  onPress={() => void model.action(item.id, true)}
+                />
+              ) : null,
+            ],
+          }))}
+        />
+      )}
+      {state.view === 'diagnostics' && (
+        <RecordTable
+          label="Diagnostics"
+          columns={[
+            'Code / operation',
+            'Environment / version',
+            'Reason / recovery',
+            'Support reference',
+          ]}
+          rows={state.diagnostics.map((item) => ({
+            id: item.id,
+            cells: [
+              item.code + ' · ' + item.operation,
+              item.environment + ' / ' + item.applicationVersion,
+              item.reason + ' · ' + item.recovery,
+              item.requestId,
+            ],
+          }))}
+        />
+      )}
       {state.loaded &&
         !state.busy &&
         !state.message &&

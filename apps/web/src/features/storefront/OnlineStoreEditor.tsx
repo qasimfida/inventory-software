@@ -176,7 +176,10 @@ export function OnlineStoreEditor({
         </>
       ) : (
         <>
-          <nav aria-label="Online store settings sections" className="flex flex-wrap gap-2">
+          <nav
+            aria-label="Online store settings sections"
+            className="view-tabs flex flex-wrap gap-2"
+          >
             {onlineSettingsSections.map((s) => (
               <Button
                 key={s}
@@ -221,7 +224,7 @@ export function OnlineStoreEditor({
               ))}
             </div>
           )}
-          <div className="flex flex-wrap gap-2">
+          <div className="drawer-actions">
             <Button
               disabled={disabled || !slug.available || (!state.dirty && !!state.saved)}
               onClick={() => void model.save()}

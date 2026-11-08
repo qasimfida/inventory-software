@@ -201,3 +201,44 @@ it('withdraws a promotion with an append-only event and retains the historical p
       .count,
   ).toBe('2');
 });
+
+it('saves the immediate selling-price form and reloads the real pricing workspace', async () => {
+  const { createPricingClient, priceForms, immediatePriceForm } =
+    await import('../../../../packages/api-client/src/index.js');
+  const { businessSchema } = await import('@inventory/contracts');
+  const { api, a, root, ownerToken } = fixture();
+  const business = businessSchema.parse(
+    (await api().get(`${root}/${a}`).set(native(ownerToken)).expect(200)).body.business,
+  );
+  const client = createPricingClient(
+    async (path, method = 'GET', body) => {
+      const req =
+        method === 'POST'
+          ? api()
+              .post(`${root}${path}`)
+              .send(body as object)
+          : api().get(`${root}${path}`);
+      const response = await req.set(native(ownerToken)).expect(method === 'POST' ? 201 : 200);
+      return response.body;
+    },
+    a,
+    productId,
+  );
+  const data = await client.load();
+  const form = immediatePriceForm(
+    priceForms(client, data, business, [], productId).find((f) => f.title === 'Publish price')!,
+    productId,
+  );
+  await form.submit({
+    unitPrice: '17.50',
+    currency: 'USD',
+    taxBasisPoints: '0',
+    taxInclusive: false,
+    storeId: '',
+  });
+  expect(
+    (await client.load()).prices.some(
+      (p) => p.unitPrice === '17.500000' && p.variantId === productId,
+    ),
+  ).toBe(true);
+});

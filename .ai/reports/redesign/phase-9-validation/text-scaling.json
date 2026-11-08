@@ -1,0 +1,122 @@
+[
+  {
+    "path": "/dashboard",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/pos",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/inventory",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/categories",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/warehouse",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/storage",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/transfers",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/purchasing",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/payables",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/customers",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/accounting",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/reports",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/trading",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/integrations",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/team",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/staff",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/notifications",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/logs",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/settings/preferences",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  },
+  {
+    "path": "/online-store",
+    "width": 320,
+    "textScale": 2,
+    "overflow": false
+  }
+]

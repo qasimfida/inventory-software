@@ -1,7 +1,7 @@
 import { RegistrationTrend } from './RegistrationTrend';
 import { useEffect, useMemo, useSyncExternalStore } from 'react';
 import { View } from 'react-native';
-import { createSecurityClient, ResourceModel } from '@inventory/api-client';
+import { createSecurityClient, ResourceModel, securityTime } from '@inventory/api-client';
 import { authClient } from '../auth/client';
 import { useTheme } from '../theme';
 import { Text } from '../ui/Themed';
@@ -45,25 +45,15 @@ export function PlatformOverview() {
               unit={`${data.totals.activeBusinesses} active`}
               primary
             />
+            <MetricCard label="Accounts" value={data.totals.accounts} unit="Registered accounts" />
+            <MetricCard label="Stores" value={data.totals.stores} unit="Registered stores" />
             <MetricCard
-              tone="success"
-              label="Accounts"
-              value={data.totals.accounts}
-              unit="Registered accounts"
-            />
-            <MetricCard
-              tone="warning"
-              label="Stores"
-              value={data.totals.stores}
-              unit="Registered stores"
-            />
-            <MetricCard
-              tone="destructive"
               label="Warehouses"
               value={data.totals.warehouses}
               unit={`${data.totals.terminals} terminals`}
             />
           </View>
+          <Text tone="muted">As of {securityTime(data.asOf, true, 'UTC')}</Text>
           <RegistrationTrend rows={data.registrations} />
           <Action
             label="View administrative logs"

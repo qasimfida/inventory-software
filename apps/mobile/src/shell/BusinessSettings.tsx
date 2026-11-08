@@ -1,3 +1,4 @@
+import { CustomerRetention } from '../customers/CustomerRetention';
 import { WorkspaceSwitcher } from './WorkspaceSwitcher';
 import { AddBusiness } from '../platform-businesses/AddBusiness';
 import { useNavigation } from './Navigation';
@@ -65,6 +66,7 @@ export function BusinessSettings() {
             busy={state.busy}
           />
           <BusinessPolicy business={business} />
+          <CustomerRetention business={business} />
         </>
       )}
     </View>

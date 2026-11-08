@@ -12,6 +12,7 @@ import {
   onlineAttentionLinks,
   onlineMessages,
   setupChecklist,
+  initialOnlineSettings,
 } from '@inventory/api-client';
 import { authClient } from '../auth/client';
 import { useCatalogLive } from '../platform/useCatalogLive';
@@ -48,7 +49,10 @@ export function OnlineOverview({ business, storeId }: { business: Business; stor
     ) : (
       <LoadingState message="Loading online store overview…" />
     );
-  const steps = settings.settings ? setupChecklist(settings.settings, settings.prerequisites) : [];
+  const steps = setupChecklist(
+    settings.settings ?? initialOnlineSettings(business.id, storeId, settings.defaults),
+    settings.prerequisites,
+  );
   const incomplete = steps.filter((c) => !c.done);
   const counts = {
     changes: overview.counts.needs_changes,
@@ -119,30 +123,53 @@ export function OnlineOverview({ business, storeId }: { business: Business; stor
       {!Object.values(counts).some(Boolean) && !incomplete.length && settings.settings && (
         <Text accessibilityLiveRegion="polite">✓ All clear</Text>
       )}
-      {!settings.settings && (
-        <Pressable
-          accessibilityRole="link"
-          onPress={() => navigate('/online-store/settings/general')}
-        >
-          <Text style={{ textDecorationLine: 'underline' }}>Set up online store</Text>
-        </Pressable>
-      )}
-      {incomplete.map((step) => (
-        <Pressable
-          key={step.label}
-          accessibilityRole="link"
-          disabled={step.path === '/settings/company' && !hasPermission(business, 'business.write')}
-          onPress={() => navigate(step.path)}
-          style={{ padding: theme.spacing.small }}
-        >
-          <Text style={{ textDecorationLine: 'underline' }}>
-            {step.label}
-            {step.path === '/settings/company' && !hasPermission(business, 'business.write')
-              ? ' — ask an administrator'
-              : ''}
-          </Text>
-        </Pressable>
-      ))}
+      <View
+        accessibilityLabel="Complete your online store"
+        style={{
+          backgroundColor: theme.colors.card,
+          padding: theme.spacing.medium,
+          borderRadius: theme.radius,
+        }}
+      >
+        <Text accessibilityRole="header">Complete your online store</Text>
+        <Text>
+          {steps.filter((step) => step.done).length} of {steps.length} steps complete · Setup does
+          not publish products.
+        </Text>
+        {!settings.settings && (
+          <Pressable
+            accessibilityRole="link"
+            onPress={() => navigate('/online-store/settings/general')}
+          >
+            <Text style={{ textDecorationLine: 'underline' }}>Set up online store</Text>
+          </Pressable>
+        )}
+        {steps.map((step) => (
+          <Pressable
+            key={step.label}
+            accessibilityRole="link"
+            disabled={
+              step.path === '/settings/company' && !hasPermission(business, 'business.write')
+            }
+            onPress={() => navigate(step.path)}
+            style={{
+              padding: theme.spacing.small,
+              borderWidth: 1,
+              borderColor: theme.tokens.border,
+              borderRadius: theme.radius,
+              marginTop: theme.spacing.small,
+            }}
+          >
+            <Text style={{ textDecorationLine: 'underline' }}>
+              {step.done ? '✓ Complete · ' : '○ To do · '}
+              {step.label}
+              {step.path === '/settings/company' && !hasPermission(business, 'business.write')
+                ? ' — ask an administrator'
+                : ''}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
       {!Object.values(overview.counts).some(Boolean) &&
         hasPermission(business, 'onlineStore.manage') && (
           <Action label="Add products" onPress={() => navigate('/online-store/products/add')} />

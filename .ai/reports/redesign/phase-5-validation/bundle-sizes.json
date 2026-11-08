@@ -1,0 +1,215 @@
+{
+  "totals": {
+    ".html": 862,
+    ".js": 1690647,
+    ".ttf": 647236,
+    ".css": 136279
+  },
+  "files": [
+    {
+      "path": "apps/web/dist/index.html",
+      "bytes": 862,
+      "gzip": 392
+    },
+    {
+      "path": "apps/web/dist/sw.js",
+      "bytes": 2001,
+      "gzip": 972
+    },
+    {
+      "path": "apps/web/dist/assets/IntegrationsPanel-YYkbiygx.js",
+      "bytes": 2228,
+      "gzip": 1098
+    },
+    {
+      "path": "apps/web/dist/assets/quill-zL3mIzDS.js",
+      "bytes": 199709,
+      "gzip": 58072
+    },
+    {
+      "path": "apps/web/dist/assets/ReportsPanel-AeQ2-xV2.js",
+      "bytes": 4565,
+      "gzip": 1828
+    },
+    {
+      "path": "apps/web/dist/assets/FormControls-BXottfnJ.js",
+      "bytes": 51416,
+      "gzip": 16599
+    },
+    {
+      "path": "apps/web/dist/assets/dist-js-BzKGOnbP.js",
+      "bytes": 1485,
+      "gzip": 670
+    },
+    {
+      "path": "apps/web/dist/assets/PayablePanel-BpORB5aV.js",
+      "bytes": 4523,
+      "gzip": 1860
+    },
+    {
+      "path": "apps/web/dist/assets/import-xlsx-k_0B6rwc.js",
+      "bytes": 63485,
+      "gzip": 21261
+    },
+    {
+      "path": "apps/web/dist/assets/TradingPanel-CfLjHhS6.js",
+      "bytes": 4016,
+      "gzip": 1701
+    },
+    {
+      "path": "apps/web/dist/assets/PurchasingPanel-DEqyIfgc.js",
+      "bytes": 5943,
+      "gzip": 2243
+    },
+    {
+      "path": "apps/web/dist/assets/Geist-Cz_WRCMl.ttf",
+      "bytes": 169056,
+      "gzip": 86506
+    },
+    {
+      "path": "apps/web/dist/assets/CustomerPanel-Bs6JNIMh.js",
+      "bytes": 6856,
+      "gzip": 2722
+    },
+    {
+      "path": "apps/web/dist/assets/rolldown-runtime-XKyaHtl9.js",
+      "bytes": 726,
+      "gzip": 431
+    },
+    {
+      "path": "apps/web/dist/assets/desktop-storage-BQzhZksZ.js",
+      "bytes": 205,
+      "gzip": 175
+    },
+    {
+      "path": "apps/web/dist/assets/index-CIfXAfiW.css",
+      "bytes": 108920,
+      "gzip": 19621
+    },
+    {
+      "path": "apps/web/dist/assets/index-C9jT1Y-P.js",
+      "bytes": 313016,
+      "gzip": 98721
+    },
+    {
+      "path": "apps/web/dist/assets/WarehousePanel-Xiyo5doK.js",
+      "bytes": 6860,
+      "gzip": 2762
+    },
+    {
+      "path": "apps/web/dist/assets/auth-client-BUaw4_PM.js",
+      "bytes": 1264,
+      "gzip": 730
+    },
+    {
+      "path": "apps/web/dist/assets/IconButton-C5MHLoyO.css",
+      "bytes": 25727,
+      "gzip": 3938
+    },
+    {
+      "path": "apps/web/dist/assets/AccountingPanel-Dal4HvOg.js",
+      "bytes": 3684,
+      "gzip": 1733
+    },
+    {
+      "path": "apps/web/dist/assets/Karla-Cc-z3u01.ttf",
+      "bytes": 94016,
+      "gzip": 57683
+    },
+    {
+      "path": "apps/web/dist/assets/Button-DXaM3rJg.js",
+      "bytes": 121291,
+      "gzip": 40381
+    },
+    {
+      "path": "apps/web/dist/assets/IconButton-BGa8wDOI.js",
+      "bytes": 103481,
+      "gzip": 31052
+    },
+    {
+      "path": "apps/web/dist/assets/ProductPage-UOsvaKKC.js",
+      "bytes": 4931,
+      "gzip": 1938
+    },
+    {
+      "path": "apps/web/dist/assets/resource-model-rPcZXhw8.js",
+      "bytes": 1263,
+      "gzip": 588
+    },
+    {
+      "path": "apps/web/dist/assets/NotificationsPanel-Xsv8CSAS.js",
+      "bytes": 9414,
+      "gzip": 3377
+    },
+    {
+      "path": "apps/web/dist/assets/InventoryWorkspace-CrEAuswa.js",
+      "bytes": 32471,
+      "gzip": 9348
+    },
+    {
+      "path": "apps/web/dist/assets/GeistMono-aobeVSSS.ttf",
+      "bytes": 171968,
+      "gzip": 89566
+    },
+    {
+      "path": "apps/web/dist/assets/browser-C0zvGkjE.js",
+      "bytes": 5401,
+      "gzip": 2704
+    },
+    {
+      "path": "apps/web/dist/assets/StoragePanel-IDa5P1-y.js",
+      "bytes": 12894,
+      "gzip": 4147
+    },
+    {
+      "path": "apps/web/dist/assets/CategoryPage-Dy3j4qqJ.js",
+      "bytes": 3277,
+      "gzip": 1459
+    },
+    {
+      "path": "apps/web/dist/assets/core-IUlRufS4.js",
+      "bytes": 168,
+      "gzip": 140
+    },
+    {
+      "path": "apps/web/dist/assets/FoundationPage-BDTP2c11.js",
+      "bytes": 98657,
+      "gzip": 17836
+    },
+    {
+      "path": "apps/web/dist/assets/dist-Y_foZ1Nq.js",
+      "bytes": 346143,
+      "gzip": 109971
+    },
+    {
+      "path": "apps/web/dist/assets/Application-PQpIsXLt.css",
+      "bytes": 1632,
+      "gzip": 553
+    },
+    {
+      "path": "apps/web/dist/assets/Application-BjPMiAN_.js",
+      "bytes": 267360,
+      "gzip": 73149
+    },
+    {
+      "path": "apps/web/dist/assets/StorefrontPanel-YQpycfWl.js",
+      "bytes": 4432,
+      "gzip": 1989
+    },
+    {
+      "path": "apps/web/dist/assets/MovementHistory-DjyN2owu.js",
+      "bytes": 2771,
+      "gzip": 1212
+    },
+    {
+      "path": "apps/web/dist/assets/Lora-C1B0tkav.ttf",
+      "bytes": 212196,
+      "gzip": 107014
+    },
+    {
+      "path": "apps/web/dist/assets/TransferPanel-B334Vppn.js",
+      "bytes": 4711,
+      "gzip": 1963
+    }
+  ]
+}

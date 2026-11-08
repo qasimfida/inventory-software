@@ -18,13 +18,22 @@ export function useSession() {
   const [busy, setBusy] = useState(true);
   const [message, setMessage] = useState('');
   const generation = useRef(0);
+  const verifiedSession = useRef<Session | null>(null);
+  useEffect(() => {
+    verifiedSession.current = session;
+  }, [session]);
   const run = useCallback(async (action: () => Promise<Session | null>, background = false) => {
     const current = ++generation.current;
     if (!background) setBusy(true);
     setMessage('');
     try {
       const result = await action();
-      if (current === generation.current) setSession(result);
+      if (current === generation.current) {
+        const valid = result && Date.parse(result.expiresAt) > Date.now() ? result : null;
+        setSession((previous) =>
+          JSON.stringify(previous) === JSON.stringify(valid) ? previous : valid,
+        );
+      }
     } catch (error) {
       if (current === generation.current) {
         // A temporary transport failure cannot extend the existing session expiry.
@@ -49,20 +58,24 @@ export function useSession() {
     const invalidate = () => {
       generation.current++;
     };
+    let checking = false;
     const check = () => {
-      if (!document.hidden) {
+      if (document.hidden) return;
+      // Timers can be suspended while hidden. Enforce expiry before revalidating on return.
+      if (verifiedSession.current && Date.parse(verifiedSession.current.expiresAt) <= Date.now())
         lock();
-        void run(savedSession);
-      }
+      if (checking) return;
+      checking = true;
+      void run(savedSession, true).finally(() => {
+        checking = false;
+      });
     };
-    const visibility = () => (document.hidden ? lock() : check());
+    const visibility = () => {
+      if (!document.hidden) check();
+    };
     check();
-    const timer = setInterval(() => {
-      if (!document.hidden) void run(savedSession, true);
-    }, 60000);
-    const reconnect = () => {
-      if (!document.hidden) void run(savedSession, true);
-    };
+    const timer = setInterval(check, 60000);
+    const reconnect = check;
     window.addEventListener('online', reconnect);
     window.addEventListener('focus', check);
     document.addEventListener('visibilitychange', visibility);

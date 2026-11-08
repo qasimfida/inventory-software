@@ -1,13 +1,11 @@
+import { ReportResults } from './ReportResults';
 import { WarehouseSelect } from '../ui/WarehouseSelect';
 import { Pagination } from '../ui/Pagination';
 import { usePageCollection } from '../ui/usePageCollection';
-import { EmptyState, LoadingState } from '../ui/AsyncState';
+import { EmptyState, LoadingState, ErrorState } from '../ui/AsyncState';
 import { ScreenBody } from '../ui/ScreenHeader';
-import { MetricCard } from '../ui/MetricCard';
 import { DisclosureTrigger } from '../ui/DisclosureTrigger';
-import { DataRow } from '../ui/DataRow';
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
-import { View } from 'react-native';
 import {
   availableReports,
   createReportsClient,
@@ -66,6 +64,7 @@ export function ReportsPanel({
         <>
           <Text>
             Confirmed server data. Dates use YYYY-MM-DD, inclusive UTC days, at most 366 days.
+            Inventory and outstanding balances are current, regardless of the date range.
           </Text>
           {!sections.length ? (
             <EmptyState message="No report categories available." />
@@ -119,36 +118,10 @@ export function ReportsPanel({
             </>
           )}
           {state.busy && <LoadingState message="Loading report…" />}
-          {!!state.error && (
-            <>
-              <Text accessibilityRole="alert">{state.error}</Text>
-              <Action label="Retry report" onPress={() => void model.run()} />
-            </>
-          )}
+          {!!state.error && <ErrorState message={state.error} onRetry={() => void model.run()} />}
           {state.data && (
             <>
-              <Text>
-                Generated {state.data.asOf} · {state.data.from} through {state.data.to} UTC
-              </Text>
-              {!state.data.rows.length && (
-                <EmptyState message="No matching records for this report." />
-              )}
-              {query.section !== 'inventory' && query.section !== 'movements' && (
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
-                  {state.data.rows.slice(0, 4).map((row, index) => (
-                    <MetricCard
-                      key={row.key}
-                      label={row.label}
-                      value={row.value}
-                      unit={row.unit}
-                      primary={index === 0}
-                    />
-                  ))}
-                </View>
-              )}
-              {state.data.rows.map((row) => (
-                <DataRow key={row.key} label={row.label} value={row.value} unit={row.unit} />
-              ))}
+              <ReportResults data={state.data} />
               <Pagination
                 label="report rows"
                 offset={query.offset}
@@ -157,9 +130,6 @@ export function ReportsPanel({
                 busy={state.busy || Boolean(state.error)}
                 onChange={(offset) => setQuery({ ...query, offset })}
               />
-              {state.data.notes.map((note) => (
-                <Text key={note}>{note}</Text>
-              ))}
             </>
           )}
         </>

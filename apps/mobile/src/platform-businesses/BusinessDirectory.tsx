@@ -1,3 +1,5 @@
+import { RecordDetails } from '../ui/RecordDetails';
+import { platformBusinessDetails, registrationTone } from '@inventory/api-client';
 import { useState } from 'react';
 import { View } from 'react-native';
 import type { Location, PlatformBusiness } from '@inventory/contracts';
@@ -47,10 +49,7 @@ export function BusinessDirectory({
               variant="ghost"
               onPress={() => setSelected({ business })}
             />
-            <StatusBadge
-              label={business.state}
-              tone={business.state === 'active' ? 'success' : 'warning'}
-            />
+            <StatusBadge label={business.state} tone={registrationTone(business.state)} />
             <Text>{business.createdAt.slice(0, 10)} UTC</Text>
             <Text tone="muted">
               {business.storeCount ?? '—'} stores · {business.warehouseCount ?? '—'} warehouses
@@ -94,29 +93,16 @@ export function BusinessDirectory({
                 onPress={() => onManage?.(selected.business.id, !!selected.location)}
               />
             )}
-            <Text accessibilityRole="header">
-              {selected.location?.name ?? selected.business.name}
-            </Text>
-            <Text>Status: {selected.location?.state ?? selected.business.state}</Text>
-            <Text>Business: {selected.business.name}</Text>
-            <Text>Time zone: {selected.business.timeZone}</Text>
-            {selected.location ? (
-              <>
-                <Text>Code: {selected.location.code}</Text>
-                <Text>Type: {selected.location.type}</Text>
-                <Text>Store reference: {selected.location.storeId ?? 'This is a store'}</Text>
-              </>
-            ) : (
-              <>
-                <Text>Registered (UTC): {selected.business.createdAt}</Text>
-                {grid && (
-                  <BusinessLocations
-                    business={selected.business}
-                    grid
-                    onOpen={(location) => setSelected({ ...selected, location })}
-                  />
-                )}
-              </>
+            <RecordDetails
+              label="Registration details"
+              items={platformBusinessDetails(selected.business, selected.location)}
+            />
+            {grid && !selected.location && (
+              <BusinessLocations
+                business={selected.business}
+                grid
+                onOpen={(location) => setSelected({ ...selected, location })}
+              />
             )}
           </>
         )}

@@ -1,0 +1,13 @@
+[
+  "packages/api-client/src/access-presentation.ts",
+  "packages/api-client/src/access-presentation.test.ts",
+  "apps/web/src/features/organization/MemberCollection.tsx",
+  "apps/web/src/features/organization/MemberEditor.tsx",
+  "apps/web/src/features/operations/StaffDetails.tsx",
+  "apps/mobile/src/organization/MemberCollection.tsx",
+  "apps/mobile/src/organization/MemberEditor.tsx",
+  "apps/mobile/src/operations/StaffDetails.tsx",
+  "apps/web/src/features/organization/MemberEditor.test.tsx",
+  "scripts/redesign-team-staff-browser.mjs",
+  ".ai/reports/redesign/phase-7-team-staff.md"
+]

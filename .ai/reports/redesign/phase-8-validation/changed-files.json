@@ -1,0 +1,15 @@
+[
+  "packages/api-client/src/online-products.ts",
+  "apps/web/src/features/storefront/OnlineOverview.tsx",
+  "apps/web/src/features/storefront/OnlineListingHistory.tsx",
+  "apps/web/src/features/storefront/OnlineBulkResult.tsx",
+  "apps/web/src/features/storefront/OnlineStoreEditor.tsx",
+  "apps/mobile/src/storefront/OnlineOverview.tsx",
+  "apps/mobile/src/storefront/OnlineListingHistory.tsx",
+  "apps/web/src/features/storefront/OnlineListingSummary.tsx",
+  "apps/mobile/src/storefront/OnlineProductDetails.tsx",
+  "packages/api-client/src/online-products.test.ts",
+  "tests/shell/online-collection-ui.spec.ts",
+  "tests/shell/online-store-setup.spec.ts",
+  "scripts/redesign-online-store-browser.mjs"
+]
